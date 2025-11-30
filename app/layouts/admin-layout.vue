@@ -1,3 +1,9 @@
+<template>
+    <div id="AdminLayout" class="bg-gray-100 min-h-screen">
+        <div class="fixed top-0 left-0 w-full h-[80px] bg-white z-50 flex items-center justify-between px-4 shadow-sm">
+            <div class="flex items-center">
+                <div class="w-[150px]">
+                    <IconCBRELogo class="text-cbre-green" />
                 </div>
                 <div class="ml-[10px] h-[30px] pt-[8px]">
                     <span v-if="isDesktop" class="whitespace-nowrap">{{ $t('app_title') }}</span>
@@ -17,8 +23,8 @@
                     </UButton>
                 </template>
 
-<!-- Mobile Navigation (Hamburger) -->
-<template v-else>
+                <!-- Mobile Navigation (Hamburger) -->
+                <template v-else>
                     <UPopover mode="click">
                         <UButton icon="i-heroicons-bars-3" color="neutral" variant="ghost" />
                         <template #content>
@@ -31,29 +37,29 @@
                                 </UButton>
                             </div>
                         </template>
-</UPopover>
-</template>
+                    </UPopover>
+                </template>
 
-<div class="h-8 w-[1px] bg-gray-200 mx-2"></div>
+                <div class="h-8 w-[1px] bg-gray-200 mx-2"></div>
 
-<!-- User Profile / Login -->
-<div v-if="loggedIn" class="flex items-center gap-3">
+                <!-- User Profile / Login -->
+                <div v-if="loggedIn" class="flex items-center gap-3">
                     <UDropdownMenu :items="userDropdownItems" :popper="{ placement: 'bottom-end' }">
                         <UAvatar :src="user?.image || '/images/avatar/avatar-placeholder.png'"
                             :alt="user?.name || 'User'" class="cursor-pointer border border-gray-200" />
                     </UDropdownMenu>
                 </div>
 
-<div v-else>
+                <div v-else>
                     <UButton :to="'/login'" color="primary" variant="solid" size="sm">
                         {{ $t('login') }}
                     </UButton>
                 </div>
-</div>
-</div>
+            </div>
+        </div>
 
-<!-- Slideshow Background -->
-<ul class="cb-slideshow">
+        <!-- Slideshow Background -->
+        <ul class="cb-slideshow">
             <li><span></span></li>
             <li><span></span></li>
             <li><span></span></li>
@@ -62,10 +68,11 @@
             <li><span></span></li>
         </ul>
 
-<div id="Content" class="absolute top-[80px] left-0 w-full h-[calc(100%-80px)] z-10 overflow-y-hidden bg-transparent">
+        <div id="Content"
+            class="absolute top-[80px] left-0 w-full h-[calc(100%-80px)] z-10 overflow-y-hidden bg-transparent">
             <slot />
         </div>
-</div>
+    </div>
 </template>
 
 <script setup lang="ts">
