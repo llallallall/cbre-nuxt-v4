@@ -1,0 +1,489 @@
+@import "tailwindcss";
+@import "@nuxt/ui";
+@config "../../../tailwind.config.ts";
+@import "./cbre-fonts.css";
+
+/* === CBRE Global Styles === */
+
+@layer base {
+    :root {
+        /* === CBRE Colors & Variables (User Provided) === */
+        --eds-color-primary-1: #003F2D;
+        --eds-color-primary-2: #17E88F;
+        --eds-color-primary-3: #012A2D;
+        --eds-color-primary-4: #435254;
+        --eds-color-primary-5: #CAD1D3;
+        --eds-color-primary-6: #DADFE0;
+        --eds-color-secondary-1: #032842;
+        --eds-color-secondary-2: #538184;
+        --eds-color-secondary-3: #80BBAD;
+        --eds-color-secondary-4: #DBD99A;
+        --eds-color-secondary-5: #7F8480;
+        --eds-color-secondary-light-1: #778F9C;
+        --eds-color-secondary-light-2: #96B3B6;
+        --eds-color-secondary-light-3: #C0D4CB;
+        --eds-color-secondary-light-4: #EFECD2;
+        --eds-color-secondary-light-5: #CBDDC8;
+        --eds-color-system-1: #000000;
+        --eds-color-system-2: #1A1A1A;
+        --eds-color-system-3: #333333;
+        --eds-color-system-4: #4D4D4D;
+        --eds-color-system-5: #666666;
+        --eds-color-system-6: #808080;
+        --eds-color-system-7: #999999;
+        --eds-color-system-8: #B3B3B3;
+        --eds-color-system-9: #CCCCCC;
+        --eds-color-system-10: #E6E6E6;
+        --eds-color-system-11: #FFFFFF;
+        --eds-font-mono: 'Space Mono', monospace;
+
+        --eds-font-serif: var(--eds-font-financier);
+        --eds-font-sans-serif: var(--eds-font-calibre);
+
+        --eds-font-size-10: 1rem;
+        --eds-font-size-12: 1.2rem;
+        --eds-font-size-14: 1.4rem;
+        --eds-font-size-16: 1.6rem;
+        --eds-font-size-18: 1.8rem;
+        --eds-font-size-20: 2rem;
+        --eds-font-size-22: 2.2rem;
+        --eds-font-size-24: 2.4rem;
+        --eds-font-size-32: 3.2rem;
+        --eds-font-size-34: 3.4rem;
+        --eds-font-size-36: 3.6rem;
+        --eds-font-size-46: 4.6rem;
+        --eds-font-size-48: 4.8rem;
+        --eds-font-size-60: 6.0rem;
+        --eds-font-size-64: 6.4rem;
+        --eds-font-size-72: 7.2rem;
+        --eds-font-weight-light: 300;
+        --eds-font-weight-normal: 400;
+        --eds-font-weight-medium: 500;
+        --eds-font-weight-heavy: 600;
+        --eds-font-weight-bold: 700;
+        --eds-line-height-1: 1;
+        --eds-line-height-2: 1.2;
+        --eds-line-height-3: 1.3;
+        --eds-line-height-4: 1.4;
+        --eds-line-height-5: 1.5;
+        --eds-line-height-6: 1.6;
+        --eds-transition-default: 0.25s var(--eds-animation-timing);
+        --eds-transition-slow: 0.5s var(--eds-animation-timing);
+        --eds-transition-fast: 0.125s var(--eds-animation-timing);
+        --eds-animation-timing: cubic-bezier(0.75, 0.02, 0.5, 1);
+        --eds-space-1: 8px;
+        --eds-space-2: calc(var(--eds-space-1) * 2);
+        --eds-space-3: calc(var(--eds-space-1) * 3);
+        --eds-space-4: calc(var(--eds-space-1) * 4);
+        --eds-space-5: calc(var(--eds-space-1) * 5);
+        --eds-space-6: calc(var(--eds-space-1) * 6);
+        --eds-space-7: calc(var(--eds-space-1) * 7);
+        --eds-space-8: calc(var(--eds-space-1) * 8);
+        --eds-space-9: calc(var(--eds-space-1) * 9);
+        --eds-space-10: calc(var(--eds-space-1) * 10);
+        --eds-z-index-default: 1;
+        --eds-z-index-sticky: 400;
+        --eds-z-index-header: 500;
+        --eds-z-index-overlay: 1000;
+
+        /* Mapped Variables for Backward Compatibility */
+        --color-primary-1: var(--eds-color-primary-1);
+        --color-primary-2: var(--eds-color-primary-2);
+        --color-primary-3: var(--eds-color-primary-3);
+        --color-primary-4: var(--eds-color-primary-4);
+        --color-primary-5: var(--eds-color-primary-5);
+        --color-primary-6: var(--eds-color-primary-6);
+
+        --color-secondary-1: var(--eds-color-secondary-1);
+        --color-secondary-2: var(--eds-color-secondary-2);
+        --color-secondary-3: var(--eds-color-secondary-3);
+        --color-secondary-4: var(--eds-color-secondary-4);
+        --color-secondary-5: var(--eds-color-secondary-5);
+
+        --color-system-11: var(--eds-color-system-11);
+        --color-system-4: var(--eds-color-system-4);
+        --color-system-15: var(--eds-color-system-15);
+
+        /* Mapped Variables */
+        --font-serif: var(--eds-font-financier);
+        --font-sans: var(--eds-font-sans-serif);
+        --font-mono: var(--eds-font-mono);
+        --font-calibre: var(--eds-font-calibre);
+        --font-financier: var(--eds-font-financier);
+    }
+
+    /* 1. Global Typography */
+    body {
+        font-family: var(--font-serif);
+        font-size: 1.6rem;
+        color: #1A1A1A;
+        background-color: #FFFFFF;
+        line-height: 1.6;
+        letter-spacing: -0.01em;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    /* 2. Headings */
+    h1,
+    h2,
+    h3 {
+        font-family: var(--font-serif);
+        font-weight: 400;
+        color: var(--color-primary-1);
+        letter-spacing: 0.06em;
+        line-height: 1.2;
+    }
+
+    h4,
+    h5,
+    h6 {
+        font-family: var(--font-sans);
+        font-weight: 600;
+        color: var(--color-primary-1);
+        letter-spacing: 0.03em;
+        line-height: 1.4;
+    }
+
+    /* 3. Links */
+    a {
+        transition: color var(--eds-transition-default);
+        cursor: pointer;
+    }
+
+    a:hover {
+        color: var(--color-primary-2);
+    }
+}
+
+@layer components {
+
+    /* === Typography Utilities === */
+    .cbre-text-hero {
+        font-family: var(--font-serif);
+        font-size: 4.6rem;
+        line-height: 1.1;
+        letter-spacing: 0.02em;
+        color: var(--color-primary-1);
+    }
+
+    @media (min-width: 768px) {
+        .cbre-text-hero {
+            font-size: 6.0rem;
+        }
+    }
+
+    .cbre-text-h1 {
+        font-family: var(--font-serif);
+        font-size: 3.2rem;
+        line-height: 1.2;
+        letter-spacing: 0.02em;
+        color: var(--color-primary-1);
+    }
+
+    @media (min-width: 768px) {
+        .cbre-text-h1 {
+            font-size: 4.6rem;
+        }
+    }
+
+    .cbre-text-h2 {
+        font-family: var(--font-serif);
+        font-size: 2.4rem;
+        line-height: 1.3;
+        color: var(--color-primary-1);
+    }
+
+    @media (min-width: 768px) {
+        .cbre-text-h2 {
+            font-size: 3.2rem;
+        }
+    }
+
+    .cbre-text-h3 {
+        font-family: var(--font-serif);
+        letter-spacing: 0.05em;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        color: var(--color-primary-1);
+    }
+
+    .cbre-text-body-large {
+        font-family: var(--font-serif);
+        font-size: 1.8rem;
+        line-height: 1.6;
+        letter-spacing: 0.02em;
+        color: #1A1A1A;
+    }
+
+    .cbre-text-body {
+        font-family: var(--font-serif);
+        font-size: 1.6rem;
+        line-height: 1.6;
+        color: #1A1A1A;
+    }
+
+    .cbre-text-meta {
+        font-family: var(--font-sans);
+        font-size: 1.4rem;
+        color: var(--color-primary-5);
+    }
+
+    .cbre-text-label {
+        font-family: var(--font-sans);
+        font-size: 1.4rem;
+        font-weight: 600;
+        font-family: var(--font-sans);
+        margin: 0;
+        padding: 0;
+        box-sizing: inherit;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        text-decoration: none !important;
+        font-size: 1.8rem;
+        font-weight: 500;
+        letter-spacing: -0.02em;
+        padding-inline-start: 48px;
+        transition: all .4s cubic-bezier(0.75, 0.02, 0.5, 1);
+        position: relative;
+        display: inline-block;
+        color: var(--color-primary-1);
+    }
+
+    /* === Buttons: CBRE Style (Renamed to cbre-btn-*) === */
+    .cbre-btn-primary {
+        @apply inline-flex items-center justify-center px-8 py-4 bg-[var(--color-primary-1)] text-white font-semibold text-sm uppercase tracking-wider border border-[var(--color-primary-1)] transition-all duration-300 shadow-sm rounded-none;
+        font-family: var(--font-sans);
+    }
+
+    .cbre-btn-primary:hover {
+        @apply bg-[var(--color-primary-2)] border-[var(--color-primary-2)] shadow-md;
+    }
+
+    .cbre-btn-secondary {
+        @apply inline-flex items-center justify-center px-8 py-4 bg-transparent text-[var(--color-primary-1)] font-semibold text-sm uppercase tracking-wider border-2 border-[var(--color-primary-1)] transition-all duration-300 rounded-none;
+        color: var(--color-primary-1) !important;
+        font-family: var(--font-sans);
+    }
+
+    .cbre-btn-secondary:hover {
+        @apply bg-[var(--color-primary-1)] text-white;
+        color: white !important;
+    }
+
+    .cbre-btn-brief {
+        @apply inline-flex items-center justify-center px-8 py-4 bg-[var(--color-primary-1)] text-white font-semibold text-sm uppercase tracking-wider border border-[var(--color-primary-1)] transition-all duration-300 shadow-sm rounded-none;
+        font-family: var(--font-sans);
+    }
+
+    .cbre-btn-brief:hover {
+        @apply bg-[var(--color-primary-2)] border-[var(--color-primary-2)] shadow-md transform -translate-y-0.5;
+    }
+
+    /* === CBRE Animated Arrow Link (Renamed from cbre-link-cta) === */
+    .cbre-link-animated-arrow {
+        -webkit-text-size-adjust: none;
+        line-height: initial;
+        font-family: var(--font-sans);
+        margin: 0;
+        padding: 0;
+        box-sizing: inherit;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        text-decoration: none !important;
+        font-size: 1.8rem;
+        font-weight: 500;
+        letter-spacing: -0.02em;
+        padding-inline-start: 48px;
+        transition: all .4s cubic-bezier(0.75, 0.02, 0.5, 1);
+        position: relative;
+        display: inline-block;
+        color: var(--color-primary-1);
+    }
+
+    .cbre-link-animated-arrow::before {
+        content: "";
+        position: absolute;
+        display: inline-block;
+        background-color: var(--color-primary-2);
+        transition: all 400ms cubic-bezier(0.75, 0.02, 0.5, 1);
+        inset-block-start: 0.6em;
+        inset-inline-start: 0;
+        width: 40px;
+        height: 2px;
+    }
+
+    .cbre-link-animated-arrow::after {
+        content: "";
+        position: absolute;
+        display: inline-block;
+        background-repeat: no-repeat;
+        background-position: right center;
+        transition: all 400ms cubic-bezier(0.75, 0.02, 0.5, 1);
+        inset-block-start: 0.15em;
+        inset-inline-end: -0.5em;
+        width: 0;
+        height: 18px;
+        background-size: 42px;
+        background-image: url("data:image/svg+xml,%3Csvg width='42' height='18' viewBox='0 0 42 18' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0.810791 8.67636L40.1891 8.67636M40.1891 8.67636L33.3612 0.892578M40.1891 8.67636L33.3612 16.4601' stroke='%2317E88F' stroke-width='2'/%3E%3C/svg%3E");
+    }
+
+    .cbre-link-animated-arrow:hover {
+        padding-inline-start: 0;
+        padding-inline-end: 48px;
+    }
+
+    .cbre-link-animated-arrow:hover::before {
+        width: 0;
+    }
+
+    .cbre-link-animated-arrow:hover::after {
+        inset-inline-end: 0;
+        width: 42px;
+    }
+
+    /* === Large Serif Link (Renamed from cbre-link-zone2) === */
+    .cbre-link-large-serif {
+        @apply block text-[var(--color-primary-4)] cursor-pointer transition-colors duration-300;
+        font-family: var(--font-serif);
+        font-size: 1.8rem;
+        line-height: 28px;
+    }
+
+    @media (min-width: 768px) {
+        .cbre-link-large-serif {
+            font-size: 3.2rem;
+            line-height: 36px;
+        }
+    }
+
+    .cbre-link-large-serif:hover {
+        @apply text-[var(--color-primary-2)] underline decoration-2 underline-offset-4;
+    }
+
+    /* === Underline Slide Link (Renamed from cbre-link-card) === */
+    .cbre-link-underline-slide {
+        @apply block font-bold text-[var(--color-primary-3)] transition-all duration-200;
+        font-family: var(--font-sans);
+        font-size: 1.5rem;
+        line-height: 1.2;
+        text-decoration: underline solid rgba(0, 0, 0, 0);
+        text-underline-offset: 3px;
+        text-decoration-thickness: 2px;
+        text-decoration-color: transparent;
+    }
+
+    .cbre-link-underline-slide:hover {
+        text-decoration-color: var(--color-primary-2);
+        color: var(--color-primary-2);
+    }
+
+    /* === Fade Arrow Link (Renamed from cbre-link-arrow) === */
+    .cbre-link-fade-arrow {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        font-family: var(--font-sans);
+        font-weight: 600;
+        color: var(--color-primary-1);
+        padding-top: 4px;
+        transition: color 0.25s cubic-bezier(0.75, 0.02, 0.5, 1);
+    }
+
+    .cbre-link-fade-arrow::before {
+        content: "";
+        display: block;
+        position: absolute;
+        inset-block-start: 0;
+        inset-inline-start: 0;
+        width: 100%;
+        height: 1px;
+        background: var(--color-primary-1);
+        opacity: 0;
+        transition: opacity 0.25s cubic-bezier(0.75, 0.02, 0.5, 1);
+    }
+
+    .cbre-link-fade-arrow::after {
+        content: "";
+        display: inline-block;
+        width: 8px;
+        height: 14px;
+        margin-left: 8px;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='14' viewBox='0 0 8 14' fill='none' stroke='%23003f2d'%3E%3Cpath d='M1 1L7 7L1 13' /%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+    .cbre-link-fade-arrow:hover {
+        color: var(--color-primary-2);
+    }
+
+    .cbre-link-fade-arrow:hover::before {
+        opacity: 1;
+        background: var(--color-primary-2);
+    }
+
+    .cbre-link-fade-arrow:hover::after {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='14' viewBox='0 0 8 14' fill='none' stroke='%2317E88F'%3E%3Cpath d='M1 1L7 7L1 13' /%3E%3C/svg%3E");
+    }
+
+    /* === Generic Link Style === */
+    a:not([class]) {
+        @apply text-[var(--color-primary-1)] font-semibold hover:underline underline-offset-4 decoration-2 transition-all;
+    }
+
+    a:not([class]):hover {
+        @apply text-[var(--color-primary-2)];
+    }
+
+    /* === Image Hover Effect (Renamed to cbre-image-*) === */
+    .cbre-image-wrapper {
+        @apply relative overflow-hidden block;
+    }
+
+    .cbre-image {
+        @apply w-full h-full object-cover transition-transform duration-500 ease-out;
+    }
+
+    .cbre-image-wrapper:hover .cbre-image {
+        @apply scale-105;
+    }
+
+    .cbre-image-overlay {
+        @apply absolute inset-0 bg-black opacity-0 transition-opacity duration-300;
+    }
+
+    .cbre-image-wrapper:hover .cbre-image-overlay {
+        @apply opacity-20;
+    }
+
+    /* === Form Inputs (Renamed to cbre-input) === */
+    .cbre-input {
+        @apply w-full px-4 py-3 border border-gray-300 bg-white text-[var(--color-primary-4)] focus:outline-none focus:border-[var(--color-primary-1)] focus:ring-1 focus:ring-[var(--color-primary-1)] disabled:bg-gray-100 disabled:text-gray-500 placeholder-gray-400 rounded-none transition-colors;
+        font-family: var(--font-sans);
+    }
+
+    /* === Cards (Renamed to cbre-card) === */
+    .cbre-card {
+        @apply bg-white border border-[var(--color-primary-5)] p-6 hover:shadow-xl transition-shadow duration-300 rounded-none;
+    }
+
+    /* === Utility Classes (Renamed to cbre-font-*) === */
+    .cbre-font-calibre {
+        font-family: var(--font-calibre);
+    }
+
+    .cbre-font-financier {
+        font-family: var(--font-financier);
+    }
+
+    .cbre-font-mono {
+        font-family: var(--font-mono);
+    }
+
+    /* === Global Monospace === */
+    code,
+    pre,
+    kbd,
+    samp {
+        font-family: var(--font-mono);
+        font-size: 0.9em;
+    }
+}

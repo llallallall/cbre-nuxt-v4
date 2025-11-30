@@ -1,0 +1,104 @@
+/* Admin Layout Background Slideshow */
+.cb-slideshow,
+.cb-slideshow:after {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    z-index: 0;
+}
+
+.cb-slideshow:after {
+    content: '';
+    background: transparent url('/assets/images/background/admin/pattern.png') repeat top left;
+    backdrop-filter: brightness(40%) opacity(80%);
+}
+
+.cb-slideshow li span {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-size: cover;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    opacity: 0;
+    z-index: 0;
+    backface-visibility: hidden;
+    animation: imageAnimation 120s linear infinite 0s;
+}
+
+.cb-slideshow li:nth-child(1) span {
+    background-image: url('/assets/images/background/admin/2023-asia-pacific-real-estate-market-outlook-mid-year-review_2736x1824.webp');
+}
+
+.cb-slideshow li:nth-child(2) span {
+    background-image: url('/assets/images/background/admin/cbre-korea-office-hero-2760x828.webp');
+    animation-delay: 20s;
+}
+
+.cb-slideshow li:nth-child(3) span {
+    background-image: url('/assets/images/background/admin/investor-relations-module-1664x936.webp');
+    animation-delay: 40s;
+}
+
+.cb-slideshow li:nth-child(4) span {
+    background-image: url('/assets/images/background/admin/korea-report-live-work-shop-2023-2736x1824.webp');
+    animation-delay: 60s;
+}
+
+.cb-slideshow li:nth-child(5) span {
+    background-image: url('/assets/images/background/admin/understanding-korea-real-estate-liquidity-flows-and-cap-rates-2736x1824.webp');
+    animation-delay: 80s;
+}
+
+.cb-slideshow li:nth-child(6) span {
+    background-image: url('/assets/images/background/admin/why-apac-offices-are-different-and-now-is-the-time-to-invest-2736x1824.webp');
+    animation-delay: 100s;
+}
+
+@keyframes imageAnimation {
+    0% {
+        opacity: 0;
+        animation-timing-function: ease-in;
+    }
+
+    8% {
+        opacity: 1;
+        transform: scale(1.05);
+        animation-timing-function: ease-out;
+    }
+
+    17% {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+
+    22% {
+        opacity: 0;
+        transform: scale(1.1) translateY(-20%);
+    }
+
+    25% {
+        opacity: 0;
+        transform: scale(1.1) translateY(-100%);
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@media screen and (max-width: 1140px) {
+    .cb-slideshow li div h3 {
+        font-size: 100px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .cb-slideshow li div h3 {
+        font-size: 50px;
+    }
+}
