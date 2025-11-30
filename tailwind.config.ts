@@ -14,6 +14,10 @@ export default <Config>{
         './nuxt.config.{js,ts}',
     ],
     theme: {
+        container: {
+            center: true,
+            padding: '1.5rem',
+        },
         extend: {
             // CBRE 브랜드 컬러 팔레트 정의 (여기 정의된 이름이 클래스가 됨)
             colors: {
@@ -25,18 +29,16 @@ export default <Config>{
                     300: '#9EB1AA',
                     400: '#54776B',
                     500: '#003F2D', // Main Brand Color
-                    condensed: ['"Barlow Condensed"', 'Arial Narrow', 'sans-serif'],
                 },
-                // 컨테이너 중앙 정렬
-                container: {
-                    center: true,
-                    padding: '1.5rem',
-                },
-                // 각진 모서리
-                borderRadius: {
-                    'cbre': '0px',
-                }
             },
+            fontFamily: {
+                condensed: ['"Barlow Condensed"', 'Arial Narrow', 'sans-serif'],
+            },
+            // 각진 모서리
+            borderRadius: {
+                'cbre': '0px',
+            }
         },
-        plugins: [],
-    }
+    },
+    plugins: [],
+}

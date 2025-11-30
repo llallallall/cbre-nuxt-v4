@@ -10,24 +10,10 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
 
-  modules: [
-    // 보안 모듈 (가장 먼저 로드 권장)
-    'nuxt-security',
-    '@vueuse/nuxt',
-    '@nuxt/icon',
-    '@nuxt/image',
-    // 인증 모듈 (Lightweight)
-    '@nuxt/eslint',
-    'nuxt-auth-utils',
-    // 'nuxt-mapbox',
-    '@nuxt/fonts',
-    "@nuxt/ui",
-    "@formkit/auto-animate",
-    "@nuxtjs/device",
-    "@nuxt/scripts",
-    "@nuxtjs/i18n",
-    "@pinia/nuxt"
-  ],
+  modules: [// 보안 모듈 (가장 먼저 로드 권장)
+    'nuxt-security', '@vueuse/nuxt', '@nuxt/icon', '@nuxt/image', // 인증 모듈 (Lightweight)
+    '@nuxt/eslint', 'nuxt-auth-utils', // 'nuxt-mapbox',
+    '@nuxt/fonts', "@nuxt/ui", "@nuxtjs/device", "@nuxt/scripts", "@nuxtjs/i18n", "@pinia/nuxt", 'nuxt-mapbox'],
 
   // [다국어] i18n 설정 추가
   i18n: {
@@ -91,6 +77,28 @@ export default defineNuxtConfig({
       interval: 'minute',
       throwError: false, // 사용자 경험을 위해 에러 대신 경고 (운영 시 true 고려)
     }
+  },
+
+  // 런타임 환경 변수 
+  runtimeConfig: {
+    MINIO_SERVER_URL: process.env.MINIO_SERVER_URL,
+    MINIO_SERVER_PORT: Number(process.env.MINIO_SERVER_PORT) || 9000,
+    MINIO_ACCESS_KEY: process.env.MINIO_ACCESS_KEY,
+    MINIO_SECRET_KEY: process.env.MINIO_SECRET_KEY,
+
+    githubClientSecret: process.env.GITHUB_CLIENT_SECRET,
+    authSecret: process.env.AUTH_SECRET,
+
+    public: {
+      githubClientID: process.env.GITHUB_CLIENT_ID,
+      googleApiToken: process.env.GOOGLE_API_TOKEN,
+      kakaoLocalApiToken: process.env.KAKAO_LOCAL_API_TOKEN,
+      minioUrl: process.env.NUXT_PUBLIC_MINIO_URL,
+    },
+  },
+
+  mapbox: {
+    accessToken: process.env.NUXT_PUBLIC_MAPBOX_ACCESS_TOKEN || process.env.MAPBOX_ACCESS_TOKEN || '',
   },
 
   // Tailwind CSS가 이 파일을 엔트리로 사용합니다.
