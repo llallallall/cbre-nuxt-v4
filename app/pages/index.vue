@@ -33,10 +33,10 @@ const quickLinks = [
         <!-- Hero Section -->
         <section class="text-center space-y-4">
             <h1 class="cbre-text-h1 font-serif text-cbre-green-500">
-                샷다 mouse
+                학씨
             </h1>
             <h2 class="cbre-text-h2 font-serif text-cbre-green-500">
-                말이 씨가되
+                이쁘냐?
             </h2>
             <h3 class="cbre-text-h3 font-serif text-cbre-green-500">
                 CBRE Property Management System
