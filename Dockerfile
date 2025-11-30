@@ -6,9 +6,8 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 
-# 소스 복사 및 Prisma 클라이언트 생성
+# 소스 복사 (Drizzle은 별도 생성 과정 불필요)
 COPY . .
-RUN npx prisma generate
 
 # Nuxt 빌드
 RUN npm run build
