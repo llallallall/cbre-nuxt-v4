@@ -1,3 +1,9 @@
+<template>
+    <div id="PageLayout" class="bg-gray-100 min-h-screen">
+        <div class="fixed top-0 left-0 w-full h-[80px] bg-white z-50 flex items-center justify-between px-4 shadow-sm">
+            <div class="flex items-center">
+                <div class="w-[150px]">
+                    <IconCBRELogo class="text-cbre-green" />
                 </div>
                 <div class="ml-[10px] h-[30px] pt-[8px]">
                     <span v-if="isDesktop" class="whitespace-nowrap">{{ $t('app_title') }}</span>

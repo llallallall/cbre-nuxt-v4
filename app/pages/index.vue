@@ -1,6 +1,6 @@
 <script setup lang="ts">
 definePageMeta({
-    layout: 'page-layout'
+    layout: 'default'
 })
 
 const quickLinks = [
@@ -33,7 +33,13 @@ const quickLinks = [
         <!-- Hero Section -->
         <section class="text-center space-y-4">
             <h1 class="text-5xl font-serif text-cbre-green-500">
-                CBRE Asset Management System
+                샷다 mouse
+            </h1>
+            <h1 class="text-5xl font-serif text-cbre-green-500">
+                말이 씨가되
+            </h1>
+            <h1 class="text-5xl font-serif text-cbre-green-500">
+                CBRE Property Management System
             </h1>
             <p class="text-xl text-gray-600 max-w-2xl mx-auto font-sans">
                 Next-generation platform for visualizing and managing real estate properties with precision and ease.
