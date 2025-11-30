@@ -1,6 +1,6 @@
 // types/map.type.ts
 
-import type { MapDefaultOptionsType } from '~/app/context/mapData';
+import type { MapDefaultOptionsType } from '../context/mapData';
 
 /**
  * @description 지도상의 핀 좌표 및 줌 레벨 정의

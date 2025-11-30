@@ -1,4 +1,4 @@
-import { pgTable, uniqueIndex, foreignKey, text, timestamp, varchar, boolean, doublePrecision, integer, pgEnum } from "drizzle-orm/pg-core"
+﻿import { pgTable, uniqueIndex, foreignKey, text, timestamp, varchar, boolean, doublePrecision, integer, pgEnum } from "drizzle-orm/pg-core"
 import { sql } from "drizzle-orm"
 import { relations } from "drizzle-orm/relations";
 
@@ -493,25 +493,6 @@ export const floorPartial = pgTable("FloorPartial", {
 
 
 
-export const sessionRelations = relations(session, ({ one }) => ({
-  user: one(user, {
-    fields: [session.userId],
-    references: [user.id]
-  }),
-}));
-
-export const userRelations = relations(user, ({ many }) => ({
-  sessions: many(session),
-  profiles: many(profile),
-  accounts: many(account),
-}));
-
-export const profileRelations = relations(profile, ({ one }) => ({
-  user: one(user, {
-    fields: [profile.userId],
-    references: [user.id]
-  }),
-}));
 
 export const propertyRelations = relations(property, ({ one, many }) => ({
   sector: one(sector, {
@@ -522,23 +503,18 @@ export const propertyRelations = relations(property, ({ one, many }) => ({
     fields: [property.subsectorId],
     references: [subSector.id]
   }),
-  locations: many(location),
-  scales: many(scale),
-  accessibilities: many(accessibility),
-  profitabilities: many(profitability),
+  location: one(location),
+  scale: one(scale),
+  facility: one(facility),
+  accessibility: one(accessibility),
+  profitability: one(profitability),
   warehouses: many(warehouse),
-  facilities: many(facility),
   histories: many(history),
   floors: many(floor),
   propertyImageFiles: many(propertyImageFile),
   propertyBrochureFiles: many(propertyBrochureFile),
   floorPlanFiles: many(floorPlanFile),
   transactions: many(transaction),
-}));
-
-export const sectorRelations = relations(sector, ({ many }) => ({
-  properties: many(property),
-  subSectors: many(subSector),
 }));
 
 export const subSectorRelations = relations(subSector, ({ one, many }) => ({
@@ -663,3 +639,17 @@ export const floorPartialRelations = relations(floorPartial, ({ one }) => ({
     references: [floor.id]
   }),
 }));
+
+export const userRelations = relations(user, ({ one, many }) => ({
+  profile: one(profile),
+  accounts: many(account),
+  sessions: many(session),
+}));
+
+export const profileRelations = relations(profile, ({ one }) => ({
+  user: one(user, {
+    fields: [profile.userId],
+    references: [user.id]
+  }),
+}));
+

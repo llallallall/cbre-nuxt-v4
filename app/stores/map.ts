@@ -3,8 +3,8 @@
 import { defineStore } from 'pinia';
 import { usePropertyStore } from './property';
 // 💡 분리된 상수와 타입 Import
-import { MapDefaultOptions } from '~/app/context/mapData';
-import type { MapState, Coordinate } from '~/app/types/map.type';
+import { MapDefaultOptions } from '../context/mapData';
+import type { MapState, Coordinate } from '../types/map.type';
 
 // ----------------------------------------------------------------------
 // 1. 초기 상태 정의

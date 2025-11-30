@@ -118,8 +118,8 @@ const goNext = () => {
 }
 
 const handleLogout = async () => {
-    // await clear(); // Commented out for safety
-    // navigateTo('/login');
-    console.log('Logout clicked - Logic commented out for safety');
+    await clear();
+    navigateTo('/login');
+    // console.log('Logout clicked - Logic commented out for safety');
 };
 </script>

@@ -1,11 +1,7 @@
-// stores/user.ts
+// app/stores/user.ts
 
 import { defineStore } from 'pinia'
-// useAuth 컴포저블 임포트 (nuxt-auth-utils는 auto-import 되므로 useUserSession 사용)
-// import { useAuth } from '#imports'
-// 정의된 타입 임포트
-import type { ProfileType, UserType } from '~/app/types/user.type'
-
+import type { ProfileType, UserType } from '../types/user.type'
 
 // =========================================================================
 // 1. 상태(State) 정의
@@ -109,7 +105,7 @@ export const useUserStore = defineStore('user', {
          * @description 인증 상태를 확인하고, DB에서 상세 Profile 정보를 가져와 Store 상태를 갱신합니다.
          */
         async getUser() {
-            const { loggedIn, user } = useUserSession()
+            const { user, loggedIn } = useUserSession()
 
             // 1. 로그인 상태 확인
             if (!loggedIn.value || !user.value) {
@@ -120,14 +116,13 @@ export const useUserStore = defineStore('user', {
             }
 
             try {
-                const userSession = user.value
-
                 // 2. 인증 상태는 확인했으니 isLogin을 true로 설정
                 this.isLogin = true
 
                 // 3. API를 통해 DB에 저장된 상세 Profile 정보를 가져옵니다.
                 const apiResponse = await $fetch<UserType>('/api/user/profile', {
-                    method: 'GET'
+                    method: 'GET',
+                    query: { id: user.value.id }
                 })
 
                 if (apiResponse) {
@@ -151,9 +146,9 @@ export const useUserStore = defineStore('user', {
 
                     if (dbImageUrl) {
                         this.userImage = dbImageUrl
-                    } else if (userSession.image) {
+                    } else if (user.value.image) {
                         // 세션의 image 필드(OAuth 이미지 등)는 접근 가능
-                        this.userImage = userSession.image
+                        this.userImage = user.value.image
                     } else {
                         this.userImage = '/images/avatar/avatar-placeholder.png'
                     }

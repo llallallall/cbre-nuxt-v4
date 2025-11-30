@@ -1,6 +1,6 @@
 // /types/user.type.ts
 
-import type { SessionProfile } from '~/app/types/auth.d';
+import type { SessionProfile } from './auth.d';
 
 // ----------------------------------------------------------------------
 // --- 1. 기본 API 응답 및 Input 타입 ---

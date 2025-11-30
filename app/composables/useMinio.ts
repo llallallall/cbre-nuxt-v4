@@ -66,7 +66,24 @@ export const useMinio = () => {
         }
     };
 
+    const deleteFile = async (fileKey: string) => {
+        try {
+            const { data, error } = await useFetch('/api/upload/minioFileUploader', {
+                method: 'DELETE',
+                body: { fileKey }
+            });
+
+            if (error.value) throw new Error(error.value.statusMessage || 'Delete failed');
+            return { status: 'success', result: data.value };
+        } catch (e: any) {
+            console.error('MinIO Delete Error:', e);
+            toast.add({ title: 'Failed to delete file', color: 'error', icon: 'i-heroicons-exclamation-circle' });
+            return { status: 'error', result: e.message };
+        }
+    };
+
     return {
-        uploadFile
+        uploadFile,
+        deleteFile
     };
 };

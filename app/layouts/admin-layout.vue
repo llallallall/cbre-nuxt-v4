@@ -72,11 +72,15 @@
             class="absolute top-[80px] left-0 w-full h-[calc(100%-80px)] z-10 overflow-y-hidden bg-transparent">
             <slot />
         </div>
+
+        <!-- Global Modals -->
+        <ViewerModal />
     </div>
 </template>
 
 <script setup lang="ts">
 import { computed, ref } from 'vue';
+import ViewerModal from '~/components/modal/ViewerModal.vue';
 
 // Modules
 const { t } = useI18n();
@@ -94,6 +98,7 @@ interface NavItem {
     link: string;
     roles: RoleEnum[];
     icon: string;
+    click?: () => void;
 }
 
 // Navigation Items
@@ -147,9 +152,9 @@ const userDropdownItems = computed(() => [
 
 // Actions
 const handleLogout = async () => {
-    // await clear(); // Commented out to prevent errors if auth is not fully set up
-    // navigateTo('/login');
-    console.log('Logout clicked - Logic commented out for safety');
+    await clear();
+    navigateTo('/login');
+    // console.log('Logout clicked - Logic commented out for safety');
 };
 </script>
 

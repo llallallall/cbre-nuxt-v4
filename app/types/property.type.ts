@@ -439,47 +439,47 @@ export interface LeaseCreatePayload {
 
     // Lease 상세 정보 (LeaseType에서 id, dates 등을 제외하거나 재정의)
     leaseType: LeaseTypeEnum; // 'ASKING' | 'ACTUAL'
-    floor: string | null;
-    unit: string | null;
-    tenant: string | null;
+    floor?: string | null;
+    unit?: string | null;
+    tenant?: string | null;
 
-    leaseStartDate: string | Date | null;
-    leaseEndDate: string | Date | null;
+    leaseStartDate?: string | Date | null;
+    leaseEndDate?: string | Date | null;
 
-    gfaSqm: number | null;
-    gfaPy: number | null;
-    nfaSqm: number | null;
-    nfaPy: number | null;
-    effRatio: number | null;
+    gfaSqm?: number | null;
+    gfaPy?: number | null;
+    nfaSqm?: number | null;
+    nfaPy?: number | null;
+    effRatio?: number | null;
 
-    monthlyRent: number | null;
-    monthlyCamf: number | null;
-    deposit: number | null;
+    monthlyRent?: number | null;
+    monthlyCamf?: number | null;
+    deposit?: number | null;
 
-    rentMonthlyPy: number | null;
-    camfMonthlyPy: number | null;
-    depositPy: number | null;
+    rentMonthlyPy?: number | null;
+    camfMonthlyPy?: number | null;
+    depositPy?: number | null;
 
-    iod: number | null;
-    gdm: number | null;
-    noc: number | null;
+    iod?: number | null;
+    gdm?: number | null;
+    noc?: number | null;
 
-    leaseTermYear: number | null;
-    rentFreeType: RentFreeTypeEnum | null; // 'PerYear' | 'PerTerm'
-    rentFreeMonth: number | null;
-    effectiveNoc: number | null;
-    fitOut: number | null;
+    leaseTermYear?: number | null;
+    rentFreeType?: RentFreeTypeEnum | null; // 'PerYear' | 'PerTerm'
+    rentFreeMonth?: number | null;
+    effectiveNoc?: number | null;
+    fitOut?: number | null;
 
-    tiAmountKrw: number | null;
-    tiAmountNfaPy: number | null;
+    tiAmountKrw?: number | null;
+    tiAmountNfaPy?: number | null;
 
-    totalFreeRentPeriodMonth: number | null;
-    totalOccupyingPeriodYear: number | null;
-    totalFreeRentOccupyingYear: number | null;
+    totalFreeRentPeriodMonth?: number | null;
+    totalOccupyingPeriodYear?: number | null;
+    totalFreeRentOccupyingYear?: number | null;
 
-    monthlyCashSupportGfa: number | null;
-    allInEffectiveRentMonthlyPy: number | null;
-    allInNoc: number | null;
+    monthlyCashSupportGfa?: number | null;
+    allInEffectiveRentMonthlyPy?: number | null;
+    allInNoc?: number | null;
 }
 
 
@@ -494,16 +494,16 @@ export interface SaleCreatePayload {
 
     // Sale 상세 정보
     saleType: SaleTypeEnum; // 'ENBLOC' | 'PARTIAL'
-    gfaSqm: number | null;
-    nfaSqm: number | null;
-    priceKrw: number | null;
-    pricePerGfa: number | null;
-    pricePerNfa: number | null;
-    estCapRate: number | null;
-    estDiscountRate: number | null;
-    buyer: string | null;
-    seller: string | null;
-    remarks: string | null;
+    gfaSqm?: number | null;
+    nfaSqm?: number | null;
+    priceKrw?: number | null;
+    pricePerGfa?: number | null;
+    pricePerNfa?: number | null;
+    estCapRate?: number | null;
+    estDiscountRate?: number | null;
+    buyer?: string | null;
+    seller?: string | null;
+    remarks?: string | null;
 }
 
 // ----------------------------------------------------------------------

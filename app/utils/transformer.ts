@@ -1,6 +1,6 @@
 // utils/transformer.ts
 
-import type { PropertyType } from '~/app/types/property.type';
+import type { PropertyType } from '../types/property.type';
 
 /**
  * @description 문자열, null, undefined 값을 받아 Date 객체 또는 null로 변환합니다.

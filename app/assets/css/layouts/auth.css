@@ -38,22 +38,22 @@
 }
 
 .bg-image-01 {
-    background-image: url('/assets/images/background/global-mid-year-outlook.jpg');
+    background-image: url('~/assets/images/background/global-mid-year-outlook.jpg');
     animation-delay: 0s;
 }
 
 .bg-image-02 {
-    background-image: url('/assets/images/background/zero_ph2_dataviz_homepage_2736x1824px_1110.jpg');
+    background-image: url('~/assets/images/background/zero_ph2_dataviz_homepage_2736x1824px_1110.jpg');
     animation-delay: 4s;
 }
 
 .bg-image-03 {
-    background-image: url('/assets/images/background/cr_carousel_2736x1824_brighter_2.jpg');
+    background-image: url('~/assets/images/background/cr_carousel_2736x1824_brighter_2.jpg');
     animation-delay: 8s;
 }
 
 .bg-image-04 {
-    background-image: url('/assets/images/background/tech-talent-2023.jpg');
+    background-image: url('~/assets/images/background/tech-talent-2023.jpg');
     animation-delay: 12s;
 }
 
