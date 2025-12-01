@@ -1,7 +1,7 @@
-// context/mapData.ts
+// app/context/mapData.ts
 
 export const mapStyleId: string = 'light-v11';
-// export const mapAccessToken: string = process.env.MAPBOX_ACCESS_TOKEN as string; // nuxt.config.ts에서 관리 권장
+// export const mapAccessToken: string = process.env.MAPBOX_ACCESS_TOKEN as string; // Managed in nuxt.config.ts
 
 export const mapCenter: [number, number] = [127.442, 35.787];
 export const mapZoom: number = 6.4;
@@ -239,5 +239,4 @@ export const MapDefaultOptions = {
     MapBearing: 0,
 };
 
-// 💡 [Export] Store에서 사용할 타입
 export type MapDefaultOptionsType = typeof MapDefaultOptions;

@@ -1,7 +1,9 @@
 // app/composables/useMinio.ts
 
+import { useAppToast } from '~/composables/useAppToast';
+
 export const useMinio = () => {
-    const toast = useToast();
+    const { showToast } = useAppToast();
 
     const uploadFile = async (file: File, uuid: string) => {
         const ext = file.name.split('.').pop()?.toLowerCase() || '';
@@ -16,7 +18,7 @@ export const useMinio = () => {
             originalFormData.append('fileKey', originalKey);
             originalFormData.append('uuid', uuid);
 
-            const { data: orgData, error: orgError } = await useFetch('/api/upload/minioFileUploader', {
+            const { data: orgData, error: orgError } = await useFetch('/api/file/minioFileUploader', {
                 method: 'POST',
                 body: originalFormData,
             });
@@ -44,7 +46,7 @@ export const useMinio = () => {
                     thumbFormData.append('fileKey', thumbKey);
                     thumbFormData.append('uuid', uuid);
 
-                    await useFetch('/api/upload/minioFileUploader', {
+                    await useFetch('/api/file/minioFileUploader', {
                         method: 'POST',
                         body: thumbFormData,
                     });
@@ -61,14 +63,14 @@ export const useMinio = () => {
 
         } catch (e: any) {
             console.error('MinIO Upload Error:', e);
-            toast.add({ title: `Failed to upload ${file.name}`, color: 'error', icon: 'i-heroicons-exclamation-circle' });
+            showToast(`Failed to upload ${file.name}`, 'danger');
             return null;
         }
     };
 
     const deleteFile = async (fileKey: string) => {
         try {
-            const { data, error } = await useFetch('/api/upload/minioFileUploader', {
+            const { data, error } = await useFetch('/api/file/minioFileUploader', {
                 method: 'DELETE',
                 body: { fileKey }
             });
@@ -77,7 +79,7 @@ export const useMinio = () => {
             return { status: 'success', result: data.value };
         } catch (e: any) {
             console.error('MinIO Delete Error:', e);
-            toast.add({ title: 'Failed to delete file', color: 'error', icon: 'i-heroicons-exclamation-circle' });
+            showToast('Failed to delete file', 'danger');
             return { status: 'error', result: e.message };
         }
     };

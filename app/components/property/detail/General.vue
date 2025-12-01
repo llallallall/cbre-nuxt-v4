@@ -1,70 +1,59 @@
 <template>
-        <div class="relative font-financier text-2xl text-primary">
-                General Infomation</div>
-
+        <div class="relative font-financier text-2xl text-cbre-green mb-4">
+                General Information
+        </div>
 
         <ul
-                class="relative cbre_bulletList font-calibreLight text-lg text-primary grid grid-cols-1 md:grid-cols-2 gap-4">
+                class="relative cbre_bulletList font-calibreLight text-lg text-cbre-green grid grid-cols-1 md:grid-cols-2 gap-4">
 
                 <li v-if="profitability?.grade" class="flex items-center">
-                        <UIcon name="i-heroicons-minus" class="w-[18px] mr-1" />
+                        <UIcon name="i-heroicons-minus" class="w-4 h-4 mr-1 text-cbre-green" />
                         <div class="w-[130px] whitespace-nowrap text-right mr-4 font-calibre">
                                 Grade :
                         </div>
                         <div class="flex-1">
-                                {{
-                                        profitability?.grade
-                                }}
+                                {{ profitability?.grade }}
                         </div>
                 </li>
                 <li v-if="profitability?.effectiveRatio" class="flex items-center">
-                        <UIcon name="i-heroicons-minus" class="w-[18px] mr-1" />
+                        <UIcon name="i-heroicons-minus" class="w-4 h-4 mr-1 text-cbre-green" />
                         <div class="w-[130px] whitespace-nowrap text-right mr-4 font-calibre">
                                 Effective Ratio :
                         </div>
                         <div class="flex-1">
-                                {{
-                                        profitability?.effectiveRatio
-                                }} %
+                                {{ profitability?.effectiveRatio }} %
                         </div>
                 </li>
                 <li v-if="scale?.noOfBuildings" class="flex items-center">
-                        <UIcon name="i-heroicons-minus" class="w-[18px] mr-1" />
+                        <UIcon name="i-heroicons-minus" class="w-4 h-4 mr-1 text-cbre-green" />
                         <div class="w-[130px] whitespace-nowrap text-right mr-4 font-calibre">
                                 No. of Buildings :
                         </div>
                         <div class="flex-1">
-                                {{
-                                        scale?.noOfBuildings
-                                }}
+                                {{ scale?.noOfBuildings }}
                         </div>
                 </li>
                 <li v-if="sector?.name" class="flex items-center">
-                        <UIcon name="i-heroicons-minus" class="w-[18px] mr-1" />
+                        <UIcon name="i-heroicons-minus" class="w-4 h-4 mr-1 text-cbre-green" />
                         <div class="w-[130px] whitespace-nowrap text-right mr-4 font-calibre">
                                 Sector :
                         </div>
                         <div class="flex-1">
-                                {{
-                                        sector?.name
-                                }}
+                                {{ sector?.name }}
                         </div>
                 </li>
                 <li v-if="subsector?.name" class="flex items-center">
-                        <UIcon name="i-heroicons-minus" class="w-[18px] mr-1" />
+                        <UIcon name="i-heroicons-minus" class="w-4 h-4 mr-1 text-cbre-green" />
                         <div class="w-[130px] whitespace-nowrap text-right mr-4 font-calibre">
-                                SubSector
-                                :
+                                SubSector :
                         </div>
                         <div class="flex-1">
-                                {{
-                                        subsector?.name
-                                }}
+                                {{ subsector?.name }}
                         </div>
                 </li>
                 <li v-if="sector?.name === 'Logistics' && warehouse && warehouse.length > 0"
                         class="flex items-start mt-0 col-span-full">
-                        <IconMinus class="w-[18px] mr-1 mt-2" />
+                        <UIcon name="i-heroicons-minus" class="w-4 h-4 mr-1 mt-2 text-cbre-green" />
                         <div class="w-[130px] whitespace-nowrap text-right mr-4 font-calibre pt-1">
                                 Usage :
                         </div>
@@ -101,12 +90,10 @@ const props = defineProps<{
         warehouse: WarehouseType[] | null | undefined;
 }>();
 
-// 💡 Warehouse 비율 추출 헬퍼 함수
 const getWarehouseRatio = (type: string) => {
         const w = props.warehouse?.find((item: any) => item.temperatureType === type);
         return Number(w?.ratio) || 0;
 };
-
 </script>
 
 <style scoped>

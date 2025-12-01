@@ -1,11 +1,11 @@
 <template>
-        <div id="location-map-section" class="font-financier text-2xl mb-4 text-primary">
+        <div id="location-map-section" class="font-financier text-2xl mb-4 text-cbre-green">
                 Location Description
         </div>
 
-        <ul class="relative cbre_bulletList font-calibreLight text-lg text-primary grid grid-cols-1">
+        <ul class="relative cbre_bulletList font-calibreLight text-lg text-cbre-green grid grid-cols-1">
                 <li v-if="location?.addressFull" class="flex items-center">
-                        <UIcon name="i-heroicons-minus" class="w-[18px] mr-1" />
+                        <UIcon name="i-heroicons-minus" class="w-4 h-4 mr-1 text-cbre-green" />
                         <div class="w-[130px] whitespace-nowrap text-right mr-4 font-calibre">
                                 Address :
                         </div>
@@ -15,10 +15,10 @@
                 </li>
         </ul>
 
-        <ul class="relative cbre_bulletList font-calibreLight text-lg text-primary grid grid-cols-1">
+        <ul class="relative cbre_bulletList font-calibreLight text-lg text-cbre-green grid grid-cols-1">
                 <li v-if="location?.addressFullJibun && location?.addressFullJibun?.trim().length > 0"
                         class="flex items-center">
-                        <UIcon name="i-heroicons-minus" class="w-[18px] mr-1" />
+                        <UIcon name="i-heroicons-minus" class="w-4 h-4 mr-1 text-cbre-green" />
                         <div class="w-[130px] whitespace-nowrap text-right mr-4 font-calibre">
                                 Jibun :
                         </div>
@@ -28,10 +28,10 @@
                 </li>
         </ul>
 
-        <ul class="relative cbre_bulletList font-calibreLight text-lg text-primary grid grid-cols-1">
+        <ul class="relative cbre_bulletList font-calibreLight text-lg text-cbre-green grid grid-cols-1">
                 <li v-if="location?.addressProvince && location?.addressProvince?.trim().length > 0"
                         class="flex items-center">
-                        <UIcon name="i-heroicons-minus" class="w-[18px] mr-1" />
+                        <UIcon name="i-heroicons-minus" class="w-4 h-4 mr-1 text-cbre-green" />
                         <div class="w-[130px] whitespace-nowrap text-right mr-4 font-calibre">
                                 Province :
                         </div>
@@ -41,9 +41,9 @@
                 </li>
         </ul>
 
-        <ul class="relative cbre_bulletList font-calibreLight text-lg text-primary grid grid-cols-1">
+        <ul class="relative cbre_bulletList font-calibreLight text-lg text-cbre-green grid grid-cols-1">
                 <li v-if="location?.addressCity && location?.addressCity?.trim().length > 0" class="flex items-center">
-                        <UIcon name="i-heroicons-minus" class="w-[18px] mr-1" />
+                        <UIcon name="i-heroicons-minus" class="w-4 h-4 mr-1 text-cbre-green" />
                         <div class="w-[130px] whitespace-nowrap text-right mr-4 font-calibre">
                                 City :
                         </div>
@@ -53,9 +53,9 @@
                 </li>
         </ul>
 
-        <ul class="relative cbre_bulletList font-calibreLight text-lg text-primary grid grid-cols-1">
+        <ul class="relative cbre_bulletList font-calibreLight text-lg text-cbre-green grid grid-cols-1">
                 <li v-if="location?.latitude" class="flex items-center">
-                        <UIcon name="i-heroicons-minus" class="w-[18px] mr-1" />
+                        <UIcon name="i-heroicons-minus" class="w-4 h-4 mr-1 text-cbre-green" />
                         <div class="w-[130px] whitespace-nowrap text-right mr-4 font-calibre">
                                 Latitude :
                         </div>
@@ -65,9 +65,9 @@
                 </li>
         </ul>
 
-        <ul class="relative cbre_bulletList font-calibreLight text-lg text-primary grid grid-cols-1">
+        <ul class="relative cbre_bulletList font-calibreLight text-lg text-cbre-green grid grid-cols-1">
                 <li v-if="location?.longitude" class="flex items-center">
-                        <UIcon name="i-heroicons-minus" class="w-[18px] mr-1" />
+                        <UIcon name="i-heroicons-minus" class="w-4 h-4 mr-1 text-cbre-green" />
                         <div class="w-[130px] whitespace-nowrap text-right mr-4 font-calibre">
                                 Longitude :
                         </div>
@@ -84,64 +84,66 @@
 
 <script setup lang="ts">
 import { ref, onMounted, watch } from 'vue';
-// import useGoogleMapsApi from '~/composables/useGoogleMapsApi';
+import useGoogleMapsApi from '~/composables/useGoogleMapsApi';
 import type { LocationType } from '~/types/property.type';
+
+declare const google: any;
 
 const props = defineProps<{
         location: LocationType | null | undefined
 }>();
 
 const mapContainer = ref<HTMLElement | null>(null);
-// let mapInstance: google.maps.Map | null = null;
-// let markerInstance: google.maps.marker.AdvancedMarkerElement | google.maps.Marker | null = null;
+let mapInstance: any | null = null;
+let markerInstance: any | null = null;
 
 const initMap = async () => {
-        // if (!mapContainer.value || !props.location?.latitude || !props.location?.longitude) return;
+        if (!mapContainer.value || !props.location?.latitude || !props.location?.longitude) return;
 
-        // try {
-        //         const googleMaps = await useGoogleMapsApi();
-        //         const position = { lat: props.location.latitude, lng: props.location.longitude };
+        try {
+                const googleMaps = await useGoogleMapsApi();
+                const position = { lat: props.location.latitude, lng: props.location.longitude };
 
-        //         // 💡 Google Maps 초기화 (Map ID 필요 for AdvancedMarkerElement)
-        //         // Map ID가 없으면 AdvancedMarkerElement가 작동하지 않을 수 있으므로 체크 필요
-        //         // 여기서는 DEMO_MAP_ID 또는 사용자의 Map ID를 사용해야 함. 없으면 기본 Marker 사용.
-        //         const mapOptions: google.maps.MapOptions = {
-        //                 center: position,
-        //                 zoom: 15,
-        //                 mapId: 'DEMO_MAP_ID', // 💡 AdvancedMarkerElement를 위해 필수 (실제 프로젝트 ID로 교체 권장)
-        //         };
+                const mapOptions: any = {
+                        center: position,
+                        zoom: 15,
+                        mapId: 'DEMO_MAP_ID',
+                };
 
-        //         mapInstance = new googleMaps.Map(mapContainer.value, mapOptions);
+                mapInstance = new googleMaps.Map(mapContainer.value, mapOptions);
 
-        //         // 💡 AdvancedMarkerElement 시도
-        //         if (googleMaps.marker && googleMaps.marker.AdvancedMarkerElement) {
-        //                 markerInstance = new googleMaps.marker.AdvancedMarkerElement({
-        //                         map: mapInstance,
-        //                         position: position,
-        //                         title: 'Property Location',
-        //                 });
-        //         } else {
-        //                 // Fallback to legacy Marker
-        //                 markerInstance = new googleMaps.Marker({
-        //                         map: mapInstance,
-        //                         position: position,
-        //                 });
-        //         }
+                if (googleMaps.marker && googleMaps.marker.AdvancedMarkerElement) {
+                        markerInstance = new googleMaps.marker.AdvancedMarkerElement({
+                                map: mapInstance,
+                                position: position,
+                                title: 'Property Location',
+                        });
+                } else {
+                        markerInstance = new googleMaps.Marker({
+                                map: mapInstance,
+                                position: position,
+                        });
+                }
 
-        // } catch (error) {
-        //         console.error('Failed to load Google Maps:', error);
-        // }
+        } catch (error) {
+                console.error('Failed to load Google Maps:', error);
+        }
 };
 
 onMounted(() => {
-        // initMap();
+        initMap();
 });
 
-// 위치 정보가 변경되면 맵 업데이트
 watch(() => props.location, () => {
-        // initMap();
+        initMap();
 }, { deep: true });
 
 </script>
 
-<style scoped></style>
+<style scoped>
+.cbre_bulletList {
+        list-style: none;
+        padding: 0 0 0 20px;
+        line-height: 2;
+}
+</style>

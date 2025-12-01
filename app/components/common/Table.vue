@@ -71,7 +71,7 @@
                         <div class="flex items-center gap-4">
                                 <select :value="rowsPerPage"
                                         @input="$emit('update:rowsPerPage', Number(($event.target as HTMLInputElement).value))"
-                                        class="p-2 border border-gray-300 rounded-md bg-white text-sm focus:ring-cbre_primary_1 focus:border-cbre_primary_1">
+                                        class="p-2 border border-gray-300 rounded-md bg-white text-sm focus:ring-cbre-green focus:border-cbre-green">
                                         <option :value="5">5 per page</option>
                                         <option :value="10">10 per page</option>
                                         <option :value="20">20 per page</option>

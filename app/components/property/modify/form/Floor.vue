@@ -519,7 +519,7 @@ const onSubmit = async () => {
     }));
 
     try {
-        const res = await $fetch<FloorType[]>(`/api/upload/${propertyStore.currentPropertyId}/floor`, {
+        const res = await $fetch<FloorType[]>(`/api/property/admin/${propertyStore.currentPropertyId}/floor`, {
             method: 'PUT',
             body: payload
         });

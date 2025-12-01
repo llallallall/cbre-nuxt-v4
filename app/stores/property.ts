@@ -466,8 +466,17 @@ export const usePropertyStore = defineStore('property', {
             const statusStore = useStatusStore();
             statusStore.setGlobalLoading(true, `update_${String(sectionName)} `);
 
+            const apiMapping: Record<string, string> = {
+                scale: 'sizes',
+                propertyBrochureFile: 'brochure',
+                floorPlanFile: 'floorplan',
+                propertyImageFile: 'photo'
+            };
+
+            const apiEndpoint = apiMapping[String(sectionName)] || String(sectionName);
+
             try {
-                const updatedData = await $fetch<PropertyType>(`/api/property/admin/${this.currentPropertyId}/${String(sectionName)}`, {
+                const updatedData = await $fetch<PropertyType>(`/api/property/admin/${this.currentPropertyId}/${apiEndpoint}`, {
                     method: 'PUT',
                     body: data
                 });

@@ -2,8 +2,8 @@
     <div class="flex flex-col gap-10">
         <!-- General Information -->
         <div v-if="item">
-            <PropertyDetailGeneral :profitability="item?.profitability" :scale="item?.scale"
-                :sector="item?.sector" :subsector="item?.subsector" :warehouse="item?.warehouse" />
+            <PropertyDetailGeneral :profitability="item?.profitability" :scale="item?.scale" :sector="item?.sector"
+                :subsector="item?.subsector" :warehouse="item?.warehouse" />
         </div>
 
         <!-- Floors Usage Summary -->

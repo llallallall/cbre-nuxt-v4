@@ -1,10 +1,11 @@
 <template>
-        <div class="font-financier text-2xl text-primary mb-2">History</div>
+        <div class="font-financier text-2xl text-cbre-green mb-2">History</div>
 
-        <ul v-if="hasHistory" class="cbre_bulletList font-calibreLight text-lg text-primary grid grid-cols-1 gap-y-1">
+        <ul v-if="hasHistory"
+                class="cbre_bulletList font-calibreLight text-lg text-cbre-green grid grid-cols-1 gap-y-1">
                 <li class="flex items-center" v-for="(h, index) in history" :key="h.id || index">
                         <div v-if="h.type === 'COMPLETION'" class="w-full flex items-center">
-                                <UIcon name="i-heroicons-minus" class="w-[18px] mr-1" />
+                                <UIcon name="i-heroicons-minus" class="w-4 h-4 mr-1 text-cbre-green" />
                                 <div class="min-w-[130px] whitespace-nowrap text-right mr-4 font-calibre">
                                         <span class="text-xs font-normal">#{{ index + 1 }}</span> YR. Built :
                                 </div>
@@ -13,7 +14,7 @@
                                 </div>
                         </div>
                         <div v-else class="w-full flex items-center">
-                                <UIcon name="i-heroicons-minus" class="w-[18px] mr-1" />
+                                <UIcon name="i-heroicons-minus" class="w-4 h-4 mr-1 text-cbre-green" />
                                 <div class="min-w-[130px] whitespace-nowrap text-right mr-4 font-calibre">
                                         <span class="text-xs font-normal">#{{ index + 1 }}</span> YR. Reno. :
                                 </div>
@@ -34,9 +35,8 @@ const props = defineProps<{
         history: HistoryType[] | null | undefined;
 }>();
 
-// 데이터 존재 여부 확인
 const hasHistory = computed(() => {
-        return props.history && props.history.length > 0 && props.history[0] && props.history[0].year;
+        return props.history && props.history.length > 0 && props.history[0]?.year;
 });
 </script>
 

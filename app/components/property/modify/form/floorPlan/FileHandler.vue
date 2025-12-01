@@ -66,16 +66,13 @@ const emit = defineEmits<{
   (e: 'update:files', files: FloorPlanFileType[]): void;
 }>();
 
+import { useAppToast } from '~/composables/useAppToast';
+
 // Stores & Composables
 const propertyStore = usePropertyStore();
 const statusStore = useStatusStore();
 const { uploadFile, deleteFile } = useMinio();
-const toast = useToast();
-
-const showToast = (message: string, type: 'success' | 'danger' | 'warning' | 'info' = 'info') => {
-  const color = type === 'danger' ? 'error' : type === 'warning' ? 'warning' : type === 'success' ? 'success' : 'primary';
-  toast.add({ title: message, color });
-};
+const { showToast } = useAppToast();
 
 const openConfirmModal = (options: { title: string, message: string, confirmText: string }) => {
   return new Promise<boolean>((resolve) => {

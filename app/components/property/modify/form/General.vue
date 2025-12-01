@@ -152,7 +152,7 @@ const onSubmit = async () => {
   };
 
   try {
-    const updatedAsset = await $fetch(`/api/upload/${propertyStore.currentPropertyId}/general`, {
+    const updatedAsset = await $fetch(`/api/property/admin/${propertyStore.currentPropertyId}/general`, {
       method: 'PUT',
       body: payload,
     });

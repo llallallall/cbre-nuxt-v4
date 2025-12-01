@@ -137,13 +137,7 @@ definePageMeta({
 });
 
 const statusStore = useStatusStore();
-const toast = useToast();
-
-const showToast = (message: string, type: 'success' | 'danger' | 'warning' = 'success', options: any = {}) => {
-    const color = type === 'danger' ? 'error' : type === 'warning' ? 'warning' : 'success';
-    const icon = type === 'danger' ? 'i-heroicons-exclamation-circle' : type === 'warning' ? 'i-heroicons-exclamation-triangle' : 'i-heroicons-check-circle';
-    toast.add({ title: message, color, icon, ...options });
-};
+const { showToast } = useAppToast();
 
 const {
     file,

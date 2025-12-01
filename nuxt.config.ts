@@ -2,6 +2,7 @@
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineNuxtConfig({
+  srcDir: 'app',
   vite: {
     plugins: [
       tailwindcss(),
@@ -29,14 +30,9 @@ export default defineNuxtConfig({
         file: 'ko.json'
       }
     ],
-    langDir: 'locales', // 언어 파일 위치 (i18n/locales/ko.json)
+    langDir: '../i18n/locales', // 언어 파일 위치 (/locales/ko.json)
     defaultLocale: 'en',
     strategy: 'prefix_except_default', // 기본 언어는 URL 프리픽스 없음 (/), 그 외는 추가 (/en)
-
-    // [옵션] lazy 로딩이 꼭 필요하다면 bundle 최적화 옵션 확인 필요
-    // bundle: {
-    //   fullInstall: false
-    // }
   },
 
   // [보안] Nuxt Security 세부 설정

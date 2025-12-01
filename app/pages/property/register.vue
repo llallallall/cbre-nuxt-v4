@@ -42,7 +42,7 @@ import { reactive, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useUiStore } from '~/stores/ui';
 import { useStatusStore } from '~/stores/status';
-import { useToast } from '#imports';
+import { useAppToast } from '~/composables/useAppToast';
 
 definePageMeta({
     middleware: "auth",
@@ -52,7 +52,7 @@ definePageMeta({
 const router = useRouter();
 const uiStore = useUiStore();
 const statusStore = useStatusStore();
-const toast = useToast();
+const { showToast } = useAppToast();
 
 const form = reactive({
     name: '',
@@ -78,7 +78,7 @@ const handleCreate = async () => {
             body: form
         });
 
-        toast.add({ title: 'Asset initialized!, Redirecting to edit mode...', color: 'success' });
+        showToast('Asset initialized!, Redirecting to edit mode...', 'success');
 
         // 🚀 생성된 ID를 가지고 수정 페이지(Modify)로 이동
         // 이 페이지는 AssetPreviewsContainer를 보여주고, 사용자는 여기서 'Edit' 버튼을 눌러 채워넣게 됩니다.
@@ -86,7 +86,7 @@ const handleCreate = async () => {
 
     } catch (error) {
         console.error(error);
-        toast.add({ title: 'Failed to create asset.', color: 'error' });
+        showToast('Failed to create asset.', 'danger');
     } finally {
         statusStore.setGlobalLoading(false);
     }

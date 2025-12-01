@@ -1,26 +1,26 @@
 <template>
-        <div class="font-financier text-2xl text-primary mb-2">Sizes and Measurements Information</div>
+        <div class="font-financier text-2xl text-cbre-green mb-2">Sizes and Measurements Information</div>
         <ul
-                class="cbre_bulletList font-calibreLight text-lg text-primary grid grid-cols-1 lg:grid-cols-2 3xl:grid-cols-3 gap-y-2">
+                class="cbre_bulletList font-calibreLight text-lg text-cbre-green grid grid-cols-1 lg:grid-cols-2 3xl:grid-cols-3 gap-y-2">
 
-                <li class="flex items-center" v-if="(scale?.gfaSqm ?? 0) > 0">
-                        <UIcon name="i-heroicons-minus" class="w-[18px] mr-1" />
+                <li class="flex items-center" v-if="scale?.gfaSqm && scale.gfaSqm > 0">
+                        <UIcon name="i-heroicons-minus" class="w-4 h-4 mr-1 text-cbre-green" />
                         <div class="min-w-[130px] whitespace-nowrap text-right mr-4 font-calibre">GFA :</div>
                         <div class="flex-1">
                                 {{ formatDecimal(scale?.gfaSqm) }} ㎡ ({{ formatDecimal(scale?.gfaPy) }} py)
                         </div>
                 </li>
 
-                <li class="flex items-center" v-if="(scale?.nfaSqm ?? 0) > 0">
-                        <UIcon name="i-heroicons-minus" class="w-[18px] mr-1" />
+                <li class="flex items-center" v-if="scale?.nfaSqm && scale.nfaSqm > 0">
+                        <UIcon name="i-heroicons-minus" class="w-4 h-4 mr-1 text-cbre-green" />
                         <div class="min-w-[130px] whitespace-nowrap text-right mr-4 font-calibre">NFA :</div>
                         <div class="flex-1">
                                 {{ formatDecimal(scale?.nfaSqm) }} ㎡ ({{ formatDecimal(scale?.nfaPy) }} py)
                         </div>
                 </li>
 
-                <li class="flex items-center" v-if="(scale?.siteAreaSqm ?? 0) > 0">
-                        <UIcon name="i-heroicons-minus" class="w-[18px] mr-1" />
+                <li class="flex items-center" v-if="scale?.siteAreaSqm && scale.siteAreaSqm > 0">
+                        <UIcon name="i-heroicons-minus" class="w-4 h-4 mr-1 text-cbre-green" />
                         <div class="min-w-[130px] whitespace-nowrap text-right mr-4 font-calibre">Land Area :</div>
                         <div class="flex-1">
                                 {{ formatDecimal(scale?.siteAreaSqm) }} ㎡ ({{ formatDecimal(scale?.siteAreaPy)
@@ -28,8 +28,8 @@
                         </div>
                 </li>
 
-                <li class="flex items-center" v-if="(scale?.floorPlateSqm ?? 0) > 0">
-                        <UIcon name="i-heroicons-minus" class="w-[18px] mr-1" />
+                <li class="flex items-center" v-if="scale?.floorPlateSqm && scale.floorPlateSqm > 0">
+                        <UIcon name="i-heroicons-minus" class="w-4 h-4 mr-1 text-cbre-green" />
                         <div class="min-w-[130px] whitespace-nowrap text-right mr-4 font-calibre">Floor Plate :</div>
                         <div class="flex-1">
                                 {{ formatDecimal(scale?.floorPlateSqm) }} ㎡ ({{
@@ -39,9 +39,9 @@
 
         </ul>
 
-        <ul class="cbre_bulletList font-calibreLight text-lg text-primary grid grid-cols-1 mt-2 gap-y-2">
-                <li class="flex items-center" v-if="(scale?.floorAreaRatioExisting ?? 0) > 0">
-                        <UIcon name="i-heroicons-minus" class="w-[18px] mr-1" />
+        <ul class="cbre_bulletList font-calibreLight text-lg text-cbre-green grid grid-cols-1 mt-2 gap-y-2">
+                <li class="flex items-center" v-if="scale?.floorAreaRatioExisting && scale.floorAreaRatioExisting > 0">
+                        <UIcon name="i-heroicons-minus" class="w-4 h-4 mr-1 text-cbre-green" />
                         <div class="min-w-[130px] whitespace-nowrap text-right mr-4 font-calibre">Floor Area Ratio :
                         </div>
                         <div class="flex-1">
@@ -51,8 +51,9 @@
                         </div>
                 </li>
 
-                <li class="flex items-center" v-if="(scale?.buildingCoverageRatioExisting ?? 0) > 0">
-                        <UIcon name="i-heroicons-minus" class="w-[18px] mr-1" />
+                <li class="flex items-center"
+                        v-if="scale?.buildingCoverageRatioExisting && scale.buildingCoverageRatioExisting > 0">
+                        <UIcon name="i-heroicons-minus" class="w-4 h-4 mr-1 text-cbre-green" />
                         <div class="min-w-[130px] whitespace-nowrap text-right mr-4 font-calibre">Building Coverage :
                         </div>
                         <div class="flex-1">

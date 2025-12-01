@@ -1,31 +1,32 @@
 <template>
-        <div class="font-financier text-2xl text-primary mb-4">
+        <div class="font-financier text-2xl text-cbre-green mb-4">
                 Facility Information</div>
 
 
-        <ul class="cbre_bulletList font-calibreLight text-lg text-primary grid grid-cols-1 gap-y-2">
+        <ul class="cbre_bulletList font-calibreLight text-lg text-cbre-green grid grid-cols-1 gap-y-2">
 
-                <li v-if="(facility?.elevatorsTotal ?? 0) > 0" class="flex items-center ">
-                        <UIcon name="i-heroicons-minus" class="w-[18px] mr-1" />
+                <li v-if="facility?.elevatorsTotal && facility.elevatorsTotal > 0" class="flex items-center ">
+                        <UIcon name="i-heroicons-minus" class="w-4 h-4 mr-1 text-cbre-green" />
                         <div class="min-w-[130px] whitespace-nowrap text-right mr-4 font-calibre">
                                 Elevators :
                         </div>
                         <div class="flex-1 text-base">
                                 <span class="font-semibold">{{ facility?.elevatorsTotal }}</span>
-                                <span v-if="(facility?.elevatorsTotal ?? 0) > 0" class="text-gray-600 text-sm ml-2">
+                                <span v-if="facility?.elevatorsTotal && facility.elevatorsTotal > 0"
+                                        class="text-gray-600 text-sm ml-2">
                                         (
                                         <span v-if="facility?.elevatorsPassenger">{{
                                                 facility?.elevatorsPassenger }} Passenger</span>
                                         <span v-if="facility?.elevatorsService"> / {{ facility?.elevatorsService
-                                        }} Service</span>
+                                                }} Service</span>
                                         <span v-if="facility?.elevatorsFreight"> / {{ facility?.elevatorsFreight
-                                        }} Freight</span>
+                                                }} Freight</span>
                                         )
                                 </span>
                         </div>
                 </li>
                 <li v-if="facility?.facade" class="flex items-center">
-                        <UIcon name="i-heroicons-minus" class="w-[18px] mr-1" />
+                        <UIcon name="i-heroicons-minus" class="w-4 h-4 mr-1 text-cbre-green" />
                         <div class="min-w-[130px] whitespace-nowrap text-right mr-4 font-calibre">
                                 Façade :
                         </div>
@@ -35,7 +36,7 @@
                 </li>
 
                 <li v-if="facility?.roofMaterial" class="flex items-center">
-                        <UIcon name="i-heroicons-minus" class="w-[18px] mr-1" />
+                        <UIcon name="i-heroicons-minus" class="w-4 h-4 mr-1 text-cbre-green" />
                         <div class="min-w-[130px] whitespace-nowrap text-right mr-4 font-calibre">
                                 Roof Material :
                         </div>
@@ -45,7 +46,7 @@
                 </li>
 
                 <li v-if="facility?.lighting" class="flex items-center">
-                        <UIcon name="i-heroicons-minus" class="w-[18px] mr-1" />
+                        <UIcon name="i-heroicons-minus" class="w-4 h-4 mr-1 text-cbre-green" />
                         <div class="min-w-[130px] whitespace-nowrap text-right mr-4 font-calibre">
                                 Lighting :
                         </div>
@@ -55,7 +56,7 @@
                 </li>
 
                 <li v-if="facility?.mechanicalElectrical" class="flex items-center">
-                        <UIcon name="i-heroicons-minus" class="w-[18px] mr-1" />
+                        <UIcon name="i-heroicons-minus" class="w-4 h-4 mr-1 text-cbre-green" />
                         <div class="min-w-[130px] whitespace-nowrap text-right mr-4 font-calibre">
                                 M & E :
                         </div>
@@ -65,7 +66,7 @@
                 </li>
 
                 <li v-if="facility?.fireFighting" class="flex items-center">
-                        <UIcon name="i-heroicons-minus" class="w-[18px] mr-1" />
+                        <UIcon name="i-heroicons-minus" class="w-4 h-4 mr-1 text-cbre-green" />
                         <div class="min-w-[130px] whitespace-nowrap text-right mr-4 font-calibre">
                                 Fire Fighting :
                         </div>

@@ -320,7 +320,9 @@
 </template>
 
 <script setup lang="ts">
-const toast = useToast()
+import { useAppToast } from '~/composables/useAppToast';
+
+const { showToast } = useAppToast()
 const { locale, setLocale, t } = useI18n()
 
 // === State ===
@@ -331,22 +333,16 @@ const isLoading = ref(false) // 로딩 상태
 
 // 1. Success Toast
 const showSuccessToast = () => {
-    toast.add({
-        title: 'Success',
+    showToast('Success', 'success', {
         description: 'Data has been saved successfully.',
-        icon: 'i-heroicons-check-circle',
-        color: 'primary',
         duration: 3000
     })
 }
 
 // 2. Error Toast
 const showErrorToast = () => {
-    toast.add({
-        title: 'Error Occurred',
-        description: 'Failed to connect to the server.',
-        icon: 'i-heroicons-exclamation-circle',
-        color: 'error'
+    showToast('Error Occurred', 'danger', {
+        description: 'Failed to connect to the server.'
     })
 }
 
@@ -362,11 +358,9 @@ const simulateLoading = () => {
 // 4. Confirm Modal Action
 const confirmModal = () => {
     isOpen.value = false
-    toast.add({
-        title: 'Confirmed',
+    showToast('Confirmed', 'success', {
         description: 'You have confirmed the action.',
         icon: 'i-heroicons-check-badge',
-        color: 'primary',
         duration: 3000
     })
 }

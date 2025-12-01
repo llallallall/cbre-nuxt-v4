@@ -121,7 +121,7 @@ import type { AdminListType } from '~/types/property.type';
 import { usePropertyStore } from '~/stores/property';
 import { useUiStore } from '~/stores/ui';
 import { useStatusStore } from '~/stores/status';
-import { useToast } from '#imports';
+import { useAppToast } from '~/composables/useAppToast';
 import { useConfirmModal } from '~/composables/useConfirmModal';
 import SearchBar from '~/components/common/SearchBar.vue';
 
@@ -134,7 +134,7 @@ const propertyStore = usePropertyStore();
 const uiStore = useUiStore();
 const statusStore = useStatusStore();
 
-const toast = useToast();
+const { showToast } = useAppToast();
 const { show: showConfirmModal } = useConfirmModal();
 
 
@@ -258,7 +258,7 @@ const paginatedList = computed<AdminListType[]>(() => {
  */
 const refreshList = async () => {
     await propertyStore.fetchAdminList();
-    toast.add({ title: 'Asset List Refreshed', color: 'success' });
+    showToast('Asset List Refreshed', 'success');
     currentPage.value = 1;
 };
 
@@ -304,12 +304,12 @@ const deleteProperty = async (propertyId: string) => {
     if (confirmed) {
         try {
             await propertyStore.deleteProperty(propertyId); // Assuming this action exists
-            toast.add({ title: '자산이 삭제되었습니다.', color: 'success' });
+            showToast('자산이 삭제되었습니다.', 'success');
             // Refresh list handled by store or manually
             await propertyStore.fetchAdminList();
         } catch (e) {
             console.error('자산 삭제 실패:', e);
-            toast.add({ title: '자산 삭제 중 오류가 발생했습니다.', color: 'error' });
+            showToast('자산 삭제 중 오류가 발생했습니다.', 'danger');
         }
     }
 };
@@ -347,7 +347,7 @@ const toggleAllCheck = (isChecked: boolean) => {
  */
 const deleteCheckedAssets = async () => {
     if (checkedAssetIds.value.length === 0) {
-        toast.add({ title: '삭제할 자산을 선택해주세요.', color: 'warning' });
+        showToast('삭제할 자산을 선택해주세요.', 'warning');
         return;
     }
 
@@ -362,12 +362,12 @@ const deleteCheckedAssets = async () => {
         try {
             // 일괄 삭제 API 호출 (Store Action 필요)
             // await propertyStore.deleteProperties(checkedAssetIds.value);
-            toast.add({ title: '기능 구현 중입니다.', color: 'info' });
+            showToast('기능 구현 중입니다.', 'info');
             // checkedAssetIds.value = [];
             // await propertyStore.fetchAdminList();
         } catch (e) {
             console.error('일괄 삭제 실패:', e);
-            toast.add({ title: '일괄 삭제 중 오류가 발생했습니다.', color: 'error' });
+            showToast('일괄 삭제 중 오류가 발생했습니다.', 'danger');
         }
     }
 };

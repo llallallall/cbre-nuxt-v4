@@ -16,24 +16,11 @@ export type SheetData = {
     errors: string[];
 };
 
+import { useAppToast } from '~/composables/useAppToast';
+
 export const useExcel = () => {
     const statusStore = useStatusStore();
-    const toast = useToast(); // Use Nuxt UI toast
-
-    // Adapter for showToast to match source usage but use Nuxt UI
-    const showToast = (message: string | { title: string, description: string }, type: 'success' | 'danger' | 'warning' = 'success', options: any = {}) => {
-        const color = type === 'danger' ? 'red' : type === 'warning' ? 'amber' : 'green';
-        const title = typeof message === 'string' ? message : message.title;
-        const description = typeof message === 'string' ? undefined : message.description;
-
-        toast.add({
-            title,
-            description,
-            color,
-            icon: type === 'danger' ? 'i-heroicons-exclamation-circle' : type === 'warning' ? 'i-heroicons-exclamation-triangle' : 'i-heroicons-check-circle',
-            ...options
-        });
-    };
+    const { showToast } = useAppToast();
 
     // --- State ---
     const file = ref<File | string>('');
@@ -365,18 +352,24 @@ export const useExcel = () => {
                     activeSheetIndex.value = 0;
 
                     if (totalErrors.value > 0) {
-                        showToast({
-                            title: 'Validation Errors Found',
-                            description: 'Please check the summary and fix errors before uploading.'
-                        }, 'warning', { timeout: 5000, showCloseButton: true, position: 'top-right', transition: 'bounce' });
+                        showToast('Validation Errors Found', 'warning', {
+                            description: 'Please check the summary and fix errors before uploading.',
+                            timeout: 5000,
+                            showCloseButton: true,
+                            position: 'top-right',
+                            transition: 'bounce'
+                        });
                     }
 
                 } catch (error) {
                     console.error("Error parsing Excel file:", error);
-                    showToast({
-                        title: 'Failed to read the Excel file.',
-                        description: 'It might be corrupted or in an unsupported format.'
-                    }, 'danger', { timeout: 5000, showCloseButton: true, position: 'top-right', transition: 'bounce' });
+                    showToast('Failed to read the Excel file.', 'danger', {
+                        description: 'It might be corrupted or in an unsupported format.',
+                        timeout: 5000,
+                        showCloseButton: true,
+                        position: 'top-right',
+                        transition: 'bounce'
+                    });
 
                     resetUpload();
                 } finally {
@@ -386,10 +379,13 @@ export const useExcel = () => {
 
             reader.onerror = (error) => {
                 console.error("FileReader error:", error);
-                showToast({
-                    title: 'Error reading file.',
-                    description: 'Please try again.'
-                }, 'danger', { timeout: 5000, showCloseButton: true, position: 'top-right', transition: 'bounce' });
+                showToast('Error reading file.', 'danger', {
+                    description: 'Please try again.',
+                    timeout: 5000,
+                    showCloseButton: true,
+                    position: 'top-right',
+                    transition: 'bounce'
+                });
 
                 statusStore.setGlobalLoading(false);
             };

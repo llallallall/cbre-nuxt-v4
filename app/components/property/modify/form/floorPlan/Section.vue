@@ -35,7 +35,7 @@ import { ref, computed, watch } from 'vue';
 import { storeToRefs } from 'pinia';
 import { usePropertyStore } from '~/stores/property';
 import { useStatusStore } from '~/stores/status';
-import { useToast } from '~/composables/useToast';
+import { useAppToast } from '~/composables/useAppToast';
 import type { FloorPlanFileType } from '~/types/property.type';
 
 // 💡 Enum 상수 정의
@@ -49,7 +49,7 @@ const FloorFlanTypeEnum = {
 const emit = defineEmits(['close']);
 const propertyStore = usePropertyStore();
 const statusStore = useStatusStore();
-const { showToast } = useToast();
+const { showToast } = useAppToast();
 
 const { currentProperty } = storeToRefs(propertyStore);
 const computedIsLoading = computed(() => statusStore.isGlobalLoading);

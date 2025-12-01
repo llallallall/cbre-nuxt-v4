@@ -1,11 +1,11 @@
 <template>
-        <div class="font-financier text-2xl text-primary mb-2">Parking Information</div>
+        <div class="font-financier text-2xl text-cbre-green mb-2">Parking Information</div>
 
-        <ul class="cbre_bulletList font-calibreLight text-lg text-primary grid grid-cols-1 md:grid-cols-2 gap-4">
+        <ul class="cbre_bulletList font-calibreLight text-lg text-cbre-green grid grid-cols-1 md:grid-cols-2 gap-4">
 
                 <li v-if="(facility?.cpsExisting !== null) || (facility?.cpsRequired !== null)"
                         class="flex items-center col-span-full">
-                        <UIcon name="i-heroicons-minus" class="w-[18px] mr-1" />
+                        <UIcon name="i-heroicons-minus" class="w-4 h-4 mr-1 text-cbre-green" />
                         <div class="min-w-[130px] whitespace-nowrap text-right mr-4 font-calibre">
                                 Parking Capacity :
                         </div>
@@ -21,7 +21,7 @@
 
                 <li v-if="(facility?.freeCpsSqm !== null) || (facility?.freeCpsPy !== null)"
                         class="flex items-center col-span-full">
-                        <UIcon name="i-heroicons-minus" class="w-[18px] mr-1" />
+                        <UIcon name="i-heroicons-minus" class="w-4 h-4 mr-1 text-cbre-green" />
                         <div class="min-w-[130px] whitespace-nowrap text-right mr-4 font-calibre">
                                 Free Parking :
                         </div>
@@ -36,7 +36,7 @@
                 </li>
 
                 <li v-if="facility?.paidParkingFee !== null" class="flex items-center col-span-full">
-                        <UIcon name="i-heroicons-minus" class="w-[18px] mr-1" />
+                        <UIcon name="i-heroicons-minus" class="w-4 h-4 mr-1 text-cbre-green" />
                         <div class="min-w-[130px] whitespace-nowrap text-right mr-4 font-calibre">
                                 Paid Parking Fee :
                         </div>

@@ -47,9 +47,7 @@
                         </table>
                 </div>
 
-                <SaleDetailModal :isOpen="isModalOpen" :saleData="selectedSaleData" @close="closeModal"
-                        @save="handleSave" />
-                <ModalsContainer />
+                <SaleDetail :isOpen="isModalOpen" :saleData="selectedSaleData" @close="closeModal" @save="handleSave" />
         </div>
 </template>
 
@@ -59,13 +57,11 @@ import { storeToRefs } from 'pinia';
 import { usePropertyStore } from '~/stores/property';
 import { useStatusStore } from '~/stores/status';
 import { useFormat } from '~/composables/useFormat';
-const { displayValue, numberFormat } = useFormat();
-const toast = useToast();
+import { useAppToast } from '~/composables/useAppToast';
+import type { SaleType, TransactionType } from '~/types/property.type';
 
-const showToast = (message: string, type: 'success' | 'danger' | 'warning' | 'info' = 'info') => {
-        const color = type === 'danger' ? 'error' : type === 'warning' ? 'warning' : type === 'success' ? 'success' : 'primary';
-        toast.add({ title: message, color });
-};
+const { displayValue, numberFormat } = useFormat();
+const { showToast } = useAppToast();
 
 const openConfirmModal = (options: { title: string, message: string, confirmText: string }) => {
         return new Promise<boolean>((resolve) => {

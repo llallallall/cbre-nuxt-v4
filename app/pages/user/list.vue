@@ -58,12 +58,14 @@ import { ref, computed } from 'vue';
 import { useUserStore } from '~/stores/user';
 import { useRouter } from 'vue-router';
 
+import { useAppToast } from '~/composables/useAppToast';
+
 definePageMeta({
     middleware: "auth",
     layout: 'admin-layout',
 });
 
-const toast = useToast();
+const { showToast } = useAppToast();
 const userStore = useUserStore();
 const router = useRouter();
 
@@ -121,14 +123,14 @@ const totalPages = computed(() => {
 const deleteUser = async (id: string) => {
     // Implement delete logic
     console.log("Delete user", id);
-    toast.add({ title: 'Delete feature not implemented yet', color: 'warning' });
+    showToast('Delete feature not implemented yet', 'warning');
 };
 
 const editItem = (propertyId: string) => {
     // router.push({ path: "/property/modify/" + propertyId }) // This was for property, user edit might be different
     // Assuming user edit page exists or modal
     console.log("Edit user", propertyId);
-    toast.add({ title: 'Edit feature not implemented yet', color: 'warning' });
+    showToast('Edit feature not implemented yet', 'warning');
 };
 
 </script>

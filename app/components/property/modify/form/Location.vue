@@ -21,9 +21,15 @@
                         <div class="relative w-full">
                                 <label for="addressFull" class="block text-base font-semibold text-primary mb-2">Full
                                         Address</label>
-                                <input id="addressFull" type="text"
-                                        class="mt-1 block w-full border border-gray-300 rounded-md p-2 font-calibreLight text-lg text-primary"
-                                        v-model="formData.addressFull" />
+                                <div class="flex gap-2">
+                                        <input id="addressFull" type="text"
+                                                class="mt-1 block w-full border border-gray-300 rounded-md p-2 font-calibreLight text-lg text-primary"
+                                                v-model="formData.addressFull" />
+                                        <button type="button" @click="onSearchAddress"
+                                                class="mt-1 bg-gray-100 hover:bg-gray-200 text-gray-800 py-2 px-4 rounded-md transition duration-150 whitespace-nowrap">
+                                                Search Coords
+                                        </button>
+                                </div>
                         </div>
 
                         <div class="relative w-full">
@@ -67,6 +73,7 @@ import { reactive, computed } from 'vue';
 import { storeToRefs } from 'pinia';
 import { usePropertyStore } from '~/stores/property';
 import { useStatusStore } from '~/stores/status';
+import { useAddressProcessor } from '~/composables/useAddressProcessor';
 
 const emit = defineEmits(['close']);
 const propertyStore = usePropertyStore();
@@ -74,6 +81,7 @@ const statusStore = useStatusStore();
 const { currentProperty } = storeToRefs(propertyStore);
 const { isGlobalLoading: computedIsLoading } = storeToRefs(statusStore);
 const { showToast } = useAppToast();
+const { searchAddressCandidates, processSelectedAddress } = useAddressProcessor();
 
 const getInitialData = () => {
         return {
@@ -88,6 +96,49 @@ const getInitialData = () => {
 
 const formData = reactive(getInitialData());
 
+const onSearchAddress = async () => {
+        if (!formData.addressFull) {
+                showToast('Please enter a Full Address to search.', 'warning');
+                return;
+        }
+
+        statusStore.setGlobalLoading(true);
+        try {
+                const candidates = await searchAddressCandidates(formData.addressFull);
+
+                if (candidates.length === 0) {
+                        showToast('No address found.', 'warning');
+                } else {
+                        // For simplicity, pick the first candidate or show a modal if needed.
+                        // Here we assume the first one is the best match.
+                        const bestMatch = candidates[0];
+                        if (!bestMatch) {
+                                showToast('No valid address candidate found.', 'warning');
+                                return;
+                        }
+                        const details = await processSelectedAddress(bestMatch);
+
+                        if (details) {
+                                formData.addressCity = details.addressCity || formData.addressCity;
+                                formData.addressProvince = details.addressProvince || formData.addressProvince;
+                                formData.latitude = details.latitude;
+                                formData.longitude = details.longitude;
+                                // Optional: Update full address if the result is more accurate
+                                // formData.addressFull = details.addressFull; 
+
+                                showToast('Coordinates updated from address.', 'success');
+                        } else {
+                                showToast('Failed to process address details.', 'danger');
+                        }
+                }
+        } catch (e) {
+                console.error(e);
+                showToast('Error searching address.', 'danger');
+        } finally {
+                statusStore.setGlobalLoading(false);
+        }
+};
+
 const onSubmit = async () => {
         statusStore.setGlobalLoading(true);
         try {
@@ -101,4 +152,3 @@ const onSubmit = async () => {
         }
 };
 </script>
-

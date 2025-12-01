@@ -50,7 +50,7 @@ import { ref, computed } from 'vue';
 import { storeToRefs } from 'pinia';
 import { usePropertyStore } from '~/stores/property';
 import { useStatusStore } from '~/stores/status';
-import { useToast } from '~/composables/useToast';
+import { useAppToast } from '~/composables/useAppToast';
 import type { HistoryTypeEnum } from '~/types/property.type';
 
 const emit = defineEmits(['close']);

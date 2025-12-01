@@ -51,12 +51,30 @@
                         </table>
                 </div>
 
-                <LeaseDetailModal :isOpen="isModalOpen" :mode="modalMode" :leaseData="selectedLeaseData"
-                        @save="handleSave" @close="closeModal" />
-                <ModalsContainer />
+                <LeaseDetail :isOpen="isModalOpen" :mode="modalMode" :leaseData="selectedLeaseData" @save="handleSave"
+                        @close="closeModal" />
         </div>
 </template>
 
+<script setup lang="ts">
+import { ref, computed } from 'vue';
+import { storeToRefs } from 'pinia';
+import { usePropertyStore } from '~/stores/property';
+import { useStatusStore } from '~/stores/status';
+import { useFormat } from '~/composables/useFormat';
+import { useAppToast } from '~/composables/useAppToast';
+import { useConfirmModal } from '~/composables/useConfirmModal';
+import type { TransactionType, LeaseType } from '~/types/property.type';
+
+const { formatDateForDisplay, displayValue } = useFormat();
+const { showToast } = useAppToast();
+const { show: openConfirmModal } = useConfirmModal();
+
+const propertyStore = usePropertyStore();
+const statusStore = useStatusStore();
+const { currentProperty } = storeToRefs(propertyStore);
+
+const isModalOpen = ref(false);
 const modalMode = ref<'create' | 'edit'>('create');
 const selectedLeaseData = ref<LeaseType | null>(null); // 紐⑤떖???꾨떖???곗씠??
 

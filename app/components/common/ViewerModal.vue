@@ -1,23 +1,27 @@
 <template>
-    <UModal v-model="isOpen">
-        <div class="p-4 h-[80vh] w-full sm:max-w-5xl flex flex-col">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="text-lg font-bold text-primary">Viewer</h3>
-                <UButton color="gray" variant="ghost" icon="i-heroicons-x-mark-20-solid" @click="closeModal" />
+    <UModal :model-value="isOpen" @update:model-value="closeModal" fullscreen
+        :ui="{ background: 'bg-black/90', overlay: { background: 'bg-black/90' } }">
+        <div class="relative w-full h-full flex flex-col">
+            <!-- Header / Close Button -->
+            <div class="absolute top-4 right-4 z-50">
+                <UButton icon="i-heroicons-x-mark" color="white" variant="ghost" @click="closeModal">
+                    Close
+                </UButton>
             </div>
 
-            <div class="flex-1 overflow-auto bg-gray-100 flex justify-center items-center rounded-lg relative">
+            <!-- Content -->
+            <div class="flex-1 w-full h-full flex items-center justify-center overflow-hidden">
                 <template v-if="viewerType === 'pdf'">
-                    <iframe v-if="viewerUrl" :src="viewerUrl" class="w-full h-full" frameborder="0"></iframe>
-                    <div v-else class="text-gray-500">No PDF URL provided</div>
+                    <PdfViewer v-if="viewerUrl" :source="viewerUrl" />
+                    <div v-else class="text-white">No PDF URL provided</div>
                 </template>
 
                 <template v-else-if="viewerType === 'image'">
                     <img v-if="viewerUrl" :src="viewerUrl" alt="Preview" class="max-w-full max-h-full object-contain" />
-                    <div v-else class="text-gray-500">No Image URL provided</div>
+                    <div v-else class="text-white">No Image URL provided</div>
                 </template>
 
-                <div v-else class="text-gray-500">
+                <div v-else class="text-white">
                     Unsupported viewer type: {{ viewerType }}
                 </div>
             </div>
@@ -28,6 +32,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useStatusStore } from '~/stores/status';
+import PdfViewer from '~/components/common/PdfViewer.vue';
 
 const statusStore = useStatusStore();
 
