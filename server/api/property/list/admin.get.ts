@@ -1,6 +1,6 @@
 import { db, schema } from '~~/server/db/db';
 import { desc, asc } from 'drizzle-orm';
-import type { AdminListType } from '../../../../app/types/property.type';
+import type { AdminListType } from '~/types/property.type';
 
 export default defineEventHandler(async (event) => {
     try {

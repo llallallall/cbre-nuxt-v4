@@ -1,5 +1,4 @@
 import { db, schema } from '~~/server/db/db';
-import { v4 as uuidv4 } from 'uuid';
 
 import { z } from 'zod';
 
@@ -55,7 +54,7 @@ export default defineEventHandler(async (event) => {
 
     try {
         const [updated] = await db.insert(schema.facility).values({
-            id: uuidv4(),
+            id: crypto.randomUUID(),
             propertyId: propertyId,
             ...dbData
         })

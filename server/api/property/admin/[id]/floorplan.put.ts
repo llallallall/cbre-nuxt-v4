@@ -1,8 +1,7 @@
 import { db, schema } from '~~/server/db/db';
 import { eq } from 'drizzle-orm';
 import { mapFloorPlanListToDrizzle } from '~~/server/utils/fileMapper';
-import { v4 as uuidv4 } from 'uuid';
-import type { FloorPlanFileType } from '../../../../../app/types/property.type';
+import type { FloorPlanFileType } from '~/types/property.type';
 
 import { z } from 'zod';
 
@@ -35,7 +34,7 @@ export default defineEventHandler(async (event) => {
             if (dataToInsert.length > 0) {
                 await tx.insert(schema.floorPlanFile).values(
                     dataToInsert.map(item => ({
-                        id: uuidv4(),
+                        id: crypto.randomUUID(),
                         ...item
                     }))
                 );

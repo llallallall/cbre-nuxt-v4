@@ -1,6 +1,6 @@
 import { db, schema } from '~~/server/db/db';
 import { desc } from 'drizzle-orm';
-import type { PropertyType } from '../../../../app/types/property.type';
+import type { PropertyType } from '~/types/property.type';
 
 export default defineEventHandler(async (event) => {
     try {

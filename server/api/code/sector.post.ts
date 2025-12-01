@@ -1,5 +1,4 @@
 import { db, schema } from '~~/server/db/db';
-import { v4 as uuidv4 } from 'uuid';
 
 import { z } from 'zod';
 
@@ -12,7 +11,7 @@ export default defineEventHandler(async (event) => {
 
     try {
         const [newSector] = await db.insert(schema.sector).values({
-            id: uuidv4(),
+            id: crypto.randomUUID(),
             name: body.name,
         }).returning();
 

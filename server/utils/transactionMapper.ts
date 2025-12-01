@@ -1,4 +1,4 @@
-import type { LeaseCreatePayload, SaleCreatePayload } from '../../app/types/property.type';
+import type { LeaseCreatePayload, SaleCreatePayload } from '~/types/property.type';
 
 /**
  * 📅 날짜 변환 유틸리티 (string | Date | null -> Date | null)

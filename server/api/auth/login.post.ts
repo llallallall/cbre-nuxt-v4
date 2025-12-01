@@ -1,6 +1,5 @@
 import { db, schema } from '~~/server/db/db';
 import { eq } from 'drizzle-orm';
-import bcrypt from 'bcrypt';
 
 import { z } from 'zod';
 
@@ -25,7 +24,7 @@ export default defineEventHandler(async (event) => {
     }
 
     // 비밀번호 검증
-    const isValid = await bcrypt.compare(body.password, user.hashedPassword);
+    const isValid = await verifyPassword(user.hashedPassword, body.password);
 
     if (!isValid) {
         throw createError({

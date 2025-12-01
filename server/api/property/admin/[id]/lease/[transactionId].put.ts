@@ -1,6 +1,6 @@
 import { db, schema } from '~~/server/db/db';
 import { eq } from 'drizzle-orm';
-import type { LeaseCreatePayload } from '../../../../../../app/types/property.type';
+import type { LeaseCreatePayload } from '~/types/property.type';
 import { mapLeaseDetailFromClientToDrizzle, toDateOrNull } from '~~/server/utils/transactionMapper';
 
 import { z } from 'zod';

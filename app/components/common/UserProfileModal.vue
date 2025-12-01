@@ -1,7 +1,6 @@
 <template>
-        <UModal :model-value="isUserProfileModalOpen" @update:model-value="handleClose"
-                :ui="{ width: 'w-full max-w-4xl' }">
-                <UCard :ui="{ ring: '', divide: 'divide-y divide-gray-100', body: { padding: 'p-0' } }">
+        <UModal :model-value="isUserProfileModalOpen" @update:model-value="handleClose">
+                <UCard>
                         <div class="flex flex-col md:flex-row h-full max-h-[85vh] overflow-hidden">
                                 <!-- Sidebar -->
                                 <div
@@ -19,25 +18,25 @@
                                                                 class="w-5 h-5 mr-3 text-cbre-green" />
                                                         <span class="font-medium text-gray-500">Company:</span>
                                                         <span class="ml-2 text-gray-900">{{ profile?.company || 'N/A'
-                                                                }}</span>
+                                                        }}</span>
                                                 </div>
                                                 <div class="flex items-center text-sm">
                                                         <UIcon name="i-heroicons-briefcase"
                                                                 class="w-5 h-5 mr-3 text-cbre-green" />
                                                         <span class="font-medium text-gray-500">Department:</span>
                                                         <span class="ml-2 text-gray-900">{{ profile?.department || 'N/A'
-                                                                }}</span>
+                                                        }}</span>
                                                 </div>
                                                 <div class="flex items-center text-sm">
                                                         <UIcon name="i-heroicons-academic-cap"
                                                                 class="w-5 h-5 mr-3 text-cbre-green" />
                                                         <span class="font-medium text-gray-500">Title:</span>
                                                         <span class="ml-2 text-gray-900">{{ profile?.title || 'N/A'
-                                                                }}</span>
+                                                        }}</span>
                                                 </div>
                                         </div>
 
-                                        <UButton block color="gray" variant="solid" class="mt-auto mt-8"
+                                        <UButton block color="neutral" variant="solid" class="mt-auto mt-8"
                                                 @click="handleLogout">
                                                 Logout
                                         </UButton>
@@ -47,14 +46,14 @@
                                 <div class="w-full md:w-2/3 p-8 overflow-y-auto">
                                         <div class="flex justify-between items-center mb-6 border-b pb-2">
                                                 <h2 class="text-2xl font-bold text-gray-900">Edit Profile</h2>
-                                                <UButton color="gray" variant="ghost" icon="i-heroicons-x-mark-20-solid"
-                                                        @click="handleClose" />
+                                                <UButton color="neutral" variant="ghost"
+                                                        icon="i-heroicons-x-mark-20-solid" @click="handleClose" />
                                         </div>
 
                                         <form @submit.prevent="handleSave" class="space-y-6">
                                                 <UFormGroup label="Name">
-                                                        <UInput :model-value="userStore.userName" disabled color="gray"
-                                                                variant="outline" class="bg-gray-100" />
+                                                        <UInput :model-value="userStore.userName" disabled
+                                                                color="neutral" variant="outline" class="bg-gray-100" />
                                                 </UFormGroup>
 
                                                 <UFormGroup label="Company">

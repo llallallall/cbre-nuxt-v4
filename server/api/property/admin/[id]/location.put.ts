@@ -1,6 +1,5 @@
 import { db, schema } from '~~/server/db/db';
-import { v4 as uuidv4 } from 'uuid';
-import type { LocationType } from '../../../../../app/types/property.type';
+import type { LocationType } from '~/types/property.type';
 
 import { z } from 'zod';
 
@@ -24,7 +23,7 @@ export default defineEventHandler(async (event) => {
 
     try {
         const [updated] = await db.insert(schema.location).values({
-            id: uuidv4(),
+            id: crypto.randomUUID(),
             propertyId: propertyId,
             addressFull: body.addressFull,
             addressFullJibun: body.addressFullJibun,

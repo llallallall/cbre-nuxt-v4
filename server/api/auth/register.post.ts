@@ -1,7 +1,5 @@
 import { db, schema } from '~~/server/db/db';
 import { eq } from 'drizzle-orm';
-import bcrypt from 'bcrypt';
-import { v4 as uuidv4 } from 'uuid';
 
 import { z } from 'zod';
 
@@ -28,11 +26,10 @@ export default defineEventHandler(async (event) => {
     }
 
     // 비밀번호 해싱
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(body.password, salt);
+    const hashedPassword = await hashPassword(body.password);
 
     try {
-        const userId = uuidv4();
+        const userId = crypto.randomUUID();
 
         // 사용자 생성
         const [newUser] = await db.insert(schema.user).values({
@@ -50,7 +47,7 @@ export default defineEventHandler(async (event) => {
 
         // 프로필 생성
         await db.insert(schema.profile).values({
-            id: uuidv4(),
+            id: crypto.randomUUID(),
             userId: userId,
         });
 

@@ -1,5 +1,5 @@
 import { db, schema } from '~~/server/db/db';
-import type { UserType } from '../../../app/types/user.type';
+import type { UserType } from '~/types/user.type';
 
 export default defineEventHandler(async (event) => {
     try {

@@ -1,8 +1,7 @@
 import { db, schema } from '~~/server/db/db';
 import { eq } from 'drizzle-orm';
 import { mapBrochureListToDrizzle } from '~~/server/utils/fileMapper';
-import { v4 as uuidv4 } from 'uuid';
-import type { PropertyBrochureFileType } from '../../../../../app/types/property.type';
+import type { PropertyBrochureFileType } from '~/types/property.type';
 
 import { z } from 'zod';
 
@@ -40,7 +39,7 @@ export default defineEventHandler(async (event) => {
 
                 await tx.insert(schema.propertyBrochureFile).values(
                     dataToInsert.map(item => ({
-                        id: uuidv4(),
+                        id: crypto.randomUUID(),
                         ...item
                     }))
                 );

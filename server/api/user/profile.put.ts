@@ -1,6 +1,6 @@
 import { db, schema } from '~~/server/db/db';
 import { eq } from 'drizzle-orm';
-import type { ProfileType } from '../../../app/types/user.type';
+import type { ProfileType } from '~/types/user.type';
 
 interface UpdateProfilePayload {
     userId: string;

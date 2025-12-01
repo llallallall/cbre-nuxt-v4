@@ -42,7 +42,7 @@
                 <div id="RightMenu" class="flex items-center gap-4 z-20">
                         <!-- Transaction Type Filter -->
                         <UPopover v-model:open="openTransaction" :popper="{ placement: 'bottom-end' }">
-                                <UButton variant="ghost" color="gray"
+                                <UButton variant="ghost" color="neutral"
                                         :class="uiStore.isMenuOverlay ? 'text-cbre-green hover:bg-gray-100' : 'text-white hover:bg-white/10'">
                                         <span
                                                 class="font-light text-xs -translate-y-2 absolute top-1 right-2 opacity-70">Transaction</span>
@@ -50,7 +50,7 @@
                                         <UIcon name="i-heroicons-chevron-down" class="ml-2" />
                                 </UButton>
 
-                                <template #panel>
+                                <template #content>
                                         <div class="p-2 w-48 bg-white">
                                                 <div v-for="type in transaction" :key="type.name"
                                                         class="p-2 hover:bg-gray-100 cursor-pointer flex justify-between items-center rounded-none"
@@ -66,7 +66,7 @@
 
                         <!-- Sector Filter -->
                         <UPopover v-model:open="openSectors" :popper="{ placement: 'bottom-end' }">
-                                <UButton variant="ghost" color="gray"
+                                <UButton variant="ghost" color="neutral"
                                         :class="uiStore.isMenuOverlay ? 'text-cbre-green hover:bg-gray-100' : 'text-white hover:bg-white/10'">
                                         <span
                                                 class="font-light text-xs -translate-y-2 absolute top-1 right-2 opacity-70">Sector</span>
@@ -74,7 +74,7 @@
                                         <UIcon name="i-heroicons-chevron-down" class="ml-2" />
                                 </UButton>
 
-                                <template #panel>
+                                <template #content>
                                         <div class="p-2 w-56 bg-white grid grid-cols-1 gap-1">
                                                 <div v-for="option in sectors" :key="option.name"
                                                         class="p-2 hover:bg-gray-100 cursor-pointer flex justify-between items-center rounded-none"
@@ -157,8 +157,8 @@ const toggleSelectedSector = (option: { name: string }) => {
 
 const selectedSectorsDisplay = computed(() => {
         if (selectedSectors.value.length === 0) return 'All Types'
-        if (selectedSectors.value.length === 1) return selectedSectors.value[0].name
-        return `${selectedSectors.value[0].name} (+${selectedSectors.value.length - 1})`
+        if (selectedSectors.value.length === 1) return selectedSectors.value[0]?.name
+        return `${selectedSectors.value[0]?.name} (+${selectedSectors.value.length - 1})`
 })
 
 const collapseAll = () => {

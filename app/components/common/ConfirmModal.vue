@@ -1,12 +1,12 @@
 <template>
         <UModal :model-value="modelValue" @update:model-value="emit('update:modelValue', $event)">
-                <UCard :ui="{ ring: '', divide: 'divide-y divide-gray-100' }">
+                <UCard>
                         <template #header>
                                 <div class="flex items-center justify-between">
                                         <h3 class="text-base font-semibold leading-6 text-gray-900">
                                                 {{ title }}
                                         </h3>
-                                        <UButton color="gray" variant="ghost" icon="i-heroicons-x-mark-20-solid"
+                                        <UButton color="neutral" variant="ghost" icon="i-heroicons-x-mark-20-solid"
                                                 class="-my-1" @click="handleCancel" />
                                 </div>
                         </template>
@@ -22,7 +22,7 @@
                                         <UButton block color="cbre-green" variant="solid" @click="handleConfirm">
                                                 {{ confirmText }}
                                         </UButton>
-                                        <UButton block color="white" variant="solid"
+                                        <UButton block color="neutral" variant="solid"
                                                 class="border border-gray-300 text-gray-700 hover:bg-gray-50"
                                                 @click="handleCancel">
                                                 {{ cancelText }}

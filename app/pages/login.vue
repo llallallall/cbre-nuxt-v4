@@ -66,7 +66,6 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 
-
 definePageMeta({
     layout: 'auth-layout',
     middleware: 'auth',
@@ -76,8 +75,8 @@ definePageMeta({
     },
 });
 
-const { signIn } = useAuth();
 const router = useRouter();
+const { fetch: refreshSession } = useUserSession();
 
 const email = ref('');
 const password = ref('');
@@ -96,20 +95,19 @@ const handleLogin = async () => {
     errorMessage.value = '';
 
     try {
-        const res = await signIn('credentials', {
-            email: email.value,
-            password: password.value,
-            redirect: false, // 리다이렉트 수동 처리
+        await $fetch('/api/auth/login', {
+            method: 'POST',
+            body: {
+                email: email.value,
+                password: password.value,
+            }
         });
 
-        if (res?.error) {
-            errorMessage.value = 'Invalid email or password. Please try again.';
-        } else {
-            router.push({ name: "index" });
-        }
+        await refreshSession();
+        router.push({ name: "index" });
     } catch (error: any) {
         console.error('Login error:', error);
-        errorMessage.value = 'An unexpected error occurred.';
+        errorMessage.value = error.data?.message || 'Invalid email or password. Please try again.';
     } finally {
         isLoading.value = false;
     }

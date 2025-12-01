@@ -50,8 +50,7 @@
                 <div v-if="loggedIn" class="flex items-center h-full space-x-3">
                     <div class="w-10 h-10 rounded-full overflow-hidden cursor-pointer" @click="openUserProfileModal"
                         :title="`Logged in as ${user?.name || 'User'}`">
-                        <img :src="user?.avatar || '/images/avatar/avatar-placeholder.png'" alt="User Avatar"
-                            class="w-full h-full object-cover" />
+                        <img :src="userAvatar" alt="User Avatar" class="w-full h-full object-cover" />
                     </div>
                     <UButton size="sm" color="primary" variant="solid" @click="handleLogout">Logout</UButton>
                 </div>
@@ -78,14 +77,16 @@ const propertyStore = usePropertyStore()
 const uiStore = useUiStore()
 const { loggedIn, user, clear } = useUserSession()
 
+const userAvatar = computed(() => (user.value as any)?.avatar || '/images/avatar/avatar-placeholder.png')
+
 const { previousPropertyId, nextPropertyId } = storeToRefs(propertyStore)
 
 const goPrevious = () => {
-    if (propertyStore.setAssetNav(previousPropertyId.value)) router.push({ path: "/property/" + previousPropertyId.value })
+    if (previousPropertyId.value && propertyStore.setAssetNav(previousPropertyId.value)) router.push({ path: "/property/" + previousPropertyId.value })
 }
 
 const goNext = () => {
-    if (propertyStore.setAssetNav(nextPropertyId.value)) router.push({ path: "/property/" + nextPropertyId.value })
+    if (nextPropertyId.value && propertyStore.setAssetNav(nextPropertyId.value)) router.push({ path: "/property/" + nextPropertyId.value })
 }
 
 const openUserProfileModal = () => {

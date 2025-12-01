@@ -66,8 +66,7 @@ import { ref, computed } from 'vue';
 import { storeToRefs } from 'pinia';
 import { usePropertyStore } from '~/stores/property';
 import { useUiStore } from '~/stores/ui';
-import { useModal } from 'vue-final-modal';
-import ModalFullscreen from '~/components/modal/FullscreenModal.vue';
+import { useStatusStore } from '~/stores/status';
 
 // 💡 Enum 런타임 객체 정의
 const FloorFlanTypeEnum = {
@@ -79,9 +78,9 @@ const FloorFlanTypeEnum = {
 
 const propertyStore = usePropertyStore();
 const uiStore = useUiStore();
+const statusStore = useStatusStore();
 
 const { currentProperty: property } = storeToRefs(propertyStore);
-const currentImgUrl = ref<string>('');
 
 // 💡 파일 필터링 (Flat Array -> Grouped)
 const files = computed(() => property.value?.floorPlanFile || []);
@@ -100,19 +99,8 @@ const openEditPanel = () => {
         uiStore.openModifyForm(propertyStore.currentPropertyId, 'floorplan');
 };
 
-const { open, close } = useModal({
-        component: ModalFullscreen,
-        attrs: {
-                imgUrl: currentImgUrl,
-                onClose() { close() },
-                clickToClose: true,
-                escToClose: true,
-        } as any,
-});
-
 const openModal = (url: string) => {
-        currentImgUrl.value = url;
-        open();
+        statusStore.openViewerModal(url, 'image');
 };
 </script>
 

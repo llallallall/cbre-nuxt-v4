@@ -2,8 +2,7 @@ import { defineEventHandler, readMultipartFormData, createError } from 'h3';
 import { db, schema } from '~~/server/db/db';
 import { eq, and } from 'drizzle-orm';
 import ExcelJS from 'exceljs';
-import { v4 as uuidv4 } from 'uuid';
-import type { PropertyType } from '../../../../app/types/property.type';
+import type { PropertyType } from '~/types/property.type';
 
 export default defineEventHandler(async (event) => {
     const formData = await readMultipartFormData(event);
@@ -63,7 +62,7 @@ export default defineEventHandler(async (event) => {
                 if (!row['Ref_ID'] || !row['Property Name'] || !row['Sector ID']) continue;
 
                 const [property] = await tx.insert(schema.property).values({
-                    id: uuidv4(),
+                    id: crypto.randomUUID(),
                     name: row['Property Name'],
                     sectorId: row['Sector ID'],
                     // Add other fields as needed mapping from row
@@ -81,7 +80,7 @@ export default defineEventHandler(async (event) => {
                 const propId = refIdMap.get(row['Property_Ref_ID']?.toString());
                 if (propId) {
                     await tx.insert(schema.warehouse).values({
-                        id: uuidv4(),
+                        id: crypto.randomUUID(),
                         propertyId: propId,
                         temperatureType: row['Temperature Type'], // Ensure Enum matches
                         ratio: row['Ratio'] ? parseFloat(row['Ratio']) : null,
@@ -96,7 +95,7 @@ export default defineEventHandler(async (event) => {
                 const propId = refIdMap.get(row['Property_Ref_ID']?.toString());
                 if (propId) {
                     await tx.insert(schema.history).values({
-                        id: uuidv4(),
+                        id: crypto.randomUUID(),
                         propertyId: propId,
                         year: row['Year']?.toString(),
                         type: row['Type'], // Ensure Enum matches
@@ -111,7 +110,7 @@ export default defineEventHandler(async (event) => {
                 const propId = refIdMap.get(row['Property_Ref_ID']?.toString());
                 if (propId) {
                     await tx.insert(schema.floor).values({
-                        id: uuidv4(),
+                        id: crypto.randomUUID(),
                         propertyId: propId,
                         floor: parseInt(row['Floor']),
                         type: row['Type'], // UPPER / BASEMENT
@@ -138,7 +137,7 @@ export default defineEventHandler(async (event) => {
 
                     if (floor) {
                         await tx.insert(schema.floorPartial).values({
-                            id: uuidv4(),
+                            id: crypto.randomUUID(),
                             floorId: floor.id,
                             unitNumber: row['Unit Number']?.toString(),
                             tenant: row['Tenant'],
@@ -155,7 +154,7 @@ export default defineEventHandler(async (event) => {
                 const propId = refIdMap.get(row['Property_Ref_ID']?.toString());
                 if (propId && row['Ref_ID']) {
                     const [transaction] = await tx.insert(schema.transaction).values({
-                        id: uuidv4(),
+                        id: crypto.randomUUID(),
                         propertyId: propId,
                         type: row['Type'], // SALE / LEASE
                         year: row['Year']?.toString(),
@@ -176,7 +175,7 @@ export default defineEventHandler(async (event) => {
                 const transId = transRefIdMap.get(row['Transaction_Ref_ID']?.toString());
                 if (transId) {
                     await tx.insert(schema.sale).values({
-                        id: uuidv4(),
+                        id: crypto.randomUUID(),
                         transactionId: transId,
                         saleType: row['Sale Type'], // ENBLOC / PARTIAL
                         priceKrw: row['Price (KRW)'] ? parseInt(row['Price (KRW)']) : null,
@@ -192,7 +191,7 @@ export default defineEventHandler(async (event) => {
                 const transId = transRefIdMap.get(row['Transaction_Ref_ID']?.toString());
                 if (transId) {
                     await tx.insert(schema.lease).values({
-                        id: uuidv4(),
+                        id: crypto.randomUUID(),
                         transactionId: transId,
                         leaseType: row['Lease Type'], // ASKING / ACTUAL
                         monthlyRent: row['Monthly Rent'] ? parseInt(row['Monthly Rent']) : null,

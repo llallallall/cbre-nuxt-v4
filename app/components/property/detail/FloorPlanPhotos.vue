@@ -3,86 +3,85 @@
                 Floor Plan
         </div>
 
-        <ul
-                class="cbre_bulletList font-calibreLight text-lg text-cbre-green grid grid-cols-1 lg:grid-cols-2 3xl:grid-cols-2 ">
-                <li class="flex items-center">
-                        <div class="relative w-full max-h-[600px] p-4 select-none">
-                                <div
-                                        class="absolute h-[30px] top-0 left-0 pl-[16px] font-financier text-xl text-cbre-green z-10 ">
-                                        Logitudinal Section
-                                </div>
-
-                                <div v-if="longitudinalPhotos.length > 0" class="flex-1 flex flex-col mt-[30px]">
-                                        <ImageSlide :images="(longitudinalPhotos as any[])" />
-                                </div>
-                        </div>
-                </li>
-        </ul>
-
-        <UAccordion :items="[{ label: 'Each Floor Plan', slot: 'content' }]" default-open
-                :ui="{ wrapper: 'w-full', item: { padding: 'pt-0 pb-2' } }">
-                <template #default="{ item, open }">
+        <UAccordion :items="accordionItems" class="bg-white mb-[20px] border-t border-gray-200">
+                <template #default="{ open }">
                         <UButton color="neutral" variant="ghost"
-                                class="w-full flex justify-between items-center py-2 px-4">
-                                <span class="font-financier text-xl text-cbre-green">{{ item.label }}</span>
-                                <div class="flex items-center gap-2">
-                                        <div
-                                                class="bg-cbre-green/10 text-cbre-green rounded-full px-4 py-1 min-w-[100px] flex justify-center items-center font-bold">
-                                                {{ upperFloors.length + basementFloors.length }}
+                                class="border-b border-gray-200 dark:border-gray-700 rounded-none p-3">
+                                <template #leading>
+                                        <div class="w-full text-left">
+                                                <span class="font-financier text-xl text-cbre-green">Floor Plan
+                                                        Photos</span>
                                         </div>
+                                </template>
+                                <template #trailing>
                                         <UIcon :name="open ? 'i-heroicons-chevron-up' : 'i-heroicons-chevron-down'"
-                                                class="w-5 h-5" />
-                                </div>
+                                                class="w-5 h-5 ms-auto transform transition-transform duration-200" />
+                                </template>
                         </UButton>
                 </template>
-                <template #content>
-                        <div class="w-full font-calibreLight text-lg text-cbre-green ">
-                                <ul
-                                        class="w-full font-calibreLight text-lg text-cbre-green gap-10 grid grid-cols-2 lg:grid-cols-2 3xl:grid-cols-2">
 
-                                        <li v-if="upperFloors.length > 0" v-for="(floor, index) in upperFloors"
-                                                :key="'up-' + index" class="relative flex items-center ml-8">
-                                                <div
-                                                        class="relative w-full max-h-[500px] flex justify-center select-none bg-gray-200/25 ">
-                                                        <div
-                                                                class="absolute h-[30px] top-0 left-0 pl-[20px] font-financier text-xl text-cbre-green z-10">
-                                                                {{ formatFloorType(floor.type) }} {{
-                                                                        floor.floor }} F
-                                                        </div>
-                                                        <div class="absolute top-0 right-0 text-cbre-green hover:text-white backdrop-blur-sm bg-white/25 hover:bg-cbre-green/75 cursor-pointer p-2"
-                                                                @click="() => { if (floor.fileUrl) openViewer(floor.fileUrl) }">
-                                                                <UIcon name="i-heroicons-arrows-pointing-out"
-                                                                        class="w-6 h-6" />
-                                                        </div>
-                                                        <div class="mt-[30px] flex-1 flex flex-col">
-                                                                <img :src="floor.fileUrl || ''"
-                                                                        class="object-contain w-[calc(100%-2.5rem)] max-h-[500px] p-5 pt-10" />
-                                                        </div>
+                <template #content="scope">
+                        <div class="w-full font-calibreLight text-lg text-cbre-green p-4">
+                                <!-- Longitudinal Section -->
+                                <div v-if="longitudinalPhotos.length > 0" class="mb-8">
+                                        <h3 class="font-financier text-xl text-cbre-green mb-4">Longitudinal Section
+                                        </h3>
+                                        <div class="grid grid-cols-2 gap-4">
+                                                <div v-for="(photo, index) in longitudinalPhotos" :key="'long-' + index"
+                                                        class="relative">
+                                                        <img :src="photo.fileUrl || ''"
+                                                                class="object-contain w-full max-h-[300px] border border-gray-200 cursor-pointer hover:opacity-90"
+                                                                @click="() => { if (photo.fileUrl) openViewer(photo.fileUrl) }" />
                                                 </div>
-                                        </li>
+                                        </div>
+                                </div>
 
-                                        <li v-if="basementFloors.length > 0" v-for="(floor, index) in basementFloors"
-                                                :key="'base-' + index" class="relative flex items-center ml-8">
-                                                <div
-                                                        class="relative w-full max-h-[500px] flex justify-center select-none bg-gray-200/25 ">
-                                                        <div
-                                                                class="absolute h-[30px] top-0 left-0 pl-[20px] font-financier text-xl text-cbre-green z-10">
-                                                                {{ formatFloorType(floor.type) }} {{
-                                                                        floor.floor }} F
-                                                        </div>
-                                                        <div class="absolute top-0 right-0 text-cbre-green hover:text-white backdrop-blur-sm bg-white/25 hover:bg-cbre-green/75 cursor-pointer p-2"
-                                                                @click="() => { if (floor.fileUrl) openViewer(floor.fileUrl) }">
-                                                                <UIcon name="i-heroicons-arrows-pointing-out"
-                                                                        class="w-6 h-6" />
-                                                        </div>
-                                                        <div class="mt-[30px] flex-1 flex flex-col">
-                                                                <img :src="floor.fileUrl || ''"
-                                                                        class="object-contain w-[calc(100%-2.5rem)] max-h-[500px] p-5 pt-10" />
-                                                        </div>
+                                <!-- Cross Section -->
+                                <div v-if="crossPhotos.length > 0" class="mb-8">
+                                        <h3 class="font-financier text-xl text-cbre-green mb-4">Cross Section</h3>
+                                        <div class="grid grid-cols-2 gap-4">
+                                                <div v-for="(photo, index) in crossPhotos" :key="'cross-' + index"
+                                                        class="relative">
+                                                        <img :src="photo.fileUrl || ''"
+                                                                class="object-contain w-full max-h-[300px] border border-gray-200 cursor-pointer hover:opacity-90"
+                                                                @click="() => { if (photo.fileUrl) openViewer(photo.fileUrl) }" />
                                                 </div>
-                                        </li>
+                                        </div>
+                                </div>
 
-                                </ul>
+                                <!-- Upper Floors -->
+                                <div v-if="upperFloors.length > 0" class="mb-8">
+                                        <h3 class="font-financier text-xl text-cbre-green mb-4">Upper Floors</h3>
+                                        <div class="grid grid-cols-2 gap-4">
+                                                <div v-for="(floor, index) in upperFloors" :key="'up-' + index"
+                                                        class="relative">
+                                                        <div class="mb-2">{{ formatFloorType(floor.type) }} {{
+                                                                floor.floor }}F</div>
+                                                        <img :src="floor.fileUrl || ''"
+                                                                class="object-contain w-full max-h-[300px] border border-gray-200 cursor-pointer hover:opacity-90"
+                                                                @click="() => { if (floor.fileUrl) openViewer(floor.fileUrl) }" />
+                                                </div>
+                                        </div>
+                                </div>
+
+                                <!-- Basement Floors -->
+                                <div v-if="basementFloors.length > 0" class="mb-8">
+                                        <h3 class="font-financier text-xl text-cbre-green mb-4">Basement Floors</h3>
+                                        <div class="grid grid-cols-2 gap-4">
+                                                <div v-for="(floor, index) in basementFloors" :key="'base-' + index"
+                                                        class="relative">
+                                                        <div class="mb-2">{{ formatFloorType(floor.type) }} {{
+                                                                floor.floor }}F</div>
+                                                        <img :src="floor.fileUrl || ''"
+                                                                class="object-contain w-full max-h-[300px] border border-gray-200 cursor-pointer hover:opacity-90"
+                                                                @click="() => { if (floor.fileUrl) openViewer(floor.fileUrl) }" />
+                                                </div>
+                                        </div>
+                                </div>
+
+                                <div v-if="files.length === 0" class="text-center text-gray-500">
+                                        No floor plan photos available.
+                                </div>
                         </div>
                 </template>
         </UAccordion>
@@ -92,7 +91,6 @@
 import { computed } from 'vue';
 import { useStatusStore } from '~/stores/status';
 import type { FloorPlanFileType } from '~/types/property.type';
-import ImageSlide from '~/components/property/ImageSlide.vue';
 
 const FloorFlanTypeEnum = {
         LOGITUDINALSECTION: 'LOGITUDINALSECTION',
@@ -100,6 +98,8 @@ const FloorFlanTypeEnum = {
         UPPERSECTION: 'UPPERSECTION',
         BASEMENTSECTION: 'BASEMENTSECTION',
 } as const;
+
+const accordionItems = [{ label: 'Floor Plan Details', defaultOpen: true, slot: 'content' }];
 
 const props = defineProps<{
         floorPlanFile: FloorPlanFileType[] | null | undefined

@@ -1,7 +1,6 @@
 import { db, schema } from '~~/server/db/db';
 import { eq } from 'drizzle-orm';
-import { v4 as uuidv4 } from 'uuid';
-import type { AccessibilityType } from '../../../../../app/types/property.type';
+import type { AccessibilityType } from '~/types/property.type';
 
 import { z } from 'zod';
 
@@ -24,7 +23,7 @@ export default defineEventHandler(async (event) => {
 
     try {
         const [updated] = await db.insert(schema.accessibility).values({
-            id: uuidv4(),
+            id: crypto.randomUUID(),
             propertyId: propertyId,
             distanceToIc: body.distanceToIc,
             timeTakenToCityHall: body.timeTakenToCityHall,

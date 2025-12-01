@@ -14,144 +14,103 @@
       </div>
     </div>
 
-    <div>
-      <div class="shadow-lg rounded-xl overflow-hidden bg-white border border-gray-200">
-        <table class="min-w-full divide-y divide-gray-200">
-          <thead class="bg-cbre-green/10 hover:bg-cbre-green/25 ">
-            <tr>
-              <th class="py-3 px-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-16">
-                Details
-              </th>
-              <th class="py-3 px-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                Floor & Type
-              </th>
-              <th
-                class="py-3 px-4 text-right text-xs font-semibold text-gray-700 uppercase tracking-wider hidden sm:table-cell">
-                Ceiling Height
-              </th>
-              <th
-                class="py-3 px-4 text-right text-xs font-semibold text-gray-700 uppercase tracking-wider hidden md:table-cell">
-                Floor Load
-              </th>
-              <th class="py-3 px-4 text-right text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                Total Area (㎡)
-              </th>
-              <th
-                class="py-3 px-4 text-right text-xs font-semibold text-gray-700 uppercase tracking-wider hidden lg:table-cell">
-                Truck Berths
-              </th>
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-gray-100">
-            <template v-for="(floorItem, index) in info" :key="floorItem.id">
-              <tr class="hover:bg-cbre-green/5 transition duration-150">
-                <td class="py-3 px-4 text-sm font-medium text-gray-900 text-center">
-                  <button @click="toggleExpand(floorItem.id)" :aria-expanded="expandedFloors.includes(floorItem.id)"
-                    class="p-1 rounded-full text-cbre-green hover:bg-cbre-green/20 transition duration-150 focus:outline-none"
-                    :class="{ 'rotate-90': expandedFloors.includes(floorItem.id) }">
-                    <UIcon name="i-heroicons-chevron-right" class="w-5 h-5 transition-transform transform" />
-                  </button>
-                </td>
-                <td class="py-3 px-4 text-sm font-medium text-gray-800">
-                  {{ floorItem.type === 'BASEMENT' ? 'B' : '' }}{{ Math.abs(floorItem.floor || 0) }}F
-                  <span class="text-gray-400 text-xs ml-1">({{ floorItem.use || 'General' }})</span>
-                </td>
-                <td class="py-3 px-4 text-sm text-gray-500 text-right hidden sm:table-cell">{{
-                  formatNumber(floorItem.ceilingHeight) }} {{ floorItem.ceilingHeightUnit || 'm' }}
-                </td>
-                <td class="py-3 px-4 text-sm text-gray-500 text-right hidden md:table-cell">{{
-                  formatNumber(floorItem.floorLoad) }} {{ floorItem.floorLoadUnit || 't/㎡' }}</td>
-                <td class="py-3 px-4 text-sm font-medium text-gray-800 text-right">{{
-                  formatNumber(floorItem.totalAreaSqm) }}</td>
-                <td class="py-3 px-4 text-sm text-gray-500 text-right hidden lg:table-cell">{{
-                  floorItem.truckBerths ||
-                  '0' }}</td>
-              </tr>
+    <div class="shadow-lg rounded-xl overflow-hidden bg-white border border-gray-200">
+      <UTable :rows="(info as any[])" :columns="(columns as any[])" :ui="{
+        th: { base: 'px-4 py-3 text-gray-700 font-semibold text-xs' },
+        td: { base: 'px-4 py-3 text-gray-800 text-sm' }
+      } as any">
+        <!-- Expand Button Column -->
+        <template #expand-data="{ row }">
+          <UButton variant="ghost" color="neutral"
+            :icon="(row as any).isExpanded ? 'i-heroicons-chevron-down' : 'i-heroicons-chevron-right'"
+            @click="(row as any).isExpanded = !(row as any).isExpanded" />
+        </template>
 
-              <tr v-if="expandedFloors.includes(floorItem.id)" class="bg-gray-50">
-                <td :colspan="6" class="p-0">
-                  <div class="px-4 py-4 border-t border-gray-200 shadow-inner">
-                    <h4 class="text-sm font-bold text-gray-700 mb-3 ml-1">Unit Details ({{
-                      floorItem.floorPartial ?
-                        floorItem.floorPartial.length : 0 }})</h4>
+        <!-- Floor & Type Column -->
+        <template #floorDetails-data="{ row }">
+          {{ (row as any).type === 'BASEMENT' ? 'B' : '' }}{{ Math.abs((row as any).floor || 0) }}F
+          <span class="text-gray-400 text-xs ml-1">({{ (row as any).use || 'General' }})</span>
+        </template>
 
-                    <div v-if="floorItem.floorPartial && floorItem.floorPartial.length > 0"
-                      class="overflow-x-auto rounded-lg border border-gray-200">
-                      <table class="min-w-full bg-white text-xs">
-                        <thead class="bg-gray-100 border-b border-gray-200">
-                          <tr>
-                            <th class="py-2 px-3 text-left font-semibold text-gray-600 w-20">
-                              Unit No.</th>
-                            <th class="py-2 px-3 text-left font-semibold text-gray-600 w-32">
-                              Tenant</th>
-                            <th class="py-2 px-3 text-right font-semibold text-gray-600 w-24">
-                              Area (PY)</th>
-                            <th class="py-2 px-3 text-right font-semibold text-gray-600 hidden sm:table-cell">
-                              Deposit
-                            </th>
-                            <th class="py-2 px-3 text-right font-semibold text-gray-600 hidden md:table-cell">
-                              Rent</th>
-                            <th class="py-2 px-3 text-right font-semibold text-gray-600 hidden md:table-cell">
-                              Mgt Fee
-                            </th>
-                            <th class="py-2 px-3 text-center font-semibold text-gray-600 hidden lg:table-cell">
-                              Term</th>
-                            <th class="py-2 px-3 text-left font-semibold text-gray-600 hidden xl:table-cell">
-                              Rent Free
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-100">
-                          <tr v-for="partial in floorItem.floorPartial" :key="partial.id" class="hover:bg-blue-50/50">
-                            <td class="py-2 px-3 font-medium text-gray-800">{{
-                              partial.unitNumber || '-' }}</td>
-                            <td class="py-2 px-3 text-gray-600 truncate max-w-[150px]" :title="partial.tenant || ''">{{
-                              partial.tenant || 'Vacant' }}</td>
-                            <td class="py-2 px-3 font-medium text-indigo-600 text-right">{{
-                              formatNumber(partial.leaseAreaPy) }}</td>
-                            <td class="py-2 px-3 text-gray-600 text-right hidden sm:table-cell">
-                              {{
-                                formatNumber(partial.depositKrw) }}</td>
-                            <td class="py-2 px-3 text-gray-600 text-right hidden md:table-cell">
-                              {{
-                                formatNumber(partial.monthlyRent) }}</td>
-                            <td class="py-2 px-3 text-gray-600 text-right hidden md:table-cell">
-                              {{
-                                formatNumber(partial.monthlyManagementFee) }}</td>
-                            <td class="py-2 px-3 text-gray-500 text-center hidden lg:table-cell">
-                              {{ partial.leaseStartDate ?
-                                formatDate(partial.leaseStartDate) : '' }}
-                              <span v-if="partial.leaseStartDate && partial.leaseEndDate">~</span>
-                              {{ partial.leaseEndDate ? formatDate(partial.leaseEndDate) :
-                                '' }}
-                            </td>
-                            <td class="py-2 px-3 text-gray-500 hidden xl:table-cell truncate max-w-[100px]"
-                              :title="partial.rentFree || ''">{{ partial.rentFree || '-'
-                              }}</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                    <p v-else class="text-sm text-gray-400 italic ml-1">No detailed unit information
-                      available for this
-                      floor.</p>
+        <!-- Numeric Columns -->
+        <template #ceilingHeight-data="{ row }">
+          <div class="text-right">{{ formatNumber((row as any).ceilingHeight) }} {{ (row as any).ceilingHeightUnit ||
+            'm' }}
+          </div>
+        </template>
+        <template #floorLoad-data="{ row }">
+          <div class="text-right">{{ formatNumber((row as any).floorLoad) }} {{ (row as any).floorLoadUnit || 't/㎡' }}
+          </div>
+        </template>
+        <template #totalAreaSqm-data="{ row }">
+          <div class="text-right font-medium">{{ formatNumber((row as any).totalAreaSqm) }}</div>
+        </template>
+        <template #truckBerths-data="{ row }">
+          <div class="text-right">{{ (row as any).truckBerths || '0' }}</div>
+        </template>
+
+        <!-- Expand Slot -->
+        <template #expand="{ row }">
+          <div class="p-4 bg-gray-50 border-t border-gray-200 shadow-inner">
+            <h4 class="text-sm font-bold text-gray-700 mb-3 ml-1">
+              Unit Details ({{ (row as any).floorPartial ? (row as any).floorPartial.length : 0 }})
+            </h4>
+
+            <div v-if="(row as any).floorPartial && (row as any).floorPartial.length > 0"
+              class="overflow-x-auto rounded-lg border border-gray-200 bg-white">
+              <UTable :rows="((row as any).floorPartial as any[])" :columns="(subColumns as any[])" :ui="{
+                th: { base: 'px-3 py-2 text-gray-600 font-semibold text-xs' },
+                td: { base: 'px-3 py-2 text-gray-600 text-sm' }
+              } as any">
+                <template #unitNumber-data="{ row: subRow }">
+                  <span class="font-medium text-gray-800">{{ (subRow as any).unitNumber || '-' }}</span>
+                </template>
+                <template #tenant-data="{ row: subRow }">
+                  <span class="truncate max-w-[150px]" :title="(subRow as any).tenant || ''">{{ (subRow as any).tenant
+                    ||
+                    'Vacant' }}</span>
+                </template>
+                <template #leaseAreaPy-data="{ row: subRow }">
+                  <div class="text-right font-medium text-indigo-600">{{ formatNumber((subRow as any).leaseAreaPy) }}
                   </div>
-                </td>
-              </tr>
-            </template>
-          </tbody>
-        </table>
-      </div>
+                </template>
+                <template #depositKrw-data="{ row: subRow }">
+                  <div class="text-right">{{ formatNumber((subRow as any).depositKrw) }}</div>
+                </template>
+                <template #monthlyRent-data="{ row: subRow }">
+                  <div class="text-right">{{ formatNumber((subRow as any).monthlyRent) }}</div>
+                </template>
+                <template #monthlyManagementFee-data="{ row: subRow }">
+                  <div class="text-right">{{ formatNumber((subRow as any).monthlyManagementFee) }}</div>
+                </template>
+                <template #term-data="{ row: subRow }">
+                  <div class="text-center">
+                    {{ (subRow as any).leaseStartDate ? formatDate((subRow as any).leaseStartDate) : '' }}
+                    <span v-if="(subRow as any).leaseStartDate && (subRow as any).leaseEndDate">~</span>
+                    {{ (subRow as any).leaseEndDate ? formatDate((subRow as any).leaseEndDate) : '' }}
+                  </div>
+                </template>
+                <template #rentFree-data="{ row: subRow }">
+                  <span class="truncate max-w-[100px]" :title="(subRow as any).rentFree || ''">
+                    {{ (subRow as any).rentFree || '-' }}</span>
+                </template>
+              </UTable>
+            </div>
+            <p v-else class="text-sm text-gray-400 italic ml-1">
+              No detailed unit information available for this floor.
+            </p>
+          </div>
+        </template>
+      </UTable>
+    </div>
 
-      <div v-if="!info || info.length === 0" class="text-center py-10 text-gray-500">
-        <p>No floor data available to display.</p>
-      </div>
+    <div v-if="!info || info.length === 0" class="text-center py-10 text-gray-500">
+      <p>No floor data available to display.</p>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, type Ref } from 'vue';
 import { useFormat } from '~/composables/useFormat';
 import type { FloorType } from '~/types/property.type';
 
@@ -163,16 +122,25 @@ const props = withDefaults(defineProps<{
 
 const { numberFormat } = useFormat();
 
-const expandedFloors: Ref<string[]> = ref([]);
+const columns = [
+  { key: 'expand', label: 'Details', class: 'w-16' },
+  { key: 'floorDetails', label: 'Floor & Type' },
+  { key: 'ceilingHeight', label: 'Ceiling Height', class: 'hidden sm:table-cell text-right' },
+  { key: 'floorLoad', label: 'Floor Load', class: 'hidden md:table-cell text-right' },
+  { key: 'totalAreaSqm', label: 'Total Area (㎡)', class: 'text-right' },
+  { key: 'truckBerths', label: 'Truck Berths', class: 'hidden lg:table-cell text-right' }
+];
 
-const toggleExpand = (floorId: string) => {
-  const index = expandedFloors.value.indexOf(floorId);
-  if (index > -1) {
-    expandedFloors.value.splice(index, 1);
-  } else {
-    expandedFloors.value.push(floorId);
-  }
-};
+const subColumns = [
+  { key: 'unitNumber', label: 'Unit No.', class: 'w-20' },
+  { key: 'tenant', label: 'Tenant', class: 'w-32' },
+  { key: 'leaseAreaPy', label: 'Area (PY)', class: 'text-right w-24' },
+  { key: 'depositKrw', label: 'Deposit', class: 'text-right hidden sm:table-cell' },
+  { key: 'monthlyRent', label: 'Rent', class: 'text-right hidden md:table-cell' },
+  { key: 'monthlyManagementFee', label: 'Mgt Fee', class: 'text-right hidden md:table-cell' },
+  { key: 'term', label: 'Term', class: 'text-center hidden lg:table-cell' },
+  { key: 'rentFree', label: 'Rent Free', class: 'hidden xl:table-cell' }
+];
 
 const formatNumber = (value: number | null | undefined): string => {
   if (value === null || value === undefined) return '-';
@@ -185,11 +153,4 @@ const formatDate = (date: Date | string | null): string => {
   if (isNaN(dateObj.getTime())) return '-';
   return dateObj.toLocaleDateString('ko-KR', { year: '2-digit', month: '2-digit', day: '2-digit' });
 };
-
 </script>
-
-<style scoped>
-.rotate-90 {
-  transform: rotate(90deg);
-}
-</style>

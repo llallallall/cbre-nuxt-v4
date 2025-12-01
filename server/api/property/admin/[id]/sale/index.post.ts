@@ -1,6 +1,5 @@
 import { db, schema } from '~~/server/db/db';
-import { v4 as uuidv4 } from 'uuid';
-import type { SaleCreatePayload } from '../../../../../../app/types/property.type';
+import type { SaleCreatePayload } from '~/types/property.type';
 import { mapSaleDetailFromClientToDrizzle, toDateOrNull } from '~~/server/utils/transactionMapper';
 
 import { z } from 'zod';
@@ -32,7 +31,7 @@ export default defineEventHandler(async (event) => {
 
     try {
         const result = await db.transaction(async (tx) => {
-            const transactionId = uuidv4();
+            const transactionId = crypto.randomUUID();
 
             // 1. Transaction 생성
             const [newTransaction] = await tx.insert(schema.transaction).values({
@@ -46,7 +45,7 @@ export default defineEventHandler(async (event) => {
 
             // 2. Sale 생성
             await tx.insert(schema.sale).values({
-                id: uuidv4(),
+                id: crypto.randomUUID(),
                 transactionId: transactionId,
                 ...mapSaleDetailFromClientToDrizzle(body)
             });

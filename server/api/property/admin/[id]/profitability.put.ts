@@ -1,6 +1,6 @@
 import { db, schema } from '~~/server/db/db';
-import { v4 as uuidv4 } from 'uuid';
-import type { ProfitabilityType } from '../../../../../app/types/property.type';
+import { eq } from 'drizzle-orm';
+import type { ProfitabilityType } from '~/types/property.type';
 
 import { z } from 'zod';
 
@@ -23,7 +23,7 @@ export default defineEventHandler(async (event) => {
 
     try {
         const [updated] = await db.insert(schema.profitability).values({
-            id: uuidv4(),
+            id: crypto.randomUUID(),
             propertyId: propertyId,
             grade: data.grade,
             effectiveRatio: data.effectiveRatio,

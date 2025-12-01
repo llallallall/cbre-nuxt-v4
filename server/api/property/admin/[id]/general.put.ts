@@ -1,7 +1,6 @@
 import { db, schema } from '~~/server/db/db';
 import { eq } from 'drizzle-orm';
-import { v4 as uuidv4 } from 'uuid';
-import type { TemperatureTypeEnum } from '../../../../../app/types/property.type';
+import type { TemperatureTypeEnum } from '~/types/property.type';
 
 import { z } from 'zod';
 
@@ -45,7 +44,7 @@ export default defineEventHandler(async (event) => {
             if (body.warehouse && body.warehouse.length > 0) {
                 await tx.insert(schema.warehouse).values(
                     body.warehouse.map((item) => ({
-                        id: uuidv4(),
+                        id: crypto.randomUUID(),
                         propertyId: propertyId,
                         temperatureType: item.temperatureType,
                         ratio: item.ratio,

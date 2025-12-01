@@ -33,8 +33,8 @@
 import { onMounted, computed } from 'vue';
 import { useUserStore } from '~/stores/user';
 import { useUiStore } from '~/stores/ui';
-import { useUserSession } from '~/composables/useUserSession'; // Assuming this exists or using nuxt-auth-utils
-import UserProfileModal from '~/components/modal/UserProfileModal.vue';
+
+import UserProfileModal from '~/components/common/UserProfileModal.vue';
 
 const userStore = useUserStore();
 const uiStore = useUiStore();

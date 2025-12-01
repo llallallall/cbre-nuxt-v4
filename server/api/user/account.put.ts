@@ -1,6 +1,5 @@
 import { db, schema } from '~~/server/db/db';
 import { eq } from 'drizzle-orm';
-import bcrypt from 'bcrypt';
 
 import { z } from 'zod';
 
@@ -20,8 +19,7 @@ export default defineEventHandler(async (event) => {
     }
 
     if (body.password) {
-        const salt = await bcrypt.genSalt(10);
-        updateData.password = await bcrypt.hash(body.password, salt);
+        updateData.hashedPassword = await hashPassword(body.password);
     }
 
     if (Object.keys(updateData).length === 0) {

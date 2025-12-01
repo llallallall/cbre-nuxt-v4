@@ -38,8 +38,7 @@
                 <div v-if="loggedIn" class="flex items-center h-full space-x-3">
                     <div class="w-10 h-10 rounded-full overflow-hidden cursor-pointer" @click="openUserProfileModal"
                         :title="`Logged in as ${user?.name || 'User'}`">
-                        <img :src="user?.avatar || '/images/avatar/avatar-placeholder.png'" alt="User Avatar"
-                            class="w-full h-full object-cover" />
+                        <img :src="userAvatar" alt="User Avatar" class="w-full h-full object-cover" />
                     </div>
                     <UButton size="sm" color="primary" variant="solid" @click="handleLogout">Logout</UButton>
                 </div>
@@ -75,6 +74,7 @@ const uiStore = useUiStore()
 
 // Role handling (assuming user object has role)
 const userRole = computed(() => (user.value as any)?.role || 'USER')
+const userAvatar = computed(() => (user.value as any)?.avatar || '/images/avatar/avatar-placeholder.png')
 
 interface NavItem {
     label: string

@@ -2,7 +2,7 @@ import type {
     FloorPlanFileType,
     PropertyImageFileType,
     PropertyBrochureFileType
-} from '../../app/types/property.type';
+} from '~/types/property.type';
 
 // =======================================================
 // 1. 공통 필드 매퍼 (Client camelCase -> DB camelCase for Drizzle)

@@ -1,10 +1,9 @@
 <template>
-    <UModal :model-value="isOpen" @update:model-value="closeModal" fullscreen
-        :ui="{ background: 'bg-black/90', overlay: { background: 'bg-black/90' } }">
-        <div class="relative w-full h-full flex flex-col">
+    <UModal :model-value="isOpen" @update:model-value="closeModal" fullscreen>
+        <div class="relative w-full h-full flex flex-col bg-black/90">
             <!-- Header / Close Button -->
             <div class="absolute top-4 right-4 z-50">
-                <UButton icon="i-heroicons-x-mark" color="white" variant="ghost" @click="closeModal">
+                <UButton icon="i-heroicons-x-mark" variant="ghost" class="text-white" @click="closeModal">
                     Close
                 </UButton>
             </div>

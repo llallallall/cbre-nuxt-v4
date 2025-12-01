@@ -1,7 +1,6 @@
 import { db, schema } from '~~/server/db/db';
 import { eq } from 'drizzle-orm';
-import { v4 as uuidv4 } from 'uuid';
-import type { ProfileType } from '../../../app/types/user.type';
+import type { ProfileType } from '~/types/user.type';
 
 interface CreateProfilePayload {
     userId: string;
@@ -38,7 +37,7 @@ export default defineEventHandler(async (event) => {
         }
 
         const [newProfile] = await db.insert(schema.profile).values({
-            id: uuidv4(),
+            id: crypto.randomUUID(),
             userId: body.userId,
             imageUrl: body.imageUrl,
             company: body.company,

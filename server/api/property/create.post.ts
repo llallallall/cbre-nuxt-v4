@@ -1,5 +1,4 @@
 import { db, schema } from '~~/server/db/db';
-import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
 
 const createPropertySchema = z.object({
@@ -11,9 +10,8 @@ export default defineEventHandler(async (event) => {
     const body = await readValidatedBody(event, (body) => createPropertySchema.parse(body));
 
     try {
-        // 최소 정보로 자산 레코드 생성
         const [newProperty] = await db.insert(schema.property).values({
-            id: uuidv4(),
+            id: crypto.randomUUID(),
             name: body.name,
             sectorId: body.sectorId,
             // 나머지 필드는 default 값 또는 null로 생성됨

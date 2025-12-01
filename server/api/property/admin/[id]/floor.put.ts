@@ -1,7 +1,6 @@
 import { db, schema } from '~~/server/db/db';
 import { eq, notInArray, and } from 'drizzle-orm';
-import { v4 as uuidv4 } from 'uuid';
-import type { FloorPayload, FloorPartialPayload } from '../../../../../app/types/property.type';
+import type { FloorPayload, FloorPartialPayload } from '~/types/property.type';
 
 // (Floor 모델과 FloorPartial 모델 전체 필드에 대한 변환 필요)
 const transformFloorToResponse = (floor: any): FloorPayload => {
@@ -151,7 +150,7 @@ export default defineEventHandler(async (event) => {
                 let savedFloorId: string;
 
                 if (isNewFloor) {
-                    savedFloorId = uuidv4();
+                    savedFloorId = crypto.randomUUID();
                     await tx.insert(schema.floor).values({
                         id: savedFloorId,
                         ...floorInput
@@ -169,7 +168,7 @@ export default defineEventHandler(async (event) => {
                 if (floorPartial && floorPartial.length > 0) {
                     await tx.insert(schema.floorPartial).values(
                         floorPartial.map(p => ({
-                            id: uuidv4(),
+                            id: crypto.randomUUID(),
                             floorId: savedFloorId,
                             unitNumber: p.unitNumber,
                             tenant: p.tenant,

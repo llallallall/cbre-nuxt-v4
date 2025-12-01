@@ -17,19 +17,19 @@
                         <div class="flex flex-col gap-4">
                                 <div class="flex justify-between items-center">
                                         <label class="text-sm font-medium">Map Style</label>
-                                        <USelect v-model="mapStore.mapStyleOptions.MapStyle" :options="MapStyle"
+                                        <USelectMenu v-model="mapStore.mapStyleOptions.MapStyle" :options="MapStyle"
                                                 option-attribute="name"
-                                                @change="onChangeStyle(mapStore.mapStyleOptions.MapStyle.value); isOpened = false" />
+                                                @change="onChangeStyle(mapStore.mapStyleOptions.MapStyle?.value ?? ''); isOpened = false" />
                                 </div>
                                 <div class="flex justify-between items-center">
                                         <label class="text-sm font-medium">Language</label>
-                                        <USelect v-model="mapStore.mapStyleOptions.MapLang" :options="MapLang"
+                                        <USelectMenu v-model="mapStore.mapStyleOptions.MapLang" :options="MapLang"
                                                 option-attribute="name"
-                                                @change="onChangeLanguage(mapStore.mapStyleOptions.MapLang.value); isOpened = false" />
+                                                @change="onChangeLanguage(mapStore.mapStyleOptions.MapLang?.value ?? ''); isOpened = false" />
                                 </div>
                                 <div class="flex flex-col gap-2">
                                         <label class="text-sm font-medium">Pitch ({{ mapStore.mapStyleOptions.MapPitch
-                                                }})</label>
+                                        }})</label>
                                         <URange v-model="mapStore.mapStyleOptions.MapPitch" :min="0" :max="85" />
                                 </div>
                                 <div class="flex flex-col gap-2">

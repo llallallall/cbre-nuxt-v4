@@ -1,6 +1,6 @@
 import { db, schema } from '~~/server/db/db';
 import { eq } from 'drizzle-orm';
-import type { UserType } from '../../../app/types/user.type';
+import type { UserType } from '~/types/user.type';
 
 export default defineEventHandler(async (event) => {
     const query = getQuery(event);

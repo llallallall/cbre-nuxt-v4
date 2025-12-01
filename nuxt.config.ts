@@ -12,7 +12,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
 
   modules: [// 보안 모듈 (가장 먼저 로드 권장)
-    'nuxt-security', '@vueuse/nuxt', '@nuxt/icon', '@nuxt/image', // 인증 모듈 (Lightweight)
+    'nuxt-security', '@nuxt/icon', '@nuxt/image', // 인증 모듈 (Lightweight)
     '@nuxt/eslint', 'nuxt-auth-utils', // 'nuxt-mapbox',
     '@nuxt/fonts', "@nuxt/ui", "@nuxtjs/device", "@nuxt/scripts", "@nuxtjs/i18n", "@pinia/nuxt", 'nuxt-mapbox'],
 

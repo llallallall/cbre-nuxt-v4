@@ -1,7 +1,6 @@
 import { db, schema } from '~~/server/db/db';
 import { eq } from 'drizzle-orm';
-import { v4 as uuidv4 } from 'uuid';
-import type { HistoryType } from '../../../../../app/types/property.type';
+import type { HistoryType } from '~/types/property.type';
 
 import { z } from 'zod';
 
@@ -27,7 +26,7 @@ export default defineEventHandler(async (event) => {
             if (body && body.length > 0) {
                 await tx.insert(schema.history).values(
                     body.map(h => ({
-                        id: uuidv4(),
+                        id: crypto.randomUUID(),
                         propertyId: propertyId,
                         year: h.year,
                         type: h.type,
