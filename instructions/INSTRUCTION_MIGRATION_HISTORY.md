@@ -14,6 +14,12 @@ This document tracks major migration decisions, component renames, and standardi
 - **Toasts**: Use `useToast` (Nuxt UI). Deprecate custom toast stores/composables.
 - **Icons**: Standardize on `UIcon` with `heroicons` collection.
 
+## Configuration Fixes
+- **Nuxt Security**: Fixed `csrf` configuration in `nuxt.config.ts`.
+  - Removed invalid `excludedUrls` property from `csrf` object.
+  - Implemented `routeRules` to disable CSRF for `/api/_nuxt_icon/**`.
+  - Enabled CSRF globally (`csrf: true`).
+
 ## Rollback Prevention
 - **DO NOT** revert `SelectedInfoPanel` back to `InfoModal`.
 - **DO NOT** re-introduce `useAuth` from `@sidebase/nuxt-auth`. Use `nuxt-auth-utils`.
