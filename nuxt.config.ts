@@ -9,7 +9,7 @@ export default defineNuxtConfig({
     ],
   },
   compatibilityDate: '2025-07-15',
-  devtools: { enabled: true },
+  devtools: { enabled: false },
 
   modules: [// 보안 모듈 (가장 먼저 로드 권장)
     'nuxt-security', '@nuxt/icon', '@nuxt/image', // 인증 모듈 (Lightweight)
@@ -53,13 +53,18 @@ export default defineNuxtConfig({
         ],
         "script-src": [
           "'self'",
+          "'unsafe-eval'",                // Vite Dev Server 필수
           "'unsafe-inline'",              // 하이드레이션 스크립트 허용
+          "blob:",                        // Mapbox/Workers 허용
           "https://*.mapbox.com"          // Mapbox 스크립트 허용
         ],
         "connect-src": [
           "'self'",
+          "blob:",                        // Mapbox/Workers 허용
           "https://*.mapbox.com",         // Mapbox API 통신 허용
-          "https://events.mapbox.com"
+          "https://events.mapbox.com",
+          "https://api.iconify.design",   // Iconify API 허용
+          "https://api.nuxt.com"          // Nuxt API 허용
         ],
         "worker-src": ["'self'", "blob:"], // Web Worker 허용
         "child-src": ["'self'", "blob:"]
@@ -67,11 +72,21 @@ export default defineNuxtConfig({
     },
     // CSRF 공격 방지 (POST 요청 시 토큰 검증)
     csrf: true,
+
+
     // 요청 속도 제한 (DDoS 방지, 1분당 150회)
     rateLimiter: {
       tokensPerInterval: 150,
       interval: 'minute',
       throwError: false, // 사용자 경험을 위해 에러 대신 경고 (운영 시 true 고려)
+    }
+  },
+
+  routeRules: {
+    '/api/_nuxt_icon/**': {
+      security: {
+        csrf: false
+      }
     }
   },
 

@@ -18,21 +18,21 @@
                                                                 class="w-5 h-5 mr-3 text-cbre-green" />
                                                         <span class="font-medium text-gray-500">Company:</span>
                                                         <span class="ml-2 text-gray-900">{{ profile?.company || 'N/A'
-                                                        }}</span>
+                                                                }}</span>
                                                 </div>
                                                 <div class="flex items-center text-sm">
                                                         <UIcon name="i-heroicons-briefcase"
                                                                 class="w-5 h-5 mr-3 text-cbre-green" />
                                                         <span class="font-medium text-gray-500">Department:</span>
                                                         <span class="ml-2 text-gray-900">{{ profile?.department || 'N/A'
-                                                        }}</span>
+                                                                }}</span>
                                                 </div>
                                                 <div class="flex items-center text-sm">
                                                         <UIcon name="i-heroicons-academic-cap"
                                                                 class="w-5 h-5 mr-3 text-cbre-green" />
                                                         <span class="font-medium text-gray-500">Title:</span>
                                                         <span class="ml-2 text-gray-900">{{ profile?.title || 'N/A'
-                                                        }}</span>
+                                                                }}</span>
                                                 </div>
                                         </div>
 
@@ -51,22 +51,22 @@
                                         </div>
 
                                         <form @submit.prevent="handleSave" class="space-y-6">
-                                                <UFormGroup label="Name">
+                                                <UFormField label="Name">
                                                         <UInput :model-value="userStore.userName" disabled
                                                                 color="neutral" variant="outline" class="bg-gray-100" />
-                                                </UFormGroup>
+                                                </UFormField>
 
-                                                <UFormGroup label="Company">
+                                                <UFormField label="Company">
                                                         <UInput v-model="formProfile.company" />
-                                                </UFormGroup>
+                                                </UFormField>
 
-                                                <UFormGroup label="Department">
+                                                <UFormField label="Department">
                                                         <UInput v-model="formProfile.department" />
-                                                </UFormGroup>
+                                                </UFormField>
 
-                                                <UFormGroup label="Title">
+                                                <UFormField label="Title">
                                                         <UInput v-model="formProfile.title" />
-                                                </UFormGroup>
+                                                </UFormField>
 
                                                 <UCheckbox v-model="formProfile.useProfileImage"
                                                         label="Use custom profile image" />

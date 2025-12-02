@@ -8,13 +8,17 @@
             Failed to load PDF.
         </div>
 
-        <VuePdfEmbed v-if="source" :source="source" class="shadow-lg" @loaded="onLoaded" @loading-failed="onError" />
+        <ClientOnly>
+            <VuePdfEmbed v-if="source" :source="source" class="shadow-lg" @loaded="onLoaded"
+                @loading-failed="onError" />
+        </ClientOnly>
     </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import VuePdfEmbed from 'vue-pdf-embed'
+import { ref, defineAsyncComponent } from 'vue'
+
+const VuePdfEmbed = defineAsyncComponent(() => import('vue-pdf-embed'))
 
 const props = defineProps<{
     source: string

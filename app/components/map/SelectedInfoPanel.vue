@@ -41,7 +41,7 @@
                                                                                 <span
                                                                                         class="hidden lg:block">Transaction</span>
                                                                         </span>
-                                                                        <UToggle v-model="filterNoTransaction"
+                                                                        <USwitch v-model="filterNoTransaction"
                                                                                 color="cbre-green" />
                                                                 </div>
 
@@ -53,7 +53,7 @@
                                                                                         class="mx-1 hidden lg:block">All</span>
                                                                                 <span>Sales</span>
                                                                         </span>
-                                                                        <UToggle v-model="filterSale"
+                                                                        <USwitch v-model="filterSale"
                                                                                 color="cbre-green" />
                                                                 </div>
 
@@ -65,7 +65,7 @@
                                                                                         class="mx-1 hidden lg:block">All</span>
                                                                                 <span>Leases</span>
                                                                         </span>
-                                                                        <UToggle v-model="filterLease"
+                                                                        <USwitch v-model="filterLease"
                                                                                 color="cbre-green" />
                                                                 </div>
                                                         </div>
@@ -98,7 +98,7 @@
                                                                 <div class="flex flex-col">
                                                                         <span class="font-calibre">Grade</span>
                                                                         <span>{{ item.profitability?.grade || 'N/A'
-                                                                        }}</span>
+                                                                                }}</span>
                                                                 </div>
                                                                 <div class="flex flex-col">
                                                                         <span class="font-calibre">Sector</span>
@@ -135,9 +135,9 @@
                                                                                         :key="idx"
                                                                                         class="flex flex-row items-center justify-between text-sm">
                                                                                         <span>{{ idx + 1 }}. {{ el.year
-                                                                                        }}/{{ el.quarter }}
+                                                                                                }}/{{ el.quarter }}
                                                                                                 :</span>
-                                                                                        <UToggle :model-value="isSaleSelected(item.id, idx)"
+                                                                                        <USwitch :model-value="isSaleSelected(item.id, idx)"
                                                                                                 @update:model-value="toggleSale(item.id, idx)"
                                                                                                 color="cbre-green"
                                                                                                 size="sm" />
@@ -157,8 +157,8 @@
                                                                                         class="flex flex-row items-center justify-between text-sm">
                                                                                         <span>{{ idx + 1 }}. {{
                                                                                                 formatDate(el.leaseStartDate)
-                                                                                        }} :</span>
-                                                                                        <UToggle :model-value="isLeaseSelected(item.id, idx)"
+                                                                                                }} :</span>
+                                                                                        <USwitch :model-value="isLeaseSelected(item.id, idx)"
                                                                                                 @update:model-value="toggleLease(item.id, idx)"
                                                                                                 color="cbre-green"
                                                                                                 size="sm" />
@@ -175,7 +175,7 @@
                                                                                 'Included in Excel' :
                                                                                 'Excluded from Excel' }}
                                                                 </div>
-                                                                <UToggle :model-value="isGeneralSelected(item.id)"
+                                                                <USwitch :model-value="isGeneralSelected(item.id)"
                                                                         @update:model-value="toggleGeneral(item.id)"
                                                                         color="cbre-green" />
                                                         </div>

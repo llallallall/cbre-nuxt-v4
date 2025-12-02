@@ -29,13 +29,13 @@
                                 </div>
                                 <div class="flex flex-col gap-2">
                                         <label class="text-sm font-medium">Pitch ({{ mapStore.mapStyleOptions.MapPitch
-                                        }})</label>
-                                        <URange v-model="mapStore.mapStyleOptions.MapPitch" :min="0" :max="85" />
+                                                }})</label>
+                                        <USlider v-model="mapStore.mapStyleOptions.MapPitch" :min="0" :max="85" />
                                 </div>
                                 <div class="flex flex-col gap-2">
                                         <label class="text-sm font-medium">Bearing ({{
                                                 mapStore.mapStyleOptions.MapBearing }})</label>
-                                        <URange v-model="mapStore.mapStyleOptions.MapBearing" :min="0" :max="360" />
+                                        <USlider v-model="mapStore.mapStyleOptions.MapBearing" :min="0" :max="360" />
                                 </div>
                         </div>
                 </div>

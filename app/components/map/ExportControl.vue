@@ -2,7 +2,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
 import { useMapbox } from '#imports';
-import '@watergis/mapbox-gl-export/css/styles.css';
+import '@watergis/mapbox-gl-export/dist/mapbox-gl-export.css';
 
 onMounted(async () => {
         if (process.client) {
