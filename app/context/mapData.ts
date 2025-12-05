@@ -110,7 +110,7 @@ export const LAYER_MINIMAP_POINTS = {
             ['linear'],
             ['zoom'],
             4,
-            ['interpolate', ['linear'], ['coalesce', ['get', 'mag'], 1], 1, 3, 6, 10],
+            ['interpolate', ['linear'], ['coalesce', ['get', 'mag'], 1], 1, 1, 6, 10], // Reduced radius for single points to 1px
             16,
             ['interpolate', ['linear'], ['coalesce', ['get', 'mag'], 1], 1, 5, 6, 50]
         ],
@@ -157,6 +157,8 @@ export const LAYER_MINIMAP_HEAT = {
             ['coalesce', ['get', 'mag'], 1],
             0,
             0,
+            1,
+            0.1, // Significantly reduced weight for single points (mag=1)
             6,
             1
         ],
@@ -168,28 +170,25 @@ export const LAYER_MINIMAP_HEAT = {
             ['zoom'],
             0,
             1,
+            5,
+            2, // Reduced intensity at zoom 5 to prevent single points from being too hot
             9,
-            3
+            5
         ],
         // Color ramp for heatmap.  Domain is 0 (low) to 1 (high).
-        // Begin color ramp at 0-stop with a 0-transparancy color
-        // to create a blur-like effect.
+        // Uses cluster colors: #17E88F (light), #018e69 (medium), #003F2D (dark)
         'heatmap-color': [
             'interpolate',
             ['linear'],
             ['heatmap-density'],
             0,
-            'rgba(0,63,45, 0.0)',
+            'rgba(23, 232, 143, 0)', // Transparent
             0.2,
-            'rgba(0,63,45, 0.1)',
-            0.4,
-            'rgba(0,63,45, 0.2)',
+            'rgba(23, 232, 143, 0.5)', // Light green #17E88F
             0.6,
-            'rgba(0,63,45, 0.4)',
-            0.8,
-            'rgba(0,63,45, 0.6)',
+            'rgba(1, 142, 105, 0.8)', // Medium green #018e69
             1,
-            'rgba(0,63,45, 0.8)'
+            'rgba(0, 63, 45, 1)' // Dark green #003F2D
         ],
         // Adjust the heatmap radius by zoom level
         'heatmap-radius': [
@@ -198,8 +197,10 @@ export const LAYER_MINIMAP_HEAT = {
             ['zoom'],
             0,
             2,
+            5,
+            10, // Reduced radius at zoom 5 to make single points smaller
             9,
-            20
+            30
         ],
         // Transition from heatmap to circle layer by zoom level
         'heatmap-opacity': [

@@ -17,7 +17,7 @@
                                 hash: false,
                         }" @load="onMapLoad">
 
-                        <MapboxLayer v-if="propertyStore.initialDataLoaded" :layer="{
+                        <MapboxLayer v-if="propertyStore.initialDataLoaded && imagesLoaded" :layer="{
                                 source: 'composite',
                                 id: LAYER_3D_BUILDINGS.id,
                                 type: LAYER_3D_BUILDINGS.type as any,
@@ -27,7 +27,7 @@
                                 paint: LAYER_3D_BUILDINGS.paint as any
                         }" />
 
-                        <MapboxLayer v-if="propertyStore.initialDataLoaded" :beforeLayer="LAYER_3D_BUILDINGS.id" :layer="{
+                        <MapboxLayer v-if="propertyStore.initialDataLoaded && imagesLoaded" :beforeLayer="LAYER_3D_BUILDINGS.id" :layer="{
                                 source: 'cbre-assets',
                                 id: LAYER_UNCLUSTERED_POINT.id,
                                 type: LAYER_UNCLUSTERED_POINT.type as any,
@@ -36,7 +36,7 @@
                                 paint: LAYER_UNCLUSTERED_POINT.paint
                         }" />
 
-                        <MapboxLayer v-if="propertyStore.initialDataLoaded" :beforeLayer="LAYER_UNCLUSTERED_POINT.id"
+                        <MapboxLayer v-if="propertyStore.initialDataLoaded && imagesLoaded" :beforeLayer="LAYER_UNCLUSTERED_POINT.id"
                                 :layer="{
                                         source: 'cbre-assets',
                                         id: LAYER_CLUSTER_COUNT.id,
@@ -46,7 +46,7 @@
                                         paint: LAYER_CLUSTER_COUNT.paint as any
                                 }" />
 
-                        <MapboxLayer v-if="propertyStore.initialDataLoaded" :beforeLayer="LAYER_CLUSTER_COUNT.id"
+                        <MapboxLayer v-if="propertyStore.initialDataLoaded && imagesLoaded" :beforeLayer="LAYER_CLUSTER_COUNT.id"
                                 :layer="{
                                         source: 'cbre-assets',
                                         id: LAYER_CLUSTERS.id,
@@ -57,18 +57,20 @@
 
                         <MapboxSource source-id="cbre-assets" :source="(cbreDataSource as any)" />
 
-                        <MapboxGeolocateControl position="top-left" @error="onGeolocateError" />
-                        <MapboxNavigationControl position="top-left" />
-                        <MapboxFullscreenControl position="top-right" />
+                       
+                        <MapboxNavigationControl position="top-left" :options="{ showCompass: true, showZoom: true }" />
+                        <MapboxFullscreenControl v-if="fullscreenSupported" position="top-right" />
 
                         <StyleControl v-show="propertyStore.initialDataLoaded" />
                         <SelectionControl v-show="propertyStore.initialDataLoaded" />
-                        <DrawControl v-show="propertyStore.initialDataLoaded" />
+                        <DrawControl v-if="propertyStore.initialDataLoaded" />
                         <ExportControl v-show="propertyStore.initialDataLoaded" />
+
+                        <MapboxGeolocateControl position="top-left" />
 
                 </MapboxMap>
 
-                <MapboxMap map-id="cbre-minimap" :class="uiStore.showMiniMap ? 'block' : 'hidden'"
+                <MapboxMap map-id="cbre-minimap" :class="uiStore.showMiniMap ? 'hidden lg:block' : 'hidden'"
                         style="position: absolute; top:calc(100% - 260px); left:0; width: 220px; height:260px; z-index:10;"
                         :options="{
                                 accessToken: mapboxAccessToken,
@@ -96,8 +98,6 @@ import { useMapStore } from '~/stores/map';
 import { usePropertyStore } from '~/stores/property';
 import { useUiStore } from '~/stores/ui';
 import { useFormat } from '~/composables/useFormat';
-import mapboxgl from "mapbox-gl";
-import MapboxLanguage from "@mapbox/mapbox-gl-language";
 import { mapCenter, mapZoom, maxZoom, minZoom, mapStyleId, LAYER_3D_BUILDINGS, LAYER_CLUSTERS, LAYER_CLUSTER_COUNT, LAYER_UNCLUSTERED_POINT, LAYER_MINIMAP_POINTS, LAYER_MINIMAP_HEAT } from '~/context/mapData';
 import StyleControl from './StyleControl.vue';
 import SelectionControl from './SelectionControl.vue';
@@ -118,13 +118,26 @@ const { filteredProperties } = storeToRefs(propertyStore);
 const mapRef = useMapboxRef("cbre-map");
 const miniMapRef = useMapboxRef("cbre-minimap");
 const printArea = ref(null);
+const imagesLoaded = ref(false);
+const fullscreenSupported = ref(false);
+
+onMounted(async () => {
+    if (typeof document !== 'undefined') {
+        fullscreenSupported.value = document.fullscreenEnabled;
+    }
+    
+    if (import.meta.client) {
+        const mapboxgl = (await import("mapbox-gl")).default;
+        const config = useRuntimeConfig();
+        const mapboxAccessToken = config.public.mapbox?.accessToken || '';
+        if (mapboxAccessToken) {
+            mapboxgl.accessToken = mapboxAccessToken;
+        }
+    }
+});
 
 const config = useRuntimeConfig();
 const mapboxAccessToken = config.public.mapbox?.accessToken || '';
-
-if (mapboxAccessToken) {
-        mapboxgl.accessToken = mapboxAccessToken;
-}
 
 const cbreDataSource = computed(() => {
         let assets = propertyStore.getFilteredMapData;
@@ -165,12 +178,7 @@ const onMapLoad = () => {
         propertyStore.initialDataLoaded = true;
 };
 
-const onGeolocateError = (e: any) => {
-        console.error('Geolocate error event:', e);
-        const errorMessage = e?.error?.message || e?.message || 'Failed to retrieve your location.';
 
-        showToast(`Geolocation Error: ${errorMessage}`, 'danger');
-};
 
 watch(() => propertyStore.filteredProperties, () => {
         const sourceData = cbreDataSource.value.data;
@@ -194,40 +202,65 @@ watch(flyTo, (nv) => {
 
 const webSearchedMarkers = shallowRef<mapboxgl.Marker[]>([]);
 
-watch(searchedMarkersChanged, () => {
+watch(searchedMarkersChanged, async () => {
         if (webSearchedMarkers.value.length > 0) {
                 webSearchedMarkers.value.forEach((marker) => marker.remove());
                 webSearchedMarkers.value = [];
         }
 
         if (mapStore.searchedMarkers.length > 0 && mapRef.value) {
-                mapStore.searchedMarkers.forEach((item) => {
-                        const marker = new mapboxgl.Marker({
-                                color: "red",
-                                draggable: true
-                        })
-                                .setLngLat([item.longitude, item.latitude])
-                                .addTo(mapRef.value as mapboxgl.Map);
+                if (import.meta.client) {
+                    const mapboxgl = (await import("mapbox-gl")).default;
+                    mapStore.searchedMarkers.forEach((item) => {
+                            const marker = new mapboxgl.Marker({
+                                    color: "red",
+                                    draggable: true
+                            })
+                                    .setLngLat([item.longitude, item.latitude])
+                                    .addTo(mapRef.value as any);
 
-                        webSearchedMarkers.value.push(marker);
-                });
+                            webSearchedMarkers.value.push(marker);
+                    });
+                }
         }
 });
 
-useMapboxBeforeLoad("cbre-map", (map) => {
-        mapStore.mapLanguage = new MapboxLanguage({ defaultLanguage: "en" });
+useMapboxBeforeLoad("cbre-map", async (map) => {
+        if (import.meta.client) {
+            const MapboxLanguage = (await import("@mapbox/mapbox-gl-language")).default;
+            mapStore.mapLanguage = new MapboxLanguage({ defaultLanguage: "en" });
+        }
 
-        map.loadImage('/images/pin.png', (error, image) => {
-                if (error) throw error;
-                if (!map.hasImage('pin') && image) map.addImage('pin', image);
+        const p1 = new Promise<void>((resolve, reject) => {
+                map.loadImage('/images/pin.png', (error, image) => {
+                        if (error) {
+                                console.error('Failed to load pin.png', error);
+                                resolve(); // Resolve anyway to avoid blocking
+                                return;
+                        }
+                        if (!map.hasImage('pin') && image) map.addImage('pin', image);
+                        resolve();
+                });
         });
-        map.loadImage('/images/red-pin.png', (error, image) => {
-                if (error) throw error;
-                if (!map.hasImage('redPin') && image) map.addImage('redPin', image);
+
+        const p2 = new Promise<void>((resolve, reject) => {
+                map.loadImage('/images/red-pin.png', (error, image) => {
+                        if (error) {
+                                console.error('Failed to load red-pin.png', error);
+                                resolve();
+                                return;
+                        }
+                        if (!map.hasImage('redPin') && image) map.addImage('redPin', image);
+                        resolve();
+                });
+        });
+
+        Promise.all([p1, p2]).then(() => {
+                imagesLoaded.value = true;
         });
 });
 
-useMapbox("cbre-map", (map) => {
+useMapbox("cbre-map", async (map) => {
         if (mapStore.mapLanguage) {
                 map.addControl(mapStore.mapLanguage);
         }
@@ -250,7 +283,7 @@ useMapbox("cbre-map", (map) => {
                 });
         });
 
-        map.on('click', 'unclustered-point', (e) => {
+        map.on('click', 'unclustered-point', async (e) => {
                 const feature = e.features?.[0];
                 if (!feature) return;
 
@@ -264,6 +297,7 @@ useMapbox("cbre-map", (map) => {
                         coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
                 }
 
+                const mapboxgl = (await import("mapbox-gl")).default;
                 new mapboxgl.Popup()
                         .setLngLat(coordinates)
                         .setHTML(`

@@ -35,13 +35,13 @@ export default function useGoogleMapsApi(): Promise<typeof google.maps> {
                         return reject(new Error("Google Maps API Key (googleApiToken) is missing in runtime config."));
                 }
 
-                if (typeof window.google?.maps !== 'undefined') {
-                        return resolve(window.google.maps);
+                if (typeof window === 'undefined') {
+                        // SSR 환경에서는 null을 반환하여 에러 방지
+                        return resolve(null as any);
                 }
 
-                if (typeof window === 'undefined') {
-                        googleMapsPromise = null;
-                        return reject(new Error("Cannot load Google Maps API on the server side (SSR)."));
+                if (typeof window.google?.maps !== 'undefined') {
+                        return resolve(window.google.maps);
                 }
 
                 window.initGoogle = () => {

@@ -1,42 +1,44 @@
 <template>
-        <UModal :model-value="isUserProfileModalOpen" @update:model-value="handleClose">
-                <UCard>
-                        <div class="flex flex-col md:flex-row h-full max-h-[85vh] overflow-hidden">
+        <UModal :model-value="isUserProfileModalOpen" @update:model-value="handleClose"
+                :ui="{ overlay: 'bg-transparent backdrop-blur-none z-[60]', wrapper: 'z-[60]' }">
+                <UCard class="pointer-events-auto" :ui="{ body: 'p-0 sm:p-0' }" @click.stop @mousedown.stop
+                        @mouseup.stop @touchstart.stop @touchend.stop @pointerdown.stop @pointerup.stop>
+                        <div class="flex flex-col md:flex-row h-full max-h-[85vh] overflow-hidden font-calibre" @click.stop>
                                 <!-- Sidebar -->
                                 <div
                                         class="w-full md:w-1/3 min-w-[300px] p-8 bg-gray-50 border-r flex flex-col items-center">
                                         <img :src="userStore.getUserImage || '/images/avatar/avatar-placeholder.png'"
                                                 alt="User Avatar"
-                                                class="w-32 h-32 rounded-full object-cover border-4 border-cbre-green shadow-md mb-4" />
+                                                class="w-32 h-32 rounded-full object-cover border-4 border-cbre-green-500 shadow-md mb-4" />
 
-                                        <h2 class="text-2xl font-semibold text-gray-900 mb-1">{{ userStore.userName ||
+                                        <h2 class="text-2xl font-financier text-cbre-green-500 mb-1">{{ userStore.userName ||
                                                 'UserName' }}</h2>
 
                                         <div class="w-full text-left space-y-3 mt-6">
                                                 <div class="flex items-center text-sm">
                                                         <UIcon name="i-heroicons-building-office-2"
-                                                                class="w-5 h-5 mr-3 text-cbre-green" />
+                                                                class="w-5 h-5 mr-3 text-cbre-green-500" />
                                                         <span class="font-medium text-gray-500">Company:</span>
                                                         <span class="ml-2 text-gray-900">{{ profile?.company || 'N/A'
                                                                 }}</span>
                                                 </div>
                                                 <div class="flex items-center text-sm">
                                                         <UIcon name="i-heroicons-briefcase"
-                                                                class="w-5 h-5 mr-3 text-cbre-green" />
+                                                                class="w-5 h-5 mr-3 text-cbre-green-500" />
                                                         <span class="font-medium text-gray-500">Department:</span>
                                                         <span class="ml-2 text-gray-900">{{ profile?.department || 'N/A'
                                                                 }}</span>
                                                 </div>
                                                 <div class="flex items-center text-sm">
                                                         <UIcon name="i-heroicons-academic-cap"
-                                                                class="w-5 h-5 mr-3 text-cbre-green" />
+                                                                class="w-5 h-5 mr-3 text-cbre-green-500" />
                                                         <span class="font-medium text-gray-500">Title:</span>
                                                         <span class="ml-2 text-gray-900">{{ profile?.title || 'N/A'
                                                                 }}</span>
                                                 </div>
                                         </div>
 
-                                        <UButton block color="neutral" variant="solid" class="mt-auto mt-8"
+                                        <UButton block color="neutral" variant="solid" class="mt-auto mt-8 rounded-none uppercase font-calibre"
                                                 @click="handleLogout">
                                                 Logout
                                         </UButton>
@@ -45,7 +47,7 @@
                                 <!-- Form -->
                                 <div class="w-full md:w-2/3 p-8 overflow-y-auto">
                                         <div class="flex justify-between items-center mb-6 border-b pb-2">
-                                                <h2 class="text-2xl font-bold text-gray-900">Edit Profile</h2>
+                                                <h2 class="text-2xl font-financier text-cbre-green-500">Edit Profile</h2>
                                                 <UButton color="neutral" variant="ghost"
                                                         icon="i-heroicons-x-mark-20-solid" @click="handleClose" />
                                         </div>
@@ -53,19 +55,19 @@
                                         <form @submit.prevent="handleSave" class="space-y-6">
                                                 <UFormField label="Name">
                                                         <UInput :model-value="userStore.userName" disabled
-                                                                color="neutral" variant="outline" class="bg-gray-100" />
+                                                                color="neutral" variant="outline" class="bg-gray-100" :ui="{ base: 'rounded-none' }" />
                                                 </UFormField>
 
                                                 <UFormField label="Company">
-                                                        <UInput v-model="formProfile.company" />
+                                                        <UInput v-model="formProfile.company" :ui="{ base: 'rounded-none' }" />
                                                 </UFormField>
 
                                                 <UFormField label="Department">
-                                                        <UInput v-model="formProfile.department" />
+                                                        <UInput v-model="formProfile.department" :ui="{ base: 'rounded-none' }" />
                                                 </UFormField>
 
                                                 <UFormField label="Title">
-                                                        <UInput v-model="formProfile.title" />
+                                                        <UInput v-model="formProfile.title" :ui="{ base: 'rounded-none' }" />
                                                 </UFormField>
 
                                                 <UCheckbox v-model="formProfile.useProfileImage"
@@ -78,8 +80,8 @@
                                                 </div>
 
                                                 <div class="flex justify-end pt-4 border-t">
-                                                        <UButton type="submit" :loading="isLoading" color="cbre-green"
-                                                                variant="solid">
+                                                        <UButton type="submit" :loading="isLoading" color="primary"
+                                                                variant="solid" class="rounded-none uppercase font-calibre">
                                                                 Save Changes
                                                         </UButton>
                                                 </div>
@@ -172,4 +174,13 @@ const handleSave = async () => {
                 statusStore.setGlobalLoading(false)
         }
 }
+import { onMounted, watch } from 'vue';
+
+// onMounted(() => {
+//     console.log('NavUserProfile mounted');
+// });
+
+watch(isUserProfileModalOpen, (newVal) => {
+    console.log('isUserProfileModalOpen changed:', newVal);
+});
 </script>

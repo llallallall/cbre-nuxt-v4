@@ -1,7 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+// Trigger rebuild for hydration fix - 2025-12-05
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineNuxtConfig({
+  // ssr: false, // Disable SSR to avoid 500 errors with mapbox
   srcDir: 'app',
   vite: {
     plugins: [
@@ -32,6 +34,7 @@ export default defineNuxtConfig({
     ],
     langDir: '../i18n/locales', // 언어 파일 위치 (/locales/ko.json)
     defaultLocale: 'en',
+    detectBrowserLanguage: false,
     strategy: 'prefix_except_default', // 기본 언어는 URL 프리픽스 없음 (/), 그 외는 추가 (/en)
   },
 
@@ -49,14 +52,20 @@ export default defineNuxtConfig({
           "blob:",
           "https://minio-api.devowls.kr", // MinIO 이미지 허용
           "https://*.mapbox.com",         // Mapbox 타일/이미지 허용 (미리 정의)
-          "https://placehold.co"          // Placeholder 이미지 허용
+          "https://placehold.co",          // Placeholder 이미지 허용
+          "https://*.googleapis.com",
+          "https://*.gstatic.com",
+          "https://*.google.com"
         ],
         "script-src": [
           "'self'",
           "'unsafe-eval'",                // Vite Dev Server 필수
           "'unsafe-inline'",              // 하이드레이션 스크립트 허용
           "blob:",                        // Mapbox/Workers 허용
-          "https://*.mapbox.com"          // Mapbox 스크립트 허용
+          "https://*.mapbox.com",          // Mapbox 스크립트 허용
+          "https://*.googleapis.com",
+          "https://*.google.com",
+          "https://*.gstatic.com"
         ],
         "connect-src": [
           "'self'",
@@ -64,24 +73,32 @@ export default defineNuxtConfig({
           "https://*.mapbox.com",         // Mapbox API 통신 허용
           "https://events.mapbox.com",
           "https://api.iconify.design",   // Iconify API 허용
-          "https://api.nuxt.com"          // Nuxt API 허용
+          "https://api.nuxt.com",          // Nuxt API 허용
+          "https://*.googleapis.com",
+          "https://*.google.com",
+          "https://*.gstatic.com"
         ],
         "worker-src": ["'self'", "blob:"], // Web Worker 허용
-        "child-src": ["'self'", "blob:"]
+        "child-src": ["'self'", "blob:", "https://*.google.com", "https://*.googleapis.com"],
+        "frame-src": ["'self'", "https://*.google.com", "https://*.googleapis.com"]
+      },
+      permissionsPolicy: {
+        geolocation: ["self"],
       }
     },
     // CSRF 공격 방지 (POST 요청 시 토큰 검증)
     csrf: true,
-
 
     // 요청 속도 제한 (DDoS 방지, 1분당 150회)
     rateLimiter: {
       tokensPerInterval: 150,
       interval: 'minute',
       throwError: false, // 사용자 경험을 위해 에러 대신 경고 (운영 시 true 고려)
-    }
+    },
+    sri: false,
   },
 
+  /*
   routeRules: {
     '/api/_nuxt_icon/**': {
       security: {
@@ -89,6 +106,7 @@ export default defineNuxtConfig({
       }
     }
   },
+  */
 
   // 런타임 환경 변수 
   runtimeConfig: {
@@ -127,8 +145,6 @@ export default defineNuxtConfig({
 
   // Nuxt UI 설정
   ui: {
-    theme: {
-      colors: ['primary', 'secondary', 'success', 'info', 'warning', 'error', 'cbre-green']
-    }
+    // colors: ['primary', 'secondary', 'success', 'info', 'warning', 'error', 'cbre-green']
   }
 })

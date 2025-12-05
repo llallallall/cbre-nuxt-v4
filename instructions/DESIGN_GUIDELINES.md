@@ -609,3 +609,34 @@ To ensure accessibility and legibility, follow these contrast guidelines:
     *   **Body Text:** Use `text-cbre-slate` (`#435254`) or `.cbre-text-body`.
     *   **Meta/Labels:** Use `text-gray-500` (`#666666`) only for non-critical metadata.
 *   **Dark Backgrounds:** When using dark backgrounds (e.g., `bg-cbre-dark`), ensure text is White (`text-white`) or Bright Green (`text-cbre-accent`).
+
+## **8. Deep Dive Research Findings (Updated)**
+
+Based on deep analysis of `cbre.com` (Services, Insights, Footer), the following patterns must be strictly observed:
+
+### **A. Navigation & Header**
+*   **Background:** **CBRE Green (#003F2D)** is the primary state for the top navigation bar.
+*   **Text:** White text is used for high contrast.
+*   **Dropdowns:** Large megamenus with white backgrounds and dark text are used for "Services" and "Insights".
+
+### **B. Page Layout Patterns**
+*   **Hero Section:**
+    *   Full-width image backgrounds.
+    *   **Typography:** Large Serif headings (Financier) often overlaid on images with a dark scrim/overlay for readability.
+    *   **Alignment:** Text is often left-aligned within the center container.
+*   **Content Grids:**
+    *   **Cards:** Strictly squared corners (`rounded-none`).
+    *   **Spacing:** Generous whitespace between grid items (gap-6 or gap-8).
+    *   **Images:** High-quality architectural photography, often with a subtle zoom effect on hover.
+
+### **C. Footer Design**
+*   **Background:** **Dark Green / Black (#012A2D)**.
+*   **Text:** White for headings, Light Grey/White for links.
+*   **Structure:** Multi-column layout for links (Services, Insights, About), followed by a bottom row for legal/social.
+*   **Typography:** Sans-serif (Calibre) is dominant in the footer.
+
+### **D. Forms & Interaction**
+*   **Input Fields:** Squared corners, light grey background (`bg-gray-50` or similar), bottom border or full border.
+*   **Buttons:**
+    *   **Primary:** Green background, White text, Squared.
+    *   **Secondary:** Transparent background, Green border, Green text (or White on dark backgrounds).

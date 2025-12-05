@@ -42,7 +42,7 @@
                                                                                         class="hidden lg:block">Transaction</span>
                                                                         </span>
                                                                         <USwitch v-model="filterNoTransaction"
-                                                                                color="cbre-green" />
+                                                                                color="primary" />
                                                                 </div>
 
                                                                 <!-- Sales Filter -->
@@ -54,7 +54,7 @@
                                                                                 <span>Sales</span>
                                                                         </span>
                                                                         <USwitch v-model="filterSale"
-                                                                                color="cbre-green" />
+                                                                                color="primary" />
                                                                 </div>
 
                                                                 <!-- Leases Filter -->
@@ -66,7 +66,7 @@
                                                                                 <span>Leases</span>
                                                                         </span>
                                                                         <USwitch v-model="filterLease"
-                                                                                color="cbre-green" />
+                                                                                color="primary" />
                                                                 </div>
                                                         </div>
                                                 </div>
@@ -139,7 +139,7 @@
                                                                                                 :</span>
                                                                                         <USwitch :model-value="isSaleSelected(item.id, idx)"
                                                                                                 @update:model-value="toggleSale(item.id, idx)"
-                                                                                                color="cbre-green"
+                                                                                                color="primary"
                                                                                                 size="sm" />
                                                                                 </div>
                                                                         </div>
@@ -160,7 +160,7 @@
                                                                                                 }} :</span>
                                                                                         <USwitch :model-value="isLeaseSelected(item.id, idx)"
                                                                                                 @update:model-value="toggleLease(item.id, idx)"
-                                                                                                color="cbre-green"
+                                                                                                color="primary"
                                                                                                 size="sm" />
                                                                                 </div>
                                                                         </div>
@@ -177,7 +177,7 @@
                                                                 </div>
                                                                 <USwitch :model-value="isGeneralSelected(item.id)"
                                                                         @update:model-value="toggleGeneral(item.id)"
-                                                                        color="cbre-green" />
+                                                                        color="primary" />
                                                         </div>
                                                 </div>
                                         </div>

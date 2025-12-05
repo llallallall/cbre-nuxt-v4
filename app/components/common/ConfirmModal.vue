@@ -19,7 +19,7 @@
 
                         <template #footer>
                                 <div class="flex flex-col space-y-3">
-                                        <UButton block color="cbre-green" variant="solid" @click="handleConfirm">
+                                        <UButton block color="primary" variant="solid" @click="handleConfirm">
                                                 {{ confirmText }}
                                         </UButton>
                                         <UButton block color="neutral" variant="solid"

@@ -4,7 +4,7 @@
 
 The **highest priority** is to achieve a complete and expert-level understanding of the official Nuxt 4.x documentation. This learning must precede any coding or development work related to the `cbre-nuxt-v4` project.
 
-* **Start URL (Mandatory Learning Target):** (여기에 Nuxt 4.x 공식 문서 URL을 입력하세요. 예: https://nuxt.com/docs/4.x)
+* **Start URL (Mandatory Learning Target):** https://nuxt.com/docs/4.x/,  https://ui.nuxt.com/docs/getting-started, https://i18n.nuxtjs.org/docs/getting-started, https://alexlavoie42.github.io/Nuxt-Mapbox/getting-started/quick-setup
 * **Learning Goal:** Acquire expert-level knowledge of Nuxt 4.x architecture, APIs, conventions, and new features.
 * **Methodology (In-Depth Exploration):** You must **recursively follow all internal links** and sub-documents within the scope to ensure no detail, code example, or core concept is missed.
 
@@ -32,12 +32,12 @@ You must read and follow these documents based on your task:
 
 | Document | Purpose |
 | :--- | :--- |
-| [INSTRUCTION_AUTH.md](file:///e:/Projects/Nuxt/cbre-nuxt-v4/instructions/INSTRUCTION_AUTH.md) | **Authentication**: Login flow, session management, middleware. |
-| [INSTRUCTION_UI_STANDARD.md](file:///e:/Projects/Nuxt/cbre-nuxt-v4/instructions/INSTRUCTION_UI_STANDARD.md) | **UI/UX**: Design system, Nuxt UI usage, component rules (e.g., `UAccordion` slots). |
-| [INSTRUCTION_MIGRATION_HISTORY.md](file:///e:/Projects/Nuxt/cbre-nuxt-v4/instructions/INSTRUCTION_MIGRATION_HISTORY.md) | **History**: Component renames, architectural decisions, rollback prevention. |
-| [INSTRUCTION_PERFORMANCE.md](file:///e:/Projects/Nuxt/cbre-nuxt-v4/instructions/INSTRUCTION_PERFORMANCE.md) | **Performance**: Image optimization, icon usage, script loading. |
-| [INSTRUCTION_CSS_STRATEGY.md](file:///e:/Projects/Nuxt/cbre-nuxt-v4/instructions/INSTRUCTION_CSS_STRATEGY.md) | **Styling**: Global CSS, Tailwind usage, CBRE identity. |
-| [INSTRUCTION_WORKFLOW.md](file:///e:/Projects/Nuxt/cbre-nuxt-v4/instructions/INSTRUCTION_WORKFLOW.md) | **Workflow**: Cross-agent/PC consistency, task tracking. |
+| [INSTRUCTION_AUTH.md](instructions/INSTRUCTION_AUTH.md) | **Authentication**: Login flow, session management, middleware. |
+| [INSTRUCTION_UI_STANDARD.md](instructions/INSTRUCTION_UI_STANDARD.md) | **UI/UX**: Design system, Nuxt UI usage, component rules (e.g., `UAccordion` slots). |
+| [INSTRUCTION_MIGRATION_HISTORY.md](instructions/INSTRUCTION_MIGRATION_HISTORY.md) | **History**: Component renames, architectural decisions, rollback prevention. |
+| [INSTRUCTION_PERFORMANCE.md](instructions/INSTRUCTION_PERFORMANCE.md) | **Performance**: Image optimization, icon usage, script loading. |
+| [INSTRUCTION_CSS_STRATEGY.md](instructions/INSTRUCTION_CSS_STRATEGY.md) | **Styling**: Global CSS, Tailwind usage, CBRE identity. |
+| [INSTRUCTION_WORKFLOW.md](instructions/INSTRUCTION_WORKFLOW.md) | **Workflow**: Cross-agent/PC consistency, task tracking. |
 
 ## 3. Quick Start Checklist
 1. **Check `task.md`**: Understand the current progress and active tasks.

@@ -2,7 +2,7 @@
 export default defineAppConfig({
     ui: {
         colors: {
-            primary: 'cbre-green', // tailwind.config.ts에 정의한 'cbre-green' 색상 사용
+            primary: 'cbre-green-500', // tailwind.config.ts에 정의한 'cbre-green' 색상 사용
             gray: 'cool',
         },
 

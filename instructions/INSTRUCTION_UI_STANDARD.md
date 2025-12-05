@@ -20,3 +20,13 @@ Reference: https://ui.nuxt.com/docs/getting-started/theme/components
    - Use `ui` prop only for overriding internal slots or specific theme keys not exposed as props.
 7. **UAccordion**:
    - Use `slot: 'content'` in items and `<template #content>` for custom body content to avoid type errors with the default `#item` slot.
+
+   - **Navigation / TopBar**:
+     - **Behavior**: Mimic `cbre.com`.
+       - **Default**: Dark Green Background (`bg-cbre-green-500`), White Text.
+       - **Hover/Active**: White Background, Dark Green Text (`text-cbre-green`).
+     - **Components**: Ensure child components (like `UserMenu`) support dynamic styling via props (e.g., `isLightMode`).
+     - **Mobile**:
+       - Mobile-specific components (e.g., `TextSearchPannel`, `FilterPannel`) should be located in `app/components/nav/mobile/`.
+       - Use `@nuxtjs/device` (`isMobile`, `isMobileOrTablet`) for conditional rendering to optimize performance.
+

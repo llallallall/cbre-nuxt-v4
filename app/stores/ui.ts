@@ -81,6 +81,9 @@ interface UiState {
 
     // map
     showMiniMap: boolean,
+
+    // Header Color Mode
+    isLightMode: boolean;
 }
 
 // ----------------------------------------------------------------------
@@ -120,6 +123,9 @@ const getInitialState = (): UiState => ({
     showInfoModal: false,
 
     showMiniMap: true,
+
+    // Header Color Mode
+    isLightMode: false,
 });
 
 // ----------------------------------------------------------------------
@@ -247,5 +253,13 @@ export const useUiStore = defineStore('ui', {
                 // [TODO]: statusStore.setGlobalLoading(false);
             }
         },
+
+        /**
+         * @description 헤더의 Light Mode 여부를 설정합니다.
+         * @param isLight - true: Light Mode (White bg), false: Dark Mode (Green bg)
+         */
+        setLightMode(isLight: boolean) {
+            this.isLightMode = isLight;
+        }
     },
 });

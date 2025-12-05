@@ -15,7 +15,7 @@ const pool = new Pool({
 // Drizzle Client는 Pool 위에서 작동합니다.
 const db = drizzle(pool, {
     schema,
-    logger: process.env.NODE_ENV === 'development' ? true : false // 개발 환경에서 쿼리 로깅 활성화
+    logger: false // process.env.NODE_ENV === 'development' ? true : false // 개발 환경에서 쿼리 로깅 활성화
 });
 
 // HMR 안전 패턴: 개발 환경에서 중복 생성을 방지합니다.

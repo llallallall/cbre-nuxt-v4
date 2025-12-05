@@ -193,7 +193,7 @@
                                                 @click="closeModal">
                                                 Cancel
                                         </UButton>
-                                        <UButton color="cbre-green" variant="solid" :loading="computedIsLoading"
+                                        <UButton color="primary" variant="solid" :loading="computedIsLoading"
                                                 @click="onSubmit">
                                                 {{ isEditMode ? 'Save Changes' : 'Create Record' }}
                                         </UButton>
