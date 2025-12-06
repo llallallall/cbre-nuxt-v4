@@ -1,54 +1,53 @@
 <template>
     <div id="AdminLayout" class="bg-white w-screen h-screen overflow-hidden font-sans">
         <div id="TopMenu" class="cbre-layout-topbar">
-            <div id="LeftMenu" class="cbre-topbar-left">
-                <div class="cbre-brand-lockup group"
-                    @click="navigateTo('/admin')">
-                    <IconCBRELogo class="w-[9rem] h-[2.8rem] group-hover:opacity-90 transition-opacity text-cbre-green" />
-                    <sub class="cbre-brand-label text-cbre-green">Map</sub>
+            <div id="LeftMenu" class="cbre-layout-topbar-left">
+                <div class="cbre-nav-brand group" @click="navigateTo('/admin')">
+                    <IconCBRELogo
+                        class="w-[9rem] h-[2.8rem] group-hover:opacity-90 transition-opacity text-cbre-green" />
+                    <sub class="cbre-nav-brand-label text-cbre-green">Map</sub>
                 </div>
-                
+
                 <!-- Title -->
-                <div class="cbre-topbar-title-separator">
-                    <span class="cbre-navbar-title text-cbre-green/90">Property Management System</span>
+                <div class="cbre-layout-topbar-separator">
+                    <span class="cbre-nav-title text-cbre-green/90">Property Management System</span>
                 </div>
-                <div class="cbre-topbar-title-separator-mobile">
+                <div class="cbre-layout-topbar-separator-mobile">
                     <span class="cbre-nav-link text-cbre-green/90">PMS</span>
                 </div>
             </div>
 
-            <div id="right-menu" class="cbre-topbar-right">
+            <div id="right-menu" class="cbre-layout-topbar-right">
                 <div class="flex items-center">
                     <!-- Desktop Navigation -->
-                    <div class="hidden md:flex items-center">
+                    <div class="hidden md:flex items-center transform translate-x-[10px]">
                         <button v-for="(item, index) in filteredNavItems" :key="index"
-                            class="group cbre-topbar-menu-btn"
-                            @click="navigateTo(item.link)">
+                            class="group cbre-button-topbar-menu" @click="navigateTo(item.link)">
                             <span>{{ item.label }}</span>
                         </button>
                     </div>
 
                     <!-- Mobile Navigation Toggle -->
-                    <div class="flex md:hidden ml-4">
-                        <button class="cbre-nav-toggle"
-                            @click="toggleAdminSideMenu">
-                            <UIcon :name="uiStore.isMenuOverlay ? 'i-heroicons-x-mark' : 'i-heroicons-bars-3'" size="30" />
+                    <div class="flex md:hidden ml-4 transform translate-x-[10px]">
+                        <button class="cbre-button-nav-toggle" @click="toggleAdminSideMenu">
+                            <UIcon :name="uiStore.isMenuOverlay ? 'i-heroicons-x-mark' : 'i-heroicons-bars-3'"
+                                size="30" />
                         </button>
                     </div>
                 </div>
 
                 <div class="cbre-layout-divider"></div>
 
-                <div v-if="loggedIn" class="cbre-topbar-user-section">
-                    <div class="cbre-user-avatar-container" @click="openUserProfileModal"
+                <div v-if="loggedIn" class="cbre-layout-topbar-user-section">
+                    <div class="cbre-avatar-user-container" @click="openUserProfileModal"
                         :title="`Logged in as ${user?.name || 'User'}`">
                         <img :src="userAvatar" alt="User Avatar" class="w-full h-full object-cover" />
                     </div>
-                    <button class="cbre-btn-brief-sm" @click="handleLogout">Logout</button>
+                    <button class="cbre-button-brief-sm" @click="handleLogout">Logout</button>
                 </div>
 
-                <div v-else class="cbre-topbar-user-section">
-                    <button class="cbre-btn-brief-sm" @click="handleLogin">Login</button>
+                <div v-else class="cbre-layout-topbar-user-section">
+                    <button class="cbre-button-brief-sm" @click="handleLogin">Login</button>
                 </div>
             </div>
         </div>
@@ -67,7 +66,7 @@
         </div>
 
         <!-- Backdrop -->
-        <!-- <Transition name="cbre-fade">
+        <!-- <Transition name="cbre-transition-fade">
             <div v-if="uiStore.isMenuOverlay"
                 class="fixed inset-0 bg-black/40 z-[55] lg:hidden"
                 @click="toggleAdminSideMenu">
@@ -75,11 +74,10 @@
         </Transition> -->
 
         <!-- Mobile Side Panel -->
-        <Transition name="cbre-slide-down">
+        <Transition name="cbre-transition-slide-down">
             <div v-show="uiStore.isMenuOverlay" class="cbre-mobile-panel lg:hidden block ">
                 <div class="flex flex-col h-full overflow-y-auto pb-8 pt-8">
-                    <div v-for="(item, index) in filteredNavItems" :key="index"
-                        class="px-8 py-2 cursor-pointer group"
+                    <div v-for="(item, index) in filteredNavItems" :key="index" class="px-8 py-2 cursor-pointer group"
                         @click="navigateTo(item.link); toggleAdminSideMenu()">
                         <span class="cbre-mobile-nav-item group-hover:text-cbre-green-800">{{ item.label }}</span>
                     </div>
@@ -118,19 +116,19 @@ const navItems: NavItem[] = [
         label: 'Users',
         link: '/user/list',
         icon: 'i-solar-user-outline',
-        roles: ['USER','ADMIN', 'DEVELOPER']
+        roles: ['USER', 'ADMIN', 'DEVELOPER']
     },
     {
         label: 'Upload File',
         link: '/property/upload',
         icon: 'i-solar-upload-outline',
-        roles: ['USER','ADMIN', 'DEVELOPER']
+        roles: ['USER', 'ADMIN', 'DEVELOPER']
     },
     {
         label: 'Download File',
         link: '/api/property/bulk',
         icon: 'i-solar-download-outline',
-        roles: ['USER','ADMIN', 'DEVELOPER']
+        roles: ['USER', 'ADMIN', 'DEVELOPER']
     }
 ]
 

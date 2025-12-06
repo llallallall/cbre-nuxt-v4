@@ -9,17 +9,18 @@
 			<div class="hidden lg:flex w-full h-full justify-between items-stretch px-12">
 				<div id="DesktopLeftMenu" class="flex items-center h-full gap-6">
 					<!-- Logo Section -->
-						<div class="cbre-brand-lockup group" @click="navigateTo('/')">
-							<IconCBRELogo class="w-[9rem] h-[2.8rem] group-hover:opacity-90 transition-opacity"
-								:class="isLightMode ? 'text-cbre-green' : 'text-white'" />
-							<sub class="cbre-brand-label"
-								:class="isLightMode ? 'text-cbre-green' : '!text-white'">Map</sub>
-						</div>
+					<div class="cbre-nav-brand group" @click="navigateTo('/')">
+						<IconCBRELogo class="w-[9rem] h-[2.8rem] group-hover:opacity-90 transition-opacity"
+							:class="isLightMode ? 'text-cbre-green' : 'text-white'" />
+						<sub class="cbre-nav-brand-label"
+							:class="isLightMode ? 'text-cbre-green' : '!text-white'">Map</sub>
+					</div>
 
 					<!-- App Title -->
-					<div class="flex items-center h-full">
-						<span class="cbre-navbar-title transition-colors duration-300"
-							:class="isLightMode ? 'text-cbre-green/90' : '!text-white/90'">Property Management System</span>
+					<div class="cbre-layout-topbar-separator border-gray-200/20">
+						<span class="cbre-nav-title transition-colors duration-300"
+							:class="isLightMode ? 'text-cbre-green/90' : '!text-white/90'">Property Management
+							System</span>
 					</div>
 
 					<!-- Search Bar -->
@@ -46,12 +47,11 @@
 				<div id="DesktopRightMenu" class="flex items-center gap-8 z-20">
 					<!-- Transaction Type Filter -->
 					<UPopover v-model:open="openTransaction" mode="click" :popper="{ placement: 'bottom-end' }">
-						<button
-							class="group cbre-topbar-menu-btn"
+						<button class="group cbre-button-topbar-menu"
 							:class="isLightMode ? 'text-cbre-green' : 'text-white'">
 							<span>Transaction</span>
 							<span v-if="selectedTransaction && selectedTransaction.name !== 'All Types'"
-								class="cbre-topbar-menu-sublabel"
+								class="cbre-text-topbar-sublabel"
 								:class="isLightMode ? 'text-cbre-green/80' : 'text-white/80'">
 								({{ selectedTransaction.name }})
 							</span>
@@ -76,11 +76,10 @@
 
 					<!-- Sector Filter -->
 					<UPopover v-model:open="openSectors" mode="click" :popper="{ placement: 'bottom-end' }">
-						<button
-							class="group cbre-topbar-menu-btn"
+						<button class="group cbre-button-topbar-menu"
 							:class="isLightMode ? 'text-cbre-green' : 'text-white'">
 							<span>Sector</span>
-							<span v-if="selectedSectors.length > 0" class="cbre-topbar-menu-sublabel"
+							<span v-if="selectedSectors.length > 0" class="cbre-text-topbar-sublabel"
 								:class="isLightMode ? 'text-cbre-green/80' : 'text-white/80'">
 								({{ selectedSectorsDisplay }})
 							</span>
@@ -105,11 +104,10 @@
 
 					<!-- SubSector Filter -->
 					<UPopover v-model:open="openSubSectors" mode="click" :popper="{ placement: 'bottom-end' }">
-						<button
-							class="group cbre-topbar-menu-btn"
+						<button class="group cbre-button-topbar-menu"
 							:class="isLightMode ? 'text-cbre-green' : 'text-white'">
 							<span>SubSector</span>
-							<span v-if="selectedSubSectors.length > 0" class="cbre-topbar-menu-sublabel"
+							<span v-if="selectedSubSectors.length > 0" class="cbre-text-topbar-sublabel"
 								:class="isLightMode ? 'text-cbre-green/80' : 'text-white/80'">
 								({{ selectedSubSectorsDisplay }})
 							</span>
@@ -133,12 +131,10 @@
 					</UPopover>
 
 					<!-- More Menu -->
-					<button @click="openMenuMore = !openMenuMore"
-						class="group cbre-topbar-menu-btn"
-						:class="[
-							isLightMode ? 'text-cbre-green' : 'text-white',
-							{ 'border-cbre-accent text-cbre-green-800': openMenuMore }
-						]">
+					<button @click="openMenuMore = !openMenuMore" class="group cbre-button-topbar-menu" :class="[
+						isLightMode ? 'text-cbre-green' : 'text-white',
+						{ 'border-cbre-accent text-cbre-green-800': openMenuMore }
+					]">
 						<span>More</span>
 						<UIcon name="i-heroicons-chevron-down"
 							class="w-4 h-4 transition-transform duration-200 group-hover:rotate-180"
@@ -147,8 +143,7 @@
 
 					<!-- Web Search -->
 					<button @click="openWebSearchPannel = !openWebSearchPannel"
-						class="hidden sm:flex group cbre-topbar-menu-btn"
-						:class="[
+						class="hidden sm:flex group cbre-button-topbar-menu" :class="[
 							isLightMode ? 'text-cbre-green' : 'text-white',
 							{ 'border-cbre-accent text-cbre-green-800': openWebSearchPannel }
 						]">
@@ -165,15 +160,15 @@
 			<div class="flex lg:hidden w-full h-full justify-between items-center px-6">
 				<div id="MobileLeftMenu" class="flex items-center h-full gap-4">
 					<!-- Logo Section -->
-					<div class="cbre-brand-lockup group" @click="navigateTo('/')">
+					<div class="cbre-nav-brand group" @click="navigateTo('/')">
 						<IconCBRELogo class="w-[9rem] h-[2.8rem] group-hover:opacity-90 transition-opacity"
 							:class="isLightMode ? 'text-cbre-green' : 'text-white'" />
-						<sub class="cbre-brand-label"
+						<sub class="cbre-nav-brand-label"
 							:class="isLightMode ? 'text-cbre-green' : '!text-white'">Map</sub>
 					</div>
 
 					<!-- App Title -->
-					<div class="flex items-center h-full">
+					<div class="cbre-layout-topbar-separator border-gray-200/20">
 						<span class="cbre-nav-link transition-colors duration-300"
 							:class="isLightMode ? 'text-cbre-green/90' : '!text-white/90'">PMS</span>
 					</div>
@@ -224,7 +219,7 @@
 			<NavMobileTextSearchPannel @isClosed="collapseAll" />
 		</div>
 
-		<Transition name="cbre-slide-down">
+		<Transition name="cbre-transition-slide-down">
 			<div v-show="isHydrationComplete && openFilterPannel"
 				class="filter-pannel fixed top-[8rem] right-0 w-full h-[calc(100vh-8rem)] bg-white shadow-2xl z-[40] lg:hidden">
 				<NavMobileFilterPannel @isClosed="collapseAll" />

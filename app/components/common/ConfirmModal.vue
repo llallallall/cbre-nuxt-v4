@@ -4,7 +4,7 @@
                         <template #header>
                                 <div class="flex items-center justify-between">
                                         <h3 class="text-base font-semibold leading-6 text-gray-900">
-                                                {{ title }}
+                                                {{ displayTitle }}
                                         </h3>
                                         <UButton color="neutral" variant="ghost" icon="i-heroicons-x-mark-20-solid"
                                                 class="-my-1" @click="handleCancel" />
@@ -13,19 +13,19 @@
 
                         <div class="text-center mb-4">
                                 <p class="text-base text-gray-600 leading-relaxed whitespace-pre-wrap">
-                                        {{ message }}
+                                        {{ displayMessage }}
                                 </p>
                         </div>
 
                         <template #footer>
                                 <div class="flex flex-col space-y-3">
                                         <UButton block color="primary" variant="solid" @click="handleConfirm">
-                                                {{ confirmText }}
+                                                {{ displayConfirmText }}
                                         </UButton>
                                         <UButton block color="neutral" variant="solid"
                                                 class="border border-gray-300 text-gray-700 hover:bg-gray-50"
                                                 @click="handleCancel">
-                                                {{ cancelText }}
+                                                {{ displayCancelText }}
                                         </UButton>
                                 </div>
                         </template>
@@ -41,11 +41,14 @@ const props = withDefaults(defineProps<{
         confirmText?: string;
         cancelText?: string;
 }>(), {
-        title: 'Confirm',
-        message: 'Are you sure?',
-        confirmText: 'Confirm',
-        cancelText: 'Cancel',
 });
+
+const { t } = useI18n();
+
+const displayTitle = computed(() => props.title || t('confirm_title'));
+const displayMessage = computed(() => props.message || t('confirm_message'));
+const displayConfirmText = computed(() => props.confirmText || t('confirm_button'));
+const displayCancelText = computed(() => props.cancelText || t('cancel_button'));
 
 const emit = defineEmits<{
         (e: 'confirm'): void;

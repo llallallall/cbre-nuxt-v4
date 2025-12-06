@@ -1,22 +1,22 @@
 <template>
-        <div class="w-full h-full overflow-y-auto overflow-x-hidden mt-2 mb-5 space-y-4 custom-scrollbar">
+        <div class="w-full h-full overflow-y-auto overflow-x-hidden mt-2 mb-5 space-y-4 pr-4">
 
                 <div v-if="kakaoAddress.length > 0">
-                        <h3 class="text-sm font-bold text-gray-500 mb-2 px-1">Kakao Address</h3>
+                        <h3 class="cbre-text-label-sm text-gray-500 mb-2 px-1">Kakao Address</h3>
                         <div v-for="(item, index) in kakaoAddress" :key="`ka-${index}`">
                                 <NavWebSearchResultAddress :item="item" />
                         </div>
                 </div>
 
                 <div v-if="kakaoKeyword.length > 0">
-                        <h3 class="text-sm font-bold text-gray-500 mb-2 px-1 mt-4">Kakao Places</h3>
+                        <h3 class="cbre-text-label-sm text-gray-500 mb-2 px-1 mt-4">Kakao Places</h3>
                         <div v-for="(item, index) in kakaoKeyword" :key="`kk-${index}`">
                                 <NavWebSearchResultKeyword :item="item" />
                         </div>
                 </div>
 
                 <div v-if="googleGeocoder.length > 0">
-                        <h3 class="text-sm font-bold text-gray-500 mb-2 px-1 mt-4">Google Results</h3>
+                        <h3 class="cbre-text-label-sm text-gray-500 mb-2 px-1 mt-4">Google Results</h3>
                         <div v-for="(item, index) in googleGeocoder" :key="`gg-${index}`">
                                 <NavWebSearchResultGeocoder :item="item" />
                         </div>
@@ -181,18 +181,3 @@ defineExpose({
         searchResult
 });
 </script>
-
-<style scoped>
-.custom-scrollbar::-webkit-scrollbar {
-        width: 6px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-track {
-        background: transparent;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb {
-        background-color: #e5e7eb;
-        border-radius: 3px;
-}
-</style>

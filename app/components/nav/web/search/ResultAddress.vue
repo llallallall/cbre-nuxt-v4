@@ -1,28 +1,30 @@
 <template>
-        <div class="group w-full relative select-none bg-white drop-shadow-sm my-2 px-3 py-3 rounded-md cursor-pointer hover:bg-gray-50 border border-transparent hover:border-gray-200 transition-all"
+        <div class="cbre-panel-card mb-3 cursor-pointer group hover:border-cbre-green transition-colors !p-4"
                 @click="handleSelect">
-
                 <div class="flex justify-between items-center mb-2">
                         <div
-                                class="w-[calc(100%-40px)] font-bold text-sm text-gray-800 truncate group-hover:text-cbre_primary_1">
-                                {{ item?.name || item?.address_name }}
+                                class="w-[calc(100%-40px)] cbre-text-body-md font-bold truncate group-hover:text-[var(--color-primary-1)]">
+                                {{ item?.address_name }}
                         </div>
-
-                        <div
-                                class="w-6 h-6 rounded-full bg-yellow-400 text-white flex justify-center items-center text-xs font-bold shadow-sm">
+                        <div class="cbre-badge-circle cbre-badge-circle-yellow">
                                 A
                         </div>
                 </div>
 
-                <div class="flex flex-col gap-1 text-xs text-gray-500">
-                        <div class="flex items-center">
+                <div class="cbre-text-meta flex flex-col gap-1">
+                        <div v-if="item?.road_address" class="flex items-center">
                                 <div class="w-1.5 h-1.5 bg-gray-400 rounded-full mr-2 flex-shrink-0"></div>
-                                <span class="truncate">{{ item?.province }} {{ item?.city }} {{ item?.street }}</span>
+                                <span class="truncate">{{ item.road_address?.address_name }}</span>
+                        </div>
+
+                        <div v-else class="flex items-center">
+                                <div class="w-1.5 h-1.5 bg-gray-400 rounded-full mr-2 flex-shrink-0"></div>
+                                <span class="truncate">{{ item.address.address_name }}</span>
                         </div>
 
                         <div class="flex items-center mt-1 opacity-70">
                                 <Icon name="ph:map-pin" size="12" class="mr-1" />
-                                <span>{{ item?.latitude }}, {{ item?.longitude }}</span>
+                                <span>{{ item?.y }}, {{ item?.x }}</span>
                         </div>
                 </div>
         </div>

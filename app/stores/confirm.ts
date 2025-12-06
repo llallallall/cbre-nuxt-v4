@@ -11,10 +11,10 @@ export const useConfirmStore = defineStore('confirm', {
         state: () => ({
                 isOpen: false,
                 options: {
-                        title: 'Confirm',
-                        message: 'Are you sure?',
-                        confirmText: 'Confirm',
-                        cancelText: 'Cancel',
+                        title: undefined,
+                        message: undefined,
+                        confirmText: undefined,
+                        cancelText: undefined,
                 } as ConfirmOptions,
                 resolve: null as ((value: boolean) => void) | null,
         }),
