@@ -2,7 +2,7 @@
 
 ### 1. 🥇 PRIMARY TASK: Nuxt 4.x Documentation Mastery
 
-The **highest priority** is to achieve a complete and expert-level understanding of the official Nuxt 4.x documentation. This learning must precede any coding or development work related to the `cbre-nuxt-v4` project.
+The **!highest priority** is to achieve a complete and expert-level understanding of the official Nuxt 4.x documentation. This learning must precede any coding or development work related to the `cbre-nuxt-v4` project.
 
 * **Start URL (Mandatory Learning Target):** https://nuxt.com/docs/4.x/,  https://ui.nuxt.com/docs/getting-started, https://i18n.nuxtjs.org/docs/getting-started, https://alexlavoie42.github.io/Nuxt-Mapbox/getting-started/quick-setup
 * **Learning Goal:** Acquire expert-level knowledge of Nuxt 4.x architecture, APIs, conventions, and new features.
