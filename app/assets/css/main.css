@@ -748,7 +748,7 @@
     }
 
     .cbre-badge-button {
-        @apply text-md text-gray-500 px-2 py-1 bg-gray-100 rounded hover:bg-gray-200 transition-colors cursor-pointer;
+        @apply text-base text-gray-500 px-2 py-1 bg-gray-100 rounded hover:bg-gray-200 transition-colors cursor-pointer;
         font-family: var(--font-sans);
     }
 

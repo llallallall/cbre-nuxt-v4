@@ -115,6 +115,7 @@ export default <Config>{
                 },
             },
             fontSize: {
+                'base': ['1.6rem', { lineHeight: '1.6' }],
                 'hero-mobile': ['5rem', { lineHeight: '1.0' }],
                 'hero-desktop': ['9.6rem', { lineHeight: '1.0' }],
                 'h1-mobile': ['3rem', { lineHeight: '1.1' }],

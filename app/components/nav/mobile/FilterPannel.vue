@@ -47,8 +47,8 @@
 							<div v-if="selectedTransaction?.name === type.name"
 								class="w-3 h-3 bg-cbre-green-500 rounded-full"></div>
 						</div>
-						<span class="cbre-filter-text"
-							:class="{ 'cbre-filter-text--active': selectedTransaction?.name === type.name }">
+						<span class="cbre-filter-text text-base"
+							:class="{ 'cbre-filter-text text-base--active': selectedTransaction?.name === type.name }">
 							{{ type.name }}
 						</span>
 					</div>
@@ -71,8 +71,8 @@
 							<UIcon v-if="isSelectedSector(option)" name="i-heroicons-check"
 								class="w-4 h-4 text-cbre-green-500" />
 						</div>
-						<span class="cbre-filter-text"
-							:class="{ 'cbre-filter-text--active': isSelectedSector(option) }">
+						<span class="cbre-filter-text text-base"
+							:class="{ 'cbre-filter-text text-base--active': isSelectedSector(option) }">
 							{{ option.name }}
 						</span>
 					</div>
@@ -95,8 +95,8 @@
 							<UIcon v-if="isSelectedSubSector(option)" name="i-heroicons-check"
 								class="w-4 h-4 text-cbre-green-500" />
 						</div>
-						<span class="cbre-filter-text"
-							:class="{ 'cbre-filter-text--active': isSelectedSubSector(option) }">
+						<span class="cbre-filter-text text-base"
+							:class="{ 'cbre-filter-text text-base--active': isSelectedSubSector(option) }">
 							{{ option.name }}
 						</span>
 					</div>
@@ -116,53 +116,53 @@
 					<!-- GFA -->
 					<div class="space-y-2">
 						<div class="flex justify-between items-baseline">
-							<span class="cbre-filter-text">GFA</span>
+							<span class="cbre-filter-text text-base">GFA</span>
 							<div class="flex items-center">
-								<span :class="{ 'font-bold': !localMoreFilters.gfaType }">py</span>
+								<span class="text-base" :class="{ 'font-bold': !localMoreFilters.gfaType }">py</span>
 								<USwitch v-model="localMoreFilters.gfaType" size="xl" class="px-1" :ui="switchUi" />
-								<span :class="{ 'font-bold': localMoreFilters.gfaType }">sqm</span>
+								<span class="text-base" :class="{ 'font-bold': localMoreFilters.gfaType }">sqm</span>
 							</div>
 						</div>
 						<div class="px-2">
 							<USlider v-model="localMoreFilters.gfa" :min="0" :max="100000" :step="100" size="xs"
 								:ui="sliderUi" />
 						</div>
-						<div class="text-right text-gray-500">{{
+						<div class="text-right text-gray-500 text-base">{{
 							thoundsGfa(localMoreFilters.gfa) }}</div>
 					</div>
 					<!-- NFA -->
 					<div class="space-y-2">
 						<div class="flex justify-between items-baseline">
-							<span class="cbre-filter-text">NFA</span>
+							<span class="cbre-filter-text text-base">NFA</span>
 							<div class="flex items-center">
-								<span :class="{ 'font-bold': !localMoreFilters.nfaType }">py</span>
+								<span class="text-base" :class="{ 'font-bold': !localMoreFilters.nfaType }">py</span>
 								<USwitch v-model="localMoreFilters.nfaType" size="xs" class="px-1" :ui="switchUi" />
-								<span :class="{ 'font-bold': localMoreFilters.nfaType }">sqm</span>
+								<span class="text-base" :class="{ 'font-bold': localMoreFilters.nfaType }">sqm</span>
 							</div>
 						</div>
 						<div class="px-2">
 							<USlider v-model="localMoreFilters.nfa" :min="0" :max="100000" :step="100" size="xs"
 								:ui="sliderUi" />
 						</div>
-						<div class="text-right text-gray-500">{{
+						<div class="text-right text-gray-500 text-base">{{
 							thoundsNfa(localMoreFilters.nfa) }}</div>
 					</div>
 					<!-- Site Area -->
 					<div class="space-y-2">
 						<div class="flex justify-between items-baseline">
-							<span class="cbre-filter-text">Site Area</span>
+							<span class="cbre-filter-text text-base">Site Area</span>
 							<div class="flex items-center">
-								<span :class="{ 'font-bold': !localMoreFilters.siteAreaType }">py</span>
+								<span class="text-base" :class="{ 'font-bold': !localMoreFilters.siteAreaType }">py</span>
 								<USwitch v-model="localMoreFilters.siteAreaType" size="xs" class="px-1"
 									:ui="switchUi" />
-								<span :class="{ 'font-bold': localMoreFilters.siteAreaType }">sqm</span>
+								<span class="text-base" :class="{ 'font-bold': localMoreFilters.siteAreaType }">sqm</span>
 							</div>
 						</div>
 						<div class="px-2">
 							<USlider v-model="localMoreFilters.siteArea" :min="0" :max="100000" :step="100" size="xs"
 								:ui="sliderUi" />
 						</div>
-						<div class="text-right text-gray-500">{{
+						<div class="text-right text-gray-500 text-base">{{
 							thoundsSite(localMoreFilters.siteArea) }}</div>
 					</div>
 				</div>
@@ -181,7 +181,7 @@
 					<!-- Built -->
 					<div class="space-y-2">
 						<div class="flex justify-between items-center">
-							<span class="cbre-filter-text">Built</span>
+							<span class="cbre-filter-text text-base">Built</span>
 							<button @click="resetLocalFilter('built')"
 								class="cbre-badge-button">Reset</button>
 						</div>
@@ -189,13 +189,13 @@
 							<USlider v-model="localMoreFilters.built" :min="1960" :max="currentYear" size="xs"
 								:ui="sliderUi" />
 						</div>
-						<div class="text-right text-gray-500">{{ localMoreFilters.built
+						<div class="text-right text-gray-500 text-base">{{ localMoreFilters.built
 							}}</div>
 					</div>
 					<!-- Reno -->
 					<div class="space-y-2">
 						<div class="flex justify-between items-center">
-							<span class="cbre-filter-text">Reno</span>
+							<span class="cbre-filter-text text-base">Reno</span>
 							<button @click="resetLocalFilter('reno')"
 								class="cbre-badge-button">Reset</button>
 						</div>
@@ -203,13 +203,13 @@
 							<USlider v-model="localMoreFilters.reno" :min="1960" :max="currentYear" size="xs"
 								:ui="sliderUi" />
 						</div>
-						<div class="text-right text-gray-500">{{ localMoreFilters.reno
+						<div class="text-right text-gray-500 text-base">{{ localMoreFilters.reno
 							}}</div>
 					</div>
 					<!-- Sales -->
 					<div class="space-y-2">
 						<div class="flex justify-between items-center">
-							<span class="cbre-filter-text">Sales</span>
+							<span class="cbre-filter-text text-base">Sales</span>
 							<button @click="resetLocalFilter('sales')"
 								class="cbre-badge-button">Reset</button>
 						</div>
@@ -217,13 +217,13 @@
 							<USlider v-model="localMoreFilters.sales" :min="1960" :max="currentYear" size="xs"
 								:ui="sliderUi" />
 						</div>
-						<div class="text-right text-gray-500">{{ localMoreFilters.sales
+						<div class="text-right text-gray-500 text-base">{{ localMoreFilters.sales
 							}}</div>
 					</div>
 					<!-- Leases -->
 					<div class="space-y-2">
 						<div class="flex justify-between items-center">
-							<span class="cbre-filter-text">Leases</span>
+							<span class="cbre-filter-text text-base">Leases</span>
 							<button @click="resetLocalFilter('leases')"
 								class="cbre-badge-button">Reset</button>
 						</div>
@@ -231,7 +231,7 @@
 							<USlider v-model="localMoreFilters.leases" :min="1960" :max="currentYear" size="xs"
 								:ui="sliderUi" />
 						</div>
-						<div class="text-right text-gray-500">{{ localMoreFilters.leases
+						<div class="text-right text-gray-500 text-base">{{ localMoreFilters.leases
 							}}</div>
 					</div>
 				</div>
@@ -248,45 +248,45 @@
 				</button>
 				<div v-show="openSections.facility" class="mt-4 pl-1 space-y-6">
 					<div class="space-y-2">
-						<span class="cbre-filter-text">Buildings</span>
+						<span class="cbre-filter-text text-base">Buildings</span>
 						<div class="px-2">
 							<USlider v-model="localMoreFilters.buildings" :min="0" :max="10" size="xs" :ui="sliderUi" />
 						</div>
-						<div class="text-right text-gray-500">{{
+						<div class="text-right text-gray-500 text-base">{{
 							localMoreFilters.buildings }}</div>
 					</div>
 					<div class="space-y-2">
-						<span class="cbre-filter-text">Basement</span>
+						<span class="cbre-filter-text text-base">Basement</span>
 						<div class="px-2">
 							<USlider v-model="localMoreFilters.basement" :min="0" :max="10" size="xs" :ui="sliderUi" />
 						</div>
-						<div class="text-right text-gray-500">{{
+						<div class="text-right text-gray-500 text-base">{{
 							localMoreFilters.basement }}</div>
 					</div>
 					<div class="space-y-2">
-						<span class="cbre-filter-text">Upper Floor</span>
+						<span class="cbre-filter-text text-base">Upper Floor</span>
 						<div class="px-2">
 							<USlider v-model="localMoreFilters.upperFloor" :min="0" :max="50" size="xs"
 								:ui="sliderUi" />
 						</div>
-						<div class="text-right text-gray-500">{{
+						<div class="text-right text-gray-500 text-base">{{
 							localMoreFilters.upperFloor }}</div>
 					</div>
 					<div class="space-y-2">
-						<span class="cbre-filter-text">Elevator</span>
+						<span class="cbre-filter-text text-base">Elevator</span>
 						<div class="px-2">
 							<USlider v-model="localMoreFilters.elevator" :min="0" :max="20" size="xs" :ui="sliderUi" />
 						</div>
-						<div class="text-right text-gray-500">{{
+						<div class="text-right text-gray-500 text-base">{{
 							localMoreFilters.elevator }}</div>
 					</div>
 					<div class="space-y-2">
-						<span class="cbre-filter-text">Parking</span>
+						<span class="cbre-filter-text text-base">Parking</span>
 						<div class="px-2">
 							<USlider v-model="localMoreFilters.parking" :min="0" :max="500" :step="10" size="xs"
 								:ui="sliderUi" />
 						</div>
-						<div class="text-right text-gray-500">{{
+						<div class="text-right text-gray-500 text-base">{{
 							localMoreFilters.parking }}</div>
 					</div>
 				</div>
@@ -303,38 +303,38 @@
 				</button>
 				<div v-show="openSections.finance" class="mt-4 pl-1 space-y-6">
 					<div class="space-y-2">
-						<span class="cbre-filter-text">IOD</span>
+						<span class="cbre-filter-text text-base">IOD</span>
 						<div class="px-2">
 							<USlider v-model="localMoreFilters.iod" :min="0" :max="10" :step="0.1" size="xs"
 								:ui="sliderUi" />
 						</div>
-						<div class="text-right text-gray-500">{{ localMoreFilters.iod }}
+						<div class="text-right text-gray-500 text-base">{{ localMoreFilters.iod }}
 						</div>
 					</div>
 					<div class="space-y-2">
-						<span class="cbre-filter-text">GDM</span>
+						<span class="cbre-filter-text text-base">GDM</span>
 						<div class="px-2">
 							<USlider v-model="localMoreFilters.gdm" :min="0" :max="10" :step="0.1" size="xs"
 								:ui="sliderUi" />
 						</div>
-						<div class="text-right text-gray-500">{{ localMoreFilters.gdm }}
+						<div class="text-right text-gray-500 text-base">{{ localMoreFilters.gdm }}
 						</div>
 					</div>
 					<div class="space-y-2">
-						<span class="cbre-filter-text">NOC</span>
+						<span class="cbre-filter-text text-base">NOC</span>
 						<div class="px-2">
 							<USlider v-model="localMoreFilters.noc" :min="0" :max="100000" :step="1000" size="xs"
 								:ui="sliderUi" />
 						</div>
-						<div class="text-right text-gray-500">{{ localMoreFilters.noc }}
+						<div class="text-right text-gray-500 text-base">{{ localMoreFilters.noc }}
 						</div>
 					</div>
 					<div class="space-y-2">
-						<span class="cbre-filter-text">Eff. Ratio</span>
+						<span class="cbre-filter-text text-base">Eff. Ratio</span>
 						<div class="px-2">
 							<USlider v-model="localMoreFilters.effRatio" :min="0" :max="100" size="xs" :ui="sliderUi" />
 						</div>
-						<div class="text-right text-gray-500">{{
+						<div class="text-right text-gray-500 text-base">{{
 							localMoreFilters.effRatio }}</div>
 					</div>
 				</div>
@@ -511,7 +511,7 @@ const toggleSelectedSubSector = (option: { name: string }) => {
 
 // --- Logic: More Filters Formatting & Reset ---
 const formatValue = (value: number, type: boolean) => {
-	const unit = type ? ' ㎡' : ' py';
+	const unit = type ? 'sqm' : 'py';
 	return numberFormat(value, 0) + unit;
 };
 
