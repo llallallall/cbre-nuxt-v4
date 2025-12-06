@@ -2,26 +2,24 @@
 	<div>
 		<!-- Force Hydration Update -->
 		<div id="TopMenu" @mouseenter="isHovered = true" @mouseleave="isHovered = false"
-			class="fixed top-0 w-full h-[80px] transition-all duration-300 z-50 shadow-md font-calibre"
+			class="fixed top-0 w-full h-[8rem] transition-all duration-300 z-50 shadow-md font-calibre"
 			:class="isLightMode ? 'bg-white text-cbre-green' : 'bg-cbre-green text-white'">
 
 			<!-- === DESKTOP NAVIGATION === -->
 			<div class="hidden lg:flex w-full h-full justify-between items-stretch px-12">
 				<div id="DesktopLeftMenu" class="flex items-center h-full gap-6">
 					<!-- Logo Section -->
-					<div class="flex items-center cursor-pointer group" @click="navigateTo('/')">
-						<IconCBRELogo class="w-[90px] h-[28px] group-hover:opacity-90 transition-opacity"
-							:class="isLightMode ? 'text-cbre-green' : 'text-white'" />
-						<div class="text-[16px] font-medium tracking-wide transition-colors duration-300 uppercase transform translate-y-[18px] translate-x-[-8px]"
-							:class="isLightMode ? 'text-cbre-green' : 'text-white'">Map</div>
-					</div>
+						<div class="cbre-brand-lockup group" @click="navigateTo('/')">
+							<IconCBRELogo class="w-[9rem] h-[2.8rem] group-hover:opacity-90 transition-opacity"
+								:class="isLightMode ? 'text-cbre-green' : 'text-white'" />
+							<sub class="cbre-brand-label"
+								:class="isLightMode ? 'text-cbre-green' : '!text-white'">Map</sub>
+						</div>
 
 					<!-- App Title -->
 					<div class="flex items-center h-full">
-						<span
-							class="text-[16px] font-normal tracking-wide transition-colors duration-300 transform translate-y-[8px] translate-x-[-8px]"
-							:class="isLightMode ? 'text-cbre-green/90' : 'text-white/90'">Property Management
-							System</span>
+						<span class="cbre-navbar-title transition-colors duration-300"
+							:class="isLightMode ? 'text-cbre-green/90' : '!text-white/90'">Property Management System</span>
 					</div>
 
 					<!-- Search Bar -->
@@ -29,16 +27,16 @@
 						<div class="relative flex items-center">
 							<input v-model="searchText" type="text" name="search" autocomplete="off"
 								@keyup.enter="onSearchText()"
-								class="w-[240px] bg-transparent border-b text-[15px] pb-1 focus:outline-none transition-all duration-300"
+								class="w-[24rem] bg-transparent border-b text-[1.5rem] pb-1 focus:outline-none transition-all duration-300"
 								:class="isLightMode ? 'border-cbre-green/30 text-cbre-green placeholder-cbre-green/60 focus:border-cbre-green' : 'border-white/30 text-white placeholder-white/60 focus:border-white'"
 								placeholder="Search" />
 							<div v-if="isHydrationComplete" class="absolute right-0 bottom-2 cursor-pointer"
 								@click="propertyStore.searchKeyword === '' ? onSearchText() : onResetKeyword()">
 								<IconMagnifier v-if="propertyStore.searchKeyword === ''"
-									class="w-[18px] h-[18px] hover:text-cbre-accent transition-colors"
+									class="w-[1.8rem] h-[1.8rem] hover:text-cbre-accent transition-colors"
 									:class="isLightMode ? 'text-cbre-green' : 'text-white'" />
 								<UIcon v-else name="i-heroicons-x-mark"
-									class="w-[18px] h-[18px] hover:text-cbre-accent transition-colors"
+									class="w-[1.8rem] h-[1.8rem] hover:text-cbre-accent transition-colors"
 									:class="isLightMode ? 'text-cbre-green' : 'text-white'" />
 							</div>
 						</div>
@@ -49,11 +47,11 @@
 					<!-- Transaction Type Filter -->
 					<UPopover v-model:open="openTransaction" mode="click" :popper="{ placement: 'bottom-end' }">
 						<button
-							class="flex items-center gap-2 text-[15px] font-medium hover:text-cbre-green-800 transition-colors focus:outline-none group h-[80px] border-b-2 border-transparent hover:border-cbre-accent"
+							class="group cbre-topbar-menu-btn"
 							:class="isLightMode ? 'text-cbre-green' : 'text-white'">
 							<span>Transaction</span>
 							<span v-if="selectedTransaction && selectedTransaction.name !== 'All Types'"
-								class="font-normal text-sm ml-1"
+								class="cbre-topbar-menu-sublabel"
 								:class="isLightMode ? 'text-cbre-green/80' : 'text-white/80'">
 								({{ selectedTransaction.name }})
 							</span>
@@ -65,7 +63,7 @@
 							<div
 								class="p-0 w-56 bg-white shadow-lg border-t-4 border-cbre-green rounded-none font-calibre">
 								<div v-for="type in transaction" :key="type.name"
-									class="px-4 py-3 hover:bg-gray-50 cursor-pointer flex justify-between items-center text-cbre-green-800 text-[15px] border-b border-gray-100 last:border-0 transition-colors"
+									class="px-4 py-3 hover:bg-gray-50 cursor-pointer flex justify-between items-center text-cbre-green-800 text-[1.5rem] border-b border-gray-100 last:border-0 transition-colors"
 									:class="{ 'font-bold text-cbre-green-800': selectedTransaction?.name === type.name }"
 									@click="selectTransaction(type)">
 									{{ type.name }}
@@ -79,10 +77,10 @@
 					<!-- Sector Filter -->
 					<UPopover v-model:open="openSectors" mode="click" :popper="{ placement: 'bottom-end' }">
 						<button
-							class="flex items-center gap-2 text-[15px] font-medium hover:text-cbre-green-800 transition-colors focus:outline-none group h-[80px] border-b-2 border-transparent hover:border-cbre-accent"
+							class="group cbre-topbar-menu-btn"
 							:class="isLightMode ? 'text-cbre-green' : 'text-white'">
 							<span>Sector</span>
-							<span v-if="selectedSectors.length > 0" class="font-normal text-sm ml-1"
+							<span v-if="selectedSectors.length > 0" class="cbre-topbar-menu-sublabel"
 								:class="isLightMode ? 'text-cbre-green/80' : 'text-white/80'">
 								({{ selectedSectorsDisplay }})
 							</span>
@@ -94,7 +92,7 @@
 							<div
 								class="p-0 w-64 bg-white shadow-lg border-t-4 border-cbre-green rounded-none font-calibre">
 								<div v-for="option in sectors" :key="option.name"
-									class="px-4 py-3 hover:bg-gray-50 cursor-pointer flex justify-between items-center text-cbre-green-800 text-[15px] border-b border-gray-100 last:border-0 transition-colors"
+									class="px-4 py-3 hover:bg-gray-50 cursor-pointer flex justify-between items-center text-cbre-green-800 text-[1.5rem] border-b border-gray-100 last:border-0 transition-colors"
 									:class="{ 'font-bold text-cbre-green-800': isSelectedSector(option) }"
 									@click="toggleSelectedSector(option)">
 									{{ option.name }}
@@ -108,10 +106,10 @@
 					<!-- SubSector Filter -->
 					<UPopover v-model:open="openSubSectors" mode="click" :popper="{ placement: 'bottom-end' }">
 						<button
-							class="flex items-center gap-2 text-[15px] font-medium hover:text-cbre-green-800 transition-colors focus:outline-none group h-[80px] border-b-2 border-transparent hover:border-cbre-accent"
+							class="group cbre-topbar-menu-btn"
 							:class="isLightMode ? 'text-cbre-green' : 'text-white'">
 							<span>SubSector</span>
-							<span v-if="selectedSubSectors.length > 0" class="font-normal text-sm ml-1"
+							<span v-if="selectedSubSectors.length > 0" class="cbre-topbar-menu-sublabel"
 								:class="isLightMode ? 'text-cbre-green/80' : 'text-white/80'">
 								({{ selectedSubSectorsDisplay }})
 							</span>
@@ -123,7 +121,7 @@
 							<div
 								class="p-0 w-72 bg-white shadow-lg border-t-4 border-cbre-green rounded-none font-calibre">
 								<div v-for="option in subsectors" :key="option.name"
-									class="px-4 py-3 hover:bg-gray-50 cursor-pointer flex justify-between items-center text-cbre-green-800 text-[15px] border-b border-gray-100 last:border-0 transition-colors"
+									class="px-4 py-3 hover:bg-gray-50 cursor-pointer flex justify-between items-center text-cbre-green-800 text-[1.5rem] border-b border-gray-100 last:border-0 transition-colors"
 									:class="{ 'font-bold text-cbre-green-800': isSelectedSubSector(option) }"
 									@click="toggleSelectedSubSector(option)">
 									{{ option.name }}
@@ -136,7 +134,7 @@
 
 					<!-- More Menu -->
 					<button @click="openMenuMore = !openMenuMore"
-						class="flex items-center gap-2 text-[15px] font-medium hover:text-cbre-green-800 transition-colors focus:outline-none group h-[80px] border-b-2 border-transparent hover:border-cbre-accent"
+						class="group cbre-topbar-menu-btn"
 						:class="[
 							isLightMode ? 'text-cbre-green' : 'text-white',
 							{ 'border-cbre-accent text-cbre-green-800': openMenuMore }
@@ -149,7 +147,7 @@
 
 					<!-- Web Search -->
 					<button @click="openWebSearchPannel = !openWebSearchPannel"
-						class="hidden sm:flex items-center gap-2 text-[15px] font-medium hover:text-cbre-green-800 transition-colors focus:outline-none group h-[80px] border-b-2 border-transparent hover:border-cbre-accent"
+						class="hidden sm:flex group cbre-topbar-menu-btn"
 						:class="[
 							isLightMode ? 'text-cbre-green' : 'text-white',
 							{ 'border-cbre-accent text-cbre-green-800': openWebSearchPannel }
@@ -167,18 +165,17 @@
 			<div class="flex lg:hidden w-full h-full justify-between items-center px-6">
 				<div id="MobileLeftMenu" class="flex items-center h-full gap-4">
 					<!-- Logo Section -->
-					<div class="flex items-center cursor-pointer group" @click="navigateTo('/')">
-						<IconCBRELogo class="w-[90px] h-[28px] group-hover:opacity-90 transition-opacity"
+					<div class="cbre-brand-lockup group" @click="navigateTo('/')">
+						<IconCBRELogo class="w-[9rem] h-[2.8rem] group-hover:opacity-90 transition-opacity"
 							:class="isLightMode ? 'text-cbre-green' : 'text-white'" />
-						<div class="text-[16px] font-medium tracking-wide transition-colors duration-300 uppercase transform translate-y-[18px] translate-x-[-8px]"
-							:class="isLightMode ? 'text-cbre-green' : 'text-white'">Map</div>
+						<sub class="cbre-brand-label"
+							:class="isLightMode ? 'text-cbre-green' : '!text-white'">Map</sub>
 					</div>
 
 					<!-- App Title -->
 					<div class="flex items-center h-full">
-						<span
-							class="text-[16px] font-normal tracking-wide transition-colors duration-300 transform translate-y-[8px] translate-x-[-8px]"
-							:class="isLightMode ? 'text-cbre-green/90' : 'text-white/90'">PMS</span>
+						<span class="cbre-nav-link transition-colors duration-300"
+							:class="isLightMode ? 'text-cbre-green/90' : '!text-white/90'">PMS</span>
 					</div>
 				</div>
 
@@ -188,13 +185,13 @@
 
 					<!-- Mobile Search Icon -->
 					<button @click="openTextSearchPannel = !openTextSearchPannel" class="focus:outline-none p-1">
-						<IconMagnifier class="w-6 h-6 transition-colors"
+						<IconMagnifier class="w-10 h-10 transition-colors transform translate-y-[-2px]"
 							:class="isLightMode ? 'text-cbre-green' : 'text-white hover:text-white/80'" />
 					</button>
 					<!-- Mobile Menu (Filter) Icon -->
 					<button @click="openFilterPannel = !openFilterPannel" class="focus:outline-none p-1">
 						<UIcon :name="openFilterPannel ? 'i-heroicons-x-mark' : 'i-heroicons-bars-3'"
-							class="w-6 h-6 transition-colors"
+							class="transition-colors" size="30"
 							:class="isLightMode ? 'text-cbre-green' : 'text-white hover:text-white/80'" />
 					</button>
 				</div>
@@ -202,8 +199,8 @@
 		</div>
 
 		<!-- More Menu Overlay -->
-		<div class="fixed top-[80px] left-0 w-full bg-white shadow-xl transition-all duration-300 overflow-hidden z-40"
-			:class="openMenuMore ? 'max-h-[600px] border-t-4 border-cbre-green' : 'max-h-0'">
+		<div class="fixed top-[8rem] left-0 w-full bg-white shadow-xl transition-all duration-300 overflow-hidden z-40"
+			:class="openMenuMore ? 'max-h-[60rem] border-t-4 border-cbre-green' : 'max-h-0'">
 			<MoreMenu />
 		</div>
 
@@ -220,17 +217,16 @@
 		<!-- Mobile Panels (Outside Menu Overlay) -->
 		<!-- Search Panel -->
 		<div v-if="isHydrationComplete"
-			class="text-search-pannel fixed top-[80px] left-0 w-full max-h-[60vh] overflow-y-auto bg-white shadow-md transition-all duration-300 ease-in-out z-[60] transform origin-top lg:hidden"
+			class="text-search-pannel fixed top-[8rem] left-0 w-full max-h-[60vh] overflow-y-auto bg-white shadow-md transition-all duration-300 ease-in-out z-[60] transform origin-top lg:hidden"
 			:class="[
 				openTextSearchPannel ? 'opacity-100 translate-y-0 visible' : 'opacity-0 -translate-y-4 invisible pointer-events-none'
 			]">
 			<NavMobileTextSearchPannel @isClosed="collapseAll" />
 		</div>
 
-		<!-- Filter Panel -->
-		<Transition name="slide-right">
+		<Transition name="cbre-slide-down">
 			<div v-show="isHydrationComplete && openFilterPannel"
-				class="filter-pannel fixed top-[80px] right-0 w-full h-[calc(100vh-80px)] bg-white shadow-2xl z-[60] lg:hidden">
+				class="filter-pannel fixed top-[8rem] right-0 w-full h-[calc(100vh-8rem)] bg-white shadow-2xl z-[40] lg:hidden">
 				<NavMobileFilterPannel @isClosed="collapseAll" />
 			</div>
 		</Transition>
@@ -238,7 +234,7 @@
 
 		<!-- Backdrop -->
 		<div v-if="uiStore.isMenuOverlay || uiStore.isUserProfileModalOpen"
-			class="fixed inset-0 top-[80px] bg-black/40 backdrop-blur-sm z-30" @click="collapseAll"></div>
+			class="fixed inset-0 top-[8rem] bg-black/40 backdrop-blur-sm z-30" @click="collapseAll"></div>
 	</div>
 </template>
 
@@ -411,34 +407,34 @@ watch([openMobileMenu, openTransaction, openSectors, openSubSectors, openMenuMor
 <style scoped>
 .search-input {
 	width: 100%;
-	padding: 5px 10px;
+	padding: 0.5rem 1rem;
 }
 
 .web-search-pannel {
 	position: absolute;
-	top: 80px;
+	top: 8rem;
 	right: 0;
 	width: 40%;
-	min-width: 400px;
-	height: calc(100vh - 80px);
+	min-width: 40rem;
+	height: calc(100vh - 8rem);
 	z-index: 100;
 	background-color: white;
 }
 
 .filter-pannel {
 	position: absolute;
-	top: 80px;
+	top: 8rem;
 	right: 0;
 	width: 100%;
-	min-width: 400px;
-	height: calc(100vh - 80px);
-	z-index: 100;
+	min-width: 40rem;
+	height: calc(100vh - 8rem);
+	z-index: 40;
 	background-color: white;
 }
 
 
 
-@media (max-width: 400px) {
+@media (max-width: 40rem) {
 
 	.text-search-pannel,
 	.web-search-pannel,

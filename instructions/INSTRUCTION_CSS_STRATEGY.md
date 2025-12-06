@@ -20,3 +20,23 @@ Guidelines for maintaining consistent styling and reusing `main.css`.
 5. **Identity**:
    - Maintain CBRE identity (Green, Squared).
    - Use `text-cbre-green` and `bg-cbre-green` utilities.
+
+## Troubleshooting
+
+### `group` Utility Class Error
+**Error**: `Cannot apply unknown utility class group` / `Cannot apply unknown utility class border-cbre-accent`
+
+**Cause**:
+- The `group` class is a structural marker for parent elements (used for `group-hover`), NOT a styling utility.
+- It cannot be used inside `@apply` in CSS files (e.g., `.my-class { @apply group; }` will fail).
+
+**Solution**:
+1. **Remove `group` from CSS**: Do not use `group` in `main.css` or `@apply`.
+2. **Add `group` to HTML**: Add the `group` class directly to the HTML element in the Vue template.
+   ```html
+   <!-- Correct -->
+   <button class="group cbre-topbar-menu-btn">...</button>
+   
+   <!-- Incorrect (in CSS) -->
+   .cbre-topbar-menu-btn { @apply group; }
+   ```

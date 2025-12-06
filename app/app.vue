@@ -1,6 +1,6 @@
 <template>
     <UApp :locale="locales[locale]">
-        <NuxtLoadingIndicator color="#003F2D" />
+        <NuxtLoadingIndicator color="var(--eds-color-green-brand)" />
         <NuxtLayout>
             <NuxtPage />
         </NuxtLayout>
@@ -43,18 +43,3 @@ if (device) {
     uiStore.setDeviceState(device.isMobile, device.isTablet);
 }
 </script>
-
-<style scoped>
-/* Nuxt UI가 Tailwind 기반이므로 별도 CSS는 최소화합니다. */
-</style>
-
-<style>
-/* Hide scrollbar globally */
-body {
-    overflow: hidden;
-}
-
-body::-webkit-scrollbar {
-    display: none;
-}
-</style>

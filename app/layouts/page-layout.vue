@@ -1,69 +1,91 @@
 <template>
-    <div id="PageLayout" class="bg-gray-100 h-screen font-sans">
-        <div id="TopMenu"
-            class="fixed top-0 w-full h-[80px] flex justify-between items-stretch px-4 md:px-6 lg:px-10 transition-all duration-500 bg-white text-cbre-green border-gray-200 border-b z-20">
-            <div id="LeftMenu" class="flex items-center w-full h-full z-20">
-                <div class="min-w-[110px] flex items-center justify-center cursor-pointer" @click="navigateTo('/')">
-                    <IconCBRELogo class="w-[80px] h-[25px] text-inherit" />
-                    <sub class="text-[14px] font-bold translate-y-1 ml-1">Map</sub>
+    <div id="PageLayout" class="bg-cbre-gray-50 h-screen font-sans">
+        <div id="TopMenu" class="cbre-layout-topbar">
+            <div id="LeftMenu" class="cbre-topbar-left">
+                <div class="cbre-brand-lockup group" @click="navigateTo('/')">
+                    <IconCBRELogo class="w-[9rem] h-[2.8rem] group-hover:opacity-90 transition-opacity text-cbre-green" />
+                    <sub class="cbre-brand-label text-cbre-green">Map</sub>
                 </div>
-                <div class="ml-[10px] h-[30px] pt-[8px] hidden md:flex whitespace-nowrap">
-                    Property Management System
+                
+                <!-- Title -->
+                <div class="cbre-topbar-title-separator">
+                    <span class="cbre-navbar-title text-cbre-green/90">Property Management System</span>
                 </div>
-                <div class="ml-[10px] h-[30px] pt-[8px] flex md:hidden whitespace-nowrap">
-                    PMS
+                <div class="cbre-topbar-title-separator-mobile">
+                    <span class="cbre-nav-link text-cbre-green/90">PMS</span>
                 </div>
             </div>
 
-            <div id="right-menu" class="flex z-20 h-full">
-                <div @click="navigateTo('/')"
-                    class="group flex items-center px-4 h-full hover:bg-gray-100 cursor-pointer transition-colors">
-                    <UIcon name="i-heroicons-home" class="w-5 h-5 group-hover:text-cbre-green" />
-                    <span
-                        class="hidden md:block ml-2 text-sm font-medium text-gray-700 group-hover:text-cbre-green">Home</span>
-                </div>
+            <div id="right-menu" class="cbre-topbar-right">
 
-                <div @click="goPrevious()"
-                    class="group flex items-center justify-center h-full px-2 md:px-4 cursor-pointer transition-colors hover:bg-gray-100"
-                    :class="!previousPropertyId ? 'opacity-50 cursor-not-allowed' : ''"
-                    :title="previousPropertyId ? 'Previous Property' : 'No Previous Property'">
-                    <div
-                        class="flex items-center text-sm font-medium text-gray-700 group-hover:text-cbre-green whitespace-nowrap">
-                        <UIcon name="i-heroicons-chevron-left" class="w-5 h-5" />
-                        <span class="hidden md:block">Previous</span>
+                <div class="flex items-center gap-2">
+                    <div @click="goPrevious()"
+                        class="cbre-nav-btn-circle"
+                        :class="{ 'disabled': !previousPropertyId }"
+                        :title="previousPropertyId ? 'Previous Property' : 'No Previous Property'">
+                        <svg width="23" height="18" viewBox="0 0 23 18" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-[1.4rem] h-[1.4rem] rotate-180 text-inherit">
+                            <path d="M0.619873 8.99985L21.3766 8.99985M21.3766 8.99985L14.5487 1.21606M21.3766 8.99985L14.5487 16.7836" stroke="currentColor" stroke-width="1.31081"/>
+                        </svg>
+                    </div>
+
+                    <div @click="goNext()"
+                        class="cbre-nav-btn-circle"
+                        :class="{ 'disabled': !nextPropertyId }"
+                        :title="nextPropertyId ? 'Next Property' : 'No Next Property'">
+                        <svg width="23" height="18" viewBox="0 0 23 18" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-[1.4rem] h-[1.4rem] text-inherit">
+                            <path d="M0.619873 8.99985L21.3766 8.99985M21.3766 8.99985L14.5487 1.21606M21.3766 8.99985L14.5487 16.7836" stroke="currentColor" stroke-width="1.31081"/>
+                        </svg>
                     </div>
                 </div>
 
-                <div @click="goNext()"
-                    class="group flex items-center justify-center h-full px-2 md:px-4 cursor-pointer transition-colors hover:bg-gray-100"
-                    :class="!nextPropertyId ? 'opacity-50 cursor-not-allowed' : ''"
-                    :title="nextPropertyId ? 'Next Property' : 'No Next Property'">
-                    <div
-                        class="flex items-center text-sm font-medium text-gray-700 group-hover:text-cbre-green whitespace-nowrap">
-                        <span class="hidden md:block">Next</span>
-                        <UIcon name="i-heroicons-chevron-right" class="w-5 h-5" />
-                    </div>
-                </div>
+                <div class="cbre-layout-divider"></div>
 
-                <div class="h-full w-[1px] bg-gray-200 mx-2 my-auto"></div>
-
-                <div v-if="loggedIn" class="flex items-center h-full space-x-3">
-                    <div class="w-10 h-10 rounded-full overflow-hidden cursor-pointer" @click="openUserProfileModal"
+                <div v-if="loggedIn" class="cbre-topbar-user-section">
+                    <div class="cbre-user-avatar-container" @click="openUserProfileModal"
                         :title="`Logged in as ${user?.name || 'User'}`">
                         <img :src="userAvatar" alt="User Avatar" class="w-full h-full object-cover" />
                     </div>
-                    <UButton size="sm" color="primary" variant="solid" @click="handleLogout">Logout</UButton>
+                    <button class="cbre-btn-brief-sm" @click="handleLogout">Logout</button>
                 </div>
 
-                <div v-else class="flex items-center h-full">
-                    <UButton size="sm" color="primary" variant="solid" @click="handleLogin">Login</UButton>
+                <div v-else class="cbre-topbar-user-section">
+                    <button class="cbre-btn-brief-sm" @click="handleLogin">Login</button>
+                </div>
+
+                <!-- Mobile Navigation Toggle -->
+                <div class="flex md:hidden ml-4">
+                    <button class="cbre-nav-toggle"
+                        :class="{ 'bg-cbre-green text-white': uiStore.isMenuOverlay }"
+                        @click="uiStore.isMenuOverlay = !uiStore.isMenuOverlay">
+                        <UIcon :name="uiStore.isMenuOverlay ? 'i-heroicons-x-mark' : 'i-heroicons-bars-3'" class="w-6 h-6" />
+                    </button>
                 </div>
             </div>
         </div>
 
-        <main class="fixed top-[80px] w-full h-[calc(100%-80px)] overflow-y-auto">
+        <main class="cbre-layout-content-fixed">
             <slot />
         </main>
+
+        <!-- Backdrop -->
+        <Transition name="cbre-fade">
+            <div v-if="uiStore.isMenuOverlay"
+                class="fixed inset-0 bg-black/40 z-[55] lg:hidden"
+                @click="uiStore.isMenuOverlay = false">
+            </div>
+        </Transition>
+
+        <!-- Mobile Side Panel -->
+        <Transition name="cbre-slide-down">
+            <div v-show="uiStore.isMenuOverlay" class="cbre-mobile-panel lg:hidden block">
+                <div class="flex flex-col h-full overflow-y-auto pb-8 pt-8">
+                    <div class="px-8 py-2 cursor-pointer group"
+                        @click="navigateTo('/'); uiStore.isMenuOverlay = false">
+                        <span class="cbre-mobile-nav-item group-hover:text-cbre-green-800">Map Home</span>
+                    </div>
+                </div>
+            </div>
+        </Transition>
     </div>
 </template>
 
@@ -76,7 +98,6 @@ const router = useRouter()
 const propertyStore = usePropertyStore()
 const uiStore = useUiStore()
 const { loggedIn, user, clear } = useUserSession()
-
 const userAvatar = computed(() => (user.value as any)?.avatar || '/images/avatar/avatar-placeholder.png')
 
 const { previousPropertyId, nextPropertyId } = storeToRefs(propertyStore)

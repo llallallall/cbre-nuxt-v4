@@ -1,13 +1,15 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
 @config "../../../tailwind.config.ts";
-@import "./cbre-fonts.css";
 
 /* === CBRE Global Styles === */
 
 @layer base {
     :root {
         /* === CBRE Colors & Variables (User Provided) === */
+        --eds-font-financier: 'Financier', serif;
+        --eds-font-calibre: 'Calibre', sans-serif;
+
         --eds-color-primary-1: #003F2D;
         --eds-color-primary-2: #17E88F;
         --eds-color-primary-3: #012A2D;
@@ -49,6 +51,18 @@
         --eds-color-green-800: #002B1F;
         --eds-color-green-900: #00241A;
         --eds-color-green-950: #001D15;
+
+        /* === Missing System Colors & Aliases (User Requested) === */
+        --eds-color-system-12: #E81717;
+        /* Alizarin Crimson (Error) */
+        --eds-color-system-13: #F1D230;
+        /* Golden Dream (Warning) */
+        --eds-color-system-14: #E6EAEA;
+        /* Porcelain (Info) */
+
+        --eds-color-kakao: #ffe945;
+        --eds-color-tag: #1B74E4;
+        --eds-color-darkgreen: #032a2d;
 
         --eds-color-green-brand: #003F2D;
         /* Alias for semantic usage */
@@ -133,6 +147,11 @@
     }
 
     /* 1. Global Typography */
+    html {
+        font-size: 62.5%;
+        /* 1rem = 10px */
+    }
+
     body {
         font-family: var(--font-sans);
         /* Calibre for Body (Insights Style) */
@@ -142,6 +161,12 @@
         line-height: 1.6;
         letter-spacing: -0.01em;
         -webkit-font-smoothing: antialiased;
+        overflow: hidden;
+        /* Global scrollbar hidden */
+    }
+
+    body::-webkit-scrollbar {
+        display: none;
     }
 
     /* 2. Headings */
@@ -179,83 +204,126 @@
 
 @layer components {
 
-    /* === Typography Utilities === */
-    .cbre-text-hero {
+    /* === Display Typography (Deep Dive) === */
+    .cbre-text-display-italic {
         font-family: var(--font-serif);
-        font-size: 7.2rem;
-        /* Increased base size */
-        line-height: 1.05;
+        font-style: italic;
+        font-size: 2.5rem;
+        line-height: 1.3;
+        color: var(--color-primary-1);
+    }
+
+    @media (min-width: 768px) {
+        .cbre-text-display-italic {
+            font-size: 3.6rem;
+        }
+    }
+
+    .cbre-text-stat-number {
+        font-family: var(--font-condensed);
+        font-size: 4rem;
+        line-height: 1;
+        font-weight: 700;
+        color: var(--color-primary-1);
+        letter-spacing: -0.02em;
+    }
+
+    @media (min-width: 768px) {
+        .cbre-text-stat-number {
+            font-size: 6rem;
+        }
+    }
+
+    /* === Typography Display (Renamed from cbre-text-hero/h1/h2) === */
+    .cbre-text-display-hero {
+        font-family: var(--font-serif);
+        font-size: 5rem;
+        line-height: 1.0;
         letter-spacing: -0.01em;
         color: var(--color-primary-1);
     }
 
     @media (min-width: 768px) {
-        .cbre-text-hero {
+        .cbre-text-display-hero {
             font-size: 9.6rem;
-            /* Increased to ~96px match */
+            /* ~96px */
         }
     }
 
-    .cbre-text-h1 {
+    .cbre-text-display-1 {
         font-family: var(--font-serif);
-        font-size: 4.8rem;
+        font-size: 3rem;
         line-height: 1.1;
         letter-spacing: -0.01em;
         color: var(--color-primary-1);
     }
 
     @media (min-width: 768px) {
-        .cbre-text-h1 {
-            font-size: 6.4rem;
+        .cbre-text-display-1 {
+            font-size: 4.8rem;
         }
     }
 
-    .cbre-text-h2 {
+    .cbre-text-display-2 {
         font-family: var(--font-serif);
-        font-size: 2.4rem;
-        line-height: 1.3;
+        font-size: 2.25rem;
+        line-height: 1.2;
         color: var(--color-primary-1);
     }
 
     @media (min-width: 768px) {
-        .cbre-text-h2 {
+        .cbre-text-display-2 {
             font-size: 3.2rem;
         }
     }
 
-    .cbre-text-h3 {
+    .cbre-text-display-3 {
         font-family: var(--font-serif);
         font-weight: 600;
+        font-size: 1.5rem;
         letter-spacing: 0.02em;
         color: var(--color-primary-1);
     }
 
+    @media (min-width: 768px) {
+        .cbre-text-display-3 {
+            font-size: 2rem;
+        }
+    }
+
     /* Lead Paragraph (Insights Style) */
-    .cbre-text-lead {
+    .cbre-text-body-lead {
         font-family: var(--font-serif);
-        font-size: 3.2rem;
-        line-height: 1.3;
+        font-size: 2rem;
+        line-height: 1.4;
         color: var(--eds-color-green-brand);
         font-weight: 400;
         letter-spacing: -0.01em;
         margin-bottom: 2rem;
     }
 
-    .cbre-text-body-large {
+    @media (min-width: 768px) {
+        .cbre-text-body-lead {
+            font-size: 3.2rem;
+            line-height: 1.3;
+        }
+    }
+
+    .cbre-text-body-lg {
         font-family: var(--font-sans);
         /* Use Sans for Body */
         font-size: 1.8rem;
         line-height: 1.6;
         letter-spacing: 0.01em;
-        color: #1A1A1A;
+        color: var(--color-primary-4);
     }
 
-    .cbre-text-body {
+    .cbre-text-body-md {
         font-family: var(--font-sans);
         /* Use Sans for Body */
         font-size: 1.6rem;
         line-height: 1.6;
-        color: #1A1A1A;
+        color: var(--color-primary-4);
     }
 
     /* Component Utilities */
@@ -280,34 +348,170 @@
         color: var(--color-primary-5);
     }
 
-    .cbre-text-label {
+    .cbre-text-label-sm {
         font-family: var(--font-sans);
-        font-size: 1.2rem;
+        font-size: 1.3rem;
+        /* Adjusted to 13px for legibility */
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.05em;
         color: var(--color-primary-1);
     }
 
-    /* === Buttons: CBRE Style (Renamed to cbre-btn-*) === */
-    .cbre-btn-primary {
-        @apply inline-flex items-center justify-center px-8 py-4 bg-[var(--color-primary-1)] text-white font-semibold text-sm uppercase tracking-wider border border-[var(--color-primary-1)] transition-all duration-300 shadow-sm rounded-none;
+    /* === Footer Typography === */
+    .cbre-text-footer-link-lg {
+        font-family: var(--font-sans);
+        font-size: 1.25rem;
+        /* 20px */
+        color: white;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .cbre-text-footer-link-sm {
+        font-family: var(--font-sans);
+        font-size: 1rem;
+        /* 16px */
+        color: white;
+        /* Often white in footer context, or dark green on light bg */
+        text-decoration: none;
+    }
+
+    .cbre-text-footer-link-lg:hover,
+    .cbre-text-footer-link-sm:hover {
+        text-decoration: underline;
+        text-underline-offset: 4px;
+        color: var(--color-primary-2);
+    }
+
+    /* === Global Navigation Links (Top Bar) === */
+    .cbre-nav-link {
+        font-family: var(--font-sans);
+        font-size: 1.6rem;
+        /* 16px */
+        font-weight: 600;
+        /* Semi-bold */
+        color: var(--color-primary-1);
+        /* #003F2D */
+        text-decoration: none;
         font-family: var(--font-sans);
     }
 
-    .cbre-btn-primary:hover {
-        @apply bg-[var(--color-primary-2)] border-[var(--color-primary-2)] shadow-md;
+    .cbre-navbar-title {
+        font-family: var(--font-sans);
+        font-size: 16px;
+        /* 18px - Prominent and readable */
+        font-weight: 500;
+        color: var(--color-primary-1);
+        text-decoration: none;
+        letter-spacing: 0.01em;
+        line-height: normal;
     }
 
-    .cbre-btn-secondary {
-        @apply inline-flex items-center justify-center px-8 py-4 bg-transparent text-[var(--color-primary-1)] font-semibold text-sm uppercase tracking-wider border-2 border-[var(--color-primary-1)] transition-all duration-300 rounded-none;
+    /* === Brand Lockup (Logo + Label) === */
+    .cbre-brand-lockup {
+        @apply min-w-[110px] flex items-center justify-center cursor-pointer;
+    }
+
+    .cbre-brand-label {
+        /* Extends .cbre-nav-link */
+        font-family: var(--font-sans);
+        font-size: 1.6rem;
+        /* 16px - Matching Nav Link */
+        font-weight: 600;
+        color: var(--color-primary-1);
+        letter-spacing: 0.01em;
+        margin-left: 0.75rem;
+        /* ml-3 */
+        transform: translateY(2px);
+    }
+
+    /* === TopBar Navigation Menu Button === */
+    .cbre-topbar-menu-btn {
+        @apply relative flex items-center gap-2 h-[8rem] px-4 text-[1.5rem] text-[var(--color-primary-1)] font-medium transition-colors duration-200 focus:outline-none cursor-pointer whitespace-nowrap shrink-0;
+    }
+
+    .cbre-topbar-menu-btn::after {
+        content: '';
+        @apply absolute bottom-0 left-0 w-full h-[3px] bg-accent transform scale-x-0 transition-transform duration-300 origin-left;
+    }
+
+    .cbre-topbar-menu-btn:hover {
+        @apply text-cbre-green-800;
+    }
+
+    .cbre-topbar-menu-btn:hover::after {
+        @apply scale-x-100;
+    }
+
+    .cbre-topbar-menu-sublabel {
+        @apply font-normal text-sm ml-1;
+    }
+
+    .cbre-button-primary {
+        @apply inline-flex items-center justify-center px-8 py-4 bg-[var(--color-primary-1)] text-white font-semibold text-base uppercase tracking-wider border border-[var(--color-primary-1)] transition-all duration-300 shadow-sm rounded-none cursor-pointer;
+        font-family: var(--font-sans);
+    }
+
+    .cbre-button-primary:hover {
+        @apply bg-[var(--color-primary-2)] border-[var(--color-primary-2)] shadow-none text-[var(--color-primary-1)];
+    }
+
+    .cbre-button-secondary {
+        @apply inline-flex items-center justify-center px-8 py-4 bg-transparent text-[var(--color-primary-1)] font-semibold text-base uppercase tracking-wider border border-[var(--color-primary-1)] transition-all duration-300 rounded-none;
         color: var(--color-primary-1) !important;
         font-family: var(--font-sans);
     }
 
-    .cbre-btn-secondary:hover {
+    .cbre-button-secondary:hover {
         @apply bg-[var(--color-primary-1)] text-white;
         color: white !important;
+    }
+
+    /* Tertiary / Ghost Button (Text + Arrow) */
+    .cbre-button-tertiary {
+        @apply inline-flex items-center gap-2 text-[var(--color-primary-1)] font-bold text-base uppercase tracking-wider transition-all duration-300;
+        font-family: var(--font-sans);
+    }
+
+    .cbre-button-tertiary:hover {
+        @apply text-[var(--color-primary-2)];
+        gap: 0.75rem;
+        /* Slide arrow away slightly */
+    }
+
+    /* === Links with Animated Underline === */
+    .cbre-link-underline {
+        position: relative;
+        text-decoration: none;
+        color: var(--color-primary-1);
+        font-weight: 600;
+        background-image: linear-gradient(currentColor, currentColor);
+        background-position: 0% 100%;
+        background-repeat: no-repeat;
+        background-size: 0% 2px;
+        transition: background-size .3s;
+    }
+
+    .cbre-link-underline:hover {
+        background-size: 100% 2px;
+    }
+
+    /* === Arrow Link Animation === */
+    .cbre-link-arrow {
+        @apply inline-flex items-center gap-1 font-semibold text-[var(--color-primary-1)] transition-colors duration-300;
+    }
+
+    .cbre-link-arrow:hover {
+        @apply text-[var(--color-primary-2)];
+    }
+
+    .cbre-link-arrow .icon {
+        @apply transition-transform duration-300;
+    }
+
+    .cbre-link-arrow:hover .icon {
+        @apply translate-x-1;
     }
 
     .cbre-btn-brief {
@@ -319,8 +523,45 @@
         @apply bg-[var(--color-primary-2)] border-[var(--color-primary-2)] shadow-md transform -translate-y-0.5;
     }
 
+    .cbre-btn-brief-sm {
+        @apply inline-flex items-center justify-center px-4 py-2 bg-[var(--color-primary-1)] text-white font-semibold text-xs uppercase tracking-wider border border-[var(--color-primary-1)] transition-all duration-300 shadow-sm rounded-none cursor-pointer;
+        font-family: var(--font-sans);
+    }
+
+    .cbre-btn-brief-sm:hover {
+        @apply bg-[var(--color-primary-2)] border-[var(--color-primary-2)] shadow-md transform -translate-y-0.5;
+    }
+
+    /* === Circular Navigation Button (e.g. Previous/Next Arrows) === */
+    .cbre-nav-btn-circle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 4.8rem;
+        height: 4.8rem;
+        border-radius: 9999px;
+        border: 1px solid var(--color-primary-1);
+        background-color: transparent;
+        color: var(--color-primary-1);
+        transition: all 300ms;
+        cursor: pointer;
+    }
+
+    .cbre-nav-btn-circle:hover {
+        background-color: var(--color-primary-1);
+        color: white;
+    }
+
+    .cbre-nav-btn-circle.disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+        pointer-events: none;
+        background-color: transparent;
+        color: var(--color-primary-1);
+    }
+
     /* === CBRE Animated Arrow Link (Renamed from cbre-link-cta) === */
-    .cbre-link-animated-arrow {
+    .cbre-link-icon-slide {
         -webkit-text-size-adjust: none;
         line-height: initial;
         font-family: var(--font-sans);
@@ -339,7 +580,7 @@
         color: var(--color-primary-1);
     }
 
-    .cbre-link-animated-arrow::before {
+    .cbre-link-icon-slide::before {
         content: "";
         position: absolute;
         display: inline-block;
@@ -351,7 +592,7 @@
         height: 2px;
     }
 
-    .cbre-link-animated-arrow::after {
+    .cbre-link-icon-slide::after {
         content: "";
         position: absolute;
         display: inline-block;
@@ -366,16 +607,16 @@
         background-image: url("data:image/svg+xml,%3Csvg width='42' height='18' viewBox='0 0 42 18' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0.810791 8.67636L40.1891 8.67636M40.1891 8.67636L33.3612 0.892578M40.1891 8.67636L33.3612 16.4601' stroke='%2317E88F' stroke-width='2'/%3E%3C/svg%3E");
     }
 
-    .cbre-link-animated-arrow:hover {
+    .cbre-link-icon-slide:hover {
         padding-inline-start: 0;
         padding-inline-end: 48px;
     }
 
-    .cbre-link-animated-arrow:hover::before {
+    .cbre-link-icon-slide:hover::before {
         width: 0;
     }
 
-    .cbre-link-animated-arrow:hover::after {
+    .cbre-link-icon-slide:hover::after {
         inset-inline-end: 0;
         width: 42px;
     }
@@ -501,6 +742,16 @@
         font-family: var(--font-sans);
     }
 
+    .cbre-input-underlined {
+        @apply w-full bg-transparent border-b border-gray-300 text-[var(--color-primary-1)] px-0 py-2 focus:outline-none focus:border-[var(--color-primary-1)] transition-colors rounded-none placeholder-gray-400;
+        font-family: var(--font-sans);
+    }
+
+    .cbre-badge-button {
+        @apply text-md text-gray-500 px-2 py-1 bg-gray-100 rounded hover:bg-gray-200 transition-colors cursor-pointer;
+        font-family: var(--font-sans);
+    }
+
     /* === Cards (Renamed to cbre-card) === */
     .cbre-card {
         @apply bg-white border border-[var(--color-primary-5)] p-6 hover:shadow-xl transition-shadow duration-300 rounded-none;
@@ -526,5 +777,319 @@
     samp {
         font-family: var(--font-mono);
         font-size: 0.9em;
+    }
+
+    .cbre-nav-toggle {
+        @apply h-full flex items-center justify-center cursor-pointer ml-3 px-2 transition-all duration-300 text-[var(--color-primary-1)];
+    }
+
+    /* === Layout: TopBar (80px) === */
+    .cbre-layout-topbar {
+        @apply fixed top-0 left-0 w-full h-[8rem] bg-white border-b border-gray-200 transition-all duration-300 z-50 flex justify-between items-center px-8;
+    }
+
+    .cbre-topbar-left {
+        @apply flex items-center h-full gap-6 z-20;
+    }
+
+    .cbre-topbar-right {
+        @apply flex items-center gap-8 z-20 h-full;
+    }
+
+    .cbre-layout-divider {
+        @apply h-8 w-[1px] bg-gray-200 mx-2;
+    }
+
+    .cbre-topbar-title-separator {
+        @apply hidden md:flex items-center h-full ml-4 pl-6;
+    }
+
+    .cbre-topbar-title-separator-mobile {
+        @apply flex md:hidden items-center h-full ml-4 pl-4;
+    }
+
+    .cbre-topbar-user-section {
+        @apply flex items-center h-full gap-4;
+    }
+
+    .cbre-user-avatar-container {
+        @apply w-10 h-10 rounded-full overflow-hidden cursor-pointer border border-gray-200 hover:border-cbre-green transition-colors;
+    }
+
+    /* === Mobile Side Panel === */
+    .cbre-mobile-panel {
+        @apply fixed top-[8rem] right-0 w-full md:w-[40rem] h-[calc(100vh-8rem)] bg-white shadow-2xl z-[40];
+    }
+
+    .cbre-mobile-nav-item {
+        @apply relative inline-block text-[2.2rem] font-medium text-[var(--color-primary-1)] cursor-pointer transition-colors duration-200 mt-2 mb-2;
+    }
+
+    .cbre-mobile-nav-item::after {
+        content: '';
+        @apply absolute bottom-0 left-0 w-full h-[3px] bg-accent transform scale-x-0 transition-transform duration-300 origin-left;
+    }
+
+    .cbre-mobile-nav-item:hover::after {
+        @apply scale-x-100;
+    }
+
+    .cbre-filter-text {
+        @apply text-[1.6rem] text-gray-600 font-medium transition-colors duration-200;
+    }
+
+    .cbre-filter-text--active {
+        @apply text-cbre-green-500 font-bold;
+    }
+
+    /* === Vue Transitions: Slide Right === */
+    .cbre-slide-right-enter-active,
+    .cbre-slide-right-leave-active {
+        transition: transform 0.5s ease-in-out;
+    }
+
+    .cbre-slide-right-enter-from,
+    .cbre-slide-right-leave-to {
+        transform: translateX(100%);
+    }
+
+    .cbre-slide-right-enter-to,
+    .cbre-slide-right-leave-from {
+        transform: translateX(0);
+    }
+
+    /* === Vue Transitions: Slide Down === */
+    .cbre-slide-down-enter-active,
+    .cbre-slide-down-leave-active {
+        transition: transform 0.5s ease-in-out;
+    }
+
+    .cbre-slide-down-enter-from,
+    .cbre-slide-down-leave-to {
+        transform: translateY(-100%);
+    }
+
+    .cbre-slide-down-enter-to,
+    .cbre-slide-down-leave-from {
+        transform: translateY(0);
+    }
+
+    /* === Vue Transitions: Fade (Backdrop) === */
+    .cbre-fade-enter-active,
+    .cbre-fade-leave-active {
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    .cbre-fade-enter-from,
+    .cbre-fade-leave-to {
+        opacity: 0;
+    }
+
+    .cbre-fade-enter-to,
+    .cbre-fade-leave-from {
+        opacity: 1;
+    }
+
+    /* === Content Containers === */
+    /* For layouts with fixed topbar (80px) */
+    .cbre-layout-content-fixed {
+        @apply fixed top-[80px] w-full h-[calc(100%-80px)] overflow-y-auto;
+    }
+
+    .cbre-layout-content-absolute {
+        @apply absolute top-[80px] left-0 w-full h-[calc(100%-80px)] z-10 overflow-y-hidden bg-transparent;
+    }
+
+    .cbre-layout-content-scroll {
+        @apply relative pt-[80px] min-h-screen;
+    }
+
+    /* === Layout: Admin Slideshow (.cb-slideshow) === */
+    .cbre-layout-slideshow {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0px;
+        left: 0px;
+        z-index: 0;
+        pointer-events: none;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .cbre-layout-slideshow::after {
+        content: '';
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background: rgba(0, 0, 0, 0.4);
+        backdrop-filter: brightness(40%) opacity(80%);
+        z-index: 0;
+    }
+
+    .cbre-layout-slideshow li span {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        background-size: cover;
+        background-position: 50% 50%;
+        background-repeat: no-repeat;
+        opacity: 0;
+        z-index: 0;
+        animation: imageAnimation 120s linear infinite 0s;
+    }
+
+    /* Admin Specific Backgrounds */
+    .cbre-layout-slideshow li:nth-child(1) span {
+        background-image: url('/images/background/admin/bg-1.webp')
+    }
+
+    .cbre-layout-slideshow li:nth-child(2) span {
+        background-image: url('/images/background/admin/bg-2.webp');
+        animation-delay: 20s;
+    }
+
+    .cbre-layout-slideshow li:nth-child(3) span {
+        background-image: url('/images/background/admin/bg-3.webp');
+        animation-delay: 40s;
+    }
+
+    .cbre-layout-slideshow li:nth-child(4) span {
+        background-image: url('/images/background/admin/bg-4.webp');
+        animation-delay: 60s;
+    }
+
+    .cbre-layout-slideshow li:nth-child(5) span {
+        background-image: url('/images/background/admin/bg-5.webp');
+        animation-delay: 80s;
+    }
+
+    .cbre-layout-slideshow li:nth-child(6) span {
+        background-image: url('/images/background/admin/bg-6.webp');
+        animation-delay: 100s;
+    }
+
+    @keyframes imageAnimation {
+        0% {
+            opacity: 0;
+            animation-timing-function: ease-in;
+        }
+
+        8% {
+            opacity: 1;
+            transform: scale(1.05);
+            animation-timing-function: ease-out;
+        }
+
+        17% {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        22% {
+            opacity: 0;
+            transform: scale(1.1) translateY(-20%);
+        }
+
+        25% {
+            opacity: 0;
+            transform: scale(1.1) translateY(-100%);
+        }
+
+        100% {
+            opacity: 0
+        }
+    }
+
+    /* === Layout: Auth & Empty Backgrounds === */
+    .cbre-layout-bg-wrapper {
+        position: absolute;
+        width: 100% !important;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        z-index: 10;
+        background-color: var(--eds-color-green-950);
+    }
+
+    .cbre-layout-auth-slider {
+        position: relative;
+        overflow: hidden;
+        width: 100% !important;
+        height: 65%;
+        min-height: 700px;
+    }
+
+    .cbre-layout-auth-slider-cover {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: var(--color-primary-4);
+        opacity: 0.25;
+        z-index: 20;
+    }
+
+    .cbre-layout-bg-image {
+        position: absolute;
+        background-size: cover;
+        opacity: 0;
+        animation: fade 16s forwards infinite;
+    }
+
+    .cbre-layout-bg-image:nth-child(1) {
+        animation-delay: 0s;
+        background-image: url('/images/background/auth/bg-1.png');
+    }
+
+    .cbre-layout-bg-image:nth-child(2) {
+        animation-delay: 4s;
+        background-image: url('/images/background/auth/bg-2.png');
+    }
+
+    .cbre-layout-bg-image:nth-child(3) {
+        animation-delay: 8s;
+        background-image: url('/images/background/auth/bg-3.png');
+    }
+
+    .cbre-layout-bg-image:nth-child(4) {
+        animation-delay: 12s;
+        background-image: url('/images/background/auth/bg-4.png');
+    }
+
+    @keyframes fade {
+        0% {
+            opacity: 0;
+        }
+
+        25% {
+            opacity: 1;
+        }
+
+        40% {
+            opacity: 0;
+        }
+
+        100% {
+            opacity: 0;
+        }
+    }
+
+    .cbre-layout-auth-form-wrapper {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 100;
     }
 }

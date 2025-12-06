@@ -34,6 +34,28 @@ export default defineAppConfig({
         // 알림(Toast) 스타일 재정의
         notifications: {
             position: 'top-right'
+        },
+
+        // Dropdown/Select/Textarea 스타일 재정의
+        select: {
+            rounded: 'rounded-none',
+            default: {
+                size: 'md',
+                color: 'gray'
+            }
+        },
+        textarea: {
+            rounded: 'rounded-none',
+            default: {
+                size: 'md',
+                color: 'gray'
+            }
+        },
+        modal: {
+            rounded: 'rounded-none',
+            overlay: {
+                background: 'bg-gray-900/75'
+            }
         }
     }
 })

@@ -1,21 +1,18 @@
 <template>
-    <div class="bg-cbre-dark w-full h-screen overflow-hidden min-w-[360px] font-sans">
-        <div class="container_wrapper">
-            <div class="bg-slider">
-                <div class="bg-slider-cover"></div>
-                <div class="bg-image-01"></div>
-                <div class="bg-image-02"></div>
-                <div class="bg-image-03"></div>
-                <div class="bg-image-04"></div>
-            </div>
-            <div class="bg-footer"></div>
+    <div class="cbre-layout-bg-wrapper font-sans">
+        <div class="cbre-layout-auth-slider">
+            <div class="cbre-layout-auth-slider-cover"></div>
+            <div class="cbre-layout-bg-image"></div>
+            <div class="cbre-layout-bg-image"></div>
+            <div class="cbre-layout-bg-image"></div>
+            <div class="cbre-layout-bg-image"></div>
         </div>
-        <div class="login-form-wrapper">
+        <div class="cbre-layout-auth-form-wrapper">
             <slot />
         </div>
     </div>
 </template>
 
 <style scoped>
-@import '~/assets/css/layouts/auth.css';
+/* Scoped styles replaced by main.css utility classes */
 </style>

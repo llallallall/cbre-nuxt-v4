@@ -83,6 +83,11 @@ export default <Config>{
                         green: 'var(--eds-color-secondary-light-5)',
                     },
 
+
+                    kakao: 'var(--eds-color-kakao)',
+                    tag: 'var(--eds-color-tag)',
+                    darkgreen: 'var(--eds-color-darkgreen)',
+
                     gray: {
                         900: 'var(--eds-color-system-2)',
                         800: 'var(--eds-color-system-3)',
@@ -97,11 +102,25 @@ export default <Config>{
                     },
 
                     functional: {
-                        error: '#E81717',
-                        warning: '#F1D230',
-                        info: '#E6EAEA',
+                        error: 'var(--eds-color-system-12)', // #E81717
+                        warning: 'var(--eds-color-system-13)', // #F1D230
+                        info: 'var(--eds-color-system-14)', // #E6EAEA
+                    },
+
+                    system: {
+                        12: 'var(--eds-color-system-12)',
+                        13: 'var(--eds-color-system-13)',
+                        14: 'var(--eds-color-system-14)',
                     }
                 },
+            },
+            fontSize: {
+                'hero-mobile': ['5rem', { lineHeight: '1.0' }],
+                'hero-desktop': ['9.6rem', { lineHeight: '1.0' }],
+                'h1-mobile': ['3rem', { lineHeight: '1.1' }],
+                'h1-desktop': ['4.8rem', { lineHeight: '1.1' }],
+                'h2-mobile': ['2.25rem', { lineHeight: '1.2' }],
+                'h2-desktop': ['3.2rem', { lineHeight: '1.2' }],
             },
             fontFamily: {
                 condensed: ['"Barlow Condensed"', 'Arial Narrow', 'sans-serif'],
@@ -109,6 +128,7 @@ export default <Config>{
                 financier: ['Financier', 'serif'],
             },
             borderRadius: {
+                'none': '0px',
                 'cbre': '0px',
             },
             animation: {

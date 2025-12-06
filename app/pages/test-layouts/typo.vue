@@ -1,5 +1,5 @@
 <template>
-    <NuxtLayout name="default">
+    <NuxtLayout name="empty-layout">
         <TypographyDemo />
     </NuxtLayout>
 </template>
@@ -8,6 +8,6 @@
 import TypographyDemo from '~/components/demo/TypographyDemo.vue';
 
 definePageMeta({
-    layout: 'page-layout'
+    layout: 'empty-layout'
 })
 </script>

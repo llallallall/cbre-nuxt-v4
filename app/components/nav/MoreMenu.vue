@@ -1,9 +1,9 @@
 <template>
-        <div class="flex w-full h-full">
+        <div class="flex w-full h-full pb-10">
                 <div class="w-3/12 flex flex-col justify-start items-start pl-14">
                         <p class="text-4xl 4xs:text-6xl font-financier pt-16 mb-0">More</p>
                         <p class="text-2xl 4xs:text-4xl font-financier pt-1 mb-5">Filters</p>
-                        <p class="hidden 4xs:flex text-base font-financier text-cbre-green">
+                        <p class="hidden 4xs:flex text-normal font-financier text-cbre-green">
                                 You can set details such as the size of the property, the year of construction, and
                                 facilities as search conditions.
                         </p>
