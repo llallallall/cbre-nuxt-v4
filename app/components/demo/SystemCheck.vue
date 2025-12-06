@@ -4,8 +4,8 @@
         <header
             class="mb-12 border-b border-gray-200 pb-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <div>
-                <h1 class="text-4xl font-bold text-cbre-green mb-2">CBRE UX System Check</h1>
-                <p class="text-cbre-gray-dark">
+                <h1 class="cbre-text-hero mb-2">CBRE UX System Check</h1>
+                <p class="cbre-text-body-large text-gray-600">
                     {{ $t('welcome_message', 'Modules Integration Test Page') }}
                 </p>
             </div>
@@ -30,7 +30,7 @@
 
         <!-- === UX Feature Demos === -->
         <section class="mb-16 p-6 bg-gray-50 border border-gray-200">
-            <h2 class="text-2xl font-bold text-cbre-green mb-6 border-l-4 border-cbre-green pl-4">
+            <h2 class="cbre-text-h2 mb-6 border-l-4 border-cbre-green pl-4">
                 UX Features Demo (Nuxt UI)
             </h2>
 
@@ -85,7 +85,7 @@
 
         <!-- === Hover Effects Demo === -->
         <section class="mb-16">
-            <h2 class="text-2xl font-bold text-cbre-green mb-6 border-l-4 border-cbre-green pl-4">
+            <h2 class="cbre-text-h2 mb-6 border-l-4 border-cbre-green pl-4">
                 CBRE Hover Effects
             </h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -173,7 +173,7 @@
 
         <!-- === Font Family Demo [NEW] === -->
         <section class="mb-16">
-            <h2 class="text-2xl font-bold text-cbre-green mb-6 border-l-4 border-cbre-green pl-4">
+            <h2 class="cbre-text-h2 mb-6 border-l-4 border-cbre-green pl-4">
                 Font Family Demo
             </h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -210,7 +210,7 @@
 
         <!-- === Typography System Demo === -->
         <section class="mb-16">
-            <h2 class="text-2xl font-bold text-cbre-green mb-6 border-l-4 border-cbre-green pl-4">
+            <h2 class="cbre-text-h2 mb-6 border-l-4 border-cbre-green pl-4">
                 Typography System Demo
             </h2>
 
@@ -286,10 +286,10 @@
         <!-- === Modal Component === -->
         <UModal v-model:open="isOpen">
             <template #content>
-                <UCard :ui="{ root: 'rounded-none bg-white ring-1 ring-cbre-border' }">
+                <UCard :ui="{ root: 'rounded-none bg-white ring-1 ring-cbre-gray-200' }">
                     <template #header>
                         <div class="flex items-center justify-between">
-                            <h3 class="text-3xl font-serif text-cbre-green">
+                            <h3 class="cbre-text-h3 text-cbre-green">
                                 Detailed Information
                             </h3>
                             <UButton color="neutral" variant="ghost" icon="i-heroicons-x-mark-20-solid"
@@ -298,7 +298,7 @@
                     </template>
 
                     <div class="py-6">
-                        <p class="text-cbre-dark text-lg leading-relaxed">
+                        <p class="cbre-text-body text-lg leading-relaxed">
                             This is a modal dialog styled with CBRE design system (Squared corners, Official
                             colors).
                             It uses Nuxt UI's `UModal` component.

@@ -2,6 +2,7 @@
 // Trigger rebuild for hydration fix - 2025-12-05
 import tailwindcss from '@tailwindcss/vite'
 
+// Force Restart
 export default defineNuxtConfig({
   // ssr: false, // Disable SSR to avoid 500 errors with mapbox
   srcDir: 'app',
@@ -11,7 +12,7 @@ export default defineNuxtConfig({
     ],
   },
   compatibilityDate: '2025-07-15',
-  devtools: { enabled: false },
+  devtools: { enabled: true },
 
   modules: [// 보안 모듈 (가장 먼저 로드 권장)
     'nuxt-security', '@nuxt/icon', '@nuxt/image', // 인증 모듈 (Lightweight)
@@ -74,6 +75,7 @@ export default defineNuxtConfig({
           "https://events.mapbox.com",
           "https://api.iconify.design",   // Iconify API 허용
           "https://api.nuxt.com",          // Nuxt API 허용
+          "https://dapi.kakao.com",       // Kakao API 허용
           "https://*.googleapis.com",
           "https://*.google.com",
           "https://*.gstatic.com"

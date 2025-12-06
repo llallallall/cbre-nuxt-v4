@@ -1,66 +1,85 @@
 <template>
-        <div class="flex flex-col w-full h-full">
-                <div class="w-full h-[225px] flex flex-col justify-center items-center relative select-none bg-black">
+        <div class="flex flex-col w-full h-full bg-white font-calibre border-l border-gray-100 shadow-xl">
+                <!-- Header Section (Dark Green Theme) with Stacked Search -->
+                <div
+                        class="w-full bg-cbre-green text-white px-8 pt-10 pb-8 flex flex-col items-start justify-center relative overflow-hidden shrink-0">
+
+                        <!-- Title & Text -->
+                        <div class="relative z-10 w-full mb-6">
+                                <h2 class="text-white text-4xl font-financier font-normal tracking-tight mb-0">Web
+                                        Location Search</h2>
+                        </div>
+
+                        <!-- Search Input (Full Width) -->
                         <div
-                                class="z-10 text-white font-financier flex flex-col justify-start items-start pl-6 w-full h-full pt-4">
-                                <p class="text-4xl 4xs:text-6xl mb-0">Web Search</p>
-                                <p class="text-2xl 4xs:text-4xl pl-1 mb-4">on google & kakao</p>
-                                <p class="hidden 4xs:flex text-base pl-1 opacity-80 max-w-[90%]">
-                                        You can display a location on a map by searching for a name, address, etc.
-                                        through a search engine.
+                                class="w-full bg-white p-1 rounded-none shadow-lg group border border-gray-100 relative z-20">
+                                <div class="relative flex items-center w-full">
+                                        <input v-model="searchWebText" type="text" name="search" autocomplete="off"
+                                                @keyup.enter="onSearchText"
+                                                class="w-full py-3 pl-4 pr-12 text-[16px] text-gray-900 bg-transparent focus:outline-none placeholder-gray-400 font-light"
+                                                placeholder="Search by Market, Address or Keyword..." />
+
+                                        <!-- Search Icon -->
+                                        <div class="absolute right-1 top-1/2 -translate-y-1/2 cursor-pointer p-2 text-cbre-green-800 rounded hover:text-cbre-green transition-colors"
+                                                @click="onSearchText">
+                                                <IconMagnifier class="w-5 h-5" />
+                                        </div>
+                                </div>
+                        </div>
+                        <div class="relative z-10 w-full mb-6">
+                                <p class="text-[16px] text-white/80 font-light leading-relaxed max-w-[90%]">
+                                        Explore properties and locations across the region.
                                 </p>
                         </div>
-
-                        <video width="100%" height="100%" poster="~/assets/images/points-on-the-map.png" autoplay loop
-                                muted playsinline
-                                class="absolute top-0 left-0 w-full h-full object-cover z-0 opacity-60">
-                                <source type="video/webm" src="~/assets/videos/points-on-the-map.webm">
-                                <source type="video/mp4" src="~/assets/videos/points-on-the-map.mp4">
-                        </video>
                 </div>
 
-                <div class="flex flex-col w-full h-[calc(100%-285px)] justify-start px-4 bg-white">
+                <!-- Hero Image -->
+                <div class="w-full h-[200px] relative">
+                        <img src="/images/intelligent-investment-1384x460.webp" class="w-full h-full object-cover"
+                                alt="Insights Hero" />
+                        <!-- Gradient Overlay -->
                         <div
-                                class="relative flex w-full items-end h-[60px] border-b-2 border-primary/50 focus-within:border-primary/70 mb-2">
-
-                                <input v-model="searchWebText" type="text" name="search" autocomplete="off"
-                                        @keyup.enter="onSearchText"
-                                        class="peer search-input relative h-[50px] text-sm text-primary flex-1 border-none focus:ring-0 bg-transparent z-20 pl-2"
-                                        placeholder=" " />
-
-                                <label
-                                        class="absolute top-4 left-2 text-[16px] text-primary/50 transition-all duration-200 ease-out pointer-events-none
-                 peer-focus:-top-2 peer-focus:text-xs peer-focus:text-primary peer-not-placeholder-shown:-top-2 peer-not-placeholder-shown:text-xs">
-                                        Search for Name, Address, and More...
-                                </label>
-
-                                <div class="magnifier flex items-center justify-center z-50 cursor-pointer p-2"
-                                        @click="onSearchText">
-                                        <IconMagnifier width="18px" height="18px"
-                                                class="text-inherit hover:text-accent" />
-                                </div>
-
-                                <div v-if="searchWebText !== ''"
-                                        class="closer flex items-center justify-center cursor-pointer z-50 p-2 mr-8"
-                                        @click="onResetKeyword">
-                                        <Icon name="ic:sharp-close" size="18"
-                                                class="text-gray-400 hover:text-gray-600" />
-                                </div>
+                                class="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent opacity-50">
                         </div>
-
-                        <NavWebGeocoder ref="geocoderRef" />
                 </div>
 
-                <div class="w-full h-[60px] px-6 bg-white flex items-center justify-end border-t border-gray-100">
-                        <div class="flex justify-center items-center relative p-0 gap-0 ml-2 hover:cursor-pointer"
-                                @click="handleClose">
-                                <div
-                                        class="relative flex px-4 py-1 items-center border-2 rounded-xl border-primary bg-[#e6eaea] hover:border-[#767676] hover:bg-white transition-colors">
-                                        <Icon name="mdi:close" size="20" />
-                                        <span
-                                                class="font-calibreLight hover:font-calibre text-lg ml-1 -translate-y-[1px]">Close</span>
-                                </div>
+                <!-- Results Section -->
+                <div class="flex flex-col w-full flex-1 px-8 pt-6 overflow-hidden">
+
+                        <!-- Clear Button (Text only if needed) -->
+                        <div v-if="searchWebText" class="flex justify-end mb-2 shrink-0">
+                                <button @click="onResetKeyword"
+                                        class="text-xs text-gray-500 hover:text-red-500 uppercase tracking-wider font-medium">Clear
+                                        Text</button>
                         </div>
+
+                        <!-- Geocoder Component -->
+                        <div class="flex-1 overflow-y-auto custom-scrollbar">
+                                <NavWebGeocoder ref="geocoderRef" />
+                        </div>
+                </div>
+
+                <!-- Footer / Close Section -->
+                <div
+                        class="w-full px-8 py-6 flex justify-between items-center bg-cbre-gray-50 border-t border-gray-200">
+                        <button @click="onClearPins"
+                                class="flex items-center gap-2 text-red-600 hover:text-red-800 transition-colors duration-300 group"
+                                title="Clear all pins on map">
+                                <UIcon name="i-heroicons-trash"
+                                        class="w-5 h-5 group-hover:scale-110 transition-transform" />
+                                <span
+                                        class="text-[14px] font-medium border-b border-transparent group-hover:border-red-600 pb-0.5 transition-all">Clear
+                                        Pins</span>
+                        </button>
+
+                        <button @click="handleClose"
+                                class="group flex items-center gap-2 text-gray-600 hover:text-cbre-green-800 transition-colors duration-300">
+                                <span
+                                        class="text-[14px] font-medium tracking-wide border-b border-transparent group-hover:border-cbre-green-800 pb-0.5 transition-all">Close
+                                        Panel</span>
+                                <UIcon name="i-heroicons-x-mark"
+                                        class="w-4 h-4 transform group-hover:rotate-90 transition-transform duration-300" />
+                        </button>
                 </div>
         </div>
 </template>
@@ -104,7 +123,16 @@ const onResetKeyword = () => {
 
 const handleClose = () => {
         emit('isClosed', true);
-        onResetKeyword();
+        // onResetKeyword(); // User might want to keep results when closing panel temporarily?
+        // If we want "sidebar" behavior, maybe we don't auto-clear?
+        // But for now let's keep it simple.
+};
+
+const onClearPins = () => {
+        mapStore.clearSearchedMarkers();
+        kakaoAddress.value = [];
+        kakaoKeyword.value = [];
+        googleGeocoder.value = [];
 };
 </script>
 

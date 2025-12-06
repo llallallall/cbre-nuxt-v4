@@ -84,6 +84,10 @@ interface UiState {
 
     // Header Color Mode
     isLightMode: boolean;
+
+    // Device State
+    isMobile: boolean;
+    isTablet: boolean;
 }
 
 // ----------------------------------------------------------------------
@@ -126,6 +130,10 @@ const getInitialState = (): UiState => ({
 
     // Header Color Mode
     isLightMode: false,
+
+    // Device State
+    isMobile: false,
+    isTablet: false,
 });
 
 // ----------------------------------------------------------------------
@@ -260,6 +268,16 @@ export const useUiStore = defineStore('ui', {
          */
         setLightMode(isLight: boolean) {
             this.isLightMode = isLight;
+        },
+
+        /**
+         * @description 디바이스 상태(Mobile, Tablet)를 설정합니다. (App.vue에서 초기화)
+         * @param isMobile 
+         * @param isTablet 
+         */
+        setDeviceState(isMobile: boolean, isTablet: boolean) {
+            this.isMobile = isMobile;
+            this.isTablet = isTablet;
         }
     },
 });

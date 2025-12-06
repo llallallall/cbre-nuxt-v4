@@ -85,13 +85,13 @@ const searchKakaoAddress = async (query: string) => {
                 // Nuxt Server API Proxy 사용 (CORS 회피 및 키 숨김)
                 // server/api/utils/websearch/kakao.ts 등을 활용하거나 직접 호출
 
-                const { data } = await useFetch<any>('https://dapi.kakao.com/v2/local/search/address.json', {
+                const data = await $fetch<any>('https://dapi.kakao.com/v2/local/search/address.json', {
                         headers: { Authorization: `KakaoAK ${KAKAO_API_KEY}` },
                         params: { query, analyze_type: 'similar', page: 1, size: 10 }
                 });
 
-                if (data.value?.documents) {
-                        kakaoAddress.value = data.value.documents.map((item: any) => ({
+                if (data?.documents) {
+                        kakaoAddress.value = data.documents.map((item: any) => ({
                                 name: item.address_name,
                                 type: item.address_type,
                                 province: item.address?.region_1depth_name,
@@ -109,13 +109,13 @@ const searchKakaoAddress = async (query: string) => {
 // --- B. Kakao Keyword Search ---
 const searchKakaoKeyword = async (query: string) => {
         try {
-                const { data } = await useFetch<any>('https://dapi.kakao.com/v2/local/search/keyword.json', {
+                const data = await $fetch<any>('https://dapi.kakao.com/v2/local/search/keyword.json', {
                         headers: { Authorization: `KakaoAK ${KAKAO_API_KEY}` },
                         params: { query, page: 1, size: 10 }
                 });
 
-                if (data.value?.documents) {
-                        kakaoKeyword.value = data.value.documents.map((item: any) => ({
+                if (data?.documents) {
+                        kakaoKeyword.value = data.documents.map((item: any) => ({
                                 name: item.place_name,
                                 type: 'KEYWORD',
                                 category: item.category_name,
@@ -140,7 +140,8 @@ const searchGoogleGeocoder = async (query: string) => {
 
                 // Promise로 래핑하여 비동기 처리
                 const results = await new Promise<any[]>((resolve, reject) => {
-                        geocoder.geocode({ address: query }, (results: any, status: any) => {
+                        // Region Bias: KR added for better local results
+                        geocoder.geocode({ address: query, region: 'kr' }, (results: any, status: any) => {
                                 if (status === 'OK' && results) resolve(results);
                                 else reject(status);
                         });

@@ -27,17 +27,18 @@
                                 paint: LAYER_3D_BUILDINGS.paint as any
                         }" />
 
-                        <MapboxLayer v-if="propertyStore.initialDataLoaded && imagesLoaded" :beforeLayer="LAYER_3D_BUILDINGS.id" :layer="{
-                                source: 'cbre-assets',
-                                id: LAYER_UNCLUSTERED_POINT.id,
-                                type: LAYER_UNCLUSTERED_POINT.type as any,
-                                filter: LAYER_UNCLUSTERED_POINT.filter,
-                                layout: LAYER_UNCLUSTERED_POINT.layout as any,
-                                paint: LAYER_UNCLUSTERED_POINT.paint
-                        }" />
+                        <MapboxLayer v-if="propertyStore.initialDataLoaded && imagesLoaded"
+                                :beforeLayer="LAYER_3D_BUILDINGS.id" :layer="{
+                                        source: 'cbre-assets',
+                                        id: LAYER_UNCLUSTERED_POINT.id,
+                                        type: LAYER_UNCLUSTERED_POINT.type as any,
+                                        filter: LAYER_UNCLUSTERED_POINT.filter,
+                                        layout: LAYER_UNCLUSTERED_POINT.layout as any,
+                                        paint: LAYER_UNCLUSTERED_POINT.paint
+                                }" />
 
-                        <MapboxLayer v-if="propertyStore.initialDataLoaded && imagesLoaded" :beforeLayer="LAYER_UNCLUSTERED_POINT.id"
-                                :layer="{
+                        <MapboxLayer v-if="propertyStore.initialDataLoaded && imagesLoaded"
+                                :beforeLayer="LAYER_UNCLUSTERED_POINT.id" :layer="{
                                         source: 'cbre-assets',
                                         id: LAYER_CLUSTER_COUNT.id,
                                         type: LAYER_CLUSTER_COUNT.type as any,
@@ -46,8 +47,8 @@
                                         paint: LAYER_CLUSTER_COUNT.paint as any
                                 }" />
 
-                        <MapboxLayer v-if="propertyStore.initialDataLoaded && imagesLoaded" :beforeLayer="LAYER_CLUSTER_COUNT.id"
-                                :layer="{
+                        <MapboxLayer v-if="propertyStore.initialDataLoaded && imagesLoaded"
+                                :beforeLayer="LAYER_CLUSTER_COUNT.id" :layer="{
                                         source: 'cbre-assets',
                                         id: LAYER_CLUSTERS.id,
                                         type: LAYER_CLUSTERS.type as any,
@@ -57,7 +58,7 @@
 
                         <MapboxSource source-id="cbre-assets" :source="(cbreDataSource as any)" />
 
-                       
+
                         <MapboxNavigationControl position="top-left" :options="{ showCompass: true, showZoom: true }" />
                         <MapboxFullscreenControl v-if="fullscreenSupported" position="top-right" />
 
@@ -122,18 +123,18 @@ const imagesLoaded = ref(false);
 const fullscreenSupported = ref(false);
 
 onMounted(async () => {
-    if (typeof document !== 'undefined') {
-        fullscreenSupported.value = document.fullscreenEnabled;
-    }
-    
-    if (import.meta.client) {
-        const mapboxgl = (await import("mapbox-gl")).default;
-        const config = useRuntimeConfig();
-        const mapboxAccessToken = config.public.mapbox?.accessToken || '';
-        if (mapboxAccessToken) {
-            mapboxgl.accessToken = mapboxAccessToken;
+        if (typeof document !== 'undefined') {
+                fullscreenSupported.value = document.fullscreenEnabled;
         }
-    }
+
+        if (import.meta.client) {
+                const mapboxgl = (await import("mapbox-gl")).default;
+                const config = useRuntimeConfig();
+                const mapboxAccessToken = config.public.mapbox?.accessToken || '';
+                if (mapboxAccessToken) {
+                        mapboxgl.accessToken = mapboxAccessToken;
+                }
+        }
 });
 
 const config = useRuntimeConfig();
@@ -200,35 +201,12 @@ watch(flyTo, (nv) => {
         }
 });
 
-const webSearchedMarkers = shallowRef<mapboxgl.Marker[]>([]);
 
-watch(searchedMarkersChanged, async () => {
-        if (webSearchedMarkers.value.length > 0) {
-                webSearchedMarkers.value.forEach((marker) => marker.remove());
-                webSearchedMarkers.value = [];
-        }
-
-        if (mapStore.searchedMarkers.length > 0 && mapRef.value) {
-                if (import.meta.client) {
-                    const mapboxgl = (await import("mapbox-gl")).default;
-                    mapStore.searchedMarkers.forEach((item) => {
-                            const marker = new mapboxgl.Marker({
-                                    color: "red",
-                                    draggable: true
-                            })
-                                    .setLngLat([item.longitude, item.latitude])
-                                    .addTo(mapRef.value as any);
-
-                            webSearchedMarkers.value.push(marker);
-                    });
-                }
-        }
-});
 
 useMapboxBeforeLoad("cbre-map", async (map) => {
         if (import.meta.client) {
-            const MapboxLanguage = (await import("@mapbox/mapbox-gl-language")).default;
-            mapStore.mapLanguage = new MapboxLanguage({ defaultLanguage: "en" });
+                const MapboxLanguage = (await import("@mapbox/mapbox-gl-language")).default;
+                mapStore.mapLanguage = new MapboxLanguage({ defaultLanguage: "en" });
         }
 
         const p1 = new Promise<void>((resolve, reject) => {

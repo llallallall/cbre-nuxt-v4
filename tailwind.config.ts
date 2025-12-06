@@ -3,7 +3,6 @@ import type { Config } from 'tailwindcss'
 export default <Config>{
     // Nuxt 4 구조에 맞춰 스캔할 파일 경로 지정
     content: [
-        // 모든 소스 파일은 app 디렉토리 아래에 있습니다.
         './app/**/*.{vue,js,ts,jsx,tsx}',
         './app/components/**/*.{vue,js,ts}',
         './app/layouts/**/*.vue',
@@ -25,21 +24,83 @@ export default <Config>{
                 '2xs': '425px',
                 'xs': '480px',
             },
-            // CBRE 브랜드 컬러 팔레트 정의 (여기 정의된 이름이 클래스가 됨)
             colors: {
-                // Nuxt UI Primary Color Mapping
-                'cbre-green': {
-                    50: '#F5F7F7',
-                    100: '#E6EBE9',
-                    200: '#C2CEC9',
-                    300: '#9EB1AA',
-                    400: '#54776B',
-                    500: '#003F2D', // Main Brand Color
-                    600: '#003828',
-                    700: '#003224',
-                    800: '#002B1F',
-                    900: '#00241A',
-                    950: '#001D15',
+                // Nuxt UI Primary Alias (Linked to Brand Palette)
+                primary: {
+                    50: 'var(--eds-color-green-50)',
+                    100: 'var(--eds-color-green-100)',
+                    200: 'var(--eds-color-green-200)',
+                    300: 'var(--eds-color-green-300)',
+                    400: 'var(--eds-color-green-400)',
+                    500: 'var(--eds-color-green-500)', // Brand (Deep Teal)
+                    600: 'var(--eds-color-green-600)',
+                    700: 'var(--eds-color-green-700)',
+                    800: 'var(--eds-color-green-800)',
+                    900: 'var(--eds-color-green-900)',
+                    950: 'var(--eds-color-green-950)',
+                    DEFAULT: 'var(--eds-color-green-brand)',
+                },
+                accent: 'var(--eds-color-accent)', // Mountain Meadow
+
+                // CBRE Brand Palette (Source of Truth)
+                cbre: {
+                    green: {
+                        50: 'var(--eds-color-green-50)',
+                        100: 'var(--eds-color-green-100)',
+                        200: 'var(--eds-color-green-200)',
+                        300: 'var(--eds-color-green-300)',
+                        400: 'var(--eds-color-green-400)',
+                        500: 'var(--eds-color-green-500)', // Brand
+                        600: 'var(--eds-color-green-600)',
+                        700: 'var(--eds-color-green-700)',
+                        800: 'var(--eds-color-green-800)',
+                        900: 'var(--eds-color-green-900)',
+                        950: 'var(--eds-color-green-950)',
+                        DEFAULT: 'var(--eds-color-green-brand)',
+                        light: 'var(--eds-color-accent)', // Semantic alias for accent usage
+                        dark: 'var(--eds-color-green-900)', // Map legacy dark to 900
+                    },
+
+                    slate: {
+                        DEFAULT: 'var(--eds-color-primary-4)',
+                        light: 'var(--eds-color-primary-5)',
+                        lighter: 'var(--eds-color-primary-6)',
+                    },
+
+                    blue: {
+                        dark: 'var(--eds-color-secondary-1)',
+                        DEFAULT: 'var(--eds-color-secondary-2)',
+                    },
+                    teal: 'var(--eds-color-secondary-3)',
+                    yellow: 'var(--eds-color-secondary-4)',
+                    olive: 'var(--eds-color-secondary-5)',
+
+                    pastel: {
+                        blue: 'var(--eds-color-secondary-light-1)',
+                        gray: 'var(--eds-color-secondary-light-2)',
+                        mint: 'var(--eds-color-secondary-light-3)',
+                        cream: 'var(--eds-color-secondary-light-4)',
+                        green: 'var(--eds-color-secondary-light-5)',
+                    },
+
+                    gray: {
+                        900: 'var(--eds-color-system-2)',
+                        800: 'var(--eds-color-system-3)',
+                        700: 'var(--eds-color-system-4)',
+                        600: 'var(--eds-color-system-5)',
+                        500: 'var(--eds-color-system-6)',
+                        400: 'var(--eds-color-system-7)',
+                        300: 'var(--eds-color-system-8)',
+                        200: 'var(--eds-color-system-9)',
+                        100: 'var(--eds-color-system-10)',
+                        50: '#F5F5F5',
+                    },
+
+                    functional: {
+                        error: '#E81717',
+                        warning: '#F1D230',
+                        info: '#E6EAEA',
+                    }
                 },
             },
             fontFamily: {
@@ -47,7 +108,6 @@ export default <Config>{
                 calibre: ['Calibre', 'sans-serif'],
                 financier: ['Financier', 'serif'],
             },
-            // 각진 모서리
             borderRadius: {
                 'cbre': '0px',
             },
@@ -56,6 +116,8 @@ export default <Config>{
                 slideShowFromRight: 'slideShowFromRight 0.5s ease-in-out forwards',
                 slideHideToTop: 'slideHideToTop 0.5s ease-in-out forwards',
                 slideShowFromTop: 'slideShowFromTop 0.5s ease-in-out forwards',
+                slideInRight: 'slideInRight 0.5s ease-in-out forwards',
+                slideOutRight: 'slideOutRight 0.5s ease-in-out forwards',
             },
             keyframes: {
                 slideHideToRight: {
@@ -65,6 +127,14 @@ export default <Config>{
                 slideShowFromRight: {
                     '0%': { right: '-400px' },
                     '100%': { right: '0px' },
+                },
+                slideInRight: {
+                    '0%': { transform: 'translateX(100%)' },
+                    '100%': { transform: 'translateX(0)' },
+                },
+                slideOutRight: {
+                    '0%': { transform: 'translateX(0)' },
+                    '100%': { transform: 'translateX(100%)' },
                 },
                 slideHideToTop: {
                     '0%': {

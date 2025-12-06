@@ -94,15 +94,7 @@ onMounted(async () => {
     await propertyStore.fetchInitialData();
 });
 
-const listWidthClass = computed(() => {
-    if (uiStore.isHiddenList) {
-        return 'w-0 hidden';
-    }
-    const mapRatio = mapStyleOptions.value.MapRatio || 60;
-    const listRatio = 100 - mapRatio;
 
-    return `w-[${listRatio}%] min-w-[40%]`;
-});
 
 // Fab Menu
 let oldPositionX: any;

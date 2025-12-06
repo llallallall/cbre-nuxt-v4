@@ -33,6 +33,15 @@ const confirmStore = useConfirmStore();
 const uiStore = useUiStore();
 const propertyStore = usePropertyStore();
 const statusStore = useStatusStore();
+
+const detailCardPrintAreaRef = ref(null);
+provide('detailCardPrintAreaRef', detailCardPrintAreaRef);
+
+// Device State Initialization
+const device = useDevice();
+if (device) {
+    uiStore.setDeviceState(device.isMobile, device.isTablet);
+}
 </script>
 
 <style scoped>

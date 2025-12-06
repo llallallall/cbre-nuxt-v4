@@ -1,5 +1,6 @@
 <template>
-    <div v-if="calculatedArea > 0 || calculatedLength > 0" class="absolute top-10 right-20 bg-white p-4 rounded shadow-lg z-50 font-sans text-sm text-gray-800">
+    <div v-if="calculatedArea > 0 || calculatedLength > 0"
+        class="absolute top-10 right-20 bg-white p-4 rounded shadow-lg z-50 font-sans text-sm text-gray-800">
         <p v-if="calculatedArea > 0" class="m-0"><strong>{{ calculatedArea }}</strong> m² (Polygon)</p>
         <p v-if="calculatedLength > 0" class="m-0"><strong>{{ calculatedLength }}</strong> m (Line)</p>
     </div>
@@ -21,7 +22,7 @@ const calculatedLength = ref(0);
 
 const updateArea = (e: any) => {
     const data = draw.value.getAll();
-    
+
     if (data.features.length > 0) {
         let polygonArea = 0;
         let lineLength = 0;
@@ -218,6 +219,7 @@ useMapbox('cbre-map', (map) => {
 
     map.on('draw.create', updateArea);
     map.on('draw.delete', updateArea);
+    map.on('draw.delete', onDrawDelete); // Add this
     map.on('draw.update', updateArea);
 });
 
@@ -229,6 +231,59 @@ onUnmounted(() => {
         mapRef.value.off('draw.create', updateArea);
         mapRef.value.off('draw.delete', updateArea);
         mapRef.value.off('draw.update', updateArea);
+        mapRef.value.off('draw.delete', onDrawDelete); // Clean up
     }
 });
+
+// --- Search Marker Integration ---
+import { useMapStore } from '~/stores/map';
+import { storeToRefs } from 'pinia';
+import { watch } from 'vue';
+
+const mapStore = useMapStore();
+const { searchedMarkersChanged } = storeToRefs(mapStore);
+
+// Sync Store -> Draw
+watch(searchedMarkersChanged, () => {
+    if (!draw.value) return;
+
+    // 1. Clear existing search points (optional, or just add new ones?)
+    // If we want to fully sync, we might want to clear "previously added search points".
+    // But Draw doesn't tag them easily unless we add properties.
+    // For now, let's just ADD new markers. If user wants to clear, they use "Clear Button".
+
+    // Actually, if we want "Clear All" to work, we need to be able to remove them.
+    // Let's assume mapStore.searchedMarkers is the list we want to SHOW.
+    // So we should remove old ones? Converting all searchedMarkers to Draw Features.
+
+    // Strategy: We won't wipe ALL draw features (user might have drawn polygons), 
+    // but typically search replaces previous search.
+    // Let's just Loop and Add.
+
+    mapStore.searchedMarkers.forEach(marker => {
+        const feature = {
+            id: `search-marker-${Date.now()}-${Math.random()}`, // Unique ID
+            type: 'Feature',
+            properties: {
+                isSearchMarker: true // Tag it
+            },
+            geometry: {
+                type: 'Point',
+                coordinates: [marker.longitude, marker.latitude]
+            }
+        };
+        draw.value.add(feature);
+    });
+});
+
+// Sync Draw -> Store (Delete)
+const onDrawDelete = (e: any) => {
+    // If user deletes a point, we could update store... 
+    // But currently store is just a "list of results". 
+    // If visual point is gone, that's enough for the user requirement "trash functionality".
+    updateArea(e);
+};
+
+// Update onDrawDelete listener above in onUnmounted
+
 </script>
