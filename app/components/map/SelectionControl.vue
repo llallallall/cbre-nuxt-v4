@@ -5,14 +5,16 @@
                         <div class="w-full h-full flex justify-center items-center">
                                 <div v-if="mapStore.filterMapPins">
                                         <UIcon v-if="!isLoading" name="i-heroicons-star-solid"
-                                                class="text-cbre-green w-6 h-6" />
+                                                class="text-cbre-green transform translate-y-1" size="20px"
+                                                bold="true" />
                                         <UIcon v-if="isLoading" name="i-heroicons-arrow-path"
-                                                class="w-5 h-5 animate-spin" />
+                                                class="animate-spin transform translate-y-1" size="20px" bold="true" />
                                 </div>
                                 <div v-else>
-                                        <UIcon v-if="!isLoading" name="i-heroicons-star" class="w-6 h-6" />
+                                        <UIcon v-if="!isLoading" name="i-heroicons-star" class="transform translate-y-1"
+                                                size="20px" bold="true" />
                                         <UIcon v-if="isLoading" name="i-heroicons-arrow-path"
-                                                class="w-5 h-5 animate-spin" />
+                                                class="animate-spin transform translate-y-1" size="20px" bold="true" />
                                 </div>
                         </div>
                 </button>

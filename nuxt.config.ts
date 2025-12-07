@@ -12,7 +12,7 @@ export default defineNuxtConfig({
     ],
   },
   compatibilityDate: '2025-07-15',
-  devtools: { enabled: true },
+  devtools: { enabled: false },
 
   modules: [// 보안 모듈 (가장 먼저 로드 권장)
     'nuxt-security', '@nuxt/icon', '@nuxt/image', // 인증 모듈 (Lightweight)
