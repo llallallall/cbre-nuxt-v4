@@ -19,6 +19,11 @@ export default defineNuxtConfig({
     '@nuxt/eslint', 'nuxt-auth-utils', // 'nuxt-mapbox',
     '@nuxt/fonts', "@nuxt/ui", "@nuxtjs/device", "@nuxt/scripts", "@nuxtjs/i18n", "@pinia/nuxt", 'nuxt-mapbox'],
 
+  // [Image Optimization]
+  image: {
+    domains: ['minio-api.devowls.kr', 'placehold.co']
+  },
+
   // [다국어] i18n 설정 추가
   i18n: {
     locales: [

@@ -24,7 +24,8 @@
                             :prev-button="{ color: 'white', icon: 'i-heroicons-arrow-left-20-solid', class: '!bg-black/50 hover:!bg-black/70 right-auto left-4' }"
                             :next-button="{ color: 'white', icon: 'i-heroicons-arrow-right-20-solid', class: '!bg-black/50 hover:!bg-black/70 left-auto right-4' }"
                             class="w-full h-full" :ui="{ item: 'basis-full h-full justify-center' }" @select="onSelect">
-                            <img :src="item" class="w-full h-full object-contain" draggable="false">
+                            <NuxtImg :src="item" class="w-full h-full object-contain" draggable="false" format="webp"
+                                quality="80" />
                         </UCarousel>
                     </div>
 
@@ -35,7 +36,7 @@
                                 class="relative size-16 md:size-20 flex-shrink-0 rounded-lg overflow-hidden transition-all duration-200 focus:outline-none"
                                 :class="activeIndex === index ? 'ring-2 ring-cbre-green-500 ring-offset-2 opacity-100' : 'opacity-60 hover:opacity-100'"
                                 @click="select(index)">
-                                <img :src="item" class="w-full h-full object-cover">
+                                <NuxtImg :src="item" class="w-full h-full object-cover" width="80" format="webp" />
                             </button>
                         </div>
                     </div>

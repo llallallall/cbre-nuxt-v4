@@ -1,6 +1,6 @@
 <template>
     <UApp :locale="locales[locale]" :toaster="{ position: 'top-right' }">
-        <NuxtLoadingIndicator color="var(--eds-color-green-brand)" />
+        <NuxtLoadingIndicator color="var(--eds-color-accent)" />
         <NuxtLayout>
             <NuxtPage />
         </NuxtLayout>
