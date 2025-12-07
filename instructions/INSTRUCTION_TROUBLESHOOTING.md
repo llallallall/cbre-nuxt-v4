@@ -141,7 +141,21 @@ onMounted(() => {
                 <div class="bg-white p-4" @click.stop>
                     Content Here
                 </div>
-            </div>
-        </UModal>
-    </template>
     ```
+
+---
+
+## 9. Docker & Database Connection Issues
+
+### **Database Connection Failed (Invalid URL Scheme)**
+- **Symptoms**:
+    - App fails to connect to the database in Docker/Portainer environment.
+    - Error logs show `Failed query: SELECT 1` or protocol errors.
+    - `DATABASE_URL` appears correct in the UI but fails in the app.
+- **Root Cause**: **Extra Quotes in Environment Variables**.
+    - In Portainer or `.env` files, wrapping values in double quotes (e.g., `DATABASE_URL="postgres://..."`) results in the **quotes being treated as part of the string** by Node.js.
+    - The app sees the URL as `"postgres://..."` (starting with a quote), which is an invalid protocol.
+- **Fix**:
+    - **Remove all quotes** from environment variable values in Portainer/Docker Compose.
+    - **Incorrect**: `DATABASE_URL="postgresql://user:pass@host:5432/db"`
+    - **Correct**: `DATABASE_URL=postgresql://user:pass@host:5432/db`
