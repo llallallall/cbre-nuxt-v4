@@ -10,19 +10,19 @@
         </div>
         <!-- BEGIN :: Expand Section -->
         <ul class="fab-menu-ul select-none">
-            <li class="fab-menu-li shadow-md bg-white" @click="resetUserSelection" title="Reset Selection">
-                <label>Reset</label>
-                <UIcon name="i-ion-refresh" class="fab-menu-icon" />
+            <li class="fab-menu-li shadow-md bg-white !hidden lg:!flex"
+                @click="uiStore.showMiniMap = !uiStore.showMiniMap" :title="$t('common.fab.toggle_title')">
+                <label>{{ $t('toggle') }}</label>
+                <UIcon name="i-ion-map" class="fab-menu-icon" />
             </li>
-
-            <li class="fab-menu-li shadow-md bg-white" @click="openInfoModal" title="Show Transaction Info">
-                <label>Info</label>
+            <li class="fab-menu-li shadow-md bg-white" @click="openInfoModal" :title="$t('common.fab.info_title')">
+                <label>{{ $t('info') }}</label>
                 <UIcon name="i-ion-document-text" class="fab-menu-icon" />
             </li>
-            <li class="fab-menu-li shadow-md bg-white" @click="uiStore.showMiniMap = !uiStore.showMiniMap"
-                title="Toggle Mini Map">
-                <label>Toggle</label>
-                <UIcon name="i-ion-map" class="fab-menu-icon" />
+            <li class="fab-menu-li shadow-md bg-white" @click="resetUserSelection"
+                :title="$t('common.fab.reset_title')">
+                <label>{{ $t('reset') }}</label>
+                <UIcon name="i-ion-refresh" class="fab-menu-icon" />
             </li>
         </ul>
     </div>
@@ -34,6 +34,7 @@ import { useUiStore } from '~/stores/ui';
 import { usePropertyStore } from '~/stores/property';
 import { useAppToast } from '~/composables/useAppToast';
 import { useDraggableFab } from '~/composables/useDraggableFab';
+import { useI18n } from 'vue-i18n';
 
 const props = defineProps<{
     wrapperElement: HTMLElement | null
@@ -45,6 +46,7 @@ const wrapperElementRef = toRef(props, 'wrapperElement');
 const uiStore = useUiStore();
 const propertyStore = usePropertyStore();
 const { showToast } = useAppToast();
+const { t } = useI18n();
 
 // Initialize Draggable Logic
 useDraggableFab(fabElement, wrapperElementRef);
@@ -61,7 +63,7 @@ const openInfoModal = () => {
     if (propertyStore.keptPropertyIds.length > 0) {
         uiStore.showInfoModal = true;
     } else {
-        showToast("There are no properties selected.", 'warning');
+        showToast(t('no_properties_selected'), 'warning');
     }
 };
 

@@ -53,18 +53,12 @@ import { useFormat } from '~/composables/useFormat';
 import type { PropertyType } from '~/types/property.type';
 
 const { numberFormat } = useFormat();
-const uiStore = useUiStore();
-const { isGridView } = storeToRefs(uiStore);
 
 const props = defineProps<{
         item: PropertyType
 }>();
 
-const textClass = computed(() =>
-        isGridView.value
-                ? 'text-ellipsis xl:truncate overflow-auto xl:overflow-hidden'
-                : 'whitespace-nowrap xl:whitespace-break-spaces'
-);
+const textClass = computed(() => 'text-ellipsis overflow-hidden whitespace-nowrap');
 
 const getCompletionYear = (item: PropertyType) => {
         const h = item.history?.find(el => el.type === 'COMPLETION');

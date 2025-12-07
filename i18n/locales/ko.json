@@ -375,5 +375,12 @@
                 }
             }
         }
+    },
+    "common": {
+        "fab": {
+            "reset_title": "선택 초기화",
+            "info_title": "거래 정보 보기",
+            "toggle_title": "미니맵 토글"
+        }
     }
 }

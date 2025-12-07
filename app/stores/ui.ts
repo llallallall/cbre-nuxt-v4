@@ -113,7 +113,7 @@ const getInitialState = (): UiState => ({
     // 리스트 표시 초기 설정
     isGridView: false, // 기본은 리스트 뷰
     isHiddenList: false,
-    isExpandedList: false,
+    isExpandedList: true,
 
     // 마스터 데이터 초기 상태
     sectorList: [],

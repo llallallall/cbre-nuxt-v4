@@ -1,81 +1,88 @@
 <template>
-        <div class="group w-full h-full relative select-none border rounded-lg overflow-hidden transition-all duration-300 hover:shadow-lg"
-                :class="isKept ? 'bg-cbre-green/10 border-cbre-green/25' : 'bg-white border-gray-200'">
+        <div class="group w-full h-full relative select-none border border-gray-200 bg-white"
+                :class="isKept ? 'bg-cbre-green-50' : ''">
 
-                <div class="flex w-full relative" :class="isGridView ? 'flex-col h-[480px]' : 'flex-row h-[260px]'">
+                <div class="flex flex-col w-full h-full">
 
-                        <div class="overflow-hidden relative cursor-pointer bg-gray-100"
-                                :class="isGridView ? 'w-full h-[260px]' : 'flex h-full w-1/2'" @click="openDetail">
+                        <!-- Image Section -->
+                        <div class="cbre-image-wrapper relative w-full aspect-[4/3] bg-gray-100 overflow-hidden"
+                                @click="openDetail">
+                                <NuxtImg :src="currentImage" class="cbre-image" loading="lazy" alt="Property Image"
+                                        @error="handleImageError" />
 
-                                <img :src="currentImage"
-                                        class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500"
-                                        loading="lazy" alt="Property Image" @error="handleImageError" />
+                                <!-- Hover Overlay: Info -->
+                                <div
+                                        class="absolute inset-0 bg-gray-100/95 p-6 flex flex-col justify-center transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-in-out z-20 border-l-4 border-accent">
+                                        <ListItemInfo :item="item" />
+                                        <div
+                                                class="mt-4 flex items-center text-cbre-green font-bold cursor-pointer hover:underline">
+                                                Learn More
+                                                <UIcon name="i-heroicons-arrow-right" class="ml-2 w-4 h-4" />
+                                        </div>
+                                </div>
 
+                                <!-- Status Badges -->
+                                <div class="absolute top-2 right-2 flex flex-col gap-2 z-10">
+                                        <div @click.stop="moveToMap" title="Show on Map"
+                                                class="flex justify-center items-center text-white hover:text-accent cursor-pointer transition-all">
+                                                <UIcon name="i-heroicons-map-pin-solid" class="text-[20px] shadow-md" />
+                                        </div>
+
+                                        <div @click.stop="toggleKeep" title="Keep Property"
+                                                class="flex justify-center items-center cursor-pointer transition-all"
+                                                :class="isKept ? 'text-yellow-400' : 'text-white hover:text-yellow-400'">
+                                                <UIcon name="i-heroicons-star-solid" class="shadow-md text-[20px]" />
+                                        </div>
+                                </div>
+
+                                <!-- Sector / Subsector -->
+                                <div class="absolute bottom-0 left-0 flex w-full justify-start items-center 
+                                        bg-cbre-green-600
+                                         text-white tracking-wider p-0 ">
+                                        <div class="flex items-center text-[2rem] font-financier font-normal px-4 py-1">
+                                                {{ item?.sector?.name }}
+                                        </div>
+                                        <div v-if="item.subsector"
+                                                class="flex items-center h-[1.6rem] text-[1.6rem] font-calibre font-light pl-4 py-1 border-l border-gray-300/50">
+                                                {{ item?.subsector?.name }}
+                                        </div>
+                                </div>
                         </div>
 
-                        <div class="card-info flex flex-col relative pt-4 pl-4 pr-4 pb-2"
-                                :class="isGridView ? 'w-full h-[220px]' : 'w-1/2 h-full'">
+                        <!-- Content Section -->
+                        <div class="flex flex-col p-4 gap-2 border-t border-gray-100">
 
-                                <div class="font-notoSansBold truncate overflow-hidden mb-2 text-lg hover:underline cursor-pointer text-cbre-green"
+
+                                <!-- Name -->
+                                <div class="font-bold text-[2rem] leading-tight text-cbre-green-900 cursor-pointer hover:text-cbre-green-600 transition-colors"
                                         @click="openDetail" :title="item.name">
                                         {{ item.name }}
                                 </div>
 
-                                <div class="text-sm text-gray-500 mb-3 flex flex-col gap-1">
-                                        <div v-if="item.location?.addressProvince" class="flex items-center">
-                                                <div class="w-1.5 h-1.5 bg-cbre-green/60 rounded-full mr-2 shrink-0">
-                                                </div>
-                                                <span class="truncate">{{ item.location.addressProvince }} {{
-                                                        item.location.addressCity ? `/ ${item.location.addressCity}` :
-                                                        '' }}</span>
-                                        </div>
-                                        <div v-if="item.location?.addressFull" class="flex items-center">
-                                                <div class="w-1.5 h-1.5 bg-cbre-green/60 rounded-full mr-2 shrink-0">
-                                                </div>
-                                                <span class="truncate">{{ item.location.addressFull }}</span>
-                                        </div>
+                                <!-- Address -->
+                                <div class="flex text-2xl w-full text-cbre-green-900 font-normal truncate">
+                                        <div v-if="item.location?.addressFull">{{ item.location.addressFull }}</div>
                                 </div>
-
-                                <div
-                                        class="flex-1 more-info flex flex-col gap-y-1 font-financier text-sm text-gray-700">
-                                        <ListItemInfo :item="item" />
-                                </div>
-
-                                <div class="flex justify-start items-end mt-2">
+                                <div class="flex text-lg w-full text-gray-500 truncate">
                                         <div
-                                                class="border border-gray-200 bg-gray-50 text-gray-400 text-[10px] px-2 py-0.5 rounded">
-                                                No. {{ idx }}
+                                                v-if="item.location?.addressCity && item.location?.addressCity !== '[NULL]'">
+                                                {{ item.location.addressCity }}</div>
+                                        <div
+                                                v-if="item.location?.addressCity && item.location?.addressCity !== '[NULL]' && item.location?.addressProvince">
+                                                ,&nbsp;
                                         </div>
+                                        <div v-if="item.location?.addressProvince">{{ item.location.addressProvince
+                                        }}</div>
+                                </div>
+
+                                <!--Transaction -->
+                                <div class="flex text-lg w-full text-gray-500 truncate">
+                                        <div v-if="item.transaction[0]?.type" class="cbre-button-primary">{{
+                                                item.transaction[0].type }}</div>
+                                        <div v-if="item.transaction[0]?.year" class="cbre-button-secondary">{{
+                                                item.transaction[0].year }}</div>
                                 </div>
                         </div>
-                </div>
-
-                <div class="absolute flex flex-col items-end gap-2 z-10"
-                        :class="isGridView ? 'right-3 top-[230px]' : 'right-3 top-3'">
-
-                        <div v-if="item.profitability?.grade"
-                                class="w-8 h-8 bg-cbre-green rounded-full flex justify-center items-center text-white shadow-md text-xs font-bold border-2 border-white">
-                                {{ item.profitability.grade }}
-                        </div>
-
-                        <div @click.stop="moveToMap"
-                                class="w-8 h-8 flex justify-center items-center text-white bg-gray-700/80 backdrop-blur-sm rounded-full shadow-md hover:bg-cbre-green cursor-pointer transition-all border-2 border-white"
-                                title="Show on Map">
-                                <UIcon name="i-heroicons-map-pin-solid" class="w-4 h-4" />
-                        </div>
-
-                        <div @click.stop="toggleKeep"
-                                class="w-8 h-8 flex justify-center items-center rounded-full shadow-md cursor-pointer transition-all border-2 border-white"
-                                :class="isKept ? 'bg-yellow-400 text-white' : 'bg-gray-700/80 backdrop-blur-sm text-white hover:bg-yellow-400'">
-                                <UIcon :name="isKept ? 'i-heroicons-star-solid' : 'i-heroicons-star'" class="w-4 h-4" />
-                        </div>
-
-                        <div v-if="hasSale"
-                                class="w-8 h-8 bg-blue-500 rounded-full shadow-md flex items-center justify-center text-[10px] text-white font-bold border-2 border-white"
-                                title="Sale">S</div>
-                        <div v-if="hasLease"
-                                class="w-8 h-8 bg-green-500 rounded-full shadow-md flex items-center justify-center text-[10px] text-white font-bold border-2 border-white"
-                                title="Lease">L</div>
                 </div>
         </div>
 </template>
@@ -83,8 +90,6 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue';
 import { useRouter } from 'vue-router';
-import { storeToRefs } from 'pinia';
-import { useUiStore } from '~/stores/ui';
 import { useMapStore } from '~/stores/map';
 import { usePropertyStore } from '~/stores/property';
 import { useFormat } from '~/composables/useFormat';
@@ -97,12 +102,9 @@ const props = defineProps<{
 }>();
 
 const router = useRouter();
-const uiStore = useUiStore();
 const mapStore = useMapStore();
 const propertyStore = usePropertyStore();
 const { getThumbnailUrl } = useFormat();
-
-const { isGridView } = storeToRefs(uiStore);
 
 const getInitialImage = () => {
         const mainImage = props.item.propertyImageFile?.find(img => img.main);
@@ -149,12 +151,3 @@ const moveToMap = () => {
         }
 };
 </script>
-
-<style scoped>
-.cbre_bulletList {
-        list-style: none;
-        margin: 0 0 1em;
-        padding: 0 0 0 20px;
-        line-height: 2;
-}
-</style>

@@ -375,5 +375,12 @@
                 }
             }
         }
+    },
+    "common": {
+        "fab": {
+            "reset_title": "Reset Selection",
+            "info_title": "Show Transaction Info",
+            "toggle_title": "Toggle Mini Map"
+        }
     }
 }
