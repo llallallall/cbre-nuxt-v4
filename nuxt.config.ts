@@ -11,6 +11,20 @@ export default defineNuxtConfig({
       tailwindcss(),
     ],
   },
+  app: {
+    head: {
+      meta: [
+        // 기본 메타 태그
+        { property: 'og:type', content: 'website' },
+        { property: 'og:site_name', content: 'CBRE Korea - Property Management System' },
+        { property: 'og:title', content: 'CBRE Korea - Property Management System' },
+        { property: 'og:description', content: 'CBRE Korea - Property Management System' },
+        // **카카오톡 미리보기를 위한 핵심 설정**
+        { property: 'og:image', content: 'https://cbre-pms.devowls.kr/images/logo.jpg' },
+        { property: 'og:url', content: 'https://cbre-pms.devowls.kr' },
+      ],
+    },
+  },
   compatibilityDate: '2025-07-15',
   devtools: { enabled: false },
 
