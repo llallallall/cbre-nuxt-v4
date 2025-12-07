@@ -8,7 +8,7 @@ import * as schema from './schema'; // 정의한 스키마를 가져옵니다.
 // 1. PostgreSQL 연결 풀 설정
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
-    ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
+    ssl: false,
 });
 
 // 2. Drizzle Client 생성 (Singleton 패턴 적용 필요)
