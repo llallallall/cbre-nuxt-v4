@@ -54,8 +54,11 @@ if (device) {
 
 // Sync HTML lang attribute with current locale for CSS :lang() selectors
 useHead({
+    title: 'CBRE Korea - Property Management System',
     htmlAttrs: {
         lang: locale
     }
 })
+
+
 </script>
