@@ -8,6 +8,7 @@ export default defineEventHandler(async (event) => {
     if (url.pathname.startsWith('/api') &&
         !url.pathname.startsWith('/api/auth') &&
         !url.pathname.startsWith('/api/property/list') &&
+        !url.pathname.startsWith('/api/debug-db') &&
         !url.pathname.startsWith('/api/_nuxt_icon')) {
 
         const session = await getUserSession(event)
