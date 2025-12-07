@@ -1,6 +1,8 @@
 <template>
         <div class="h-full flex items-center" @click.stop>
-                <div class="flex items-center gap-2 px-4 h-full cursor-pointer transition-colors border-b-2 border-transparent hover:border-cbre-accent group"
+                <!-- Logged In: User Profile & Menu -->
+                <div v-if="userStore.isLogin"
+                        class="flex items-center gap-2 px-4 h-full cursor-pointer transition-colors border-b-2 border-transparent hover:border-cbre-accent group"
                         @click="uiStore.toggleUserProfileModal(true)">
                         <div class="flex flex-col items-center">
                                 <div
@@ -16,6 +18,13 @@
                                 </div>
                         </div>
                 </div>
+
+                <!-- Logged Out: Login Button -->
+                <div v-else class="cbre-button-topbar-menu px-0 ml-0 mr-2"
+                        :class="isLightMode ? 'text-cbre-green' : 'text-white'" @click="handleLogin">
+                        {{ $t('login') }}
+                </div>
+
                 <div class="absolute top-22 right-2">
                         <NavUserProfile v-if="uiStore.isUserProfileModalOpen" />
                 </div>
@@ -27,13 +36,11 @@ import { onMounted, computed } from 'vue';
 import { useUserStore } from '~/stores/user';
 import { useUiStore } from '~/stores/ui';
 
-
-
-
-
-const props = defineProps<{
-        // isLightMode?: boolean;
-}>();
+const props = withDefaults(defineProps<{
+        isLightMode?: boolean;
+}>(), {
+        isLightMode: true // Default to true (Light Mode) if not provided
+});
 
 const userStore = useUserStore();
 const uiStore = useUiStore();
@@ -41,4 +48,8 @@ const uiStore = useUiStore();
 onMounted(async () => {
         await userStore.getUser();
 });
+
+const handleLogin = () => {
+        navigateTo('/login');
+}
 </script>

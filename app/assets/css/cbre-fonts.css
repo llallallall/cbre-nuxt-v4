@@ -89,3 +89,99 @@
   font-style: normal;
   font-display: swap;
 }
+
+/* === 5. Korean Fonts (Local Fallback) === */
+
+/* --- Asta Sans (Calibre Fallback) --- */
+@font-face {
+  font-family: 'Asta Sans';
+  src: url('/fonts/Asta_Sans/static/AstaSans-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Asta Sans';
+  src: url('/fonts/Asta_Sans/static/AstaSans-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Asta Sans';
+  src: url('/fonts/Asta_Sans/static/AstaSans-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Asta Sans';
+  src: url('/fonts/Asta_Sans/static/AstaSans-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Asta Sans';
+  src: url('/fonts/Asta_Sans/static/AstaSans-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* --- Gowun Batang (Financier Fallback) --- */
+@font-face {
+  font-family: 'Gowun Batang';
+  src: url('/fonts/Gowun_Batang/GowunBatang-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Gowun Batang';
+  src: url('/fonts/Gowun_Batang/GowunBatang-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* --- Do Hyeon (Barlow Condensed Fallback) --- */
+@font-face {
+  font-family: 'Do Hyeon';
+  src: url('/fonts/Do_Hyeon/DoHyeon-Regular.ttf') format('truetype');
+  font-weight: 400;
+  /* Do Hyeon only has regular, map to others if needed or use single */
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Do Hyeon';
+  src: url('/fonts/Do_Hyeon/DoHyeon-Regular.ttf') format('truetype');
+  font-weight: 700;
+  /* Map bold to regular since it's a display font */
+  font-style: normal;
+  font-display: swap;
+}
+
+/* --- Orbit (Space Mono Fallback) --- */
+@font-face {
+  font-family: 'Orbit';
+  src: url('/fonts/Orbit/Orbit-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Orbit';
+  src: url('/fonts/Orbit/Orbit-Regular.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}

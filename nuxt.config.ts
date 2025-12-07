@@ -88,8 +88,8 @@ export default defineNuxtConfig({
         geolocation: ["self"],
       }
     },
-    // CSRF 공격 방지 (POST 요청 시 토큰 검증)
-    csrf: true,
+    // CSRF 공격 방지 (POST 요청 시 토큰 검증) - 로그인 문제로 임시 비활성화
+    csrf: false,
 
     // 요청 속도 제한 (DDoS 방지, 1분당 150회)
     rateLimiter: {
@@ -100,15 +100,13 @@ export default defineNuxtConfig({
     sri: false,
   },
 
-  /*
   routeRules: {
-    '/api/_nuxt_icon/**': {
+    '/api/auth/login': {
       security: {
         csrf: false
       }
     }
   },
-  */
 
   // 런타임 환경 변수 
   runtimeConfig: {

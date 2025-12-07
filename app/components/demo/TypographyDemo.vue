@@ -7,7 +7,7 @@
             <div class="mb-4">
                 <code class="text-lg text-blue-500 font-mono mb-1 block">.cbre-text-label-sm</code>
                 <span class="cbre-text-label-sm tracking-wide">
-                    Insights & Research
+                    {{ $t('demo.typography.label_insights') }}
                 </span>
             </div>
 
@@ -15,7 +15,7 @@
             <div class="mb-8">
                 <code class="text-lg text-blue-500 font-mono mb-1 block">.cbre-text-display-hero</code>
                 <h1 class="cbre-text-display-hero text-cbre-green break-words">
-                    Intelligent Investment
+                    {{ $t('demo.typography.hero_title') }}
                 </h1>
             </div>
 
@@ -27,12 +27,24 @@
                     class="w-6 h-6 hover:text-cbre-accent cursor-pointer transition-colors" />
             </div>
 
-            <!-- 4. Hero Image (Full Width) -->
-            <div class="w-full h-[60vh] bg-gray-100 mb-16 relative overflow-hidden group">
-                <div class="cbre-image-wrapper h-full w-full">
-                    <img src="https://placehold.co/1920x1080/E6EAEA/333333?text=Aerial+Property+View" alt="Hero Image"
-                        class="cbre-image" />
-                    <div class="cbre-image-overlay"></div>
+            <!-- 4. Hero Image (Accordion) -->
+            <div class="mb-16">
+                <!-- Accordion Header -->
+                <UButton color="primary" variant="soft" class="w-full flex justify-between items-center mb-4"
+                    @click="isHeroOpen = !isHeroOpen">
+                    <span class="font-bold text-lg">Hero Image</span>
+                    <UIcon :name="isHeroOpen ? 'i-heroicons-chevron-up' : 'i-heroicons-chevron-down'"
+                        class="w-5 h-5 transition-transform" />
+                </UButton>
+
+                <!-- Collapsible Content -->
+                <div v-show="isHeroOpen"
+                    class="w-full h-[60vh] bg-gray-100 relative overflow-hidden group transition-all duration-300">
+                    <div class="cbre-image-wrapper h-full w-full">
+                        <img src="https://placehold.co/1920x1080/E6EAEA/333333?text=Aerial+Property+View"
+                            alt="Hero Image" class="cbre-image" />
+                        <div class="cbre-image-overlay"></div>
+                    </div>
                 </div>
             </div>
 
@@ -40,13 +52,12 @@
             <div class="max-w-6xl">
                 <code class="text-lg text-blue-500 font-mono mb-1 block">.cbre-text-body-lead</code>
                 <p class="cbre-text-body-lead mb-8">
-                    Optimize your real estate investment strategy with expert perspectives.
-                    <span class="text-cbre-green opacity-70">Our research and insights platform combines comprehensive
-                        data with in-depth capital markets expertise across geographies and property types.</span>
+                    {{ $t('demo.typography.lead_text') }}
+                    <span class="text-cbre-green opacity-70">{{ $t('demo.typography.lead_sub') }}</span>
                 </p>
                 <code class="text-lg text-blue-500 font-mono mb-1 block">.cbre-button-primary</code>
                 <button class="cbre-button-primary">
-                    Explore Intelligent Investment
+                    {{ $t('demo.typography.btn_explore') }}
                 </button>
             </div>
 
@@ -63,11 +74,12 @@
                         <div class="cbre-image-overlay"></div>
                     </div>
                     <code class="text-lg text-blue-500 font-mono mb-1 block">.cbre-text-label-sm</code>
-                    <span class="cbre-text-label-sm mb-3 block text-gray-500">Report</span>
+                    <span class="cbre-text-label-sm mb-3 block text-gray-500">{{ $t('demo.typography.articles.report')
+                    }}</span>
                     <code class="text-lg text-blue-500 font-mono mb-1 block">.cbre-text-display-2</code>
                     <h3
                         class="cbre-text-display-2 text-cbre-green group-hover:underline decoration-2 underline-offset-4">
-                        Global Real Estate Outlook 2024
+                        {{ $t('demo.typography.articles.title_outlook') }}
                     </h3>
                 </div>
 
@@ -79,11 +91,12 @@
                         <div class="cbre-image-overlay"></div>
                     </div>
                     <code class="text-lg text-blue-500 font-mono mb-1 block">.cbre-text-label-sm</code>
-                    <span class="cbre-text-label-sm mb-3 block text-gray-500">Viewpoint</span>
+                    <span class="cbre-text-label-sm mb-3 block text-gray-500">{{
+                        $t('demo.typography.articles.viewpoint') }}</span>
                     <code class="text-lg text-blue-500 font-mono mb-1 block">.cbre-text-display-2</code>
                     <h3
                         class="cbre-text-display-2 text-cbre-green group-hover:underline decoration-2 underline-offset-4">
-                        European Logistics: The Road Ahead
+                        {{ $t('demo.typography.articles.title_logistics') }}
                     </h3>
                 </div>
 
@@ -95,11 +108,12 @@
                         <div class="cbre-image-overlay"></div>
                     </div>
                     <code class="text-lg text-blue-500 font-mono mb-1 block">.cbre-text-label-sm</code>
-                    <span class="cbre-text-label-sm mb-3 block text-gray-500">Perspective</span>
+                    <span class="cbre-text-label-sm mb-3 block text-gray-500">{{
+                        $t('demo.typography.articles.perspective') }}</span>
                     <code class="text-lg text-blue-500 font-mono mb-1 block">.cbre-text-display-2</code>
                     <h3
                         class="cbre-text-display-2 text-cbre-green group-hover:underline decoration-2 underline-offset-4">
-                        Sustainability as a Value Driver
+                        {{ $t('demo.typography.articles.title_sustainability') }}
                     </h3>
                 </div>
             </div>
@@ -109,24 +123,25 @@
             <!-- ============================================== -->
             <section class="mb-32 pt-16 border-t-2 border-gray-900">
                 <h2 class="cbre-text-display-2 mb-12 text-gray-400 uppercase tracking-widest text-sm font-bold">
-                    UX Features Demo (Interactive)
+                    {{ $t('demo.typography.ux_demo.title') }}
                 </h2>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <!-- 1. Toast Notifications -->
                     <div class="space-y-4">
                         <code class="text-lg text-blue-500 font-mono mb-1 block">.cbre-text-display-3</code>
-                        <h3 class="cbre-text-display-3 mb-4">1. Toast Notifications</h3>
+                        <h3 class="cbre-text-display-3 mb-4">{{ $t('demo.typography.ux_demo.toast.title') }}</h3>
                         <code class="text-lg text-blue-500 font-mono mb-1 block">.cbre-text-body-md</code>
-                        <p class="cbre-text-body-md text-gray-600 mb-4">Provides non-intrusive feedback.</p>
+                        <p class="cbre-text-body-md text-gray-600 mb-4">{{ $t('demo.typography.ux_demo.toast.desc') }}
+                        </p>
                         <div class="flex gap-2">
                             <UButton color="primary" variant="solid" class="rounded-none uppercase"
                                 @click="showSuccessToast">
-                                Success Toast
+                                {{ $t('demo.typography.ux_demo.toast.success') }}
                             </UButton>
                             <UButton color="error" variant="outline" class="rounded-none uppercase"
                                 @click="showErrorToast">
-                                Error Toast
+                                {{ $t('demo.typography.ux_demo.toast.error') }}
                             </UButton>
                         </div>
                     </div>
@@ -134,27 +149,29 @@
                     <!-- 2. Modal Dialog -->
                     <div class="space-y-4">
                         <code class="text-lg text-blue-500 font-mono mb-1 block">.cbre-text-display-3</code>
-                        <h3 class="cbre-text-display-3 mb-4">2. Modal Dialog</h3>
+                        <h3 class="cbre-text-display-3 mb-4">{{ $t('demo.typography.ux_demo.modal.title') }}</h3>
                         <code class="text-lg text-blue-500 font-mono mb-1 block">.cbre-text-body-md</code>
-                        <p class="cbre-text-body-md text-gray-600 mb-4">Focuses user attention.</p>
+                        <p class="cbre-text-body-md text-gray-600 mb-4">{{ $t('demo.typography.ux_demo.modal.desc') }}
+                        </p>
                         <code class="text-lg text-blue-500 font-mono mb-1 block">.cbre-button-secondary</code>
                         <UButton variant="ghost" icon="i-heroicons-window" class="cbre-button-secondary rounded-none"
                             @click="isOpen = true">
-                            Open Modal
+                            {{ $t('demo.typography.ux_demo.modal.btn_open') }}
                         </UButton>
                     </div>
 
                     <!-- 3. Loading States -->
                     <div class="space-y-4">
                         <code class="text-lg text-blue-500 font-mono mb-1 block">.cbre-text-display-3</code>
-                        <h3 class="cbre-text-display-3 mb-4">3. Loading States</h3>
+                        <h3 class="cbre-text-display-3 mb-4">{{ $t('demo.typography.ux_demo.loading.title') }}</h3>
                         <code class="text-lg text-blue-500 font-mono mb-1 block">.cbre-text-body-md</code>
-                        <p class="cbre-text-body-md text-gray-600 mb-4">Improves perceived performance.</p>
+                        <p class="cbre-text-body-md text-gray-600 mb-4">{{ $t('demo.typography.ux_demo.loading.desc') }}
+                        </p>
                         <div class="flex items-center gap-4">
                             <!-- 버튼 로딩 -->
                             <UButton :loading="isLoading" color="primary" variant="solid" class="rounded-none uppercase"
                                 @click="simulateLoading">
-                                Fetch Data (2s)
+                                {{ $t('demo.typography.ux_demo.loading.btn_fetch') }}
                             </UButton>
                         </div>
                         <!-- 스켈레톤 로딩 -->
@@ -171,7 +188,7 @@
             <!-- ============================================== -->
             <section class="mb-32 pt-16 border-t-2 border-gray-900">
                 <h2 class="cbre-text-display-2 mb-12 text-gray-400 uppercase tracking-widest text-sm font-bold">
-                    Standardized Search Panel UI
+                    {{ $t('demo.typography.search_panel.title') }}
                 </h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
                     <!-- Panel Structure Demo -->
@@ -179,30 +196,33 @@
                         <div class="cbre-panel-container h-[500px] max-w-md mx-auto relative rounded-none">
                             <!-- Header -->
                             <div class="cbre-panel-header">
-                                <h2 class="cbre-panel-title">Panel Title</h2>
+                                <h2 class="cbre-panel-title">{{ $t('demo.typography.search_panel.panel_title') }}</h2>
                                 <div class="cbre-input-search-box my-6">
                                     <div class="relative flex items-center w-full">
-                                        <input type="text" class="cbre-input-search-field" placeholder="Search..." />
+                                        <input type="text" class="cbre-input-search-field"
+                                            :placeholder="$t('demo.typography.search_panel.placeholder')" />
                                         <div class="cbre-input-search-icon-wrapper">
                                             <UIcon name="i-heroicons-magnifying-glass" class="w-5 h-5" />
                                         </div>
                                     </div>
                                 </div>
-                                <p class="cbre-panel-description">Standardized panel description text style.</p>
+                                <p class="cbre-panel-description">{{ $t('demo.typography.search_panel.desc') }}</p>
                             </div>
                             <!-- Body -->
                             <div class="flex-1 p-8 bg-white">
-                                <p class="cbre-text-body-md">Panel Content Area</p>
+                                <p class="cbre-text-body-md">{{ $t('demo.typography.search_panel.content_area') }}</p>
                             </div>
                             <!-- Footer -->
                             <div class="cbre-panel-footer mt-auto">
                                 <button class="cbre-button-action-danger group">
                                     <UIcon name="i-heroicons-trash"
                                         class="w-5 h-5 group-hover:scale-110 transition-transform" />
-                                    <span class="cbre-button-action-danger-text">Danger Action</span>
+                                    <span class="cbre-button-action-danger-text">{{
+                                        $t('demo.typography.search_panel.btn_danger') }}</span>
                                 </button>
                                 <button class="cbre-button-action-secondary group">
-                                    <span class="cbre-button-action-secondary-text">Secondary</span>
+                                    <span class="cbre-button-action-secondary-text">{{
+                                        $t('demo.typography.search_panel.btn_secondary') }}</span>
                                     <UIcon name="i-heroicons-arrow-right"
                                         class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
                                 </button>
@@ -212,23 +232,28 @@
 
                     <!-- Usage Documentation -->
                     <div class="space-y-4">
-                        <h3 class="cbre-text-display-3">Utility Classes</h3>
+                        <h3 class="cbre-text-display-3">{{ $t('demo.typography.search_panel.utility_classes.title') }}
+                        </h3>
                         <ul class="space-y-2">
                             <li>
                                 <code class="text-blue-500 font-bold">.cbre-panel-container</code>
-                                <span class="text-sm text-gray-600 ml-2">Main flex container</span>
+                                <span class="text-sm text-gray-600 ml-2">{{
+                                    $t('demo.typography.search_panel.utility_classes.container') }}</span>
                             </li>
                             <li>
                                 <code class="text-blue-500 font-bold">.cbre-panel-header</code>
-                                <span class="text-sm text-gray-600 ml-2">Dark Green Header</span>
+                                <span class="text-sm text-gray-600 ml-2">{{
+                                    $t('demo.typography.search_panel.utility_classes.header') }}</span>
                             </li>
                             <li>
                                 <code class="text-blue-500 font-bold">.cbre-input-search-box</code>
-                                <span class="text-sm text-gray-600 ml-2">Floating Search Input</span>
+                                <span class="text-sm text-gray-600 ml-2">{{
+                                    $t('demo.typography.search_panel.utility_classes.search_box') }}</span>
                             </li>
                             <li>
                                 <code class="text-blue-500 font-bold">.cbre-button-action-*</code>
-                                <span class="text-sm text-gray-600 ml-2">Footer Actions</span>
+                                <span class="text-sm text-gray-600 ml-2">{{
+                                    $t('demo.typography.search_panel.utility_classes.actions') }}</span>
                             </li>
                         </ul>
                     </div>
@@ -240,7 +265,7 @@
             <!-- ============================================== -->
             <section class="mb-32 pt-16 border-t-2 border-gray-900">
                 <h2 class="cbre-text-display-2 mb-12 text-gray-400 uppercase tracking-widest text-sm font-bold">
-                    Search Result Items (Interactive)
+                    {{ $t('demo.typography.search_result.title') }}
                 </h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
                     <!-- Demo Area -->
@@ -251,7 +276,7 @@
                             <div class="flex justify-between items-center mb-2">
                                 <div
                                     class="w-[calc(100%-40px)] cbre-text-body-md font-bold truncate group-hover:text-[var(--color-primary-1)]">
-                                    Gangnam Finance Center
+                                    {{ $t('demo.typography.search_result.mock.building_name') }}
                                 </div>
                                 <div class="cbre-badge-circle cbre-badge-circle-yellow">
                                     A
@@ -260,7 +285,7 @@
                             <div class="cbre-text-meta flex flex-col gap-1">
                                 <div class="flex items-center">
                                     <div class="w-1.5 h-1.5 bg-gray-400 rounded-full mr-2 flex-shrink-0"></div>
-                                    <span class="truncate">Seoul, Gangnam-gu, Teheran-ro 152</span>
+                                    <span class="truncate">{{ $t('demo.typography.search_result.mock.address') }}</span>
                                 </div>
                                 <div class="flex items-center mt-1 opacity-70">
                                     <UIcon name="i-heroicons-map-pin" class="w-3 h-3 mr-1" />
@@ -274,7 +299,7 @@
                             <div class="flex justify-between items-center mb-2">
                                 <div
                                     class="w-[calc(100%-40px)] cbre-text-body-md font-bold truncate group-hover:text-[var(--color-primary-1)]">
-                                    Starbucks GFC
+                                    {{ $t('demo.typography.search_result.mock.cafe_name') }}
                                 </div>
                                 <div class="cbre-badge-circle cbre-badge-circle-yellow">
                                     K
@@ -282,9 +307,9 @@
                             </div>
                             <div class="cbre-text-meta flex flex-col gap-1">
                                 <div class="flex items-center text-[var(--color-primary-1)] font-medium mb-0.5">
-                                    Cafe / Coffee
+                                    {{ $t('demo.typography.search_result.mock.cafe_type') }}
                                 </div>
-                                <span class="truncate">Teheran-ro 152</span>
+                                <span class="truncate">{{ $t('demo.typography.search_result.mock.cafe_addr') }}</span>
                             </div>
                         </div>
                         <!-- Google Result -->
@@ -293,7 +318,7 @@
                             <div class="flex justify-between items-center mb-2">
                                 <div
                                     class="w-[calc(100%-40px)] cbre-text-body-md font-bold truncate group-hover:text-[var(--color-primary-1)]">
-                                    Seoul City Hall
+                                    {{ $t('demo.typography.search_result.mock.city_hall') }}
                                 </div>
                                 <div class="cbre-badge-circle cbre-badge-circle-blue">
                                     G
@@ -301,32 +326,38 @@
                             </div>
                             <div class="cbre-text-meta flex flex-col gap-1">
                                 <div class="flex items-center text-[var(--color-primary-1)] font-medium mb-0.5">
-                                    City Hall
+                                    {{ $t('demo.typography.search_result.mock.city_hall_type') }}
                                 </div>
-                                <span class="truncate">Sejong-daero 110</span>
+                                <span class="truncate">{{ $t('demo.typography.search_result.mock.city_hall_addr')
+                                }}</span>
                             </div>
                         </div>
                     </div>
 
                     <!-- Usage Documentation -->
                     <div class="space-y-4">
-                        <h3 class="cbre-text-display-3">Component Classes</h3>
+                        <h3 class="cbre-text-display-3">{{ $t('demo.typography.search_result.component_classes.title')
+                        }}</h3>
                         <ul class="space-y-2">
                             <li>
                                 <code class="text-blue-500 font-bold">.cbre-panel-card</code>
-                                <span class="text-sm text-gray-600 ml-2">Standard Card (Wrapped)</span>
+                                <span class="text-sm text-gray-600 ml-2">{{
+                                    $t('demo.typography.search_result.component_classes.card') }}</span>
                             </li>
                             <li>
                                 <code class="text-blue-500 font-bold">.cbre-text-body-md</code>
-                                <span class="text-sm text-gray-600 ml-2">Title Base (Bold + Truncate)</span>
+                                <span class="text-sm text-gray-600 ml-2">{{
+                                    $t('demo.typography.search_result.component_classes.body') }}</span>
                             </li>
                             <li>
                                 <code class="text-blue-500 font-bold">.cbre-text-meta</code>
-                                <span class="text-sm text-gray-600 ml-2">Meta Info</span>
+                                <span class="text-sm text-gray-600 ml-2">{{
+                                    $t('demo.typography.search_result.component_classes.meta') }}</span>
                             </li>
                             <li>
                                 <code class="text-blue-500 font-bold">.cbre-badge-circle</code>
-                                <span class="text-sm text-gray-600 ml-2">Icon Badge Base</span>
+                                <span class="text-sm text-gray-600 ml-2">{{
+                                    $t('demo.typography.search_result.component_classes.badge') }}</span>
                             </li>
                         </ul>
                     </div>
@@ -338,96 +369,110 @@
             <!-- ============================================== -->
             <div class="pt-16 border-t-2 border-gray-900">
                 <h2 class="cbre-text-display-2 mb-12 text-gray-400 uppercase tracking-widest text-sm font-bold">
-                    Design System Reference (Updated)
+                    {{ $t('demo.typography.design_system.title') }}
                 </h2>
                 <div class="mb-8">
-                    <span class="text-xs font-bold text-gray-500 uppercase block mb-2">Brand & Primary (Green
-                        Scale)</span>
+                    <span class="text-xs font-bold text-gray-500 uppercase block mb-2">{{
+                        $t('demo.typography.design_system.brand_scale') }}</span>
                     <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
                         <!-- Primary / Brand -->
                         <div class="space-y-1">
                             <div class="h-16 w-full bg-cbre-green shadow-sm"></div>
                             <code class="text-lg block font-bold text-blue-600">.bg-cbre-green</code>
-                            <span class="text-[10px] text-gray-500 block">Primary / Brand (#003F2D)</span>
+                            <span class="text-[10px] text-gray-500 block">{{
+                                $t('demo.typography.design_system.colors.primary_brand') }}</span>
                         </div>
                         <!-- Accent -->
                         <div class="space-y-1">
                             <div class="h-16 w-full bg-accent shadow-sm"></div>
                             <code class="text-lg block font-bold text-blue-600">.bg-accent</code>
-                            <span class="text-[10px] text-gray-500 block">Accent (#17E88F)</span>
+                            <span class="text-[10px] text-gray-500 block">{{
+                                $t('demo.typography.design_system.colors.accent') }}</span>
                         </div>
                         <!-- Darkest Green -->
                         <div class="space-y-1">
                             <div class="h-16 w-full bg-cbre-green-950 shadow-sm"></div>
                             <code class="text-lg block font-bold text-blue-600">.bg-cbre-green-950</code>
-                            <span class="text-[10px] text-gray-500 block">Darkest</span>
+                            <span class="text-[10px] text-gray-500 block">{{
+                                $t('demo.typography.design_system.colors.darkest') }}</span>
                         </div>
                         <!-- Light Gray/Green -->
                         <div class="space-y-1">
                             <div class="h-16 w-full bg-cbre-green-100 shadow-sm"></div>
                             <code class="text-lg block font-bold text-blue-600">.bg-cbre-green-100</code>
-                            <span class="text-[10px] text-gray-500 block">Light Background</span>
+                            <span class="text-[10px] text-gray-500 block">{{
+                                $t('demo.typography.design_system.colors.light_bg') }}</span>
                         </div>
                         <!-- Background White/Mint -->
                         <div class="space-y-1">
                             <div class="h-16 w-full bg-cbre-green-50 shadow-sm"></div>
                             <code class="text-lg block font-bold text-blue-600">.bg-cbre-green-50</code>
-                            <span class="text-[10px] text-gray-500 block">Faint Background</span>
+                            <span class="text-[10px] text-gray-500 block">{{
+                                $t('demo.typography.design_system.colors.faint_bg') }}</span>
                         </div>
                     </div>
                 </div>
 
                 <!-- Neutral / Slate Scale -->
                 <div class="mb-8">
-                    <span class="text-xs font-bold text-gray-500 uppercase block mb-2">Neutral (Slate
-                        Scale)</span>
+                    <span class="text-xs font-bold text-gray-500 uppercase block mb-2">{{
+                        $t('demo.typography.design_system.neutral_scale') }}</span>
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                         <div class="space-y-1">
                             <div class="h-16 w-full bg-cbre-slate shadow-sm"></div>
                             <code class="text-lg block font-bold text-blue-600">.bg-cbre-slate</code>
-                            <span class="text-[10px] text-gray-500 block">Body Text</span>
+                            <span class="text-[10px] text-gray-500 block">{{
+                                $t('demo.typography.design_system.colors.body_text') }}</span>
                         </div>
                         <div class="space-y-1">
                             <div class="h-16 w-full bg-cbre-slate-light shadow-sm"></div>
                             <code class="text-lg block font-bold text-blue-600">.bg-cbre-slate-light</code>
-                            <span class="text-[10px] text-gray-500 block">Meta Text</span>
+                            <span class="text-[10px] text-gray-500 block">{{
+                                $t('demo.typography.design_system.colors.meta_text') }}</span>
                         </div>
                         <div class="space-y-1">
                             <div class="h-16 w-full bg-cbre-slate-lighter shadow-sm"></div>
                             <code class="text-lg block font-bold text-blue-600">.bg-cbre-slate-lighter</code>
-                            <span class="text-[10px] text-gray-500 block">Borders / Dividers</span>
+                            <span class="text-[10px] text-gray-500 block">{{
+                                $t('demo.typography.design_system.colors.borders') }}</span>
                         </div>
                     </div>
                 </div>
 
                 <!-- Secondary Colors -->
                 <div class="mb-8">
-                    <span class="text-xs font-bold text-gray-500 uppercase block mb-2">Secondary Palette</span>
+                    <span class="text-xs font-bold text-gray-500 uppercase block mb-2">{{
+                        $t('demo.typography.design_system.secondary_palette') }}</span>
                     <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
                         <div class="space-y-1">
                             <div class="h-12 w-full bg-cbre-blue-dark shadow-sm"></div>
                             <code class="text-lg block font-bold text-blue-600">.bg-cbre-blue-dark</code>
-                            <span class="text-[10px] text-gray-500 block">Dark Blue</span>
+                            <span class="text-[10px] text-gray-500 block">{{
+                                $t('demo.typography.design_system.colors.dark_blue') }}</span>
                         </div>
                         <div class="space-y-1">
                             <div class="h-12 w-full bg-cbre-blue shadow-sm"></div>
                             <code class="text-lg block font-bold text-blue-600">.bg-cbre-blue</code>
-                            <span class="text-[10px] text-gray-500 block">Blue</span>
+                            <span class="text-[10px] text-gray-500 block">{{
+                                $t('demo.typography.design_system.colors.blue') }}</span>
                         </div>
                         <div class="space-y-1">
                             <div class="h-12 w-full bg-cbre-teal shadow-sm"></div>
                             <code class="text-lg block font-bold text-blue-600">.bg-cbre-teal</code>
-                            <span class="text-[10px] text-gray-500 block">Teal</span>
+                            <span class="text-[10px] text-gray-500 block">{{
+                                $t('demo.typography.design_system.colors.teal') }}</span>
                         </div>
                         <div class="space-y-1">
                             <div class="h-12 w-full bg-cbre-yellow shadow-sm"></div>
                             <code class="text-lg block font-bold text-blue-600">.bg-cbre-yellow</code>
-                            <span class="text-[10px] text-gray-500 block">Yellow</span>
+                            <span class="text-[10px] text-gray-500 block">{{
+                                $t('demo.typography.design_system.colors.yellow') }}</span>
                         </div>
                         <div class="space-y-1">
                             <div class="h-12 w-full bg-cbre-olive shadow-sm"></div>
                             <code class="font-[16px] block font-bold text-blue-600">.bg-cbre-olive</code>
-                            <span class="text-[10px] text-gray-500 block">Olive</span>
+                            <span class="text-[10px] text-gray-500 block">{{
+                                $t('demo.typography.design_system.colors.olive') }}</span>
                         </div>
                     </div>
                 </div>
@@ -435,45 +480,52 @@
 
                 <!-- Functional & Aliases -->
                 <div class="mb-8">
-                    <span class="text-xs font-bold text-gray-500 uppercase block mb-2">Functional & Aliases
-                        (New)</span>
+                    <span class="text-xs font-bold text-gray-500 uppercase block mb-2">{{
+                        $t('demo.typography.design_system.functional_aliases') }}</span>
                     <div class="grid grid-cols-2 md:grid-cols-6 gap-4">
                         <div class="space-y-1">
                             <div class="h-12 w-full bg-cbre-functional-error shadow-sm"></div>
                             <code class="text-lg block font-bold text-blue-600">.bg-cbre-functional-error</code>
-                            <span class="text-[10px] text-gray-500 block">System 12</span>
+                            <span class="text-[10px] text-gray-500 block">{{
+                                $t('demo.typography.design_system.colors.system_12') }}</span>
                         </div>
                         <div class="space-y-1">
                             <div class="h-12 w-full bg-cbre-functional-warning shadow-sm"></div>
                             <code class="text-lg block font-bold text-blue-600">.bg-cbre-functional-warning</code>
-                            <span class="text-[10px] text-gray-500 block">System 13</span>
+                            <span class="text-[10px] text-gray-500 block">{{
+                                $t('demo.typography.design_system.colors.system_13') }}</span>
                         </div>
                         <div class="space-y-1">
                             <div class="h-12 w-full bg-cbre-functional-info shadow-sm"></div>
                             <code class="text-lg block font-bold text-blue-600">.bg-cbre-functional-info</code>
-                            <span class="text-[10px] text-gray-500 block">System 14</span>
+                            <span class="text-[10px] text-gray-500 block">{{
+                                $t('demo.typography.design_system.colors.system_14') }}</span>
                         </div>
                         <div class="space-y-1">
                             <div class="h-12 w-full bg-cbre-kakao shadow-sm"></div>
                             <code class="text-lg block font-bold text-blue-600">.bg-cbre-kakao</code>
-                            <span class="text-[10px] text-gray-500 block">Kakao</span>
+                            <span class="text-[10px] text-gray-500 block">{{
+                                $t('demo.typography.design_system.colors.kakao') }}</span>
                         </div>
                         <div class="space-y-1">
                             <div class="h-12 w-full bg-cbre-tag shadow-sm"></div>
                             <code class="text-lg block font-bold text-blue-600">.bg-cbre-tag</code>
-                            <span class="text-[10px] text-gray-500 block">Tag Blue</span>
+                            <span class="text-[10px] text-gray-500 block">{{
+                                $t('demo.typography.design_system.colors.tag_blue') }}</span>
                         </div>
                         <div class="space-y-1">
                             <div class="h-12 w-full bg-cbre-darkgreen shadow-sm"></div>
                             <code class="text-lg block font-bold text-blue-600">.bg-cbre-darkgreen</code>
-                            <span class="text-[10px] text-gray-500 block">Dark Green</span>
+                            <span class="text-[10px] text-gray-500 block">{{
+                                $t('demo.typography.design_system.colors.dark_green') }}</span>
                         </div>
                     </div>
                 </div>
 
                 <!-- Pastel Colors -->
                 <div class="mb-8">
-                    <span class="text-xs font-bold text-gray-500 uppercase block mb-2">Pastel Palette</span>
+                    <span class="text-xs font-bold text-gray-500 uppercase block mb-2">{{
+                        $t('demo.typography.design_system.pastel_palette') }}</span>
                     <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
                         <div class="space-y-1">
                             <div class="h-12 w-full bg-cbre-pastel-blue shadow-sm"></div>
@@ -501,33 +553,36 @@
 
             <!-- 2. Font Families -->
             <div>
-                <span class="cbre-text-label-sm block mb-6">Font Families</span>
+                <span class="cbre-text-label-sm block mb-6">{{ $t('demo.typography.design_system.font_families')
+                    }}</span>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <!-- Financier -->
                     <div class="p-6 border border-gray-200">
                         <h3 class="cbre-text-display-3 mb-2">Financier Display</h3>
-                        <p class="text-sm text-gray-600 mb-4">Serif / Headings & Body</p>
+                        <p class="text-sm text-gray-600 mb-4">{{ $t('demo.typography.design_system.serif_desc') }}</p>
                         <p class="font-serif text-3xl mb-2">Aa Bb Cc</p>
-                        <p class="font-serif text-lg">The quick brown fox jumps over the lazy dog.</p>
+                        <p class="font-serif text-lg">{{ $t('demo.typography.design_system.sample_sentence') }}</p>
                     </div>
                     <!-- Calibre -->
                     <div class="p-6 border border-gray-200">
                         <h3 class="cbre-text-display-3 mb-2 font-sans">Calibre</h3>
-                        <p class="text-sm text-gray-600 mb-4">Sans-serif / UI & Labels</p>
+                        <p class="text-sm text-gray-600 mb-4">{{ $t('demo.typography.design_system.sans_desc') }}</p>
                         <p class="font-sans text-3xl mb-2">Aa Bb Cc</p>
-                        <p class="font-sans text-lg">The quick brown fox jumps over the lazy dog.</p>
+                        <p class="font-sans text-lg">{{ $t('demo.typography.design_system.sample_sentence') }}</p>
                     </div>
                     <!-- Barlow Condensed -->
                     <div class="p-6 border border-gray-200">
                         <h3 class="cbre-text-display-3 mb-2 font-condensed">Barlow Condensed</h3>
-                        <p class="text-sm text-gray-600 mb-4">Condensed / Data</p>
+                        <p class="text-sm text-gray-600 mb-4">{{ $t('demo.typography.design_system.condensed_desc') }}
+                        </p>
                         <p class="font-condensed text-3xl mb-2">1,234,567</p>
-                        <p class="font-condensed text-lg">DATA VISUALIZATION</p>
+                        <p class="font-condensed text-lg">{{ $t('demo.typography.design_system.data_visualization') }}
+                        </p>
                     </div>
                     <!-- Space Mono -->
                     <div class="p-6 border border-gray-200">
                         <h3 class="cbre-text-display-3 mb-2 cbre-font-mono">Space Mono</h3>
-                        <p class="text-sm text-gray-600 mb-4">Monospace / Code & Tech</p>
+                        <p class="text-sm text-gray-600 mb-4">{{ $t('demo.typography.design_system.mono_desc') }}</p>
                         <p class="cbre-font-mono text-3xl mb-2">101010</p>
                         <p class="cbre-font-mono text-lg">console.log('CBRE')</p>
                     </div>
@@ -537,39 +592,42 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
                 <!-- Button Variants -->
                 <div>
-                    <span class="cbre-text-label-sm block mb-4">Button Variants</span>
+                    <span class="cbre-text-label-sm block mb-4">{{ $t('demo.typography.components.buttons.title')
+                        }}</span>
                     <div class="flex flex-wrap gap-4 items-center">
                         <div class="flex flex-col">
                             <code class="text-lg text-blue-500 font-mono mb-1">.cbre-button-primary</code>
-                            <button class="cbre-button-primary">Primary Button</button>
+                            <button class="cbre-button-primary">{{ $t('demo.typography.components.buttons.primary')
+                                }}</button>
                         </div>
                         <div class="flex flex-col">
                             <code class="text-lg text-blue-500 font-mono mb-1">.cbre-button-secondary</code>
-                            <button class="cbre-button-secondary">Secondary Button</button>
+                            <button class="cbre-button-secondary">{{ $t('demo.typography.components.buttons.secondary')
+                                }}</button>
                         </div>
                         <div class="flex flex-col">
                             <code class="text-lg text-blue-500 font-mono mb-1">.cbre-button-tertiary</code>
                             <button class="cbre-button-tertiary">
-                                Tertiary Action
+                                {{ $t('demo.typography.components.buttons.tertiary') }}
                                 <UIcon name="i-heroicons-arrow-right" class="w-5 h-5" />
                             </button>
                         </div>
                         <div class="flex flex-col">
                             <code class="text-lg text-blue-500 font-mono mb-1">.cbre-button-brief</code>
                             <button class="cbre-button-brief">
-                                Brief Button
+                                {{ $t('demo.typography.components.buttons.brief') }}
                             </button>
                         </div>
                         <div class="flex flex-col">
                             <code class="text-lg text-blue-500 font-mono mb-1">.cbre-button-brief-sm</code>
                             <button class="cbre-button-brief-sm">
-                                Brief SM
+                                {{ $t('demo.typography.components.buttons.brief_sm') }}
                             </button>
                         </div>
                         <div class="flex flex-col">
                             <code class="text-lg text-blue-500 font-mono mb-1">.cbre-button-badge</code>
                             <button class="cbre-button-badge">
-                                Badge Button
+                                {{ $t('demo.typography.components.buttons.badge') }}
                             </button>
                         </div>
                         <div class="flex flex-col">
@@ -581,7 +639,7 @@
                         <div class="flex flex-col">
                             <code class="text-lg text-blue-500 font-mono mb-1">.cbre-button-topbar-menu</code>
                             <button class="cbre-button-topbar-menu">
-                                Menu Button
+                                {{ $t('demo.typography.components.buttons.menu') }}
                             </button>
                         </div>
                     </div>
@@ -589,35 +647,39 @@
 
                 <!-- Link Interactions -->
                 <div>
-                    <span class="cbre-text-label-sm block mb-4">Link Interactions</span>
+                    <span class="cbre-text-label-sm block mb-4">{{ $t('demo.typography.components.links.title')
+                        }}</span>
                     <div class="flex flex-col gap-4 items-start">
                         <div>
                             <code class="text-lg text-blue-500 font-mono mb-1 block">.cbre-text-link-underline</code>
-                            <a href="#" class="cbre-text-link-underline text-xl">Standard Underline
-                                Animation</a>
+                            <a href="#" class="cbre-text-link-underline text-xl">{{
+                                $t('demo.typography.components.links.standard') }}</a>
                         </div>
                         <div>
                             <code class="text-lg text-blue-500 font-mono mb-1 block">.cbre-text-link-icon-slide</code>
-                            <a href="#" class="cbre-text-link-icon-slide text-xl">Animated Icon Slide</a>
+                            <a href="#" class="cbre-text-link-icon-slide text-xl">{{
+                                $t('demo.typography.components.links.icon_slide') }}</a>
                         </div>
                         <div>
                             <code
                                 class="text-lg text-blue-500 font-mono mb-1 block">.cbre-text-link-underline-slide</code>
-                            <a href="#" class="cbre-text-link-underline-slide text-xl">Underline Slide
-                                Effect</a>
+                            <a href="#" class="cbre-text-link-underline-slide text-xl">{{
+                                $t('demo.typography.components.links.underline_slide') }}</a>
                         </div>
                         <div>
                             <code class="text-lg text-blue-500 font-mono mb-1 block">.cbre-text-link-fade-arrow</code>
-                            <a href="#" class="cbre-text-link-fade-arrow text-xl">Fade Arrow Link</a>
+                            <a href="#" class="cbre-text-link-fade-arrow text-xl">{{
+                                $t('demo.typography.components.links.fade_arrow') }}</a>
                         </div>
                         <div>
                             <code class="text-lg text-blue-500 font-mono mb-1 block">.cbre-text-link-large-serif</code>
-                            <a href="#" class="cbre-text-link-large-serif">Large Serif Link Style</a>
+                            <a href="#" class="cbre-text-link-large-serif">{{
+                                $t('demo.typography.components.links.large_serif') }}</a>
                         </div>
                         <div>
                             <code class="text-lg text-blue-500 font-mono mb-1 block">.cbre-text-link-arrow</code>
                             <a href="#" class="cbre-text-link-arrow text-xl">
-                                Simple Arrow Effect
+                                {{ $t('demo.typography.components.links.simple_arrow') }}
                                 <UIcon name="i-heroicons-arrow-right" class="icon w-5 h-5" />
                             </a>
                         </div>
@@ -628,30 +690,35 @@
             <!-- Layout & Form Utilities -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
                 <div>
-                    <span class="cbre-text-label-sm block mb-4">Form Inputs</span>
+                    <span class="cbre-text-label-sm block mb-4">{{ $t('demo.typography.components.inputs.title')
+                        }}</span>
                     <div class="space-y-4">
                         <div>
                             <code class="text-lg text-blue-500 font-mono mb-1 block">.cbre-input</code>
-                            <input type="text" class="cbre-input" placeholder="Standard Input Field" />
+                            <input type="text" class="cbre-input"
+                                :placeholder="$t('demo.typography.components.inputs.standard_placeholder')" />
                         </div>
                         <div>
                             <code class="text-lg text-blue-500 font-mono mb-1 block">.cbre-input (Disabled)</code>
-                            <input type="text" class="cbre-input" disabled placeholder="Disabled Input" />
+                            <input type="text" class="cbre-input" disabled
+                                :placeholder="$t('demo.typography.components.inputs.disabled_placeholder')" />
                         </div>
                         <div>
                             <code class="text-lg text-blue-500 font-mono mb-1 block">.cbre-input-underlined</code>
-                            <input type="text" class="cbre-input-underlined" placeholder="Underlined Input" />
+                            <input type="text" class="cbre-input-underlined"
+                                :placeholder="$t('demo.typography.components.inputs.underlined_placeholder')" />
                         </div>
                     </div>
                 </div>
                 <div>
-                    <span class="cbre-text-label-sm block mb-4">Cards</span>
+                    <span class="cbre-text-label-sm block mb-4">{{ $t('demo.typography.components.cards.title')
+                        }}</span>
                     <div>
                         <code class="text-lg text-blue-500 font-mono mb-1 block">.cbre-panel-card</code>
                         <div class="cbre-panel-card">
-                            <h4 class="cbre-text-display-3 mb-2">Card Title</h4>
-                            <p class="cbre-text-body-md">This is a standard card container with hover effect.
-                            </p>
+                            <h4 class="cbre-text-display-3 mb-2">{{ $t('demo.typography.components.cards.card_title') }}
+                            </h4>
+                            <p class="cbre-text-body-md">{{ $t('demo.typography.components.cards.card_desc') }}</p>
                         </div>
                     </div>
                 </div>
@@ -660,29 +727,34 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 pb-20 border-b-2 border-gray-100 mb-20">
                 <!-- Headings -->
                 <div>
-                    <span class="cbre-text-label-sm text-gray-400 block mb-6">Headings</span>
+                    <span class="cbre-text-label-sm text-gray-400 block mb-6">{{
+                        $t('demo.typography.design_system.headings') }}</span>
                     <div class="space-y-8">
                         <div>
                             <code class="text-lg text-blue-500 font-mono mb-1 block">.cbre-text-display-hero</code>
-                            <h1 class="cbre-text-display-hero">Hero Title</h1>
+                            <h1 class="cbre-text-display-hero">{{ $t('demo.typography.design_system.headings_text.hero')
+                            }}</h1>
                         </div>
                         <div>
                             <code class="text-lg text-blue-500 font-mono mb-1 block">.cbre-text-display-1</code>
-                            <h1 class="cbre-text-display-1">Heading Level 1</h1>
+                            <h1 class="cbre-text-display-1">{{ $t('demo.typography.design_system.headings_text.h1') }}
+                            </h1>
                         </div>
                         <div>
                             <code class="text-lg text-blue-500 font-mono mb-1 block">.cbre-text-display-2</code>
-                            <h2 class="cbre-text-display-2">Heading Level 2</h2>
+                            <h2 class="cbre-text-display-2">{{ $t('demo.typography.design_system.headings_text.h2') }}
+                            </h2>
                         </div>
                         <div>
                             <code class="text-lg text-blue-500 font-mono mb-1 block">.cbre-text-display-3</code>
-                            <h3 class="cbre-text-display-3">Heading Level 3</h3>
+                            <h3 class="cbre-text-display-3">{{ $t('demo.typography.design_system.headings_text.h3') }}
+                            </h3>
                         </div>
                         <!-- Integrated Deep Dive Item -->
                         <div>
                             <code class="text-lg text-blue-500 font-mono mb-1 block">.cbre-text-display-italic</code>
                             <p class="cbre-text-display-italic">
-                                "Real estate is not just about buildings."
+                                "{{ $t('demo.typography.design_system.quotes_text') }}"
                             </p>
                         </div>
                     </div>
@@ -690,38 +762,37 @@
 
                 <!-- Body & Utilities -->
                 <div>
-                    <span class="cbre-text-label-sm text-gray-400 block mb-6">Body & Text</span>
+                    <span class="cbre-text-label-sm text-gray-400 block mb-6">{{
+                        $t('demo.typography.design_system.body_text') }}</span>
                     <div class="space-y-8">
                         <div>
                             <code class="text-lg text-blue-500 font-mono mb-1 block">.cbre-text-body-lead</code>
                             <p class="cbre-text-body-lead">
-                                Lead paragraph text used for article introductions.
+                                {{ $t('demo.typography.design_system.body_desc.lead') }}
                             </p>
                         </div>
                         <div>
                             <code class="text-lg text-blue-500 font-mono mb-1 block">.cbre-text-body-lg</code>
                             <p class="cbre-text-body-lg">
-                                Large body text used for emphasis or sub-introductions. Clean and readable
-                                Sans-Serif.
+                                {{ $t('demo.typography.design_system.body_desc.lg') }}
                             </p>
                         </div>
                         <div>
                             <code class="text-lg text-blue-500 font-mono mb-1 block">.cbre-text-body-md</code>
                             <p class="cbre-text-body-md">
-                                Standard body text. detailed information, long form content, and general
-                                readability.
+                                {{ $t('demo.typography.design_system.body_desc.md') }}
                             </p>
                         </div>
                         <div>
                             <code class="text-lg text-blue-500 font-mono mb-1 block">.cbre-text-meta</code>
                             <p class="cbre-text-meta">
-                                Meta data like dates, authors, captions.
+                                {{ $t('demo.typography.design_system.body_desc.meta') }}
                             </p>
                         </div>
                         <div>
                             <code class="text-lg text-blue-500 font-mono mb-1 block">.cbre-text-label-sm</code>
                             <p class="cbre-text-label-sm">
-                                LABEL TAG
+                                {{ $t('demo.typography.design_system.body_desc.label') }}
                             </p>
                         </div>
                     </div>
@@ -733,36 +804,41 @@
                 <!-- Layout Utilities -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
                     <div>
-                        <span class="cbre-text-label-sm text-gray-400 block mb-6">Quotes</span>
+                        <span class="cbre-text-label-sm text-gray-400 block mb-6">{{
+                            $t('demo.typography.design_system.quotes') }}</span>
                         <div>
                             <code class="text-lg text-blue-500 font-mono mb-1 block">.cbre-text-quote</code>
                             <blockquote class="cbre-text-quote">
                                 <p class="cbre-text-display-3 italic">
-                                    "Pull quotes add emphasis and visual break to long articles."
+                                    "{{ $t('demo.typography.design_system.pull_quote') }}"
                                 </p>
                             </blockquote>
                         </div>
                     </div>
                     <div>
-                        <span class="cbre-text-label-sm text-gray-400 block mb-6">Lists & Layouts</span>
+                        <span class="cbre-text-label-sm text-gray-400 block mb-6">{{
+                            $t('demo.typography.design_system.lists_layouts') }}</span>
                         <div>
                             <h5 class="cbre-text-display-3 mb-2">Lists</h5>
                             <code class="text-lg text-blue-500 font-mono mb-1 block">.cbre-list-brand</code>
                             <ul class="cbre-list-brand space-y-2 mb-8">
-                                <li class="cbre-text-body-md">Brand Styled List Item 1</li>
-                                <li class="cbre-text-body-md">Brand Styled List Item 2</li>
-                                <li class="cbre-text-body-md">Brand Styled List Item 3</li>
+                                <li class="cbre-text-body-md">{{ $t('demo.typography.design_system.list_item') }} 1</li>
+                                <li class="cbre-text-body-md">{{ $t('demo.typography.design_system.list_item') }} 2</li>
+                                <li class="cbre-text-body-md">{{ $t('demo.typography.design_system.list_item') }} 3</li>
                             </ul>
 
-                            <h5 class="cbre-text-display-3 mb-2">Layout Components</h5>
+                            <h5 class="cbre-text-display-3 mb-2">{{
+                                $t('demo.typography.design_system.layout.layout_components') }}</h5>
                             <div class="space-y-4">
                                 <div>
                                     <code
                                         class="text-lg text-blue-500 font-mono mb-1 block">.cbre-layout-topbar-separator</code>
                                     <div class="flex items-center gap-4 p-4 border border-gray-100 bg-white">
-                                        <span class="cbre-nav-title">Title</span>
+                                        <span class="cbre-nav-title">{{ $t('demo.typography.design_system.layout.title')
+                                        }}</span>
                                         <div class="cbre-layout-topbar-separator h-8">
-                                            <span class="cbre-nav-link text-cbre-green/90">Separator</span>
+                                            <span class="cbre-nav-link text-cbre-green/90">{{
+                                                $t('demo.typography.design_system.layout.separator') }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -771,7 +847,7 @@
                                         class="text-lg text-blue-500 font-mono mb-1 block">.cbre-button-topbar-menu</code>
                                     <div class="flex p-4 border border-gray-100 bg-white">
                                         <button class="cbre-button-topbar-menu">
-                                            Menu Item
+                                            {{ $t('demo.typography.components.buttons.menu') }}
                                         </button>
                                     </div>
                                 </div>
@@ -782,22 +858,26 @@
 
                 <!-- Statistics -->
                 <div>
-                    <span class="cbre-text-label-sm text-gray-400 block mb-6">Statistics</span>
+                    <span class="cbre-text-label-sm text-gray-400 block mb-6">{{
+                        $t('demo.typography.design_system.statistics') }}</span>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
                         <div>
                             <code class="text-lg text-blue-500 font-mono mb-1 block">.cbre-text-stat-number</code>
                             <span class="cbre-text-stat-number block mb-2">500+</span>
-                            <span class="cbre-text-body-md block">Offices Worldwide</span>
+                            <span class="cbre-text-body-md block">{{ $t('demo.typography.design_system.stats_offices')
+                                }}</span>
                         </div>
                         <div>
                             <code class="text-lg text-blue-500 font-mono mb-1 block">.cbre-text-stat-number</code>
                             <span class="cbre-text-stat-number block mb-2">$145B</span>
-                            <span class="cbre-text-body-md block">Assets Under Management</span>
+                            <span class="cbre-text-body-md block">{{ $t('demo.typography.design_system.stats_assets')
+                                }}</span>
                         </div>
                         <div>
                             <code class="text-lg text-blue-500 font-mono mb-1 block">.cbre-text-stat-number</code>
                             <span class="cbre-text-stat-number block mb-2">115K</span>
-                            <span class="cbre-text-body-md block">Employees</span>
+                            <span class="cbre-text-body-md block">{{ $t('demo.typography.design_system.stats_employees')
+                                }}</span>
                         </div>
                     </div>
                 </div>
@@ -842,6 +922,7 @@ import { useAppToast } from '~/composables/useAppToast';
 const { showToast } = useAppToast()
 
 // === State ===
+const isHeroOpen = ref(false) // Hero Image Accordion State
 const isOpen = ref(false) // Modal State
 const isLoading = ref(false) // Loading State
 

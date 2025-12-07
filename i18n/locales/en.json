@@ -167,5 +167,213 @@
     "no_previous_property": "No Previous Property",
     "next_property": "Next Property",
     "no_next_property": "No Next Property",
-    "logged_in_as": "Logged in as"
+    "logged_in_as": "Logged in as",
+    "nav": {
+        "brand": {
+            "map": "Map",
+            "title": "Property Management System",
+            "pms_short": "PMS"
+        },
+        "menu": {
+            "more": "More",
+            "web": "Web",
+            "home": "Map Home"
+        },
+        "filter": {
+            "transaction": "Transaction",
+            "sector": "Sector",
+            "subsector": "SubSector",
+            "options": {
+                "all": "All Types",
+                "lease": "Lease",
+                "sale": "Sale",
+                "sale_lease": "Sale/Lease",
+                "office": "Office",
+                "retail": "Retail",
+                "logistics": "Logistics",
+                "hospital": "Hospital",
+                "subsector": {
+                    "cold": "Cold Logistic",
+                    "dry": "Dry Logistic",
+                    "mixed": "Mixed Logistic",
+                    "cbd": "Central Business District"
+                }
+            }
+        },
+        "admin": {
+            "property_list": "Property List",
+            "users": "Users",
+            "upload_file": "Upload File",
+            "download_file": "Download File"
+        }
+    },
+    "demo": {
+        "typography": {
+            "label_insights": "Insights & Research",
+            "hero_title": "Intelligent Investment",
+            "lead_text": "Optimize your real estate investment strategy with expert perspectives.",
+            "lead_sub": "Our research and insights platform combines comprehensive data with in-depth capital markets expertise across geographies and property types.",
+            "btn_explore": "Explore Intelligent Investment",
+            "articles": {
+                "report": "Report",
+                "viewpoint": "Viewpoint",
+                "perspective": "Perspective",
+                "title_outlook": "Global Real Estate Outlook 2024",
+                "title_logistics": "European Logistics: The Road Ahead",
+                "title_sustainability": "Sustainability as a Value Driver"
+            },
+            "ux_demo": {
+                "title": "UX Features Demo (Interactive)",
+                "toast": {
+                    "title": "1. Toast Notifications",
+                    "desc": "Provides non-intrusive feedback.",
+                    "success": "Success Toast",
+                    "error": "Error Toast"
+                },
+                "modal": {
+                    "title": "2. Modal Dialog",
+                    "desc": "Focuses user attention.",
+                    "btn_open": "Open Modal"
+                },
+                "loading": {
+                    "title": "3. Loading States",
+                    "desc": "Improves perceived performance.",
+                    "btn_fetch": "Fetch Data (2s)"
+                }
+            },
+            "search_panel": {
+                "title": "Standardized Search Panel UI",
+                "panel_title": "Panel Title",
+                "placeholder": "Search...",
+                "desc": "Standardized panel description text style.",
+                "content_area": "Panel Content Area",
+                "btn_danger": "Danger Action",
+                "btn_secondary": "Secondary",
+                "utility_classes": {
+                    "title": "Utility Classes",
+                    "container": "Main flex container",
+                    "header": "Dark Green Header",
+                    "search_box": "Floating Search Input",
+                    "actions": "Footer Actions"
+                }
+            },
+            "search_result": {
+                "title": "Search Result Items (Interactive)",
+                "mock": {
+                    "building_name": "Gangnam Finance Center",
+                    "address": "Seoul, Gangnam-gu, Teheran-ro 152",
+                    "cafe_name": "Starbucks GFC",
+                    "cafe_type": "Cafe / Coffee",
+                    "cafe_addr": "Teheran-ro 152",
+                    "city_hall": "Seoul City Hall",
+                    "city_hall_type": "City Hall",
+                    "city_hall_addr": "Sejong-daero 110"
+                },
+                "component_classes": {
+                    "title": "Component Classes",
+                    "card": "Standard Card (Wrapped)",
+                    "body": "Title Base (Bold + Truncate)",
+                    "meta": "Meta Info",
+                    "badge": "Icon Badge Base"
+                }
+            },
+            "design_system": {
+                "title": "Design System Reference (Updated)",
+                "brand_scale": "Brand & Primary (Green Scale)",
+                "neutral_scale": "Neutral (Slate Scale)",
+                "secondary_palette": "Secondary Palette",
+                "functional_aliases": "Functional & Aliases (New)",
+                "pastel_palette": "Pastel Palette",
+                "font_families": "Font Families",
+                "serif_desc": "Serif / Headings & Body",
+                "sans_desc": "Sans-serif / UI & Labels",
+                "condensed_desc": "Condensed / Data",
+                "data_visualization": "DATA VISUALIZATION",
+                "mono_desc": "Monospace / Code & Tech",
+                "sample_sentence": "The quick brown fox jumps over the lazy dog.",
+                "headings": "Headings",
+                "body_text": "Body & Text",
+                "quotes": "Quotes",
+                "lists_layouts": "Lists & Layouts",
+                "statistics": "Statistics",
+                "stats_offices": "Offices Worldwide",
+                "stats_assets": "Assets Under Management",
+                "stats_employees": "Employees",
+                "list_item": "Brand Styled List Item",
+                "colors": {
+                    "primary_brand": "Primary / Brand (#003F2D)",
+                    "accent": "Accent (#17E88F)",
+                    "darkest": "Darkest",
+                    "light_bg": "Light Background",
+                    "faint_bg": "Faint Background",
+                    "body_text": "Body Text",
+                    "meta_text": "Meta Text",
+                    "borders": "Borders / Dividers",
+                    "dark_blue": "Dark Blue",
+                    "blue": "Blue",
+                    "teal": "Teal",
+                    "yellow": "Yellow",
+                    "olive": "Olive",
+                    "system_12": "System 12",
+                    "system_13": "System 13",
+                    "system_14": "System 14",
+                    "kakao": "Kakao",
+                    "tag_blue": "Tag Blue",
+                    "dark_green": "Dark Green"
+                },
+                "headings_text": {
+                    "hero": "Hero Title",
+                    "h1": "Heading Level 1",
+                    "h2": "Heading Level 2",
+                    "h3": "Heading Level 3"
+                },
+                "quotes_text": "Real estate is not just about buildings.",
+                "pull_quote": "Pull quotes add emphasis and visual break to long articles.",
+                "body_desc": {
+                    "lead": "Lead paragraph text used for article introductions.",
+                    "lg": "Large body text used for emphasis or sub-introductions. Clean and readable Sans-Serif.",
+                    "md": "Standard body text. detailed information, long form content, and general readability.",
+                    "meta": "Meta data like dates, authors, captions.",
+                    "label": "LABEL TAG"
+                },
+                "layout": {
+                    "layout_components": "Layout Components",
+                    "title": "Title",
+                    "separator": "Separator"
+                }
+            },
+            "components": {
+                "buttons": {
+                    "title": "Button Variants",
+                    "primary": "Primary Button",
+                    "secondary": "Secondary Button",
+                    "tertiary": "Tertiary Action",
+                    "brief": "Brief Button",
+                    "brief_sm": "Brief SM",
+                    "badge": "Badge Button",
+                    "menu": "Menu Button"
+                },
+                "links": {
+                    "title": "Link Interactions",
+                    "standard": "Standard Underline Animation",
+                    "icon_slide": "Animated Icon Slide",
+                    "underline_slide": "Underline Slide Effect",
+                    "fade_arrow": "Fade Arrow Link",
+                    "large_serif": "Large Serif Link Style",
+                    "simple_arrow": "Simple Arrow Effect"
+                },
+                "inputs": {
+                    "title": "Form Inputs",
+                    "standard_placeholder": "Standard Input Field",
+                    "disabled_placeholder": "Disabled Input",
+                    "underlined_placeholder": "Underlined Input"
+                },
+                "cards": {
+                    "title": "Cards",
+                    "card_title": "Card Title",
+                    "card_desc": "This is a standard card container with hover effect."
+                }
+            }
+        }
+    }
 }

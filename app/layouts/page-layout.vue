@@ -5,15 +5,15 @@
                 <div class="cbre-nav-brand group" @click="navigateTo('/')">
                     <IconCBRELogo
                         class="w-[9rem] h-[2.8rem] group-hover:opacity-90 transition-opacity text-cbre-green" />
-                    <sub class="cbre-nav-brand-label text-cbre-green">Map</sub>
+                    <sub class="cbre-nav-brand-label text-cbre-green">{{ $t('nav.brand.map') }}</sub>
                 </div>
 
                 <!-- Title -->
                 <div class="cbre-layout-topbar-separator">
-                    <span class="cbre-nav-title text-cbre-green/90">Property Management System</span>
+                    <span class="cbre-nav-title text-cbre-green/90">{{ $t('nav.brand.title') }}</span>
                 </div>
                 <div class="cbre-layout-topbar-separator-mobile">
-                    <span class="cbre-nav-link text-cbre-green/90">PMS</span>
+                    <span class="cbre-nav-link text-cbre-green/90">{{ $t('nav.brand.pms_short') }}</span>
                 </div>
             </div>
 
@@ -22,7 +22,7 @@
                 <div class="flex items-center gap-2">
                     <div @click="goPrevious()" class="cbre-button-nav-circle"
                         :class="{ 'disabled': !previousPropertyId }"
-                        :title="previousPropertyId ? 'Previous Property' : 'No Previous Property'">
+                        :title="previousPropertyId ? $t('previous_property') : $t('no_previous_property')">
                         <svg width="23" height="18" viewBox="0 0 23 18" fill="none" xmlns="http://www.w3.org/2000/svg"
                             class="w-[1.4rem] h-[1.4rem] rotate-180 text-inherit">
                             <path
@@ -32,7 +32,7 @@
                     </div>
 
                     <div @click="goNext()" class="cbre-button-nav-circle" :class="{ 'disabled': !nextPropertyId }"
-                        :title="nextPropertyId ? 'Next Property' : 'No Next Property'">
+                        :title="nextPropertyId ? $t('next_property') : $t('no_next_property')">
                         <svg width="23" height="18" viewBox="0 0 23 18" fill="none" xmlns="http://www.w3.org/2000/svg"
                             class="w-[1.4rem] h-[1.4rem] text-inherit">
                             <path
@@ -44,16 +44,20 @@
 
                 <div class="cbre-layout-divider"></div>
 
+                <CommonLanguageSwitcher />
+
+                <div class="cbre-layout-divider"></div>
+
                 <div v-if="loggedIn" class="cbre-layout-topbar-user-section">
                     <div class="cbre-avatar-user-container" @click="openUserProfileModal"
-                        :title="`Logged in as ${user?.name || 'User'}`">
+                        :title="`${$t('logged_in_as')} ${user?.name || 'User'}`">
                         <img :src="userAvatar" alt="User Avatar" class="w-full h-full object-cover" />
                     </div>
-                    <button class="cbre-button-brief-sm" @click="handleLogout">Logout</button>
+                    <button class="cbre-button-brief-sm" @click="handleLogout">{{ $t('logout') }}</button>
                 </div>
 
                 <div v-else class="cbre-layout-topbar-user-section">
-                    <button class="cbre-button-brief-sm" @click="handleLogin">Login</button>
+                    <button class="cbre-button-brief-sm" @click="handleLogin">{{ $t('login') }}</button>
                 </div>
 
                 <!-- Mobile Navigation Toggle -->
@@ -84,7 +88,8 @@
             <div v-show="uiStore.isMenuOverlay" class="cbre-mobile-panel lg:hidden block">
                 <div class="flex flex-col h-full overflow-y-auto pb-8 pt-8">
                     <div class="px-8 py-2 cursor-pointer group" @click="navigateTo('/'); uiStore.isMenuOverlay = false">
-                        <span class="cbre-mobile-nav-item group-hover:text-cbre-green-800">Map Home</span>
+                        <span class="cbre-mobile-nav-item group-hover:text-cbre-green-800">{{ $t('nav.menu.home')
+                            }}</span>
                     </div>
                 </div>
             </div>

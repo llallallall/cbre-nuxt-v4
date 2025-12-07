@@ -42,4 +42,11 @@ const device = useDevice();
 if (device) {
     uiStore.setDeviceState(device.isMobile, device.isTablet);
 }
+
+// Sync HTML lang attribute with current locale for CSS :lang() selectors
+useHead({
+    htmlAttrs: {
+        lang: locale
+    }
+})
 </script>

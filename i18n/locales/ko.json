@@ -167,5 +167,213 @@
     "no_previous_property": "이전 자산 없음",
     "next_property": "다음 자산",
     "no_next_property": "다음 자산 없음",
-    "logged_in_as": "로그인 사용자:"
+    "logged_in_as": "로그인 계정:",
+    "nav": {
+        "brand": {
+            "map": "지도",
+            "title": "자산 관리 시스템",
+            "pms_short": "PMS"
+        },
+        "menu": {
+            "more": "더보기",
+            "web": "웹 검색",
+            "home": "지도 홈"
+        },
+        "filter": {
+            "transaction": "거래 유형",
+            "sector": "자산 유형",
+            "subsector": "세부 유형",
+            "options": {
+                "all": "전체",
+                "lease": "임대",
+                "sale": "매각",
+                "sale_lease": "매각/임대",
+                "office": "오피스",
+                "retail": "리테일",
+                "logistics": "물류",
+                "hospital": "병원",
+                "subsector": {
+                    "cold": "저온 물류",
+                    "dry": "상온 물류",
+                    "mixed": "복합 물류",
+                    "cbd": "중심 업무 지구(CBD)"
+                }
+            }
+        },
+        "admin": {
+            "property_list": "자산 목록",
+            "users": "사용자 관리",
+            "upload_file": "파일 업로드",
+            "download_file": "파일 다운로드"
+        }
+    },
+    "demo": {
+        "typography": {
+            "label_insights": "인사이트 & 리서치",
+            "hero_title": "지능형 투자",
+            "lead_text": "전문적인 관점으로 부동산 투자 전략을 최적화하세요.",
+            "lead_sub": "우리의 리서치 및 인사이트 플랫폼은 포괄적인 데이터와 지역 및 자산 유형 전반에 걸친 심도 있는 자본 시장 전문 지식을 결합합니다.",
+            "btn_explore": "지능형 투자 탐색하기",
+            "articles": {
+                "report": "보고서",
+                "viewpoint": "견해",
+                "perspective": "관점",
+                "title_outlook": "2024 글로벌 부동산 전망",
+                "title_logistics": "유럽 물류: 앞으로의 길",
+                "title_sustainability": "가치 동인으로서의 지속 가능성"
+            },
+            "ux_demo": {
+                "title": "UX 기능 데모 (인터랙티브)",
+                "toast": {
+                    "title": "1. 토스트 알림",
+                    "desc": "방해받지 않는 피드백을 제공합니다.",
+                    "success": "성공 토스트",
+                    "error": "오류 토스트"
+                },
+                "modal": {
+                    "title": "2. 모달 대화상자",
+                    "desc": "사용자의 주의를 집중시킵니다.",
+                    "btn_open": "모달 열기"
+                },
+                "loading": {
+                    "title": "3. 로딩 상태",
+                    "desc": "체감 성능을 향상시킵니다.",
+                    "btn_fetch": "데이터 가져오기 (2초)"
+                }
+            },
+            "search_panel": {
+                "title": "표준화된 검색 패널 UI",
+                "panel_title": "패널 제목",
+                "placeholder": "검색...",
+                "desc": "표준화된 패널 설명 텍스트 스타일입니다.",
+                "content_area": "패널 콘텐츠 영역",
+                "btn_danger": "위험 작업",
+                "btn_secondary": "보조 작업",
+                "utility_classes": {
+                    "title": "유틸리티 클래스",
+                    "container": "메인 플렉스 컨테이너",
+                    "header": "다크 그린 헤더",
+                    "search_box": "플로팅 검색 입력창",
+                    "actions": "푸터 액션"
+                }
+            },
+            "search_result": {
+                "title": "검색 결과 항목 (인터랙티브)",
+                "mock": {
+                    "building_name": "강남 파이낸스 센터",
+                    "address": "서울 강남구 테헤란로 152",
+                    "cafe_name": "스타벅스 GFC점",
+                    "cafe_type": "카페 / 커피",
+                    "cafe_addr": "역삼동 737",
+                    "city_hall": "서울시청",
+                    "city_hall_type": "시청",
+                    "city_hall_addr": "세종대로 110"
+                },
+                "component_classes": {
+                    "title": "컴포넌트 클래스",
+                    "card": "표준 카드 (래핑됨)",
+                    "body": "제목 기본 (굵게 + 말줄임)",
+                    "meta": "메타 정보",
+                    "badge": "아이콘 배지 기본"
+                }
+            },
+            "design_system": {
+                "title": "디자인 시스템 참조 (업데이트됨)",
+                "brand_scale": "브랜드 & 주요 색상 (그린 스케일)",
+                "neutral_scale": "중립 색상 (슬레이트 스케일)",
+                "secondary_palette": "보조 팔레트",
+                "functional_aliases": "기능 및 별칭 (신규)",
+                "pastel_palette": "파스텔 팔레트",
+                "font_families": "폰트 패밀리",
+                "serif_desc": "Serif / 제목 & 본문",
+                "sans_desc": "Sans-serif / UI & 라벨",
+                "condensed_desc": "Condensed / 데이터",
+                "data_visualization": "데이터 시각화",
+                "mono_desc": "Monospace / 코드 & 기술",
+                "sample_sentence": "다람쥐 헌 쳇바퀴에 타고파.",
+                "headings": "제목 (Headings)",
+                "body_text": "본문 & 텍스트",
+                "quotes": "인용구",
+                "lists_layouts": "목록 & 레이아웃",
+                "statistics": "통계",
+                "stats_offices": "전 세계 지사",
+                "stats_assets": "운용 자산",
+                "stats_employees": "임직원수",
+                "list_item": "브랜드 스타일 목록 항목",
+                "colors": {
+                    "primary_brand": "기본 / 브랜드 (#003F2D)",
+                    "accent": "강조 (#17E88F)",
+                    "darkest": "가장 어두운 색",
+                    "light_bg": "밝은 배경",
+                    "faint_bg": "흐릿한 배경",
+                    "body_text": "본문 텍스트",
+                    "meta_text": "메타 텍스트",
+                    "borders": "테두리 / 구분선",
+                    "dark_blue": "다크 블루",
+                    "blue": "블루",
+                    "teal": "청록",
+                    "yellow": "노랑",
+                    "olive": "올리브",
+                    "system_12": "시스템 12",
+                    "system_13": "시스템 13",
+                    "system_14": "시스템 14",
+                    "kakao": "카카오",
+                    "tag_blue": "태그 블루",
+                    "dark_green": "다크 그린"
+                },
+                "headings_text": {
+                    "hero": "히어로 타이틀",
+                    "h1": "제목 레벨 1",
+                    "h2": "제목 레벨 2",
+                    "h3": "제목 레벨 3"
+                },
+                "quotes_text": "부동산은 단순한 건물이 아닙니다.",
+                "pull_quote": "인용구는 긴 기사에 강조를 더하고 시각적인 환기를 제공합니다.",
+                "body_desc": {
+                    "lead": "기사 도입부에 사용되는 리드 문단 텍스트입니다.",
+                    "lg": "강조나 서브 도입부에 사용되는 큰 본문 텍스트입니다. 깔끔하고 가독성 좋은 산세리프체입니다.",
+                    "md": "표준 본문 텍스트입니다. 상세 정보, 긴 형식의 콘텐츠 및 일반적인 가독성을 위해 사용됩니다.",
+                    "meta": "날짜, 작성자, 캡션과 같은 메타 데이터입니다.",
+                    "label": "라벨 태그"
+                },
+                "layout": {
+                    "layout_components": "레이아웃 컴포넌트",
+                    "title": "제목",
+                    "separator": "구분선"
+                }
+            },
+            "components": {
+                "buttons": {
+                    "title": "버튼 변형",
+                    "primary": "기본 버튼",
+                    "secondary": "보조 버튼",
+                    "tertiary": "3차 작업",
+                    "brief": "간략 버튼",
+                    "brief_sm": "간략 SM",
+                    "badge": "배지 버튼",
+                    "menu": "메뉴 버튼"
+                },
+                "links": {
+                    "title": "링크 인터랙션",
+                    "standard": "표준 밑줄 애니메이션",
+                    "icon_slide": "애니메이션 아이콘 슬라이드",
+                    "underline_slide": "밑줄 슬라이드 효과",
+                    "fade_arrow": "페이드 화살표 링크",
+                    "large_serif": "큰 세리프 링크 스타일",
+                    "simple_arrow": "단순 화살표 효과"
+                },
+                "inputs": {
+                    "title": "입력 필드",
+                    "standard_placeholder": "표준 입력 필드",
+                    "disabled_placeholder": "비활성화된 입력",
+                    "underlined_placeholder": "밑줄 입력"
+                },
+                "cards": {
+                    "title": "카드",
+                    "card_title": "카드 제목",
+                    "card_desc": "호버 효과가 있는 표준 카드 컨테이너입니다."
+                }
+            }
+        }
+    }
 }

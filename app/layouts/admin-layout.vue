@@ -5,15 +5,15 @@
                 <div class="cbre-nav-brand group" @click="navigateTo('/admin')">
                     <IconCBRELogo
                         class="w-[9rem] h-[2.8rem] group-hover:opacity-90 transition-opacity text-cbre-green" />
-                    <sub class="cbre-nav-brand-label text-cbre-green">Map</sub>
+                    <sub class="cbre-nav-brand-label text-cbre-green">{{ $t('nav.brand.map') }}</sub>
                 </div>
 
                 <!-- Title -->
                 <div class="cbre-layout-topbar-separator">
-                    <span class="cbre-nav-title text-cbre-green/90">Property Management System</span>
+                    <span class="cbre-nav-title text-cbre-green/90">{{ $t('nav.brand.title') }}</span>
                 </div>
                 <div class="cbre-layout-topbar-separator-mobile">
-                    <span class="cbre-nav-link text-cbre-green/90">PMS</span>
+                    <span class="cbre-nav-link text-cbre-green/90">{{ $t('nav.brand.pms_short') }}</span>
                 </div>
             </div>
 
@@ -23,7 +23,7 @@
                     <div class="hidden md:flex items-center transform translate-x-[10px]">
                         <button v-for="(item, index) in filteredNavItems" :key="index"
                             class="group cbre-button-topbar-menu" @click="navigateTo(item.link)">
-                            <span>{{ item.label }}</span>
+                            <span>{{ $t(item.label) }}</span>
                         </button>
                     </div>
 
@@ -38,16 +38,12 @@
 
                 <div class="cbre-layout-divider"></div>
 
-                <div v-if="loggedIn" class="cbre-layout-topbar-user-section">
-                    <div class="cbre-avatar-user-container" @click="openUserProfileModal"
-                        :title="`Logged in as ${user?.name || 'User'}`">
-                        <img :src="userAvatar" alt="User Avatar" class="w-full h-full object-cover" />
-                    </div>
-                    <button class="cbre-button-brief-sm" @click="handleLogout">Logout</button>
-                </div>
+                <CommonLanguageSwitcher />
 
-                <div v-else class="cbre-layout-topbar-user-section">
-                    <button class="cbre-button-brief-sm" @click="handleLogin">Login</button>
+                <div class="cbre-layout-divider"></div>
+
+                <div class="cbre-layout-topbar-user-section">
+                    <NavUserMenu />
                 </div>
             </div>
         </div>
@@ -79,7 +75,8 @@
                 <div class="flex flex-col h-full overflow-y-auto pb-8 pt-8">
                     <div v-for="(item, index) in filteredNavItems" :key="index" class="px-8 py-2 cursor-pointer group"
                         @click="navigateTo(item.link); toggleAdminSideMenu()">
-                        <span class="cbre-mobile-nav-item group-hover:text-cbre-green-800">{{ item.label }}</span>
+                        <span class="cbre-mobile-nav-item group-hover:text-cbre-green-800">{{ $t(item.label)
+                        }}</span>
                     </div>
                 </div>
             </div>
@@ -107,25 +104,25 @@ interface NavItem {
 
 const navItems: NavItem[] = [
     {
-        label: 'Property List',
+        label: 'nav.admin.property_list',
         link: '/admin',
         icon: 'i-solar-pen-new-square-outline',
         roles: ['USER', 'ADMIN', 'DEVELOPER']
     },
     {
-        label: 'Users',
+        label: 'nav.admin.users',
         link: '/user/list',
         icon: 'i-solar-user-outline',
         roles: ['USER', 'ADMIN', 'DEVELOPER']
     },
     {
-        label: 'Upload File',
+        label: 'nav.admin.upload_file',
         link: '/property/upload',
         icon: 'i-solar-upload-outline',
         roles: ['USER', 'ADMIN', 'DEVELOPER']
     },
     {
-        label: 'Download File',
+        label: 'nav.admin.download_file',
         link: '/api/property/bulk',
         icon: 'i-solar-download-outline',
         roles: ['USER', 'ADMIN', 'DEVELOPER']
@@ -138,18 +135,5 @@ const filteredNavItems = computed(() => {
 
 const toggleAdminSideMenu = () => {
     uiStore.toggleOverlay('menu')
-}
-
-const openUserProfileModal = () => {
-    uiStore.toggleUserProfileModal(true)
-}
-
-const handleLogout = async () => {
-    await clear()
-    navigateTo('/login')
-}
-
-const handleLogin = () => {
-    navigateTo('/login')
 }
 </script>

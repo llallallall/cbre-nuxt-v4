@@ -124,9 +124,10 @@ export default <Config>{
                 'h2-desktop': ['3.2rem', { lineHeight: '1.2' }],
             },
             fontFamily: {
-                condensed: ['"Barlow Condensed"', 'Arial Narrow', 'sans-serif'],
-                calibre: ['Calibre', 'sans-serif'],
-                financier: ['Financier', 'serif'],
+                condensed: ['"Barlow Condensed"', '"Do Hyeon"', 'sans-serif'],
+                calibre: ['Calibre', '"Asta Sans"', 'sans-serif'],
+                financier: ['Financier', '"Gowun Batang"', 'serif'],
+                mono: ['"Space Mono"', '"Orbit"', 'monospace'],
             },
             borderRadius: {
                 'none': '0px',

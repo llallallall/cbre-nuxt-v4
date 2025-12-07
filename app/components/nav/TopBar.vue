@@ -12,15 +12,15 @@
 					<div class="cbre-nav-brand group" @click="navigateTo('/')">
 						<IconCBRELogo class="w-[9rem] h-[2.8rem] group-hover:opacity-90 transition-opacity"
 							:class="isLightMode ? 'text-cbre-green' : 'text-white'" />
-						<sub class="cbre-nav-brand-label"
-							:class="isLightMode ? 'text-cbre-green' : '!text-white'">Map</sub>
+						<sub class="cbre-nav-brand-label" :class="isLightMode ? 'text-cbre-green' : '!text-white'">{{
+							$t('nav.brand.map') }}</sub>
 					</div>
 
 					<!-- App Title -->
 					<div class="cbre-layout-topbar-separator border-gray-200/20">
 						<span class="cbre-nav-title transition-colors duration-300"
-							:class="isLightMode ? 'text-cbre-green/90' : '!text-white/90'">Property Management
-							System</span>
+							:class="isLightMode ? 'text-cbre-green/90' : '!text-white/90'">{{ $t('nav.brand.title')
+							}}</span>
 					</div>
 
 					<!-- Search Bar -->
@@ -30,7 +30,7 @@
 								@keyup.enter="onSearchText()"
 								class="w-[24rem] bg-transparent border-b text-[1.5rem] pb-1 focus:outline-none transition-all duration-300"
 								:class="isLightMode ? 'border-cbre-green/30 text-cbre-green placeholder-cbre-green/60 focus:border-cbre-green' : 'border-white/30 text-white placeholder-white/60 focus:border-white'"
-								placeholder="Search" />
+								:placeholder="$t('search_placeholder')" />
 							<div v-if="isHydrationComplete" class="absolute right-0 bottom-2 cursor-pointer"
 								@click="propertyStore.searchKeyword === '' ? onSearchText() : onResetKeyword()">
 								<IconMagnifier v-if="propertyStore.searchKeyword === ''"
@@ -49,11 +49,11 @@
 					<UPopover v-model:open="openTransaction" mode="click" :popper="{ placement: 'bottom-end' }">
 						<button class="group cbre-button-topbar-menu"
 							:class="isLightMode ? 'text-cbre-green' : 'text-white'">
-							<span>Transaction</span>
+							<span>{{ $t('nav.filter.transaction') }}</span>
 							<span v-if="selectedTransaction && selectedTransaction.name !== 'All Types'"
 								class="cbre-text-topbar-sublabel"
 								:class="isLightMode ? 'text-cbre-green/80' : 'text-white/80'">
-								({{ selectedTransaction.name }})
+								({{ $t(selectedTransaction.labelKey) }})
 							</span>
 							<UIcon name="i-heroicons-chevron-down"
 								class="w-4 h-4 transition-transform duration-200 group-hover:rotate-180" />
@@ -66,7 +66,7 @@
 									class="px-4 py-3 hover:bg-gray-50 cursor-pointer flex justify-between items-center text-cbre-green-800 text-[1.5rem] border-b border-gray-100 last:border-0 transition-colors"
 									:class="{ 'font-bold text-cbre-green-800': selectedTransaction?.name === type.name }"
 									@click="selectTransaction(type)">
-									{{ type.name }}
+									{{ $t(type.labelKey) }}
 									<UIcon v-if="selectedTransaction?.name === type.name" name="i-heroicons-check"
 										class="text-cbre-green-800" />
 								</div>
@@ -78,7 +78,7 @@
 					<UPopover v-model:open="openSectors" mode="click" :popper="{ placement: 'bottom-end' }">
 						<button class="group cbre-button-topbar-menu"
 							:class="isLightMode ? 'text-cbre-green' : 'text-white'">
-							<span>Sector</span>
+							<span>{{ $t('nav.filter.sector') }}</span>
 							<span v-if="selectedSectors.length > 0" class="cbre-text-topbar-sublabel"
 								:class="isLightMode ? 'text-cbre-green/80' : 'text-white/80'">
 								({{ selectedSectorsDisplay }})
@@ -94,7 +94,7 @@
 									class="px-4 py-3 hover:bg-gray-50 cursor-pointer flex justify-between items-center text-cbre-green-800 text-[1.5rem] border-b border-gray-100 last:border-0 transition-colors"
 									:class="{ 'font-bold text-cbre-green-800': isSelectedSector(option) }"
 									@click="toggleSelectedSector(option)">
-									{{ option.name }}
+									{{ $t(option.labelKey) }}
 									<UIcon v-if="isSelectedSector(option)" name="i-heroicons-check"
 										class="text-cbre-green-800" />
 								</div>
@@ -106,7 +106,7 @@
 					<UPopover v-model:open="openSubSectors" mode="click" :popper="{ placement: 'bottom-end' }">
 						<button class="group cbre-button-topbar-menu"
 							:class="isLightMode ? 'text-cbre-green' : 'text-white'">
-							<span>SubSector</span>
+							<span>{{ $t('nav.filter.subsector') }}</span>
 							<span v-if="selectedSubSectors.length > 0" class="cbre-text-topbar-sublabel"
 								:class="isLightMode ? 'text-cbre-green/80' : 'text-white/80'">
 								({{ selectedSubSectorsDisplay }})
@@ -122,7 +122,7 @@
 									class="px-4 py-3 hover:bg-gray-50 cursor-pointer flex justify-between items-center text-cbre-green-800 text-[1.5rem] border-b border-gray-100 last:border-0 transition-colors"
 									:class="{ 'font-bold text-cbre-green-800': isSelectedSubSector(option) }"
 									@click="toggleSelectedSubSector(option)">
-									{{ option.name }}
+									{{ $t(option.labelKey) }}
 									<UIcon v-if="isSelectedSubSector(option)" name="i-heroicons-check"
 										class="text-cbre-green-800" />
 								</div>
@@ -135,7 +135,7 @@
 						isLightMode ? 'text-cbre-green' : 'text-white',
 						{ 'border-cbre-accent text-cbre-green-800': openMenuMore }
 					]">
-						<span>More</span>
+						<span>{{ $t('nav.menu.more') }}</span>
 						<UIcon name="i-heroicons-chevron-down"
 							class="w-4 h-4 transition-transform duration-200 group-hover:rotate-180"
 							:class="{ 'rotate-180': openMenuMore }" />
@@ -147,12 +147,15 @@
 							isLightMode ? 'text-cbre-green' : 'text-white',
 							{ 'border-cbre-accent text-cbre-green-800': openWebSearchPannel }
 						]">
-						<span>Web</span>
+						<span>{{ $t('nav.menu.web') }}</span>
 						<UIcon name="i-heroicons-globe-alt" class="w-5 h-5" />
 					</button>
 
+					<!-- Language Switcher -->
+					<CommonLanguageSwitcher />
+
 					<!-- User Menu -->
-					<UserMenu />
+					<NavUserMenu :isLightMode="isLightMode" />
 				</div>
 			</div>
 
@@ -163,20 +166,25 @@
 					<div class="cbre-nav-brand group" @click="navigateTo('/')">
 						<IconCBRELogo class="w-[9rem] h-[2.8rem] group-hover:opacity-90 transition-opacity"
 							:class="isLightMode ? 'text-cbre-green' : 'text-white'" />
-						<sub class="cbre-nav-brand-label"
-							:class="isLightMode ? 'text-cbre-green' : '!text-white'">Map</sub>
+						<sub class="cbre-nav-brand-label" :class="isLightMode ? 'text-cbre-green' : '!text-white'">{{
+							$t('nav.brand.map') }}</sub>
 					</div>
 
 					<!-- App Title -->
 					<div class="cbre-layout-topbar-separator border-gray-200/20">
 						<span class="cbre-nav-link transition-colors duration-300"
-							:class="isLightMode ? 'text-cbre-green/90' : '!text-white/90'">PMS</span>
+							:class="isLightMode ? 'text-cbre-green/90' : '!text-white/90'">{{
+								$t('nav.brand.pms_short')
+							}}</span>
 					</div>
 				</div>
 
 				<div class="flex items-center gap-2 z-20">
+
+					<CommonLanguageSwitcher />
+
 					<!-- Mobile User Menu -->
-					<UserMenu />
+					<NavUserMenu :isLightMode="isLightMode" />
 
 					<!-- Mobile Search Icon -->
 					<button @click="openTextSearchPannel = !openTextSearchPannel" class="focus:outline-none p-1">
@@ -196,7 +204,7 @@
 		<!-- More Menu Overlay -->
 		<div class="fixed top-[8rem] left-0 w-full bg-white shadow-xl transition-all duration-300 overflow-hidden z-40"
 			:class="openMenuMore ? 'max-h-[60rem] border-t-4 border-cbre-green' : 'max-h-0'">
-			<MoreMenu />
+			<NavMoreMenu />
 		</div>
 
 		<!-- Web Search Panel -->
@@ -238,11 +246,6 @@ import { ref, computed, watch, onMounted } from 'vue'
 import { useUserStore } from '~/stores/user'
 import { useUiStore } from '~/stores/ui'
 import { usePropertyStore } from '~/stores/property'
-import MoreMenu from '~/components/nav/MoreMenu.vue'
-import UserMenu from '~/components/nav/UserMenu.vue'
-import NavWebSearchPannel from '~/components/nav/web/SearchPannel.vue'
-import NavMobileTextSearchPannel from '~/components/nav/mobile/TextSearchPannel.vue'
-import NavMobileFilterPannel from '~/components/nav/mobile/FilterPannel.vue'
 
 import { storeToRefs } from 'pinia'
 
@@ -289,36 +292,36 @@ const onResetKeyword = () => {
 
 // Transaction Types
 const transaction = [
-	{ name: 'All Types' },
-	{ name: 'Lease' },
-	{ name: 'Sale' },
-	{ name: 'Sale/Lease' }
+	{ name: 'All Types', labelKey: 'nav.filter.options.all', value: '' },
+	{ name: 'Lease', labelKey: 'nav.filter.options.lease', value: 'Lease' },
+	{ name: 'Sale', labelKey: 'nav.filter.options.sale', value: 'Sale' },
+	{ name: 'Sale/Lease', labelKey: 'nav.filter.options.sale_lease', value: 'Sale/Lease' }
 ]
 const selectedTransaction = ref(transaction[0])
 const openTransaction = ref(false)
 
 const selectTransaction = (type: any) => {
 	selectedTransaction.value = type
-	propertyStore.updateFilter('filterTransactionType', type.name === 'All Types' ? '' : type.name)
+	propertyStore.updateFilter('filterTransactionType', type.value)
 	openTransaction.value = false
 }
 
 // Sectors
 const sectors = [
-	{ name: 'All' },
-	{ name: 'Office' },
-	{ name: 'Logistics' },
-	{ name: 'Retail' },
-	{ name: 'Hospital' }
+	{ name: 'All', labelKey: 'nav.filter.options.all', value: '' },
+	{ name: 'Office', labelKey: 'nav.filter.options.office', value: 'Office' },
+	{ name: 'Logistics', labelKey: 'nav.filter.options.logistics', value: 'Logistics' },
+	{ name: 'Retail', labelKey: 'nav.filter.options.retail', value: 'Retail' },
+	{ name: 'Hospital', labelKey: 'nav.filter.options.hospital', value: 'Hospital' }
 ]
-const selectedSectors = ref<{ name: string }[]>([])
+const selectedSectors = ref<{ name: string, labelKey: string, value: string }[]>([])
 const openSectors = ref(false)
 
 const isSelectedSector = (option: { name: string }) => {
 	if (option.name === 'All') return selectedSectors.value.length === 0
 	return selectedSectors.value.some(s => s.name === option.name)
 }
-const toggleSelectedSector = (option: { name: string }) => {
+const toggleSelectedSector = (option: { name: string, labelKey: string, value: string }) => {
 	if (option.name === 'All') {
 		selectedSectors.value = []
 	} else {
@@ -328,31 +331,32 @@ const toggleSelectedSector = (option: { name: string }) => {
 			selectedSectors.value.push(option)
 		}
 	}
-	propertyStore.updateFilter('filterSectorTypes', selectedSectors.value.map(s => s.name))
+	propertyStore.updateFilter('filterSectorTypes', selectedSectors.value.map(s => s.value))
 }
 
 const selectedSectorsDisplay = computed(() => {
-	if (selectedSectors.value.length === 0) return 'All Types'
-	if (selectedSectors.value.length === 1) return selectedSectors.value[0]?.name
-	return `${selectedSectors.value[0]?.name} (+${selectedSectors.value.length - 1})`
+	const { t } = useI18n()
+	if (selectedSectors.value.length === 0) return t('nav.filter.options.all')
+	if (selectedSectors.value.length === 1) return t(selectedSectors.value[0]?.labelKey || '')
+	return `${t(selectedSectors.value[0]?.labelKey || '')} (+${selectedSectors.value.length - 1})`
 })
 
 // SubSectors
 const subsectors = [
-	{ name: 'All' },
-	{ name: 'Cold Logistic' },
-	{ name: 'Dry Logistic' },
-	{ name: 'Mixed Logistic' },
-	{ name: 'Central Business District' }
+	{ name: 'All', labelKey: 'nav.filter.options.all', value: '' },
+	{ name: 'Cold Logistic', labelKey: 'nav.filter.options.subsector.cold', value: 'Cold Logistic' },
+	{ name: 'Dry Logistic', labelKey: 'nav.filter.options.subsector.dry', value: 'Dry Logistic' },
+	{ name: 'Mixed Logistic', labelKey: 'nav.filter.options.subsector.mixed', value: 'Mixed Logistic' },
+	{ name: 'Central Business District', labelKey: 'nav.filter.options.subsector.cbd', value: 'Central Business District' }
 ]
-const selectedSubSectors = ref<{ name: string }[]>([])
+const selectedSubSectors = ref<{ name: string, labelKey: string, value: string }[]>([])
 const openSubSectors = ref(false)
 
 const isSelectedSubSector = (option: { name: string }) => {
 	if (option.name === 'All') return selectedSubSectors.value.length === 0
 	return selectedSubSectors.value.some(s => s.name === option.name)
 }
-const toggleSelectedSubSector = (option: { name: string }) => {
+const toggleSelectedSubSector = (option: { name: string, labelKey: string, value: string }) => {
 	if (option.name === 'All') {
 		selectedSubSectors.value = []
 	} else {
@@ -362,13 +366,14 @@ const toggleSelectedSubSector = (option: { name: string }) => {
 			selectedSubSectors.value.push(option)
 		}
 	}
-	propertyStore.updateFilter('filterSubSectorTypes', selectedSubSectors.value.map(s => s.name))
+	propertyStore.updateFilter('filterSubSectorTypes', selectedSubSectors.value.map(s => s.value))
 }
 
 const selectedSubSectorsDisplay = computed(() => {
-	if (selectedSubSectors.value.length === 0) return 'All Types'
-	if (selectedSubSectors.value.length === 1) return selectedSubSectors.value[0]?.name
-	return `${selectedSubSectors.value[0]?.name} (+${selectedSubSectors.value.length - 1})`
+	const { t } = useI18n()
+	if (selectedSubSectors.value.length === 0) return t('nav.filter.options.all')
+	if (selectedSubSectors.value.length === 1) return t(selectedSubSectors.value[0]?.labelKey || '')
+	return `${t(selectedSubSectors.value[0]?.labelKey || '')} (+${selectedSubSectors.value.length - 1})`
 })
 
 // More Menu

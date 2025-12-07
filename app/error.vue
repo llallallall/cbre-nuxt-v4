@@ -94,7 +94,7 @@ const errorDescription = computed(() => {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-image: url('/images/background/global-mid-year-outlook.jpg');
+  background-image: url('/images/background/bg-1.jpg');
   background-size: cover;
   background-position: center;
   animation: fade 16s forwards infinite;
@@ -106,7 +106,7 @@ const errorDescription = computed(() => {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-image: url('/images/background/zero_ph2_dataviz_homepage_2736x1824px_1110.jpg');
+  background-image: url('/images/background/bg-2.jpg');
   background-size: cover;
   background-position: center;
   animation: fade 16s forwards infinite;
@@ -118,7 +118,7 @@ const errorDescription = computed(() => {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-image: url('/images/background/cr_carousel_2736x1824_brighter_2.jpg');
+  background-image: url('/images/background/bg-3.jpg');
   background-size: cover;
   background-position: center;
   animation: fade 16s forwards infinite;
@@ -130,7 +130,7 @@ const errorDescription = computed(() => {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-image: url('/images/background/tech-talent-2023.jpg');
+  background-image: url('/images/background/bg-4.jpg');
   background-size: cover;
   background-position: center;
   animation: fade 16s forwards infinite;

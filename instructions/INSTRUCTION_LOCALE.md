@@ -37,6 +37,11 @@ We leverage both `@nuxt/ui` capabilities and `@nuxtjs/i18n`.
 *   `[/]` In Progress
 *   `[x]` Completed (Fully Localized)
 
+### Layouts (`app/layouts`)
+- [x] `default.vue`
+- [x] `admin-layout.vue`
+- [x] `page-layout.vue`
+
 ### Pages (`app/pages`)
 - [x] `app.vue` (Root Layout/Modals)
 - [ ] `index.vue` (Home/Search)
@@ -47,7 +52,7 @@ We leverage both `@nuxt/ui` capabilities and `@nuxtjs/i18n`.
 - [ ] `property/[id].vue`
 
 ### Components: Navigation (`app/components/nav`)
-- [ ] `TopBar.vue`
+- [x] `TopBar.vue`
 - [ ] `MoreMenu.vue`
 - [ ] `TextSearchPannel.vue`
 - [ ] `mobile/FilterPannel.vue`
@@ -58,7 +63,8 @@ We leverage both `@nuxt/ui` capabilities and `@nuxtjs/i18n`.
 - [ ] `PropertyDetail` components
 
 ### Components: Common/Demo
-- [ ] `demo/TypographyDemo.vue`
+- [x] `LanguageSwitcher.vue`
+- [x] `demo/TypographyDemo.vue`
 - [ ] `common/Footer.vue` (if exists)
 
 ---
