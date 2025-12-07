@@ -5,14 +5,17 @@
             <NuxtPage />
         </NuxtLayout>
 
-        <ConfirmModal v-if="confirmStore.isOpen" :model-value="confirmStore.isOpen" :title="confirmStore.options.title"
-            :message="confirmStore.options.message" :confirm-text="confirmStore.options.confirmText"
-            :cancel-text="confirmStore.options.cancelText" @update:model-value="confirmStore.cancel"
-            @confirm="confirmStore.confirm" @cancel="confirmStore.cancel" />
+        <CommonConfirmModal v-if="confirmStore.isOpen" :model-value="confirmStore.isOpen"
+            :title="confirmStore.options.title" :message="confirmStore.options.message"
+            :confirm-text="confirmStore.options.confirmText" :cancel-text="confirmStore.options.cancelText"
+            @update:model-value="confirmStore.cancel" @confirm="confirmStore.confirm" @cancel="confirmStore.cancel" />
 
-        <ViewerModal v-if="statusStore.isViewerOpen" />
+        <CommonViewerModal v-if="statusStore.isViewerOpen" />
+
+        <CommonCarouselModal v-if="statusStore.isSlideOpen" />
+
         <ClientOnly>
-            <SelectedInfoModal v-if="uiStore.showInfoModal" :show="uiStore.showInfoModal"
+            <MapSelectedInfoModal v-if="uiStore.showInfoModal" :show="uiStore.showInfoModal"
                 :items="propertyStore.keptProperties" @close="uiStore.showInfoModal = false" />
         </ClientOnly>
     </UApp>
@@ -24,15 +27,21 @@ import { useConfirmStore } from '~/stores/confirm';
 import { useUiStore } from '~/stores/ui';
 import { usePropertyStore } from '~/stores/property';
 import { useStatusStore } from '~/stores/status';
-import ConfirmModal from '~/components/common/ConfirmModal.vue';
-import ViewerModal from '~/components/common/ViewerModal.vue';
-import SelectedInfoModal from '~/components/map/SelectedInfoModal.vue';
 
 const { locale } = useI18n()
 const confirmStore = useConfirmStore();
 const uiStore = useUiStore();
 const propertyStore = usePropertyStore();
 const statusStore = useStatusStore();
+const indicator = useLoadingIndicator();
+
+watch(() => statusStore.isGlobalLoading, (newVal) => {
+    if (newVal) {
+        indicator.start();
+    } else {
+        indicator.finish();
+    }
+});
 
 const detailCardPrintAreaRef = ref(null);
 provide('detailCardPrintAreaRef', detailCardPrintAreaRef);

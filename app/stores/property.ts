@@ -190,9 +190,9 @@ export const usePropertyStore = defineStore('property', {
         // A. 데이터 로드 액션
         // ------------------------------------------------------------------
 
-        async fetchInitialData() {
+        async fetchInitialData(force = false) {
             const statusStore = useStatusStore();
-            if (this.initialDataLoaded && this.initialProperties.length > 0) return;
+            if (!force && this.initialDataLoaded && this.initialProperties.length > 0) return;
             statusStore.setGlobalLoading(true, 'fetchInitialData');
 
             try {

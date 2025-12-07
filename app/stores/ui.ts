@@ -111,7 +111,7 @@ const getInitialState = (): UiState => ({
     isDetailModalOpened: false,
 
     // 리스트 표시 초기 설정
-    isGridView: false, // 기본은 리스트 뷰
+    isGridView: true, // 기본은 리스트 뷰
     isHiddenList: false,
     isExpandedList: true,
 

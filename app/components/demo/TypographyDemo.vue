@@ -75,7 +75,7 @@
                     </div>
                     <code class="text-lg text-blue-500 font-mono mb-1 block">.cbre-text-label-sm</code>
                     <span class="cbre-text-label-sm mb-3 block text-gray-500">{{ $t('demo.typography.articles.report')
-                    }}</span>
+                        }}</span>
                     <code class="text-lg text-blue-500 font-mono mb-1 block">.cbre-text-display-2</code>
                     <h3
                         class="cbre-text-display-2 text-cbre-green group-hover:underline decoration-2 underline-offset-4">
@@ -329,7 +329,7 @@
                                     {{ $t('demo.typography.search_result.mock.city_hall_type') }}
                                 </div>
                                 <span class="truncate">{{ $t('demo.typography.search_result.mock.city_hall_addr')
-                                }}</span>
+                                    }}</span>
                             </div>
                         </div>
                     </div>
@@ -337,7 +337,7 @@
                     <!-- Usage Documentation -->
                     <div class="space-y-4">
                         <h3 class="cbre-text-display-3">{{ $t('demo.typography.search_result.component_classes.title')
-                        }}</h3>
+                            }}</h3>
                         <ul class="space-y-2">
                             <li>
                                 <code class="text-blue-500 font-bold">.cbre-panel-card</code>
@@ -554,7 +554,7 @@
             <!-- 2. Font Families -->
             <div>
                 <span class="cbre-text-label-sm block mb-6">{{ $t('demo.typography.design_system.font_families')
-                    }}</span>
+                }}</span>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <!-- Financier -->
                     <div class="p-6 border border-gray-200">
@@ -593,17 +593,17 @@
                 <!-- Button Variants -->
                 <div>
                     <span class="cbre-text-label-sm block mb-4">{{ $t('demo.typography.components.buttons.title')
-                        }}</span>
+                    }}</span>
                     <div class="flex flex-wrap gap-4 items-center">
                         <div class="flex flex-col">
                             <code class="text-lg text-blue-500 font-mono mb-1">.cbre-button-primary</code>
                             <button class="cbre-button-primary">{{ $t('demo.typography.components.buttons.primary')
-                                }}</button>
+                            }}</button>
                         </div>
                         <div class="flex flex-col">
                             <code class="text-lg text-blue-500 font-mono mb-1">.cbre-button-secondary</code>
                             <button class="cbre-button-secondary">{{ $t('demo.typography.components.buttons.secondary')
-                                }}</button>
+                            }}</button>
                         </div>
                         <div class="flex flex-col">
                             <code class="text-lg text-blue-500 font-mono mb-1">.cbre-button-tertiary</code>
@@ -648,7 +648,7 @@
                 <!-- Link Interactions -->
                 <div>
                     <span class="cbre-text-label-sm block mb-4">{{ $t('demo.typography.components.links.title')
-                        }}</span>
+                    }}</span>
                     <div class="flex flex-col gap-4 items-start">
                         <div>
                             <code class="text-lg text-blue-500 font-mono mb-1 block">.cbre-text-link-underline</code>
@@ -691,7 +691,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
                 <div>
                     <span class="cbre-text-label-sm block mb-4">{{ $t('demo.typography.components.inputs.title')
-                        }}</span>
+                    }}</span>
                     <div class="space-y-4">
                         <div>
                             <code class="text-lg text-blue-500 font-mono mb-1 block">.cbre-input</code>
@@ -712,7 +712,7 @@
                 </div>
                 <div>
                     <span class="cbre-text-label-sm block mb-4">{{ $t('demo.typography.components.cards.title')
-                        }}</span>
+                    }}</span>
                     <div>
                         <code class="text-lg text-blue-500 font-mono mb-1 block">.cbre-panel-card</code>
                         <div class="cbre-panel-card">
@@ -733,7 +733,7 @@
                         <div>
                             <code class="text-lg text-blue-500 font-mono mb-1 block">.cbre-text-display-hero</code>
                             <h1 class="cbre-text-display-hero">{{ $t('demo.typography.design_system.headings_text.hero')
-                            }}</h1>
+                                }}</h1>
                         </div>
                         <div>
                             <code class="text-lg text-blue-500 font-mono mb-1 block">.cbre-text-display-1</code>
@@ -835,7 +835,7 @@
                                         class="text-lg text-blue-500 font-mono mb-1 block">.cbre-layout-topbar-separator</code>
                                     <div class="flex items-center gap-4 p-4 border border-gray-100 bg-white">
                                         <span class="cbre-nav-title">{{ $t('demo.typography.design_system.layout.title')
-                                        }}</span>
+                                            }}</span>
                                         <div class="cbre-layout-topbar-separator h-8">
                                             <span class="cbre-nav-link text-cbre-green/90">{{
                                                 $t('demo.typography.design_system.layout.separator') }}</span>
@@ -865,19 +865,19 @@
                             <code class="text-lg text-blue-500 font-mono mb-1 block">.cbre-text-stat-number</code>
                             <span class="cbre-text-stat-number block mb-2">500+</span>
                             <span class="cbre-text-body-md block">{{ $t('demo.typography.design_system.stats_offices')
-                                }}</span>
+                            }}</span>
                         </div>
                         <div>
                             <code class="text-lg text-blue-500 font-mono mb-1 block">.cbre-text-stat-number</code>
                             <span class="cbre-text-stat-number block mb-2">$145B</span>
                             <span class="cbre-text-body-md block">{{ $t('demo.typography.design_system.stats_assets')
-                                }}</span>
+                            }}</span>
                         </div>
                         <div>
                             <code class="text-lg text-blue-500 font-mono mb-1 block">.cbre-text-stat-number</code>
                             <span class="cbre-text-stat-number block mb-2">115K</span>
                             <span class="cbre-text-body-md block">{{ $t('demo.typography.design_system.stats_employees')
-                                }}</span>
+                            }}</span>
                         </div>
                     </div>
                 </div>

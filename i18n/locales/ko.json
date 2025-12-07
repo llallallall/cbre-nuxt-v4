@@ -172,15 +172,17 @@
         "brand": {
             "map": "지도",
             "title": "자산 관리 시스템",
-            "pms_short": "PMS"
+            "pms_short": "PMS",
+            "app_title": "CBRE Korea 자산 관리 시스템",
+            "pms_full": "자산 관리 시스템"
         },
         "menu": {
-            "more": "더보기",
-            "web": "웹 검색",
-            "home": "지도 홈"
+            "more": "더 보기",
+            "web": "웹",
+            "home": "지도로 가기"
         },
         "filter": {
-            "transaction": "거래 유형",
+            "transaction": "거래",
             "sector": "자산 유형",
             "subsector": "세부 유형",
             "options": {
@@ -206,6 +208,10 @@
             "upload_file": "파일 업로드",
             "download_file": "파일 다운로드"
         }
+    },
+    "list": {
+        "load_more": "더 보기",
+        "all_loaded": "모든 자산을 불러왔습니다"
     },
     "demo": {
         "typography": {

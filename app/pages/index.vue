@@ -21,7 +21,7 @@
                 'w-full h-[50%] border-t lg:h-[calc(100vh-80px)] lg:border-l lg:border-t-0',
                 uiStore.isExpandedList ? 'lg:w-[50%]' : 'lg:w-[40%] lg:min-w-[400px] lg:max-w-[600px]'
             ]">
-                <ListCard :data="filteredProperties" :totalCount="filteredProperties.length" :itemsPerRender="6"
+                <ListCard :data="filteredProperties" :totalCount="filteredProperties.length" :itemsPerRender="12"
                     containerClasses="bg-cbre-green-50 p-2 pt-0 h-full" defaultLoadingColor="#222" />
             </div>
 

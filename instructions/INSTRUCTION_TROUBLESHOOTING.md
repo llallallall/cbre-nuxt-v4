@@ -113,6 +113,35 @@ onMounted(() => {
       colorMode: {
         preference: 'light',
         fallback: 'light'
-      }
     })
+    ```
+
+---
+
+## 8. Nuxt UI Components
+
+### **UModal Verification Failed (Invisible Modal)**
+- **Issue**: `UModal` component mounts (lifecycle hooks run) but content is not visible on screen. Standard implementation (`<UModal v-model="isOpen">`) fails to render overlay or content.
+- **Root Cause**: In specific layout configurations (especially with global styling overrides or complex z-index contexts), the default `UModal` positioning (centered dialogue) may be occluded or fail to calculate dimensions correctly.
+- **Diagnosis**:
+    1.  **Red Box Test**: Use `<Teleport to="body">` with a high z-index `fixed` div to verify that portals work generally. If visible, the issue is specific to `UModal` styling.
+    2.  **Property Check**: Some `UModal` versions or configurations require explicit width constraints or overlay rendering.
+- **Fix (Validated)**:
+    - Use the `fullscreen` prop on `UModal`.
+    - Manually implement the overlay and centering container *inside* the fullscreen modal.
+    - Explicitly manage the "Close" interaction (background click + Close button) since default closing behavior might not trigger on the custom inner container.
+
+    ```vue
+    <template>
+        <!-- Fullscreen fixes the visibility/stacking issue -->
+        <UModal v-model="isOpen" fullscreen>
+            <!-- Manual Overlay -->
+            <div class="fixed inset-0 bg-black/90 flex items-center justify-center" @click="isOpen = false">
+                <!-- Content Container (Stop Propagation) -->
+                <div class="bg-white p-4" @click.stop>
+                    Content Here
+                </div>
+            </div>
+        </UModal>
+    </template>
     ```

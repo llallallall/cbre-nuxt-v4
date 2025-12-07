@@ -207,6 +207,10 @@
             "download_file": "Download File"
         }
     },
+    "list": {
+        "load_more": "Load More",
+        "all_loaded": "All properties loaded"
+    },
     "demo": {
         "typography": {
             "label_insights": "Insights & Research",

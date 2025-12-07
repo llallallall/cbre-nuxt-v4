@@ -3,23 +3,30 @@
 
                 <div v-if="totalCount > 0"
                         class="sticky top-0 z-30 bg-white/95 backdrop-blur-sm py-2 border-b mb-4 flex justify-between items-center">
-                        <div class="text-xl">
-                                <span class="font-bold text-2xl pl-3">{{ totalCount }}</span> {{ $t('properties_found')
+                        <div class="text-xl flex items-center">
+                                <span class="font-bold text-2xl px-2">{{ totalCount }}</span> {{ $t('properties_found')
                                 }}
+                                <UButton icon="i-heroicons-arrow-path" size="xl" color="neutral" variant="ghost"
+                                        class="group ml-2 bg-transparent hover:bg-transparent"
+                                        :ui="{ leadingIcon: 'group-hover:animate-spin' }"
+                                        @click="propertyStore.fetchInitialData(true)" />
                         </div>
 
-                        <div class="flex items-center gap-2">
+                        <div class="flex items-center gap-2 mr-2">
                                 <UButton icon="i-heroicons-list-bullet" size="xl"
+                                        class="rounded-none border-1 border-gray-300"
                                         :color="!uiStore.isGridView ? 'primary' : 'neutral'"
                                         :variant="!uiStore.isGridView ? 'soft' : 'ghost'"
                                         @click="uiStore.isGridView = false" />
                                 <UButton icon="i-heroicons-squares-2x2" size="xl"
+                                        class="rounded-none border-1 border-gray-300"
                                         :color="uiStore.isGridView ? 'primary' : 'neutral'"
                                         :variant="uiStore.isGridView ? 'soft' : 'ghost'"
                                         @click="uiStore.isGridView = true" />
                                 <UButton :icon="uiStore.isExpandedList ? 'i-heroicons-arrows-pointing-in' : 'i-heroicons-arrows-pointing-out'"
                                         :label="uiStore.isExpandedList ? $t('shrink_list') : $t('expand_list')"
-                                        size="lg" color="neutral" variant="outline" class="text-xl hidden lg:flex"
+                                        size="lg" color="neutral" variant="outline"
+                                        class="text-xl hidden lg:flex rounded-none"
                                         @click="uiStore.isExpandedList = !uiStore.isExpandedList" />
                         </div>
                 </div>
@@ -31,11 +38,22 @@
                                 <ListItem :item="item" :idx="totalCount - index" />
                         </template>
 
+                        <div v-if="hasMoreItems && !isLoadingMore" class="col-span-full flex justify-center py-6">
+                                <UButton :label="$t('list.load_more')" color="neutral" variant="outline" size="lg"
+                                        class="px-8 shadow-sm border-gray-200 border text-gray-700 bg-white hover:bg-gray-50"
+                                        @click="loadMore" />
+                        </div>
+
                         <div v-if="isLoadingMore" class="col-span-full flex justify-center py-4">
                                 <UIcon name="i-heroicons-arrow-path" class="w-8 h-8 animate-spin text-cbre-green" />
                         </div>
 
                         <div ref="loadMoreTrigger" class="h-4 w-full -mt-10 pointer-events-none opacity-0"></div>
+
+                        <div v-if="!hasMoreItems && totalCount > 0"
+                                class="col-span-full text-center py-8 text-gray-400 text-sm font-medium">
+                                {{ $t('list.all_loaded') }}
+                        </div>
 
                 </div>
 
@@ -48,25 +66,29 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onMounted, onUnmounted } from 'vue';
+import { ref, watch, onMounted, onUnmounted, computed } from 'vue';
 import { useUiStore } from '~/stores/ui';
+import { usePropertyStore } from '~/stores/property';
 import type { PropertyType } from '~/types/property.type';
 import ListItem from './Item.vue';
 
 const props = defineProps({
         data: { type: Array as () => PropertyType[], default: () => [] },
         totalCount: { type: Number, default: 0 },
-        itemsPerRender: { type: Number, default: 10 },
+        itemsPerRender: { type: Number, default: 40 },
         containerClasses: { type: String, default: '' },
 });
 
 const uiStore = useUiStore();
+const propertyStore = usePropertyStore();
 
 const itemsToDisplay = ref<PropertyType[]>([]);
 const page = ref(1);
 const isLoadingMore = ref(false);
 const loadMoreTrigger = ref<HTMLElement | null>(null);
 let observer: IntersectionObserver | null = null;
+
+const hasMoreItems = computed(() => itemsToDisplay.value.length < props.data.length);
 
 const resetList = () => {
         page.value = 1;

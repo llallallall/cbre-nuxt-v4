@@ -11,6 +11,8 @@ interface StatusState {
     viewerUrl: string | null;
     viewerType: string | null;
     isViewerOpen: boolean;
+    slideImages: any[];
+    isSlideOpen: boolean;
 }
 
 export const useStatusStore = defineStore('status', {
@@ -23,6 +25,8 @@ export const useStatusStore = defineStore('status', {
         viewerUrl: null,
         viewerType: null,
         isViewerOpen: false,
+        slideImages: [],
+        isSlideOpen: false,
     }),
 
     getters: {
@@ -62,6 +66,16 @@ export const useStatusStore = defineStore('status', {
             this.viewerUrl = null;
             this.viewerType = null;
             this.isViewerOpen = false;
+        },
+
+        openSlideModal(images: any[]) {
+            this.slideImages = images;
+            this.isSlideOpen = true;
+        },
+
+        closeSlideModal() {
+            this.slideImages = [];
+            this.isSlideOpen = false;
         }
     }
 });

@@ -7,7 +7,7 @@
                                 <div class="truncate overflow-hidden relative">
                                         {{ location.addressProvince }}
                                         <span v-if="location && location.addressCity"> / {{ location.addressCity
-                                                }}</span>
+                                        }}</span>
                                 </div>
                         </div>
 
@@ -54,7 +54,7 @@
 import { ref, computed } from 'vue';
 import { useStatusStore } from '~/stores/status';
 import type { LocationType, PropertyImageFileType, PropertyBrochureFileType } from '~/types/property.type';
-import ImageSlide from '~/components/property/ImageSlide.vue';
+import ImageSlide from '~/components/common/ImageSlide.vue';
 import BrochureList from '~/components/property/modify/form/BrochureList.vue';
 
 import { useAppToast } from '~/composables/useAppToast';
