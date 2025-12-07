@@ -1,213 +1,195 @@
 <template>
-    <main>
-        <div class="header min-w-[40vh]">
-            <div class="logo"></div>
+    <main class="w-full h-full flex flex-col items-center justify-center p-4">
+        <div class="z-50 absolute top-0 w-full max-w-[1200px] flex justify-between h-[80px] md:h-[100px] p-4 md:p-0">
+            <div class="relative md:pt-[30px] md:pl-[40px]">
+                <IconCBRELogo class="text-white w-[110px] h-[40px] md:w-[140px] md:h-[50px]" />
+            </div>
+            <div class="relative md:pt-[30px] md:pr-[40px]">
+                <UIcon name="i-heroicons-globe-alt" class="w-6 h-6 text-white" />
+            </div>
         </div>
-        <div class="login-form-title font-calibre text-white text-center min-w-[40vh]">
-            <div class="text-4xl ">CBRE Korea</div>
-            <div class="text-xl">Asset Management System</div>
-        </div>
 
-        <div class="login-form-wrapper shadow-xl min-w-[40vh]">
-            <div class="login-form-bg"></div>
-            <div class="login-form">
+        <div class="flex flex-col w-full max-w-[400px] z-50 gap-0">
+            <!-- Header Section -->
+            <div class="cbre-font-calibre text-center backdrop-blur-md bg-white/5 py-6 px-4 select-none rounded-t-lg">
+                <div
+                    class="cbre-text-display-1 font-mono text-white text-3xl md:text-5xl lg:text-6xl tracking-wider font-bold pt-0 pb-2 md:pb-4">
+                    Register</div>
+                <div class="cbre-text-body-md text-white text-lg md:text-xl lg:text-2xl font-light opacity-90 py-0">
+                    Property
+                    Management
+                    System</div>
+            </div>
 
-                <form @submit.prevent="handleSignup"
-                    class="flex-1 shadow-lg bg-ct-dark-200 rounded-2xl px-8 py-6 space-y-4 flex flex-col justify-center">
-                    <div class="title font-spaceMono px-0 text-2xl font-bold mb-4">Sign Up</div>
+            <!-- Form Section -->
+            <div class="bg-black/30 backdrop-blur-md shadow-xl p-6 md:p-8 rounded-b-lg rounded-t-none mt-0">
+                <form @submit.prevent="handleSignup" class="flex flex-col space-y-5 md:space-y-6">
 
-                    <div class="flex flex-col">
-                        <label class="text-sm font-medium text-gray-300 mb-1">Name</label>
-                        <input v-model="form.name" type="text" placeholder="Your Name"
-                            class="w-full px-4 py-2 rounded-lg bg-white/10 border border-gray-400 text-white focus:outline-none focus:border-white placeholder-gray-400" />
+                    <div class="space-y-4">
+                        <div class="flex flex-col space-y-2">
+                            <label class="cbre-text-label-sm font-normal text-white/90 select-none">Name</label>
+                            <UInput v-model="name" size="xl" type="text" placeholder="Enter your name" variant="none"
+                                class="w-full"
+                                :ui="{ base: 'tracking-widest rounded-none bg-white/10 text-white placeholder-gray-400 focus:ring-1 focus:ring-white border border-white/40 focus:border-white/50' }"
+                                required />
+                        </div>
+
+                        <div class="flex flex-col space-y-2">
+                            <label class="cbre-text-label-sm font-normal text-white/90 select-none">Email</label>
+                            <UInput v-model="email" size="xl" type="email" placeholder="Enter your email" variant="none"
+                                class="w-full"
+                                :ui="{ base: 'tracking-widest rounded-none bg-white/10 text-white placeholder-gray-400 focus:ring-1 focus:ring-white border border-white/40 focus:border-white/50' }"
+                                required @blur="validateEmail" id="signup-email" />
+                        </div>
+
+                        <div class="flex flex-col space-y-2">
+                            <label class="cbre-text-label-sm font-normal text-white/90 select-none">Password</label>
+                            <UInput v-model="password" size="xl" type="password" placeholder="Create a password"
+                                variant="none" class="w-full"
+                                :ui="{ base: 'tracking-widest rounded-none bg-white/10 text-white placeholder-gray-400 focus:ring-1 focus:ring-white border border-white/40 focus:border-white/50' }"
+                                required />
+                        </div>
+
+                        <div class="flex flex-col space-y-2">
+                            <label class="cbre-text-label-sm font-normal text-white/90 select-none">Confirm
+                                Password</label>
+                            <UInput v-model="confirmPassword" size="xl" type="password"
+                                placeholder="Confirm your password" variant="none" class="w-full"
+                                :ui="{ base: 'tracking-widest rounded-none bg-white/10 text-white placeholder-gray-400 focus:ring-1 focus:ring-white border border-white/40 focus:border-white/50' }"
+                                required />
+                        </div>
                     </div>
 
-                    <div class="flex flex-col">
-                        <label class="text-sm font-medium text-gray-300 mb-1">Email</label>
-                        <input v-model="form.email" type="email" placeholder="Your Email"
-                            class="w-full px-4 py-2 rounded-lg bg-white/10 border border-gray-400 text-white focus:outline-none focus:border-white placeholder-gray-400" />
+                    <UButton type="submit" block size="xl" :loading="isLoading" :disabled="!isValid" variant="ghost"
+                        :ui="{ base: 'rounded-none font-bold uppercase tracking-wider disabled:bg-white disabled:opacity-100 disabled:cursor-not-allowed' }"
+                        :class="['mt-4 transition-transform active:scale-[0.98]', isValid ? 'text-white bg-cbre-green hover:bg-cbre-green-light' : 'text-gray-400 ring-1 ring-inset ring-gray-200']">
+                        {{ isLoading ? 'Creating Account...' : 'Request Access' }}
+                    </UButton>
+
+                    <div class="flex justify-center items-center gap-2 my-2 select-none">
+                        <span class="text-gray-300">Already have an account? </span>
+                        <NuxtLink to="/login"
+                            class="cbre-text-link-underline-slide font-normal text-white cursor-pointer w-fit">
+                            Sign In
+                        </NuxtLink>
                     </div>
 
-                    <div class="flex flex-col">
-                        <label class="text-sm font-medium text-gray-300 mb-1">Password</label>
-                        <input v-model="form.password" type="password" placeholder="Create Password"
-                            class="w-full px-4 py-2 rounded-lg bg-white/10 border border-gray-400 text-white focus:outline-none focus:border-white placeholder-gray-400" />
+                    <div
+                        class="cbre-text-meta font-light text-gray-300/50 my-4 text-justify break-words text-sm md:text-base leading-none select-none">
+                        EULA – You acknowledge and agree to use this system for your sole and
+                        exclusive benefit only while you are employed in CBRE Korea.
                     </div>
-
-                    <div class="flex flex-col">
-                        <label class="text-sm font-medium text-gray-300 mb-1">Confirm
-                            Password</label>
-                        <input v-model="form.confirmed" type="password" placeholder="Confirm Password"
-                            class="w-full px-4 py-2 rounded-lg bg-white/10 border border-gray-400 text-white focus:outline-none focus:border-white placeholder-gray-400" />
-                    </div>
-
-                    <div v-if="errorMessage" class="text-red-400 text-sm text-center mt-2">
-                        {{ errorMessage }}
-                    </div>
-
-                    <button class="button font-bold" type="submit" :disabled="!isFormValid || isLoading"
-                        :class="isFormValid && !isLoading ? 'bg-cbre_primary_2 text-white hover:bg-cbre_primary_1' : 'bg-cbre_primary_1/60 text-cbre_primary_5/50 cursor-not-allowed'">
-                        <span v-if="isLoading">Processing...</span>
-                        <span v-else>Request Account</span>
-                    </button>
-
-                    <div class="register text-center mt-4">
-                        <span class="text-gray-300">Have an account? </span>
-                        <a href="/login" class="hover:underline cursor-pointer text-white font-bold">Log
-                            in</a>
-                    </div>
-
                 </form>
-
             </div>
         </div>
     </main>
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, computed } from 'vue';
-import { useRouter } from 'vue-router';
+import { ref, computed } from 'vue';
 
 definePageMeta({
     layout: 'auth-layout',
-    middleware: 'auth',
-    auth: {
-        unauthenticatedOnly: true,
-        navigateAuthenticatedTo: '/',
-    },
+    middleware: defineNuxtRouteMiddleware((to, from) => {
+        const { loggedIn } = useUserSession()
+        if (loggedIn.value) {
+            return navigateTo('/')
+        }
+    }),
 });
 
 const router = useRouter();
+const { showToast } = useAppToast();
+
+const name = ref('');
+const email = ref('');
+const password = ref('');
+const confirmPassword = ref('');
 const isLoading = ref(false);
-const errorMessage = ref('');
+const emailError = ref('');
 
-const form = reactive({
-    name: '',
-    email: '',
-    password: '',
-    confirmed: ''
+// Validation
+const isValid = computed(() => {
+    const isEmailValid = email.value.trim().length > 0;
+    const isNameValid = name.value.trim().length > 0;
+    const isPasswordValid = password.value.trim().length > 0;
+    const isPasswordMatch = password.value === confirmPassword.value;
+
+    return isEmailValid && isNameValid && isPasswordValid && isPasswordMatch;
 });
 
-// 이메일 형식 검사
-const isValidEmail = (email: string) => {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return re.test(email);
-};
-
-// 폼 유효성 검사
-const isFormValid = computed(() => {
-    return (
-        form.name.trim().length > 0 &&
-        isValidEmail(form.email) &&
-        form.password.length >= 4 && // 최소 길이 예시
-        form.password === form.confirmed
-    );
-});
-
-// 이메일 중복 체크 API
-const checkEmailExists = async (email: string) => {
+const checkEmailExists = async (emailStr: string) => {
     try {
-        const result = await $fetch<boolean>(`/api/auth/checkemail?email=${email}`);
-        return result; // true면 중복
+        const exists = await $fetch<boolean>(`/api/auth/checkemail?email=${emailStr}`);
+        return exists;
     } catch (e) {
         return false;
     }
 };
 
+const validateEmail = async () => {
+    if (!email.value) {
+        emailError.value = '';
+        return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email.value)) {
+        showToast('Invalid Email', 'danger', {
+            description: 'Please enter in an email format.'
+        });
+        email.value = '';
+        return;
+    }
+
+    // 회원가입에서는 이메일이 이미 존재하면 에러
+    const exists = await checkEmailExists(email.value);
+    if (exists) {
+        showToast('Email Exists', 'danger', {
+            description: 'This email is already registered. Please sign in.'
+        });
+        email.value = '';
+        emailError.value = 'Email already exists';
+    } else {
+        emailError.value = '';
+    }
+};
+
 const handleSignup = async () => {
-    if (!isFormValid.value) {
-        if (form.password !== form.confirmed) errorMessage.value = "Passwords do not match.";
-        else if (!isValidEmail(form.email)) errorMessage.value = "Invalid email format.";
+    if (!isValid.value) {
+        if (password.value !== confirmPassword.value) {
+            showToast('Password Mismatch', 'warning', {
+                description: 'Passwords do not match.'
+            });
+        }
         return;
     }
 
     isLoading.value = true;
-    errorMessage.value = '';
 
     try {
-        // 1. 이메일 중복 체크
-        const isTaken = await checkEmailExists(form.email);
-        if (isTaken) {
-            errorMessage.value = "Email is already taken.";
-            isLoading.value = false;
-            return;
-        }
-
-        // 2. 회원가입 요청
-        await $fetch("/api/auth/register", {
-            method: "POST",
+        await $fetch('/api/auth/register', {
+            method: 'POST',
             body: {
-                name: form.name,
-                email: form.email,
-                password: form.password
+                name: name.value,
+                email: email.value,
+                password: password.value,
             }
         });
 
-        // 성공 시 로그인 페이지로 이동
-        router.push({ name: "login" });
+        showToast('Success', 'success', {
+            description: 'Account created successfully. Please sign in.'
+        });
 
+        router.push('/login');
     } catch (error: any) {
-        console.error("Signup error:", error);
-        errorMessage.value = error.data?.message || "Failed to create account.";
+        console.error('Registration Error:', error);
+        const errorMsg = error.data?.message || 'Failed to create account.';
+        showToast('Registration Failed', 'danger', {
+            description: errorMsg
+        });
     } finally {
         isLoading.value = false;
     }
 }
 </script>
-
-<style scoped>
-/* 기존 스타일 유지 + 일부 조정 */
-.header {
-    position: absolute;
-    top: 0;
-    width: 100%;
-    height: 100px;
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-}
-
-.login-form-wrapper {
-    position: relative;
-    width: 100%;
-    height: 60vh;
-    /* 폼이 길어졌으므로 높이 조정 */
-}
-
-.login-form-title {
-    padding: 1vh 0;
-    backdrop-filter: blur(10px);
-    font-weight: 600;
-}
-
-.login-form-bg {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(10px);
-    z-index: 50;
-}
-
-.login-form {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    z-index: 60;
-    color: white;
-    padding: 20px 40px;
-    display: flex;
-    flex-direction: column;
-}
-
-.login-form .button {
-    width: 100%;
-    height: 45px;
-    outline: none;
-    border-radius: 8px;
-    margin: 20px 0;
-    font-size: 16px;
-    transition: background-color 0.3s;
-}
-</style>

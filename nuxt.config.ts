@@ -145,7 +145,7 @@ export default defineNuxtConfig({
 
   // Nuxt UI 설정
   ui: {
-    // colors: ['primary', 'secondary', 'success', 'info', 'warning', 'error', 'cbre-green']
+    //color: ['primary', 'secondary', 'success', 'info', 'warning', 'error', 'cbre-green']
   },
 
   // 다크 모드 비활성화 (시스템 설정 무시하고 라이트 모드 고정)

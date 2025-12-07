@@ -1,10 +1,8 @@
 /// <reference path="../.nuxt/nuxt.d.ts" />
 export default defineAppConfig({
     ui: {
-        colors: {
-            primary: 'primary',
-            neutral: 'cool',
-        },
+        primary: 'primary',
+        gray: 'cool',
         button: {
             defaultVariants: {
                 size: 'md',
