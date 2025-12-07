@@ -1201,4 +1201,28 @@
         @apply text-sm text-[var(--color-primary-4)] font-normal leading-relaxed;
         font-family: var(--font-calibre);
     }
+
+    /* === Toast Notification Overrides === */
+    /* .cbre-toast-root {
+        @apply relative overflow-hidden shadow-lg rounded-lg ring ring-gray-200 dark:ring-gray-800 p-4 flex gap-2.5 focus:outline-none;
+        background-color: white !important;
+    }
+
+    .dark .cbre-toast-root {
+        background-color: #111827 !important;
+    }
+
+    .cbre-toast-wrapper {
+        @apply w-0 flex-1 flex flex-col;
+    }
+    */
+    .cbre-toast-title {
+        font-size: 2rem !important;
+        line-height: 1.2 !important;
+    }
+
+    .cbre-toast-description {
+        font-size: 1.6rem !important;
+        line-height: 1.4 !important;
+    }
 }

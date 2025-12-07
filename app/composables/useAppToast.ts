@@ -8,7 +8,16 @@ export const useAppToast = () => {
                 type === 'info' ? 'i-heroicons-information-circle' :
                     'i-heroicons-check-circle';
 
-        toast.add({ title: message, color, icon, ...options });
+        toast.add({
+            title: message,
+            color,
+            icon,
+            ui: {
+                title: 'cbre-toast-title font-medium text-gray-900 dark:text-white',
+                description: 'mt-1 cbre-toast-description text-gray-500 dark:text-gray-400'
+            },
+            ...options
+        });
     };
 
     return {

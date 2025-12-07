@@ -84,3 +84,35 @@ onMounted(() => {
 ### **CSRF Errors**
 - **Issue**: API calls blocked by CSRF protection.
 - **Fix**: In `nuxt.config.ts`, use `routeRules` to exclude specific API paths if necessary (e.g., `/api/_nuxt_icon/**`), but keep `csrf: true` globally.
+
+---
+
+## 6. Nuxt UI & App Config
+
+### **Styling / Config Changes Ignored**
+- **Issue**: Changes in `app.config.ts` (e.g., Toast size, Component colors) are ignored, or custom Tailwind classes (`text-[3rem]`) are not generated.
+- **Root Causes**:
+    1.  **Wrong Location**: If `nuxt.config.ts` sets `srcDir: 'app'`, then `app.config.ts` **MUST** be located in `app/app.config.ts`.
+    2.  **Wrong Key**: Nuxt UI v3 (and v2) have different config keys (`toaster` vs `notifications`).
+    3.  **Tailwind Scan**: Tailwind JIT does not scan `app.config.ts` by default.
+- **Fix**:
+    1.  **Move File**: `app.config.ts` -> `app/app.config.ts`.
+    2.  **Update Config Key**: Use `toaster` for Nuxt UI v3 (check documentation version).
+    3.  **Update Tailwind**: Add `'./app/app.config.ts'` to `tailwind.config.ts` content list.
+
+---
+
+## 7. Theme & Dark Mode
+
+### **Unexpected Dark Mode**
+- **Issue**: The application renders in Dark Mode even when no dark theme was explicitly configured.
+- **Cause**: Nuxt UI (via `@nuxtjs/color-mode`) defaults to `preference: 'system'`. If the user's OS is in Dark Mode, the app automatically applies the `.dark` class.
+- **Fix**: Force Light Mode in `nuxt.config.ts` if strict branding is required.
+    ```typescript
+    export default defineNuxtConfig({
+      colorMode: {
+        preference: 'light',
+        fallback: 'light'
+      }
+    })
+    ```

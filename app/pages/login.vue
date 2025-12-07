@@ -85,7 +85,7 @@ definePageMeta({
 
 const router = useRouter();
 const { fetch: refreshSession } = useUserSession();
-const toast = useToast();
+const { showToast } = useAppToast();
 
 const email = ref('');
 const password = ref('');
@@ -113,22 +113,18 @@ const handleLogin = async () => {
             }
         });
 
-        toast.add({
-            title: 'Success',
-            description: 'Signed in successfully',
-            color: 'success',
-            icon: 'i-heroicons-check-circle',
+
+
+        showToast('Success', 'success', {
+            description: 'Signed in successfully'
         });
 
         try {
             await refreshSession();
         } catch (sessionErr) {
             console.error('Session refresh failed:', sessionErr);
-            toast.add({
-                title: 'Warning',
-                description: 'Session refresh failed, but login succeeded.',
-                color: 'warning',
-                icon: 'i-heroicons-exclamation-triangle',
+            showToast('Warning', 'warning', {
+                description: 'Session refresh failed, but login succeeded.'
             });
         }
 
@@ -137,11 +133,8 @@ const handleLogin = async () => {
         console.error('Full Login Error object:', error);
         errorMessage.value = error.data?.message || 'Invalid email or password.';
 
-        toast.add({
-            title: 'Login Failed',
-            description: errorMessage.value,
-            color: 'error',
-            icon: 'i-heroicons-x-circle',
+        showToast('Login Failed', 'danger', {
+            description: errorMessage.value
         });
     } finally {
         isLoading.value = false;
@@ -168,11 +161,8 @@ const validateEmail = async () => {
     // 기본 이메일 형식 체크
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email.value)) {
-        toast.add({
-            title: 'Invalid Email',
-            description: 'Please enter in an email format.',
-            color: 'error',
-            icon: 'i-heroicons-exclamation-circle',
+        showToast('Invalid Email', 'danger', {
+            description: 'Please enter in an email format.'
         });
 
         email.value = '';
@@ -186,11 +176,8 @@ const validateEmail = async () => {
 
     const exists = await checkEmailExists(email.value);
     if (!exists) {
-        toast.add({
-            title: 'Invalid Email',
-            description: 'The email address you entered does not exist.',
-            color: 'error',
-            icon: 'i-heroicons-exclamation-circle',
+        showToast('Invalid Email', 'danger', {
+            description: 'The email address you entered does not exist.'
         });
     } else {
         emailError.value = '';

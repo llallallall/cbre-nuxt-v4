@@ -146,5 +146,17 @@ export default defineNuxtConfig({
   // Nuxt UI 설정
   ui: {
     // colors: ['primary', 'secondary', 'success', 'info', 'warning', 'error', 'cbre-green']
+  },
+
+  // 다크 모드 비활성화 (시스템 설정 무시하고 라이트 모드 고정)
+  colorMode: {
+    preference: 'light',
+    fallback: 'light',
+    hid: 'nuxt-color-mode-script',
+    globalName: '__NUXT_COLOR_MODE__',
+    componentName: 'ColorScheme',
+    classPrefix: '',
+    classSuffix: '-mode',
+    storageKey: 'nuxt-color-mode'
   }
 })

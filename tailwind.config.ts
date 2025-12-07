@@ -11,6 +11,7 @@ export default <Config>{
         './app/app.vue',
         './app/error.vue',
         './nuxt.config.{js,ts}',
+        './app/app.config.ts',
     ],
     theme: {
         container: {
