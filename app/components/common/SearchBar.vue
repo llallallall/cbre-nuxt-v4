@@ -1,11 +1,8 @@
 <template>
-        <div class="relative w-full max-w-md">
-                <input type="text" :value="keyword" @input="updateKeyword" @keyup.enter="$emit('search')"
-                        placeholder="Search..."
-                        class="w-full pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:border-cbre_primary_1 transition-colors" />
-                <div class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
-                        <UIcon name="i-heroicons-magnifying-glass" class="w-5 h-5" />
-                </div>
+        <div class="w-full max-w-md">
+                <UInput :model-value="keyword" @update:model-value="emit('update:keyword', $event)"
+                        @keyup.enter="$emit('search')" icon="i-heroicons-magnifying-glass" placeholder="Search..."
+                        class="w-full placeholder:tracking-widest rounded-none" color="primary" variant="outline" />
         </div>
 </template>
 
@@ -16,8 +13,4 @@ defineProps<{
 
 const emit = defineEmits(['update:keyword', 'search']);
 
-const updateKeyword = (event: Event) => {
-        const target = event.target as HTMLInputElement;
-        emit('update:keyword', target.value);
-};
 </script>

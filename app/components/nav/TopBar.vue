@@ -31,7 +31,7 @@
 						<div class="relative flex items-center">
 							<input v-model="searchText" type="text" name="search"
 								autocomplete="off" @keyup.enter="onSearchText()"
-								class="w-[24rem] bg-transparent border-b text-[1.5rem] pb-1 focus:outline-none transition-all duration-300"
+								class="w-[24rem] bg-transparent border-b text-[1.5rem] pb-1 focus:outline-none transition-all duration-300 placeholder:tracking-widest"
 								:class="isLightMode ? 'border-cbre-green/30 text-cbre-green placeholder-cbre-green/60 focus:border-cbre-green' : 'border-white/30 text-white placeholder-white/60 focus:border-white'"
 								:placeholder="$t('search_placeholder')" />
 							<div v-if="isHydrationComplete"

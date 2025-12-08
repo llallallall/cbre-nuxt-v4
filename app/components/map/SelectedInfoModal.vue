@@ -91,7 +91,7 @@
                                                                                 }}</span>
                                                                         <span class="cbre-text-body-md font-medium">{{
                                                                                 item.profitability?.grade || 'N/A'
-                                                                                }}</span>
+                                                                        }}</span>
                                                                 </div>
                                                                 <div class="flex flex-col">
                                                                         <span
@@ -115,7 +115,9 @@
                                                                 <div v-for="preview in item.propertyImageFile"
                                                                         :key="preview.id"
                                                                         class="w-[100px] h-[75px] min-w-[100px] border border-gray-200 rounded-sm overflow-hidden cursor-pointer hover:opacity-90">
-                                                                        <img :src="getThumbnailUrl(preview.fileUrl)"
+                                                                        <NuxtImg :src="getThumbnailUrl(preview.fileUrl)"
+                                                                                width="100" height="75" format="webp"
+                                                                                loading="lazy"
                                                                                 class="object-cover w-full h-full" />
                                                                 </div>
                                                         </div>
