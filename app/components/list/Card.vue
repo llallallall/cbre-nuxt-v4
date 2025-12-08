@@ -32,7 +32,7 @@
                 </div>
 
                 <div v-if="itemsToDisplay.length > 0" class="relative pb-10"
-                        :class="uiStore.isGridView ? 'grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4' : 'flex flex-col gap-4'">
+                        :class="uiStore.isGridView ? 'grid grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4 4xl:grid-cols-4  gap-4' : 'flex flex-col gap-4'">
 
                         <template v-for="(item, index) in itemsToDisplay" :key="item.id">
                                 <ListItem :item="item" :idx="totalCount - index" />

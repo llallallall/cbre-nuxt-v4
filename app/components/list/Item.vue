@@ -1,5 +1,5 @@
 <template>
-        <div class="w-full h-full relative select-none border border-gray-200 bg-white"
+        <div class="w-full h-full relative select-none border border-gray-200 bg-white aspect-[1/1]"
                 :class="isKept ? 'bg-cbre-green-50' : ''">
 
                 <div v-if="uiStore.isGridView" class="flex flex-col w-full h-full">
@@ -67,7 +67,7 @@
                                                 ,&nbsp;
                                         </div>
                                         <div v-if="item.location?.addressProvince">{{ item.location.addressProvince
-                                                }}</div>
+                                        }}</div>
                                 </div>
 
                                 <!--Transaction -->
