@@ -30,6 +30,29 @@
     "confirm_message": "Are you sure?",
     "confirm_button": "Confirm",
     "cancel_button": "Cancel",
+    "map": {
+        "selected_info": {
+            "title": "Selected Properties Information",
+            "download_excel": "Download Excel",
+            "filter": {
+                "no_transaction": "No Trans.",
+                "sales": "Sales",
+                "leases": "Leases",
+                "desc": "The filters above apply only to the screen view. Use the toggles on each card to control data inclusion in the Excel download."
+            },
+            "card": {
+                "grade": "Grade",
+                "sector": "Sector",
+                "sub_sector": "Sub",
+                "transaction_sales": "Sales Transaction",
+                "transaction_leases": "Lease Transaction",
+                "status": {
+                    "included": "INCLUDED",
+                    "excluded": "EXCLUDED"
+                }
+            }
+        }
+    },
     "selected_properties_info": "Selected Properties Information",
     "download": "Download",
     "excel": "Excel",

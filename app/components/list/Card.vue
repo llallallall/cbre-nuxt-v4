@@ -2,7 +2,7 @@
         <div id="container" :class="containerClasses" class="w-full h-full overflow-y-auto pr-1">
 
                 <div v-if="totalCount > 0"
-                        class="sticky top-0 z-30 bg-white/95 backdrop-blur-sm py-2 border-b mb-4 flex justify-between items-center">
+                        class="sticky top-0 z-20 bg-white/95 backdrop-blur-sm py-2 border-b mb-4 flex justify-between items-center">
                         <div class="text-xl flex items-center">
                                 <span class="font-bold text-2xl px-2">{{ totalCount }}</span> {{ $t('properties_found')
                                 }}

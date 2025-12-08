@@ -30,6 +30,29 @@
     "confirm_message": "확실합니까?",
     "confirm_button": "확인",
     "cancel_button": "취소",
+    "map": {
+        "selected_info": {
+            "title": "선택된 자산 정보",
+            "download_excel": "엑셀 다운로드",
+            "filter": {
+                "no_transaction": "거래 없음",
+                "sales": "매각",
+                "leases": "임대",
+                "desc": "위의 필터는 화면 보기에만 적용됩니다. 엑셀 다운로드에 포함할 데이터는 각 카드의 토글을 사용하세요."
+            },
+            "card": {
+                "grade": "등급",
+                "sector": "섹터",
+                "sub_sector": "서브",
+                "transaction_sales": "매각 거래",
+                "transaction_leases": "임대 거래",
+                "status": {
+                    "included": "포함됨",
+                    "excluded": "제외됨"
+                }
+            }
+        }
+    },
     "selected_properties_info": "선택된 자산 정보",
     "download": "다운로드",
     "excel": "엑셀",

@@ -10,28 +10,32 @@
 				<div id="DesktopLeftMenu" class="flex items-center h-full gap-6">
 					<!-- Logo Section -->
 					<div class="cbre-nav-brand group" @click="navigateTo('/')">
-						<IconCBRELogo class="w-[9rem] h-[2.8rem] group-hover:opacity-90 transition-opacity"
+						<IconCBRELogo
+							class="w-[9rem] h-[2.8rem] group-hover:opacity-90 transition-opacity"
 							:class="isLightMode ? 'text-cbre-green' : 'text-white'" />
-						<sub class="cbre-nav-brand-label" :class="isLightMode ? 'text-cbre-green' : '!text-white'">{{
-							$t('nav.brand.map') }}</sub>
+						<sub class="cbre-nav-brand-label"
+							:class="isLightMode ? 'text-cbre-green' : '!text-white'">{{
+								$t('nav.brand.map') }}</sub>
 					</div>
 
 					<!-- App Title -->
 					<div class="cbre-layout-topbar-separator border-gray-200/20">
 						<span class="cbre-nav-title transition-colors duration-300"
-							:class="isLightMode ? 'text-cbre-green/90' : '!text-white/90'">{{ $t('nav.brand.title')
+							:class="isLightMode ? 'text-cbre-green/90' : '!text-white/90'">{{
+								$t('nav.brand.title')
 							}}</span>
 					</div>
 
 					<!-- Search Bar -->
 					<div class="flex items-center ml-8 relative group">
 						<div class="relative flex items-center">
-							<input v-model="searchText" type="text" name="search" autocomplete="off"
-								@keyup.enter="onSearchText()"
+							<input v-model="searchText" type="text" name="search"
+								autocomplete="off" @keyup.enter="onSearchText()"
 								class="w-[24rem] bg-transparent border-b text-[1.5rem] pb-1 focus:outline-none transition-all duration-300"
 								:class="isLightMode ? 'border-cbre-green/30 text-cbre-green placeholder-cbre-green/60 focus:border-cbre-green' : 'border-white/30 text-white placeholder-white/60 focus:border-white'"
 								:placeholder="$t('search_placeholder')" />
-							<div v-if="isHydrationComplete" class="absolute right-0 bottom-2 cursor-pointer"
+							<div v-if="isHydrationComplete"
+								class="absolute right-0 bottom-2 cursor-pointer"
 								@click="propertyStore.searchKeyword === '' ? onSearchText() : onResetKeyword()">
 								<IconMagnifier v-if="propertyStore.searchKeyword === ''"
 									class="w-[1.8rem] h-[1.8rem] hover:text-cbre-accent transition-colors"
@@ -46,7 +50,8 @@
 
 				<div id="DesktopRightMenu" class="flex items-center gap-8 z-20">
 					<!-- Transaction Type Filter -->
-					<UPopover v-model:open="openTransaction" mode="click" :popper="{ placement: 'bottom-end' }">
+					<UPopover v-model:open="openTransaction" mode="click"
+						:popper="{ placement: 'bottom-end' }">
 						<button class="group cbre-button-topbar-menu"
 							:class="isLightMode ? 'text-cbre-green' : 'text-white'">
 							<span>{{ $t('nav.filter.transaction') }}</span>
@@ -67,7 +72,8 @@
 									:class="{ 'font-bold text-cbre-green-800': selectedTransaction?.name === type.name }"
 									@click="selectTransaction(type)">
 									{{ $t(type.labelKey) }}
-									<UIcon v-if="selectedTransaction?.name === type.name" name="i-heroicons-check"
+									<UIcon v-if="selectedTransaction?.name === type.name"
+										name="i-heroicons-check"
 										class="text-cbre-green-800" />
 								</div>
 							</div>
@@ -75,11 +81,13 @@
 					</UPopover>
 
 					<!-- Sector Filter -->
-					<UPopover v-model:open="openSectors" mode="click" :popper="{ placement: 'bottom-end' }">
+					<UPopover v-model:open="openSectors" mode="click"
+						:popper="{ placement: 'bottom-end' }">
 						<button class="group cbre-button-topbar-menu"
 							:class="isLightMode ? 'text-cbre-green' : 'text-white'">
 							<span>{{ $t('nav.filter.sector') }}</span>
-							<span v-if="selectedSectors.length > 0" class="cbre-text-topbar-sublabel"
+							<span v-if="selectedSectors.length > 0"
+								class="cbre-text-topbar-sublabel"
 								:class="isLightMode ? 'text-cbre-green/80' : 'text-white/80'">
 								({{ selectedSectorsDisplay }})
 							</span>
@@ -95,7 +103,8 @@
 									:class="{ 'font-bold text-cbre-green-800': isSelectedSector(option) }"
 									@click="toggleSelectedSector(option)">
 									{{ $t(option.labelKey) }}
-									<UIcon v-if="isSelectedSector(option)" name="i-heroicons-check"
+									<UIcon v-if="isSelectedSector(option)"
+										name="i-heroicons-check"
 										class="text-cbre-green-800" />
 								</div>
 							</div>
@@ -103,11 +112,13 @@
 					</UPopover>
 
 					<!-- SubSector Filter -->
-					<UPopover v-model:open="openSubSectors" mode="click" :popper="{ placement: 'bottom-end' }">
+					<UPopover v-model:open="openSubSectors" mode="click"
+						:popper="{ placement: 'bottom-end' }">
 						<button class="group cbre-button-topbar-menu"
 							:class="isLightMode ? 'text-cbre-green' : 'text-white'">
 							<span>{{ $t('nav.filter.subsector') }}</span>
-							<span v-if="selectedSubSectors.length > 0" class="cbre-text-topbar-sublabel"
+							<span v-if="selectedSubSectors.length > 0"
+								class="cbre-text-topbar-sublabel"
 								:class="isLightMode ? 'text-cbre-green/80' : 'text-white/80'">
 								({{ selectedSubSectorsDisplay }})
 							</span>
@@ -123,7 +134,8 @@
 									:class="{ 'font-bold text-cbre-green-800': isSelectedSubSector(option) }"
 									@click="toggleSelectedSubSector(option)">
 									{{ $t(option.labelKey) }}
-									<UIcon v-if="isSelectedSubSector(option)" name="i-heroicons-check"
+									<UIcon v-if="isSelectedSubSector(option)"
+										name="i-heroicons-check"
 										class="text-cbre-green-800" />
 								</div>
 							</div>
@@ -131,10 +143,11 @@
 					</UPopover>
 
 					<!-- More Menu -->
-					<button @click="openMenuMore = !openMenuMore" class="group cbre-button-topbar-menu" :class="[
-						isLightMode ? 'text-cbre-green' : 'text-white',
-						{ 'border-cbre-accent text-cbre-green-800': openMenuMore }
-					]">
+					<button @click="openMenuMore = !openMenuMore"
+						class="group cbre-button-topbar-menu" :class="[
+							isLightMode ? 'text-cbre-green' : 'text-white',
+							{ 'border-cbre-accent text-cbre-green-800': openMenuMore }
+						]">
 						<span>{{ $t('nav.menu.more') }}</span>
 						<UIcon name="i-heroicons-chevron-down"
 							class="w-4 h-4 transition-transform duration-200 group-hover:rotate-180"
@@ -164,10 +177,12 @@
 				<div id="MobileLeftMenu" class="flex items-center h-full gap-4">
 					<!-- Logo Section -->
 					<div class="cbre-nav-brand group" @click="navigateTo('/')">
-						<IconCBRELogo class="w-[9rem] h-[2.8rem] group-hover:opacity-90 transition-opacity"
+						<IconCBRELogo
+							class="w-[9rem] h-[2.8rem] group-hover:opacity-90 transition-opacity"
 							:class="isLightMode ? 'text-cbre-green' : 'text-white'" />
-						<sub class="cbre-nav-brand-label" :class="isLightMode ? 'text-cbre-green' : '!text-white'">{{
-							$t('nav.brand.map') }}</sub>
+						<sub class="cbre-nav-brand-label"
+							:class="isLightMode ? 'text-cbre-green' : '!text-white'">{{
+								$t('nav.brand.map') }}</sub>
 					</div>
 
 					<!-- App Title -->
@@ -187,12 +202,15 @@
 					<NavUserMenu :isLightMode="isLightMode" />
 
 					<!-- Mobile Search Icon -->
-					<button @click="openTextSearchPannel = !openTextSearchPannel" class="focus:outline-none p-1">
-						<IconMagnifier class="w-10 h-10 transition-colors transform translate-y-[-2px]"
+					<button @click="openTextSearchPannel = !openTextSearchPannel"
+						class="focus:outline-none p-1">
+						<IconMagnifier
+							class="w-10 h-10 transition-colors transform translate-y-[-2px]"
 							:class="isLightMode ? 'text-cbre-green' : 'text-white hover:text-white/80'" />
 					</button>
 					<!-- Mobile Menu (Filter) Icon -->
-					<button @click="openFilterPannel = !openFilterPannel" class="focus:outline-none p-1">
+					<button @click="openFilterPannel = !openFilterPannel"
+						class="focus:outline-none p-1">
 						<UIcon :name="openFilterPannel ? 'i-heroicons-x-mark' : 'i-heroicons-bars-3'"
 							class="transition-colors" size="30"
 							:class="isLightMode ? 'text-cbre-green' : 'text-white hover:text-white/80'" />
@@ -236,7 +254,7 @@
 
 
 		<!-- Backdrop -->
-		<div v-if="uiStore.isMenuOverlay || uiStore.isUserProfileModalOpen"
+		<div v-if="uiStore.isMenuOverlay || uiStore.isUserProfileModalOpen || uiStore.showInfoModal"
 			class="fixed inset-0 top-[8rem] bg-black/40 backdrop-blur-sm z-30" @click="collapseAll"></div>
 	</div>
 </template>

@@ -1,5 +1,5 @@
 <template>
-    <div id="DefaultLayout" class="bg-cbre-gray-50 min-h-screen font-sans text-cbre-slate">
+    <div id="DefaultLayout" class="bg-cbre-gray-50 min-h-screen font-sans text-cbre-slate relative z-0">
         <NavTopBar />
         <main class="cbre-layout-content-scroll">
             <slot />

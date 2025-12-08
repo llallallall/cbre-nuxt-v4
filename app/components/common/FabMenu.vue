@@ -1,10 +1,10 @@
 <template>
     <div ref="fabElement" class="floating-snap-btn-wrapper drop-shadow-xl select-none left"
-        :class="uiStore.isFabOpen ? 'fab-active z-100' : 'z-10'">
+        :class="uiStore.isFabOpen ? 'fab-active z-[80]' : 'z-10'">
 
         <!-- BEGIN :: Floating Button -->
         <div class="fab-btn shadow-md flex justify-center cursor-pointer"
-            :class="uiStore.isFabOpen ? 'bg-cbre-green-500/90 delay-300 z-100' : 'bg-cbre-green-500 z-10'">
+            :class="uiStore.isFabOpen ? 'bg-cbre-green-500/90 delay-300 z-[80]' : 'bg-cbre-green-500 z-10'">
             <UIcon name="i-ion-add-sharp" :class="uiStore.isFabOpen ? 'rotate-45' : 'rotate-0'"
                 class="transition-transform duration-300 w-6 h-6 text-white" />
         </div>
@@ -172,8 +172,8 @@ const openInfoModal = () => {
 }
 
 .fab-menu-li label {
-    font-size: 8px;
-    font-weight: 600;
+    font-size: 10px;
+    font-weight: 500;
     color: gray;
 }
 
