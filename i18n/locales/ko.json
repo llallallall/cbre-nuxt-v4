@@ -234,7 +234,9 @@
     },
     "list": {
         "load_more": "더 보기",
-        "all_loaded": "모든 자산을 불러왔습니다"
+        "all_loaded": "모든 자산을 불러왔습니다",
+        "refresh_success": "자산 목록이 성공적으로 갱신되었습니다.",
+        "refresh_failed": "자산 목록 갱신에 실패했습니다."
     },
     "demo": {
         "typography": {
@@ -406,6 +408,8 @@
         }
     },
     "common": {
+        "success": "성공",
+        "error": "오류",
         "fab": {
             "reset_title": "선택 초기화",
             "info_title": "거래 정보 보기",

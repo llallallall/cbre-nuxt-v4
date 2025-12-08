@@ -9,7 +9,7 @@
                                 <UButton icon="i-heroicons-arrow-path" size="xl" color="neutral" variant="ghost"
                                         class="group ml-2 bg-transparent hover:bg-transparent"
                                         :ui="{ leadingIcon: 'group-hover:animate-spin' }"
-                                        @click="propertyStore.fetchInitialData(true)" />
+                                        @click="handleRefresh" />
                         </div>
 
                         <div class="flex items-center gap-2 mr-2">
@@ -51,7 +51,7 @@
                         <div ref="loadMoreTrigger" class="h-4 w-full -mt-10 pointer-events-none opacity-0"></div>
 
                         <div v-if="!hasMoreItems && totalCount > 0"
-                                class="col-span-full text-center py-8 text-gray-400 text-sm font-medium">
+                                class="col-span-full text-center py-8 text-gray-400 text-2xl font-medium">
                                 {{ $t('list.all_loaded') }}
                         </div>
 
@@ -59,7 +59,7 @@
 
                 <div v-else class="h-full flex flex-col items-center justify-center text-gray-400">
                         <UIcon name="i-heroicons-building-office-2" class="w-12 h-12 mb-2 opacity-50" />
-                        <p>{{ $t('no_properties_found') }}</p>
+                        <p class="text-2xl font-medium">{{ $t('no_properties_found') }}</p>
                 </div>
 
         </div>
@@ -70,6 +70,7 @@ import { ref, watch, onMounted, onUnmounted, computed } from 'vue';
 import { useUiStore } from '~/stores/ui';
 import { usePropertyStore } from '~/stores/property';
 import type { PropertyType } from '~/types/property.type';
+import { useAppToast } from '~/composables/useAppToast';
 import ListItem from './Item.vue';
 
 const props = defineProps({
@@ -81,6 +82,17 @@ const props = defineProps({
 
 const uiStore = useUiStore();
 const propertyStore = usePropertyStore();
+const { t } = useI18n();
+const { showToast } = useAppToast();
+
+const handleRefresh = async () => {
+    const success = await propertyStore.fetchInitialData(true);
+    if (success) {
+        showToast(t('common.success'), 'success', { description: t('list.refresh_success') });
+    } else {
+        showToast(t('common.error'), 'danger', { description: t('list.refresh_failed') });
+    }
+};
 
 const itemsToDisplay = ref<PropertyType[]>([]);
 const page = ref(1);

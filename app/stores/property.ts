@@ -190,9 +190,9 @@ export const usePropertyStore = defineStore('property', {
         // A. 데이터 로드 액션
         // ------------------------------------------------------------------
 
-        async fetchInitialData(force = false) {
+        async fetchInitialData(force = false): Promise<boolean> {
             const statusStore = useStatusStore();
-            if (!force && this.initialDataLoaded && this.initialProperties.length > 0) return;
+            if (!force && this.initialDataLoaded && this.initialProperties.length > 0) return true;
             statusStore.setGlobalLoading(true, 'fetchInitialData');
 
             try {
@@ -207,10 +207,12 @@ export const usePropertyStore = defineStore('property', {
                 this.generateAdminListFromInitial();
                 this.applyFilter();
                 this.initialDataLoaded = true;
+                return true;
 
             } catch (e: any) {
                 statusStore.setGlobalError('Failed to load initial property data.', 'fetchInitialData');
                 console.error('fetchInitialData Error:', e);
+                return false;
             } finally {
                 statusStore.setGlobalLoading(false);
             }

@@ -232,7 +232,9 @@
     },
     "list": {
         "load_more": "Load More",
-        "all_loaded": "All properties loaded"
+        "all_loaded": "All properties loaded",
+        "refresh_success": "Property list refreshed successfully.",
+        "refresh_failed": "Failed to refresh property list."
     },
     "demo": {
         "typography": {
@@ -404,6 +406,8 @@
         }
     },
     "common": {
+        "success": "Success",
+        "error": "Error",
         "fab": {
             "reset_title": "Reset Selection",
             "info_title": "Show Transaction Info",
