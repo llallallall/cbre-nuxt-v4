@@ -3,8 +3,8 @@
 import { defineStore } from 'pinia';
 import { usePropertyStore } from './property';
 // 💡 분리된 상수와 타입 Import
-import { MapDefaultOptions } from '../context/mapData';
-import type { MapState, Coordinate } from '../types/map.type';
+import { MapLangOptions, MapStyleOptions } from '../context/mapData';
+import type { MapState, Coordinate, MapOptionStyle } from '../types/map.type';
 
 // ----------------------------------------------------------------------
 // 1. 초기 상태 정의
@@ -23,11 +23,18 @@ const getInitialState = (): MapState => ({
         curve: 1,
     },
 
-    mapLanguage: null,
+    mapLanguagePlugin: null,
 
     // 💡 context/mapData.ts에서 가져온 기본값 사용
-    mapStyleOptions: { ...MapDefaultOptions },
+    selectedMapStyle: MapStyleOptions[0] as MapOptionStyle,
+    mapStyleOptions: MapStyleOptions as MapOptionStyle[],
+    selectedMapLanguage: MapLangOptions[0] as MapOptionStyle,
+    mapLanguageOptions: MapLangOptions as MapOptionStyle[],
+    mapRatio: 60,
+    mapPitch: 10,
+    mapBearing: 0,
 
+    mapStyleId: MapStyleOptions[0]?.id as string,
     searchedMarkers: [],
     searchedMarkersChanged: Date.now(),
     kakaoAddress: [],
@@ -100,6 +107,10 @@ export const useMapStore = defineStore('map', {
         clearSearchedMarkers() {
             this.searchedMarkers = [];
             this.searchedMarkersChanged = Date.now();
-        }
+        },
+
+        setMapStyleId(id: string) {
+            this.mapStyleId = id;
+        },
     },
 });

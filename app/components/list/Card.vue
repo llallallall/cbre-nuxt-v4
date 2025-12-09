@@ -8,8 +8,7 @@
                                 }}
                                 <UButton icon="i-heroicons-arrow-path" size="xl" color="neutral" variant="ghost"
                                         class="group ml-2 bg-transparent hover:bg-transparent"
-                                        :ui="{ leadingIcon: 'group-hover:animate-spin' }"
-                                        @click="handleRefresh" />
+                                        :ui="{ leadingIcon: 'group-hover:animate-spin' }" @click="handleRefresh" />
                         </div>
 
                         <div class="flex items-center gap-2 mr-2">
@@ -32,7 +31,7 @@
                 </div>
 
                 <div v-if="itemsToDisplay.length > 0" class="relative pb-10"
-                        :class="uiStore.isGridView ? 'grid grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4 4xl:grid-cols-4  gap-4' : 'flex flex-col gap-4'">
+                        :class="uiStore.isGridView ? 'grid grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3 5xl:grid-cols-4  gap-4' : 'flex flex-col gap-4'">
 
                         <template v-for="(item, index) in itemsToDisplay" :key="item.id">
                                 <ListItem :item="item" :idx="totalCount - index" />
@@ -86,12 +85,12 @@ const { t } = useI18n();
 const { showToast } = useAppToast();
 
 const handleRefresh = async () => {
-    const success = await propertyStore.fetchInitialData(true);
-    if (success) {
-        showToast(t('common.success'), 'success', { description: t('list.refresh_success') });
-    } else {
-        showToast(t('common.error'), 'danger', { description: t('list.refresh_failed') });
-    }
+        const success = await propertyStore.fetchInitialData(true);
+        if (success) {
+                showToast(t('common.success'), 'success', { description: t('list.refresh_success') });
+        } else {
+                showToast(t('common.error'), 'danger', { description: t('list.refresh_failed') });
+        }
 };
 
 const itemsToDisplay = ref<PropertyType[]>([]);

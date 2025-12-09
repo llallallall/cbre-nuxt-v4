@@ -9,8 +9,8 @@
                                 zoom: mapZoom,
                                 maxZoom: maxZoom,
                                 minZoom: minZoom,
-                                pitch: mapStore.mapStyleOptions.MapPitch,
-                                bearing: mapStore.mapStyleOptions.MapBearing,
+                                pitch: mapStore.mapPitch,
+                                bearing: mapStore.mapBearing,
                                 antialias: true,
                                 attributionControl: false,
                                 preserveDrawingBuffer: true,
@@ -62,10 +62,10 @@
                         <MapboxNavigationControl position="top-left" :options="{ showCompass: true, showZoom: true }" />
                         <MapboxFullscreenControl v-if="fullscreenSupported" position="top-right" />
 
-                        <StyleControl v-show="propertyStore.initialDataLoaded" />
-                        <SelectionControl v-show="propertyStore.initialDataLoaded" />
+                        <StyleControl v-if="propertyStore.initialDataLoaded" />
+                        <SelectionControl v-if="propertyStore.initialDataLoaded" />
                         <DrawControl v-if="propertyStore.initialDataLoaded" />
-                        <ExportControl v-show="propertyStore.initialDataLoaded" />
+                        <ExportControl v-if="propertyStore.initialDataLoaded" />
 
                         <MapboxGeolocateControl position="top-left" />
 
@@ -99,7 +99,7 @@ import { useMapStore } from '~/stores/map';
 import { usePropertyStore } from '~/stores/property';
 import { useUiStore } from '~/stores/ui';
 import { useFormat } from '~/composables/useFormat';
-import { mapCenter, mapZoom, maxZoom, minZoom, mapStyleId, LAYER_3D_BUILDINGS, LAYER_CLUSTERS, LAYER_CLUSTER_COUNT, LAYER_UNCLUSTERED_POINT, LAYER_MINIMAP_POINTS, LAYER_MINIMAP_HEAT } from '~/context/mapData';
+import { mapCenter, mapZoom, maxZoom, minZoom, LAYER_3D_BUILDINGS, LAYER_CLUSTERS, LAYER_CLUSTER_COUNT, LAYER_UNCLUSTERED_POINT, LAYER_MINIMAP_POINTS, LAYER_MINIMAP_HEAT } from '~/context/mapData';
 import StyleControl from './StyleControl.vue';
 import SelectionControl from './SelectionControl.vue';
 import DrawControl from './DrawControl.vue';
@@ -121,6 +121,8 @@ const miniMapRef = useMapboxRef("cbre-minimap");
 const printArea = ref(null);
 const imagesLoaded = ref(false);
 const fullscreenSupported = ref(false);
+
+const mapStyleId = computed(() => mapStore.mapStyleId);
 
 onMounted(async () => {
         if (typeof document !== 'undefined') {
@@ -203,17 +205,17 @@ watch(flyTo, (nv) => {
 
 
 
-useMapboxBeforeLoad("cbre-map", async (map) => {
-        if (import.meta.client) {
-                const MapboxLanguage = (await import("@mapbox/mapbox-gl-language")).default;
-                mapStore.mapLanguage = new MapboxLanguage({ defaultLanguage: "en" });
-        }
-
-        const p1 = new Promise<void>((resolve, reject) => {
-                map.loadImage('/images/pin.png', (error, image) => {
+// Image loading logic extracted to handle style changes
+const loadMapImages = (map: any) => {
+        const p1 = new Promise<void>((resolve) => {
+                if (map.hasImage('pin')) {
+                        resolve();
+                        return;
+                }
+                map.loadImage('/images/pin.png', (error: any, image: any) => {
                         if (error) {
                                 console.error('Failed to load pin.png', error);
-                                resolve(); // Resolve anyway to avoid blocking
+                                resolve();
                                 return;
                         }
                         if (!map.hasImage('pin') && image) map.addImage('pin', image);
@@ -221,8 +223,12 @@ useMapboxBeforeLoad("cbre-map", async (map) => {
                 });
         });
 
-        const p2 = new Promise<void>((resolve, reject) => {
-                map.loadImage('/images/red-pin.png', (error, image) => {
+        const p2 = new Promise<void>((resolve) => {
+                if (map.hasImage('redPin')) {
+                        resolve();
+                        return;
+                }
+                map.loadImage('/images/red-pin.png', (error: any, image: any) => {
                         if (error) {
                                 console.error('Failed to load red-pin.png', error);
                                 resolve();
@@ -236,12 +242,25 @@ useMapboxBeforeLoad("cbre-map", async (map) => {
         Promise.all([p1, p2]).then(() => {
                 imagesLoaded.value = true;
         });
+};
+
+useMapboxBeforeLoad("cbre-map", async (map) => {
+        if (import.meta.client) {
+                const MapboxLanguage = (await import("@mapbox/mapbox-gl-language")).default;
+                mapStore.mapLanguagePlugin = new MapboxLanguage({ defaultLanguage: mapStore.selectedMapLanguage?.value || "en" });
+        }
+        loadMapImages(map);
 });
 
 useMapbox("cbre-map", async (map) => {
-        if (mapStore.mapLanguage) {
-                map.addControl(mapStore.mapLanguage);
+        if (mapStore.mapLanguagePlugin) {
+                map.addControl(mapStore.mapLanguagePlugin);
         }
+
+        // Re-add images when style changes (e.g. invalidating sprites)
+        map.on('styledata', () => {
+                loadMapImages(map);
+        });
 
         map.on('click', 'clusters', (e) => {
                 const features = map.queryRenderedFeatures(e.point, { layers: ['clusters'] });

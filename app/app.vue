@@ -5,6 +5,8 @@
             <NuxtPage />
         </NuxtLayout>
 
+        <CommonGlobalLoader />
+
         <CommonConfirmModal v-if="confirmStore.isOpen" :model-value="confirmStore.isOpen"
             :title="confirmStore.options.title" :message="confirmStore.options.message"
             :confirm-text="confirmStore.options.confirmText" :cancel-text="confirmStore.options.cancelText"

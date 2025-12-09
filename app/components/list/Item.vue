@@ -5,7 +5,8 @@
                 <div v-if="uiStore.isGridView" class="flex flex-col w-full h-full aspect-[1/1]">
 
                         <!-- Image Section -->
-                        <div class="cbre-image-wrapper relative w-full aspect-[3/2] bg-gray-100 overflow-hidden shrink-0">
+                        <div
+                                class="cbre-image-wrapper relative w-full aspect-[3/2] bg-gray-100 overflow-hidden shrink-0">
                                 <NuxtImg :src="currentImage" class="cbre-image" loading="lazy" alt="Property Image"
                                         @error="handleImageError" @click.stop="openSlide" />
 
@@ -34,7 +35,7 @@
                                         bg-cbre-green-600
                                          text-white tracking-wider p-0 ">
                                         <div class="flex items-center font-financier font-normal"
-                                             :class="!uiStore.isExpandedList ? 'text-[1.0rem] px-1.5 py-0.5' : 'text-[2rem] px-4 py-1'">
+                                                :class="!uiStore.isExpandedList ? 'text-[1.0rem] px-1.5 py-0.5' : 'text-[2rem] px-4 py-1'">
                                                 {{ item?.sector?.name }}
                                         </div>
                                         <div v-if="item.subsector"
@@ -60,16 +61,19 @@
 
                                 <!-- Address -->
                                 <div class="w-full text-cbre-green-900 font-normal break-keep"
-                                     :class="!uiStore.isExpandedList ? 'text-xs leading-normal line-clamp-2' : 'flex text-2xl truncate leading-normal'">
+                                        :class="!uiStore.isExpandedList ? 'text-xs leading-normal line-clamp-2' : 'flex text-2xl truncate leading-normal'">
                                         <div v-if="item.location?.addressFull">{{ item.location.addressFull }}</div>
                                 </div>
-                                
-                                <div class="w-full text-gray-500"
-                                     :class="!uiStore.isExpandedList ? 'text-[10px] leading-normal mt-0.5 truncate' : 'flex text-lg truncate leading-normal'">
-                                        <span v-if="item.location?.addressCity && item.location?.addressCity !== '[NULL]'">
+
+                                <div class="w-full text-gray-500 hidden xl:flex"
+                                        :class="!uiStore.isExpandedList ? 'text-[10px] leading-normal mt-0.5 truncate' : 'text-lg truncate leading-normal'">
+                                        <span
+                                                v-if="item.location?.addressCity && item.location?.addressCity !== '[NULL]'">
                                                 {{ item.location.addressCity }}
                                         </span>
-                                        <span v-if="item.location?.addressCity && item.location?.addressCity !== '[NULL]' && item.location?.addressProvince">, </span>
+                                        <span
+                                                v-if="item.location?.addressCity && item.location?.addressCity !== '[NULL]' && item.location?.addressProvince">,
+                                        </span>
                                         <span v-if="item.location?.addressProvince">
                                                 {{ item.location.addressProvince }}
                                         </span>
@@ -77,13 +81,13 @@
 
                                 <!-- Transaction -->
                                 <div class="flex w-full text-gray-500 truncate mt-auto pt-2"
-                                     :class="!uiStore.isExpandedList ? 'text-[10px]' : 'text-lg'">
+                                        :class="!uiStore.isExpandedList ? 'text-[10px]' : 'text-lg'">
                                         <div v-if="item.transaction[0]?.type" class="cbre-button-primary"
-                                             :class="!uiStore.isExpandedList ? 'px-1.5 py-0.5 text-[10px]' : ''">
+                                                :class="!uiStore.isExpandedList ? 'px-1.5 py-0.5 text-[10px]' : ''">
                                                 {{ item.transaction[0].type }}
                                         </div>
                                         <div v-if="item.transaction[0]?.year" class="cbre-button-secondary ml-1.5"
-                                             :class="!uiStore.isExpandedList ? 'px-1.5 py-0.5 text-[10px]' : ''">
+                                                :class="!uiStore.isExpandedList ? 'px-1.5 py-0.5 text-[10px]' : ''">
                                                 {{ item.transaction[0].year }}
                                         </div>
                                 </div>
@@ -94,8 +98,8 @@
                                 <!-- Image -->
                                 <div class="cbre-image-wrapper relative bg-gray-100 overflow-hidden w-[120px] min-w-[120px] h-full shrink-0"
                                         @click="openDetail">
-                                        <NuxtImg :src="currentImage" class="cbre-image cover w-full h-full" loading="lazy"
-                                                alt="Property Image" @error="handleImageError" />
+                                        <NuxtImg :src="currentImage" class="cbre-image cover w-full h-full"
+                                                loading="lazy" alt="Property Image" @error="handleImageError" />
                                 </div>
                                 <!-- Status Badges -->
                                 <div class="flex flex-col justify-center items-center gap-2 bg-cbre-green-500">
@@ -257,62 +261,62 @@ const nameRef = ref<HTMLElement | null>(null);
 const listAddressRef = ref<HTMLElement | null>(null);
 
 const adjustTextSize = async () => {
-    await nextTick();
-    const elements = [nameRef.value, listAddressRef.value];
-    
-    elements.forEach(el => {
-        if (!el) return;
-        
-        // Reset to measure natural width
-        el.style.fontSize = '';
-        
-        // If overflowing
-        if (el.scrollWidth > el.clientWidth) {
-            // Calculate ratio (Safe guard min size to 1.5rem to be readable)
-            const currentSize = 2; // base size in rem (This is an approximation, ideally we get computed style)
-            // But we can just use the scroll/client ratio to scale down whatever the current computed size is effectively
-            
-            // However, the class binding changes font-size based on isExpandedList.
-            // So we should capture the 'intended' size from the class first?
-            // Actually, if we reset style.fontSize = '', the class takes over.
-            // So el.scrollWidth is based on the class-defined font size.
-            // We just need to scale it down.
-            
-            const ratio = el.clientWidth / el.scrollWidth;
-            // Get current font size from computed style to apply exact ratio
-            const computedFontSize = parseFloat(window.getComputedStyle(el).fontSize); 
-            // computedFontSize is in px.
-            
-            // We want to apply scaling on top of the CSS class size.
-            // If we just set a fixed rem based on ratio, it overrides the class.
-            
-            // Let's stick to the previous logic but maybe more dynamic
-            // If we assume the base is what CSS provides.
-            // newSizePx = computedFontSize * ratio
-            
-            // Convert back to rem for consistency or just use px
-             const newSizePx = Math.max(computedFontSize * ratio, 12); // min 12px
-             el.style.fontSize = `${newSizePx}px`;
-        }
-    });
+        await nextTick();
+        const elements = [nameRef.value, listAddressRef.value];
+
+        elements.forEach(el => {
+                if (!el) return;
+
+                // Reset to measure natural width
+                el.style.fontSize = '';
+
+                // If overflowing
+                if (el.scrollWidth > el.clientWidth) {
+                        // Calculate ratio (Safe guard min size to 1.5rem to be readable)
+                        const currentSize = 2; // base size in rem (This is an approximation, ideally we get computed style)
+                        // But we can just use the scroll/client ratio to scale down whatever the current computed size is effectively
+
+                        // However, the class binding changes font-size based on isExpandedList.
+                        // So we should capture the 'intended' size from the class first?
+                        // Actually, if we reset style.fontSize = '', the class takes over.
+                        // So el.scrollWidth is based on the class-defined font size.
+                        // We just need to scale it down.
+
+                        const ratio = el.clientWidth / el.scrollWidth;
+                        // Get current font size from computed style to apply exact ratio
+                        const computedFontSize = parseFloat(window.getComputedStyle(el).fontSize);
+                        // computedFontSize is in px.
+
+                        // We want to apply scaling on top of the CSS class size.
+                        // If we just set a fixed rem based on ratio, it overrides the class.
+
+                        // Let's stick to the previous logic but maybe more dynamic
+                        // If we assume the base is what CSS provides.
+                        // newSizePx = computedFontSize * ratio
+
+                        // Convert back to rem for consistency or just use px
+                        const newSizePx = Math.max(computedFontSize * ratio, 12); // min 12px
+                        el.style.fontSize = `${newSizePx}px`;
+                }
+        });
 };
 
 let resizeObserver: ResizeObserver | null = null;
 
 onMounted(() => {
-    // Initial check
-    setTimeout(adjustTextSize, 100);
+        // Initial check
+        setTimeout(adjustTextSize, 100);
 
-    // Setup ResizeObserver
-    resizeObserver = new ResizeObserver(() => {
-        adjustTextSize();
-    });
+        // Setup ResizeObserver
+        resizeObserver = new ResizeObserver(() => {
+                adjustTextSize();
+        });
 
-    if (nameRef.value) resizeObserver.observe(nameRef.value);
-    if (listAddressRef.value) resizeObserver.observe(listAddressRef.value);
-    
-    // Also watch parent container or window for layout shifts that might not directly trigger element resize immediately if they are purely flex based without container query
-    // But observing the element itself is usually enough as its clientWidth changes.
+        if (nameRef.value) resizeObserver.observe(nameRef.value);
+        if (listAddressRef.value) resizeObserver.observe(listAddressRef.value);
+
+        // Also watch parent container or window for layout shifts that might not directly trigger element resize immediately if they are purely flex based without container query
+        // But observing the element itself is usually enough as its clientWidth changes.
 });
 
 // Watch item specifically for content changes
@@ -320,7 +324,7 @@ watch(() => props.item, adjustTextSize, { deep: true });
 
 // Listen to UI store changes directly just in case transition delays affect observer
 watch(() => uiStore.isExpandedList, () => {
-    setTimeout(adjustTextSize, 300); // Wait for transition
+        setTimeout(adjustTextSize, 300); // Wait for transition
 });
 
 </script>

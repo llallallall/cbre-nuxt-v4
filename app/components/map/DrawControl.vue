@@ -14,6 +14,9 @@ import MapboxDraw from "@mapbox/mapbox-gl-draw";
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import area from '@turf/area';
 import length from '@turf/length';
+import { useMapStore } from '~/stores/map';
+import { storeToRefs } from 'pinia';
+import { watch } from 'vue'; // Ensure watch is imported
 
 const draw = shallowRef<any>(null);
 const mapRef = shallowRef<any>(null);
@@ -41,6 +44,14 @@ const updateArea = (e: any) => {
         calculatedArea.value = 0;
         calculatedLength.value = 0;
     }
+};
+
+// Sync Draw -> Store (Delete)
+const onDrawDelete = (e: any) => {
+    // If user deletes a point, we could update store... 
+    // But currently store is just a "list of results". 
+    // If visual point is gone, that's enough for the user requirement "trash functionality".
+    updateArea(e);
 };
 
 useMapbox('cbre-map', (map) => {
@@ -235,30 +246,12 @@ onUnmounted(() => {
     }
 });
 
-// --- Search Marker Integration ---
-import { useMapStore } from '~/stores/map';
-import { storeToRefs } from 'pinia';
-import { watch } from 'vue';
-
 const mapStore = useMapStore();
 const { searchedMarkersChanged } = storeToRefs(mapStore);
 
 // Sync Store -> Draw
 watch(searchedMarkersChanged, () => {
     if (!draw.value) return;
-
-    // 1. Clear existing search points (optional, or just add new ones?)
-    // If we want to fully sync, we might want to clear "previously added search points".
-    // But Draw doesn't tag them easily unless we add properties.
-    // For now, let's just ADD new markers. If user wants to clear, they use "Clear Button".
-
-    // Actually, if we want "Clear All" to work, we need to be able to remove them.
-    // Let's assume mapStore.searchedMarkers is the list we want to SHOW.
-    // So we should remove old ones? Converting all searchedMarkers to Draw Features.
-
-    // Strategy: We won't wipe ALL draw features (user might have drawn polygons), 
-    // but typically search replaces previous search.
-    // Let's just Loop and Add.
 
     mapStore.searchedMarkers.forEach(marker => {
         const feature = {
@@ -276,13 +269,7 @@ watch(searchedMarkersChanged, () => {
     });
 });
 
-// Sync Draw -> Store (Delete)
-const onDrawDelete = (e: any) => {
-    // If user deletes a point, we could update store... 
-    // But currently store is just a "list of results". 
-    // If visual point is gone, that's enough for the user requirement "trash functionality".
-    updateArea(e);
-};
+
 
 // Update onDrawDelete listener above in onUnmounted
 

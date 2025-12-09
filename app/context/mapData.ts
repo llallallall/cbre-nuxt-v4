@@ -215,29 +215,22 @@ export const LAYER_MINIMAP_HEAT = {
     }
 };
 
-// Map Style Options
-export const MapStyle = [
-    { name: 'Light', value: 'mapbox://styles/mapbox/light-v11' },
-    { name: 'Dark', value: 'mapbox://styles/mapbox/dark-v11' },
-    { name: 'Streets', value: 'mapbox://styles/mapbox/streets-v12' },
-    { name: 'Outdoors', value: 'mapbox://styles/mapbox/outdoors-v12' },
-    { name: 'Satellite', value: 'mapbox://styles/mapbox/satellite-v9' },
-    { name: 'SatelliteStreets', value: 'mapbox://styles/mapbox/satellite-streets-v12' },
-    { name: 'NavigationDay', value: 'mapbox://styles/mapbox/navigation-day-v1' },
-    { name: 'NavigationNight', value: 'mapbox://styles/mapbox/navigation-night-v1' },
+// Map Options
+export const MapStyleOptions = [
+    { label: 'Standard', value: 'mapbox://styles/mapbox/standard', id: 'standard', avatar: { src: 'images/mapbox/Standard.png', alt: 'Light' } },
+    { label: 'StandardSatellite', value: 'mapbox://styles/mapbox/standard-satellite', id: 'standard-satellite', avatar: { src: 'images/mapbox/StandardSatellite.png', alt: 'Light' } },
+    { label: 'Light', value: 'mapbox://styles/mapbox/light-v11', id: 'light-v11', avatar: { src: 'images/mapbox/Light.png', alt: 'Light' } },
+    { label: 'Dark', value: 'mapbox://styles/mapbox/dark-v11', id: 'dark-v11', avatar: { src: 'images/mapbox/Dark.png', alt: 'Dark' } },
+    { label: 'Streets', value: 'mapbox://styles/mapbox/streets-v12', id: 'streets-v12', avatar: { src: 'images/mapbox/Streets.png', alt: 'Streets' } },
+    { label: 'Outdoors', value: 'mapbox://styles/mapbox/outdoors-v12', id: 'outdoors-v12', avatar: { src: 'images/mapbox/Outdoors.png', alt: 'Outdoors' } },
+    { label: 'Satellite', value: 'mapbox://styles/mapbox/satellite-v9', id: 'satellite-v9', avatar: { src: 'images/mapbox/Satellite.png', alt: 'Satellite' } },
+    { label: 'SatelliteStreets', value: 'mapbox://styles/mapbox/satellite-streets-v12', id: 'satellite-streets-v12', avatar: { src: 'images/mapbox/SatelliteStreets.png', alt: 'SatelliteStreets' } },
+    { label: 'NavigationDay', value: 'mapbox://styles/mapbox/navigation-day-v1', id: 'navigation-day-v1', avatar: { src: 'images/mapbox/NavigationDay.png', alt: 'NavigationDay' } },
+    { label: 'NavigationNight', value: 'mapbox://styles/mapbox/navigation-night-v1', id: 'navigation-night-v1', avatar: { src: 'images/mapbox/NavigationNight.png', alt: 'NavigationNight' } },
 ];
 
-export const MapLang = [
-    { name: 'English', value: 'en' },
-    { name: 'Korean', value: 'ko' },
+export const MapLangOptions = [
+    { label: 'English', value: 'en', avatar: { src: 'images/icons/FlagUS.svg', alt: 'English' } },
+    { label: 'Korean', value: 'ko', avatar: { src: 'images/icons/FlagKR.svg', alt: 'Korean' } },
 ];
 
-export const MapDefaultOptions = {
-    MapStyle: MapStyle[0],
-    MapLang: MapLang[0],
-    MapRatio: 60,
-    MapPitch: 10,
-    MapBearing: 0,
-};
-
-export type MapDefaultOptionsType = typeof MapDefaultOptions;
