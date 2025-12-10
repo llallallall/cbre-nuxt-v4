@@ -13,6 +13,12 @@ export default <Config>{
         './nuxt.config.{js,ts}',
         './app/app.config.ts',
     ],
+    safelist: [
+        {
+            pattern: /(bg|text|ring|border)-white/,
+            variants: ['hover', 'focus', 'active']
+        }
+    ],
     theme: {
         container: {
             center: true,

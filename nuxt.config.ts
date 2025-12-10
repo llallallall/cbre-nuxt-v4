@@ -66,6 +66,7 @@ export default defineNuxtConfig({
 
       // CSP (Content Security Policy): 외부 리소스 허용 규칙
       contentSecurityPolicy: {
+        "default-src": ["'self'", "data:", "blob:"], // 기본 정책 허용
         "img-src": [
           "'self'",
           "data:",
@@ -89,8 +90,10 @@ export default defineNuxtConfig({
         ],
         "connect-src": [
           "'self'",
+          "data:",                        // Data URI 허용 (추가)
           "blob:",                        // Mapbox/Workers 허용
           "https://*.mapbox.com",         // Mapbox API 통신 허용
+          "https://api.mapbox.com",         // Mapbox API 통신 허용
           "https://events.mapbox.com",
           "https://api.iconify.design",   // Iconify API 허용
           "https://api.nuxt.com",          // Nuxt API 허용

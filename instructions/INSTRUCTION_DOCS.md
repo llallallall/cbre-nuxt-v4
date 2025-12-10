@@ -42,4 +42,5 @@ This document contains a curated list of official documentation for the modules 
 | Module | URL | Purpose |
 | :--- | :--- | :--- |
 | **nuxt-mapbox** | [https://nuxt-mapbox.vercel.app](https://nuxt-mapbox.vercel.app) | Mapbox integration for Nuxt. |
+| **Mapbox GL JS** | [https://docs.mapbox.com/mapbox-gl-js/guides/](https://docs.mapbox.com/mapbox-gl-js/guides/) | Official Mapbox GL JS Guides. |
 | **@nuxt/scripts** | [https://scripts.nuxt.com](https://scripts.nuxt.com) | Third-party script management. |

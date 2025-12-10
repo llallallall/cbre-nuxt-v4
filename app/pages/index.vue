@@ -42,7 +42,8 @@ import { usePropertyStore } from '~/stores/property';
 import { useUiStore } from '~/stores/ui';
 
 definePageMeta({
-    layout: 'default'
+    layout: 'default',
+    key: 'main-map-page'
 });
 
 const propertyStore = usePropertyStore();

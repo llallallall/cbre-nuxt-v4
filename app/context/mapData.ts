@@ -217,9 +217,9 @@ export const LAYER_MINIMAP_HEAT = {
 
 // Map Options
 export const MapStyleOptions = [
+    { label: 'Light', value: 'mapbox://styles/mapbox/light-v11', id: 'light-v11', avatar: { src: 'images/mapbox/Light.png', alt: 'Light' } },
     { label: 'Standard', value: 'mapbox://styles/mapbox/standard', id: 'standard', avatar: { src: 'images/mapbox/Standard.png', alt: 'Light' } },
     { label: 'StandardSatellite', value: 'mapbox://styles/mapbox/standard-satellite', id: 'standard-satellite', avatar: { src: 'images/mapbox/StandardSatellite.png', alt: 'Light' } },
-    { label: 'Light', value: 'mapbox://styles/mapbox/light-v11', id: 'light-v11', avatar: { src: 'images/mapbox/Light.png', alt: 'Light' } },
     { label: 'Dark', value: 'mapbox://styles/mapbox/dark-v11', id: 'dark-v11', avatar: { src: 'images/mapbox/Dark.png', alt: 'Dark' } },
     { label: 'Streets', value: 'mapbox://styles/mapbox/streets-v12', id: 'streets-v12', avatar: { src: 'images/mapbox/Streets.png', alt: 'Streets' } },
     { label: 'Outdoors', value: 'mapbox://styles/mapbox/outdoors-v12', id: 'outdoors-v12', avatar: { src: 'images/mapbox/Outdoors.png', alt: 'Outdoors' } },
@@ -234,3 +234,14 @@ export const MapLangOptions = [
     { label: 'Korean', value: 'ko', avatar: { src: 'images/icons/FlagKR.svg', alt: 'Korean' } },
 ];
 
+export const MAPBOX_LOCALE_KO = {
+    'NavigationControl.ZoomIn': '확대',
+    'NavigationControl.ZoomOut': '축소',
+    'NavigationControl.ResetBearing': '회전 초기화',
+    'GeolocateControl.FindMyLocation': '내 위치 찾기',
+    'GeolocateControl.LocationNotAvailable': '위치를 찾을 수 없습니다.',
+    'LogoControl.Title': 'Mapbox',
+    'Map.Title': '지도',
+    'AttributionControl.ToggleAttribution': '정보 토글',
+    'AttributionControl.MapFeedback': '피드백 보내기',
+};

@@ -159,3 +159,73 @@ onMounted(() => {
     - **Remove all quotes** from environment variable values in Portainer/Docker Compose.
     - **Incorrect**: `DATABASE_URL="postgresql://user:pass@host:5432/db"`
     - **Correct**: `DATABASE_URL=postgresql://user:pass@host:5432/db`
+
+---
+
+## 10. Mapbox GL JS Issues
+
+### **`featureNamespace` Warning with Standard Style**
+- **Symptoms**: Console flooding with `"featureNamespace place-A of featureset place-labels's selector is not associated to the same source..."` when using `mapbox://styles/mapbox/standard`.
+- **Cause**: Incompatibilities or internal bugs in Mapbox GL JS v3 when reactive frameworks initialize the complex `standard` style slots.
+- **Fix**:
+    - **Switch Style**: Use Classic styles (e.g., `mapbox://styles/mapbox/light-v11`) which do not use the feature set logic causing this warning.
+    - **Acceptance**: If Standard style is required, the warning may trigger, but functionality is often preserved if correct lifecycle hooks are used (e.g. `on('style.load')` checks).
+
+### **Language Sync on Classic Styles (v1/v2)**
+- **Issue**: `map.setConfigProperty('basemap', 'language', ...)` fails or does nothing on `light-v11` / `streets-v11`.
+- **Cause**: Classic styles do not support the v3 Config API.
+- **Fix**: Manually iterate through style layers and update `text-field` properties.
+    ```javascript
+    style.layers.forEach(layer => {
+        if (layer.source === 'composite' && layer.layout?.['text-field']) {
+            map.setLayoutProperty(layer.id, 'text-field', ['get', `name_${lang}`]);
+        }
+    });
+    ```
+
+### **`mapRef` Null in Event Handlers**
+- **Issue**: `mapRef.value` is null inside button click handlers even after map visual load.
+- **Cause**: Using `@load="onMapLoad"` in template might fire before the ref is bound or instance is ready in some Nuxt environments.
+- **Fix**: ALWAYS use the `useMapbox` composable to capture the instance reliably.
+    ```typescript
+### **`Blocked aria-hidden` Warning**
+- **Symptoms**: Console warning `Blocked aria-hidden on an element because its descendant retained focus`.
+- **Context**: Occurs when using `Headless UI` components (like `USelect`/`Listbox`) inside the map container.
+- **Cause**: Known issue in `Headless UI` v1/v2 where portaled elements (dropdowns) conflict with the accessibility tree management of the root container, especially during HMR (Hot Module Replacement).
+- **Impact**: Mostly harmless in development. If persistent in production, ensure no `aria-hidden="true"` attributes are stuck on the root `#__nuxt` element.
+
+### **Mapbox Initial Language Sync Fails on Refresh**
+- **Issue**: Refreshing the page with a localized URL (e.g., `/ko`) loads the English map properties (`name_en`) despite the locale being correctly set in Vue I18n.
+- **Root Causes**:
+    1.  **Race Condition**: `updateLanguage` runs before the `style.load` event completes, meaning layers aren't ready to be updated.
+    2.  **Default Style Mismatch**: The `mapStore` or `mapData.ts` defines a default style (e.g., `Standard`) that differs from the map's initial prop (`Light`). The implicit style switch resets the language to default (English).
+- **Fix**:
+    1.  **Sync Defaults**: Ensure `MapStyleOptions[0]` in `mapData.ts` matches the `style` prop passed to `<MapboxMap>`.
+    2.  **Robust Listeners**: In `Container.vue`, listen for `style.load` both immediately and via a backup timeout (e.g., 1000ms) to catch hydration delays.
+    3.  **Direct Instance Pass**: Pass the `map` instance directly to the update function to verify `isStyleLoaded()` accurately.
+
+
+### **Mapbox Export Filename Not Changing (Library Limitation)**
+- **Issue**: `@watergis/mapbox-gl-export` ignores the `FileName` option update and always downloads as `map.png` (or random UUID) in some environments.
+- **Root Cause**: The library's internal `generateDownload` logic relies on initial config or fails to append the anchor tag to the DOM, bypassing standard `MutationObserver` interception.
+- **Fix**: **Monkey-Patch `document.createElement`**.
+    - Intercept the creation of `<a>` tags globally.
+    - Wrap the `click()` method to check for map downloads.
+    - Override the `download` attribute *just-in-time* before the click executes.
+    ```typescript
+    const originalCreateElement = document.createElement;
+    document.createElement = function(tagName, options) {
+        const element = originalCreateElement.call(document, tagName, options);
+        if (tagName.toLowerCase() === 'a') {
+            const anchor = element;
+            const originalClick = anchor.click;
+            anchor.click = function() {
+                if (anchor.download?.includes('map')) {
+                    anchor.download = `CBRE_Map_${Date.now()}.png`; // Dynamic Name
+                }
+                originalClick.apply(this);
+            };
+        }
+        return element;
+    };
+    ```
