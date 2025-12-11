@@ -7,8 +7,12 @@
                         <!-- Image Section -->
                         <div
                                 class="cbre-image-wrapper relative w-full aspect-[3/2] bg-gray-100 overflow-hidden shrink-0">
-                                <NuxtImg :src="currentImage" class="cbre-image" loading="lazy" alt="Property Image"
-                                        @error="handleImageError" @click.stop="openSlide" />
+                                <UTooltip :text="$t('tooltip.view_images')" :popper="{ placement: 'bottom' }"
+                                        class="w-full h-full">
+                                        <NuxtImg :src="currentImage" class="cbre-image" loading="lazy"
+                                                alt="Property Image" @error="handleImageError"
+                                                @click.stop="openSlide" />
+                                </UTooltip>
 
                                 <!-- Hover Overlay: Info -->
                                 <div class="absolute inset-0 bg-gray-100/95 p-6 flex flex-col justify-center transform transition-transform duration-300 ease-in-out z-20 border-l-4 border-accent truncate"
@@ -18,16 +22,22 @@
 
                                 <!-- Status Badges -->
                                 <div class="absolute top-2 right-2 flex flex-col gap-2 z-10">
-                                        <div @click.stop="moveToMap" title="Show on Map"
-                                                class="flex justify-center items-center text-white hover:text-accent cursor-pointer transition-all">
-                                                <UIcon name="i-heroicons-map-pin-solid" class="text-[20px] shadow-md" />
-                                        </div>
+                                        <UTooltip :text="$t('tooltip.move_to_map')" :popper="{ placement: 'left' }">
+                                                <div @click.stop="moveToMap"
+                                                        class="flex justify-center items-center text-white hover:text-accent cursor-pointer transition-all">
+                                                        <UIcon name="i-heroicons-map-pin-solid"
+                                                                class="text-[20px] shadow-md" />
+                                                </div>
+                                        </UTooltip>
 
-                                        <div @click.stop="toggleKeep" title="Keep Property"
-                                                class="flex justify-center items-center cursor-pointer transition-all"
-                                                :class="isKept ? 'text-yellow-400' : 'text-white hover:text-yellow-400'">
-                                                <UIcon name="i-heroicons-star-solid" class="shadow-md text-[20px]" />
-                                        </div>
+                                        <UTooltip :text="$t('tooltip.keep_property')" :popper="{ placement: 'left' }">
+                                                <div @click.stop="toggleKeep"
+                                                        class="flex justify-center items-center cursor-pointer transition-all"
+                                                        :class="isKept ? 'text-yellow-400' : 'text-white hover:text-yellow-400'">
+                                                        <UIcon name="i-heroicons-star-solid"
+                                                                class="shadow-md text-[20px]" />
+                                                </div>
+                                        </UTooltip>
                                 </div>
 
                                 <!-- Sector / Subsector -->
@@ -52,11 +62,13 @@
                                 @mouseenter="isHovered = true" @mouseleave="isHovered = false">
 
                                 <!-- Name -->
-                                <div class="cbre-text-link-fade-arrow font-semibold text-cbre-green-900 cursor-pointer hover:text-cbre-green-600 transition-colors overflow-hidden"
-                                        :class="!uiStore.isExpandedList ? 'text-[1.2rem] leading-tight mb-1 line-clamp-2' : 'text-[2rem] leading-tight line-clamp-2'"
-                                        @click="openDetail" :title="item.name">
-                                        {{ item.name }}
-                                </div>
+                                <UTooltip :text="$t('tooltip.view_details')" :popper="{ placement: 'top' }">
+                                        <div class="cbre-text-link-fade-arrow font-semibold text-cbre-green-900 cursor-pointer hover:text-cbre-green-600 transition-colors overflow-hidden"
+                                                :class="!uiStore.isExpandedList ? 'text-[1.2rem] leading-tight mb-1 line-clamp-2' : 'text-[2rem] leading-tight line-clamp-2'"
+                                                @click="openDetail">
+                                                {{ item.name }}
+                                        </div>
+                                </UTooltip>
 
                                 <!-- Address -->
                                 <div class="w-full text-cbre-green-900 font-normal break-keep"
@@ -97,21 +109,30 @@
                                 <!-- Image -->
                                 <div class="cbre-image-wrapper relative bg-gray-100 overflow-hidden w-[120px] min-w-[120px] h-full shrink-0"
                                         @click="openDetail">
-                                        <NuxtImg :src="currentImage" class="cbre-image cover w-full h-full"
-                                                loading="lazy" alt="Property Image" @error="handleImageError" />
+                                        <UTooltip :text="$t('tooltip.view_images')" :popper="{ placement: 'right' }"
+                                                class="w-full h-full">
+                                                <NuxtImg :src="currentImage" class="cbre-image cover w-full h-full"
+                                                        loading="lazy" alt="Property Image" @error="handleImageError" />
+                                        </UTooltip>
                                 </div>
                                 <!-- Status Badges -->
                                 <div class="flex flex-col justify-center items-center gap-2 bg-cbre-green-500">
-                                        <div @click.stop="moveToMap" title="Show on Map"
-                                                class="flex justify-center items-center text-white hover:text-accent cursor-pointer transition-all">
-                                                <UIcon name="i-heroicons-map-pin-solid" class="text-[20px] shadow-md" />
-                                        </div>
+                                        <UTooltip :text="$t('tooltip.move_to_map')" :popper="{ placement: 'right' }">
+                                                <div @click.stop="moveToMap"
+                                                        class="flex justify-center items-center text-white hover:text-accent cursor-pointer transition-all">
+                                                        <UIcon name="i-heroicons-map-pin-solid"
+                                                                class="text-[20px] shadow-md" />
+                                                </div>
+                                        </UTooltip>
 
-                                        <div @click.stop="toggleKeep" title="Keep Property"
-                                                class="flex justify-center items-center cursor-pointer transition-all"
-                                                :class="isKept ? 'text-yellow-400' : 'text-white hover:text-yellow-400'">
-                                                <UIcon name="i-heroicons-star-solid" class="shadow-md text-[20px]" />
-                                        </div>
+                                        <UTooltip :text="$t('tooltip.keep_property')" :popper="{ placement: 'right' }">
+                                                <div @click.stop="toggleKeep"
+                                                        class="flex justify-center items-center cursor-pointer transition-all"
+                                                        :class="isKept ? 'text-yellow-400' : 'text-white hover:text-yellow-400'">
+                                                        <UIcon name="i-heroicons-star-solid"
+                                                                class="shadow-md text-[20px]" />
+                                                </div>
+                                        </UTooltip>
                                 </div>
                                 <div class="flex flex-row w-full gap-4 ml-4">
                                         <!-- Sector -->
@@ -131,10 +152,13 @@
                                                 <div class="flex flex-col w-full">
                                                         <!-- Name -->
                                                         <div class="flex flex-row justify-start w-full">
-                                                                <div class="font-semibold text-[2rem] leading-tight text-cbre-green-900 cursor-pointer hover:text-cbre-green-600 transition-colors"
-                                                                        @click="openDetail" :title="item.name">
-                                                                        {{ item.name }}
-                                                                </div>
+                                                                <UTooltip :text="$t('tooltip.view_details')"
+                                                                        :popper="{ placement: 'top' }">
+                                                                        <div class="font-semibold text-[2rem] leading-tight text-cbre-green-900 cursor-pointer hover:text-cbre-green-600 transition-colors"
+                                                                                @click="openDetail">
+                                                                                {{ item.name }}
+                                                                        </div>
+                                                                </UTooltip>
                                                                 <div v-if="item.transaction[0]?.type"
                                                                         class="cbre-button-primary">{{
                                                                                 item.transaction[0].type }}</div>
@@ -154,7 +178,7 @@
                                                                         </div>
                                                                         <div v-if="item.location?.addressProvince">{{
                                                                                 item.location.addressProvince
-                                                                        }}</div>
+                                                                                }}</div>
                                                                 </div>
                                                                 <div ref="listAddressRef"
                                                                         class="flex-1 text-2xl w-full text-cbre-green-900 font-normal truncate border-l-1 border-gray-300 pl-2 whitespace-nowrap overflow-hidden">

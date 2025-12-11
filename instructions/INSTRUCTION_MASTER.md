@@ -49,3 +49,9 @@ Follow this checklist strictly when switching between PCs or starting a new sess
 - **CSS**: Arbitrary Z-Indexes (e.g., `z-[999]`) are **FORBIDDEN**. Use the Semantic Scale in UI Standards.
 - **Styling**: All new classes MUST follow `cbre-[Category]-[Function]-...`.
 - **State**: `SelectedInfoPanel` must NOT be reverted to `InfoModal`.
+
+## 4. UX & Interaction Standards (Tooltip Policy)
+
+1.  **Universal Hover Tooltips**: Every element with user interaction (hover/click) MUST have a `UTooltip`.
+2.  **Descriptive Content**: Tooltip text must be **intuitive and descriptive sentences** (e.g., "Reset map view to default" instead of "Reset"). Avoid single-word titles.
+3.  **History Tracking**: All tooltip implementations must be logged in [`tooltip_history.md`](../tooltip_history.md).

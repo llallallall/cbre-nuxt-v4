@@ -1,15 +1,20 @@
 <template>
         <div class="absolute z-30 flex flex-col gap-4" :class="positionClasses">
                 <!-- Settings Toggle Button -->
-                <UButton color="neutral" variant="outline"
-                        class="shadow-md bg-white rounded-none font-[1100] text-2xl text-black/50 hover:text-opacity-100 hover:text-black p-4"
-                        icon="i-heroicons-cog-6-tooth" @click="isOpened = !isOpened" />
+                <UTooltip :text="$t('tooltip.toggle_settings')" :popper="{ placement: 'right' }">
+                        <UButton color="neutral" variant="outline"
+                                class="shadow-md bg-white rounded-none font-[1100] text-2xl text-black/50 hover:text-opacity-100 hover:text-black p-4"
+                                icon="i-heroicons-cog-6-tooth" @click="isOpened = !isOpened" />
+                </UTooltip>
 
                 <!-- Reset Button -->
-                <UButton v-if="!isResetting" color="neutral" variant="outline"
-                        class="shadow-md bg-white rounded-none font-[1100] text-2xl text-black/50 hover:text-opacity-100 hover:text-black p-4"
-                        icon="i-heroicons-arrow-uturn-left" @click="onReset" />
-                <UButton v-else loading color="neutral" variant="solid" class="shadow-md bg-white rounded-none" />
+                <UTooltip :text="$t('tooltip.reset_view')" :popper="{ placement: 'right' }">
+                        <UButton v-if="!isResetting" color="neutral" variant="outline"
+                                class="shadow-md bg-white rounded-none font-[1100] text-2xl text-black/50 hover:text-opacity-100 hover:text-black p-4"
+                                icon="i-heroicons-arrow-uturn-left" @click="onReset" />
+                        <UButton v-else loading color="neutral" variant="outline"
+                                class="p-4 text-center text-2xl shadow-md bg-white rounded-none" />
+                </UTooltip>
 
                 <!-- Settings Panel -->
                 <div v-if="isOpened"

@@ -10,20 +10,27 @@
         </div>
         <!-- BEGIN :: Expand Section -->
         <ul class="fab-menu-ul select-none">
-            <li class="fab-menu-li shadow-md bg-white !hidden lg:!flex"
-                @click="uiStore.showMiniMap = !uiStore.showMiniMap" :title="$t('common.fab.toggle_title')">
-                <label>{{ $t('toggle') }}</label>
-                <UIcon name="i-ion-map" class="fab-menu-icon" />
-            </li>
-            <li class="fab-menu-li shadow-md bg-white" @click="openInfoModal" :title="$t('common.fab.info_title')">
-                <label>{{ $t('info') }}</label>
-                <UIcon name="i-ion-document-text" class="fab-menu-icon" />
-            </li>
-            <li class="fab-menu-li shadow-md bg-white" @click="resetUserSelection"
-                :title="$t('common.fab.reset_title')">
-                <label>{{ $t('reset') }}</label>
-                <UIcon name="i-ion-refresh" class="fab-menu-icon" />
-            </li>
+            <UTooltip :text="$t('tooltip.toggle_minimap')" :popper="{ placement: 'left' }">
+                <li class="fab-menu-li shadow-md bg-white !hidden lg:!flex"
+                    @click="uiStore.showMiniMap = !uiStore.showMiniMap">
+                    <label>{{ $t('toggle') }}</label>
+                    <UIcon name="i-ion-map" class="fab-menu-icon" />
+                </li>
+            </UTooltip>
+
+            <UTooltip :text="$t('tooltip.show_info')" :popper="{ placement: 'left' }">
+                <li class="fab-menu-li shadow-md bg-white" @click="openInfoModal">
+                    <label>{{ $t('info') }}</label>
+                    <UIcon name="i-ion-document-text" class="fab-menu-icon" />
+                </li>
+            </UTooltip>
+
+            <UTooltip :text="$t('tooltip.reset_filter')" :popper="{ placement: 'left' }">
+                <li class="fab-menu-li shadow-md bg-white" @click="resetUserSelection">
+                    <label>{{ $t('reset') }}</label>
+                    <UIcon name="i-ion-refresh" class="fab-menu-icon" />
+                </li>
+            </UTooltip>
         </ul>
     </div>
 </template>

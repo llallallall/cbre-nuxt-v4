@@ -266,6 +266,9 @@ useMapbox('cbre-map', async (map) => {
                 // Re-load images if style wipe removed them
                 loadMapImages(map);
 
+                // Update Control Tooltips (Native Mapbox Controls)
+                updateControlTooltips();
+
                 // Disable global loader if active
                 if (statusStore.isLoading) {
                         statusStore.setGlobalLoading(false);
@@ -465,6 +468,7 @@ watch(locale, (newLang) => {
         }
 
         updateLanguage(newLang);
+        updateControlTooltips();
 });
 
 // Watch for flyTo actions (e.g. from Sidebar)
@@ -514,6 +518,7 @@ const mapOptions = computed(() => ({
         pitch: mapPitch,
         bearing: mapBearing,
         preserveDrawingBuffer: true, // Required for map export
+        attributionControl: false, // Hide attribution
         // UI Localization
         locale: locale.value === 'ko' ? MAPBOX_LOCALE_KO : undefined
 }));
@@ -536,9 +541,118 @@ const miniMapOptions = computed(() => ({
 }));
 
 // Initialize Mini Map
+// Helper: Update Tooltips for Mapbox Native Controls (DOM Manipulation)
+const updateControlTooltips = () => {
+        // Map of Selector -> I18n Key
+        const tooltipMap = [
+                { selector: '.mapboxgl-ctrl-zoom-in', key: 'tooltip.zoom_in' },
+                { selector: '.mapboxgl-ctrl-zoom-out', key: 'tooltip.zoom_out' },
+                { selector: '.mapboxgl-ctrl-compass', key: 'tooltip.compass' },
+                { selector: '.mapboxgl-ctrl-geolocate', key: 'tooltip.geolocate' },
+                { selector: '.mapboxgl-ctrl-fullscreen', key: 'tooltip.fullscreen' },
+                // Export Control (might be the button itself or container)
+                { selector: '.mapboxgl-ctrl-export button', key: 'tooltip.export' },
+                { selector: '.mapbox-gl-export-control button', key: 'tooltip.export' },
+                // Draw Controls
+                { selector: '.mapbox-gl-draw_point', key: 'tooltip.draw_point' },
+                { selector: '.mapbox-gl-draw_line_string', key: 'tooltip.draw_line' },
+                { selector: '.mapbox-gl-draw_polygon', key: 'tooltip.draw_polygon' },
+                { selector: '.mapbox-gl-draw_trash', key: 'tooltip.draw_trash' },
+        ];
+
+        // Wait a tick for DOM to settle if called immediately
+        setTimeout(() => {
+                const { t } = useI18n(); // Ensure we get the latest translator if needed, though global t is fine in setup
+
+                tooltipMap.forEach(({ selector, key }) => {
+                        const els = document.querySelectorAll(selector);
+                        els.forEach(el => {
+                                if (el instanceof HTMLElement) {
+                                        el.setAttribute('title', t(key));
+                                }
+                        });
+                });
+                console.log('[Container] Updated Mapbox Control Tooltips');
+        }, 1000); // 1s delay to safely catch lazy loaded controls
+};
+
+// Initialize Mini Map
+const miniMapMarkers: Record<string, any> = {};
+let miniMapMarkersOnScreen: Record<string, any> = {};
+
+// Helper: Create Mini Map Halo Cluster (Smaller)
+function createMiniMapHaloCluster(props: any) {
+        const count = props.point_count || 0;
+        const countAbbr = props.point_count_abbreviated || count;
+        const size = count >= 1000 ? 30 : count >= 100 ? 25 : count >= 10 ? 20 : 15; // ~50% smaller
+
+        const el = document.createElement('div');
+        el.className = 'cluster-halo minimap-halo'; // Add specific class
+        el.style.width = `${size + 8}px`;
+        el.style.height = `${size + 8}px`;
+
+        const inner = document.createElement('div');
+        inner.className = 'cluster-inner';
+        inner.style.width = `${size}px`;
+        inner.style.height = `${size}px`;
+        inner.style.fontSize = '10px'; // Smaller font
+        inner.innerText = countAbbr;
+
+        el.appendChild(inner);
+        return el;
+}
+
+// Update Mini Map Markers
+const updateMiniMapMarkers = () => {
+        if (!miniMapRef.value) return;
+        const map = miniMapRef.value;
+        if (!map.getSource('cbre-minimap-points')) return;
+
+        const newMarkers: Record<string, any> = {};
+        // Query features from the rendered source
+        const features = map.querySourceFeatures('cbre-minimap-points');
+
+        for (const feature of features) {
+                const coords = (feature.geometry as any).coordinates;
+                const props = feature.properties;
+
+                if (!props?.cluster) continue;
+
+                const id = props.cluster_id;
+                let marker = miniMapMarkers[id];
+
+                if (!marker) {
+                        const el = createMiniMapHaloCluster(props);
+                        // @ts-ignore
+                        marker = miniMapMarkers[id] = new mapboxgl.Marker({
+                                element: el
+                        }).setLngLat(coords);
+                }
+
+                newMarkers[id] = marker;
+
+                if (!miniMapMarkersOnScreen[id]) {
+                        marker.addTo(map);
+                }
+        }
+
+        // Cleanup
+        for (const id in miniMapMarkersOnScreen) {
+                if (!newMarkers[id]) {
+                        miniMapMarkersOnScreen[id].remove();
+                }
+        }
+        miniMapMarkersOnScreen = newMarkers;
+};
+
 useMapbox('cbre-minimap', (map) => {
         miniMapRef.value = map;
         console.log('[Container] Mini Map initialized (Static).');
+
+        map.on('render', () => {
+                if (!map.isSourceLoaded('cbre-minimap-points')) return;
+                updateMiniMapMarkers();
+        });
 });
 
 // Adjust Heatmap Style based on Data Count
@@ -548,35 +662,31 @@ const updateHeatmapVisuals = (count: number) => {
         if (!miniMapRef.value.getLayer(layerId)) return;
 
         // Heuristic Logic for Visual Consistency @ Zoom 5
+        // Since we now have Clusters, we can reduce Heatmap intensity slightly to avoid clash
+        // Or keep it as a background glow
         let intensity = 1;
         let radius = 10;
 
         if (count === 0) {
                 intensity = 0;
         } else if (count <= 30) {
-                // Critical Low Density (e.g. ~20 items):
-                // Intensity 4: Single point (0.1 * 4 = 0.4) -> Light Green. Cluster -> Dark Green.
-                // Radius 25: Smaller, distinct dots.
-                intensity = 4;
-                radius = 25;
-        } else if (count <= 100) {
-                // Sparse
-                intensity = 5;
-                radius = 25;
-        } else if (count <= 500) {
-                // Moderate
+                intensity = 0; // Hide heatmap if very few items, show clusters/points only?
+                // Actually, consistency: Keep heatmap as "glow"
                 intensity = 2;
+                radius = 20;
+        } else if (count <= 100) {
+                intensity = 2;
+                radius = 20;
+        } else if (count <= 500) {
+                intensity = 1.5;
                 radius = 15;
         } else {
-                // Dense
-                intensity = 0.8;
+                intensity = 0.5;
                 radius = 10;
         }
 
         miniMapRef.value.setPaintProperty(layerId, 'heatmap-intensity', intensity);
         miniMapRef.value.setPaintProperty(layerId, 'heatmap-radius', radius);
-
-        console.log(`[Container] Updated Heatmap for ${count} items. Intensity: ${intensity}, Radius: ${radius}`);
 };
 
 // Watch for property data changes -> Update Map Source & Heatmap Style

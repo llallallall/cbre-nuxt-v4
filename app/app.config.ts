@@ -47,6 +47,13 @@ export default defineAppConfig({
             slots: {
                 overlay: 'bg-gray-900/75'
             }
+        },
+        tooltip: {
+            arrow: true,
+            delayDuration: 500,
+            slots: {
+                content: 'text-base font-semibold px-4 py-6 border-b-4 border-accent shadow-lg'
+            }
         }
     }
 })

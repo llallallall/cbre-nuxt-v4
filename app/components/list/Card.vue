@@ -6,27 +6,40 @@
                         <div class="text-xl flex items-center">
                                 <span class="font-bold text-2xl px-2">{{ totalCount }}</span> {{ $t('properties_found')
                                 }}
-                                <UButton icon="i-heroicons-arrow-path" size="xl" color="neutral" variant="ghost"
-                                        class="group ml-2 bg-transparent hover:bg-transparent"
-                                        :ui="{ leadingIcon: 'group-hover:animate-spin' }" @click="handleRefresh" />
+                                <UTooltip :text="$t('tooltip.refresh_list')" :popper="{ placement: 'bottom' }">
+                                        <UButton icon="i-heroicons-arrow-path" size="xl" color="neutral" variant="ghost"
+                                                class="group ml-2 bg-transparent hover:bg-transparent"
+                                                :ui="{ leadingIcon: 'group-hover:animate-spin' }"
+                                                @click="handleRefresh" />
+                                </UTooltip>
                         </div>
 
                         <div class="flex items-center gap-2 mr-2">
-                                <UButton icon="i-heroicons-list-bullet" size="xl"
-                                        class="rounded-none border-1 border-gray-300"
-                                        :color="!uiStore.isGridView ? 'primary' : 'neutral'"
-                                        :variant="!uiStore.isGridView ? 'soft' : 'ghost'"
-                                        @click="uiStore.isGridView = false" />
-                                <UButton icon="i-heroicons-squares-2x2" size="xl"
-                                        class="rounded-none border-1 border-gray-300"
-                                        :color="uiStore.isGridView ? 'primary' : 'neutral'"
-                                        :variant="uiStore.isGridView ? 'soft' : 'ghost'"
-                                        @click="uiStore.isGridView = true" />
-                                <UButton :icon="uiStore.isExpandedList ? 'i-heroicons-arrows-pointing-in' : 'i-heroicons-arrows-pointing-out'"
-                                        :label="uiStore.isExpandedList ? $t('shrink_list') : $t('expand_list')"
-                                        size="lg" color="neutral" variant="outline"
-                                        class="text-xl hidden lg:flex rounded-none"
-                                        @click="uiStore.isExpandedList = !uiStore.isExpandedList" />
+                                <UTooltip :text="$t('tooltip.view_list')" :popper="{ placement: 'bottom' }">
+                                        <UButton icon="i-heroicons-list-bullet" size="xl"
+                                                class="rounded-none border-1 border-gray-300"
+                                                :color="!uiStore.isGridView ? 'primary' : 'neutral'"
+                                                :variant="!uiStore.isGridView ? 'soft' : 'ghost'"
+                                                @click="uiStore.isGridView = false" />
+                                </UTooltip>
+
+                                <UTooltip :text="$t('tooltip.view_grid')" :popper="{ placement: 'bottom' }">
+                                        <UButton icon="i-heroicons-squares-2x2" size="xl"
+                                                class="rounded-none border-1 border-gray-300"
+                                                :color="uiStore.isGridView ? 'primary' : 'neutral'"
+                                                :variant="uiStore.isGridView ? 'soft' : 'ghost'"
+                                                @click="uiStore.isGridView = true" />
+                                </UTooltip>
+
+                                <UTooltip
+                                        :text="uiStore.isExpandedList ? $t('tooltip.shrink_list') : $t('tooltip.expand_list')"
+                                        :popper="{ placement: 'bottom' }">
+                                        <UButton :icon="uiStore.isExpandedList ? 'i-heroicons-arrows-pointing-in' : 'i-heroicons-arrows-pointing-out'"
+                                                :label="uiStore.isExpandedList ? $t('shrink_list') : $t('expand_list')"
+                                                size="lg" color="neutral" variant="outline"
+                                                class="text-xl hidden lg:flex rounded-none"
+                                                @click="uiStore.isExpandedList = !uiStore.isExpandedList" />
+                                </UTooltip>
                         </div>
                 </div>
 
