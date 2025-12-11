@@ -215,9 +215,12 @@ export const LAYER_MINIMAP_HEAT = {
     }
 };
 
+
+
 // Map Options
 export const MapStyleOptions = [
     { label: 'Light', value: 'mapbox://styles/mapbox/light-v11', id: 'light-v11', avatar: { src: 'images/mapbox/Light.png', alt: 'Light' } },
+    // ...
     { label: 'Standard', value: 'mapbox://styles/mapbox/standard', id: 'standard', avatar: { src: 'images/mapbox/Standard.png', alt: 'Light' } },
     { label: 'StandardSatellite', value: 'mapbox://styles/mapbox/standard-satellite', id: 'standard-satellite', avatar: { src: 'images/mapbox/StandardSatellite.png', alt: 'Light' } },
     { label: 'Dark', value: 'mapbox://styles/mapbox/dark-v11', id: 'dark-v11', avatar: { src: 'images/mapbox/Dark.png', alt: 'Dark' } },

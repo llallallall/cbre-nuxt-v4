@@ -66,6 +66,16 @@
                         <MapDrawControl position="top-right" />
 
                 </MapboxMap>
+
+                <!-- Mini Map -->
+                <div v-if="uiStore.showMiniMap"
+                        class="absolute bottom-8 right-8 w-[200px] h-[200px] rounded-lg border-2 border-white shadow-xl overflow-hidden z-20 hidden md:block transition-all duration-300">
+                        <MapboxMap map-id="cbre-minimap" class="w-full h-full" :options="miniMapOptions">
+                                <MapboxLayer :layer="(LAYER_MINIMAP_POINTS as any)" />
+                                <MapboxLayer :layer="(LAYER_MINIMAP_HEAT as any)" />
+                                <MapboxSource source-id="cbre-minimap-points" :source="(cbreDataSource as any)" />
+                        </MapboxMap>
+                </div>
         </div>
 </template>
 
@@ -75,18 +85,53 @@ import { useI18n } from 'vue-i18n';
 import { useMapStore } from '~/stores/map';
 import { usePropertyStore } from '~/stores/property';
 import { useStatusStore } from '~/stores/status';
+import { useUiStore } from '~/stores/ui'; // Import UI Store
 import { useFormat } from '~/composables/useFormat';
 import {
         mapCenter, mapZoom, mapPitch, mapBearing, MAPBOX_LOCALE_KO, MapLangOptions,
-        LAYER_3D_BUILDINGS, LAYER_UNCLUSTERED_POINT
+        LAYER_3D_BUILDINGS, LAYER_UNCLUSTERED_POINT, LAYER_MINIMAP_POINTS, LAYER_MINIMAP_HEAT
 } from '~/context/mapData';
 
 const { locale } = useI18n();
 const mapStore = useMapStore();
 const propertyStore = usePropertyStore();
 const statusStore = useStatusStore();
+const uiStore = useUiStore(); // Initialize UI Store
 const { getThumbnailUrl } = useFormat();
 const mapRef = ref<any>(null);
+const miniMapRef = ref<any>(null); // Hoisted
+
+const updateLanguage = (lang: string, mapInstance?: any) => {
+        const map = mapInstance || mapRef.value;
+        if (!map) return;
+
+        if (!map.isStyleLoaded()) {
+                // Redundant safely covered by on('style.load') but good for backup
+                return;
+        }
+
+        const style = map.getStyle();
+        if (!style || !style.layers) return;
+
+        const fieldName = `name_${lang}`;
+        let updatedCount = 0;
+
+        for (const layer of style.layers) {
+                if (layer.type === 'symbol') {
+                        const layout = (layer as any).layout;
+                        if (layout && layout['text-field']) {
+                                if (layer.source === 'composite') {
+                                        if (layer.id.includes('label') || layer.id.includes('place') || layer.id.includes('poi')) {
+                                                map.setLayoutProperty(layer.id, 'text-field', ['get', fieldName]);
+                                                updatedCount++;
+                                        }
+                                }
+                        }
+                }
+        }
+        console.log(`[Container] Language updated to ${fieldName}. Affected layers: ${updatedCount}`);
+};
+
 const config = useRuntimeConfig();
 const mapboxAccessToken = config.public.mapbox?.accessToken || '';
 
@@ -383,16 +428,12 @@ function createHaloCluster(props: any) {
         return el;
 }
 
-// Watch for property data changes -> Update Map Source
-watch(() => propertyStore.filteredProperties, () => {
-        if (!mapRef.value) return;
-        const source = mapRef.value.getSource('cbre-assets');
-        if (source) {
-                // @ts-ignore
-                source.setData(cbreDataSource.value.data);
-                console.log('[Container] Updated cbre-assets source data.');
-        }
-}, { deep: true });
+// Helper: Create Halo Cluster Element
+// ... (existing code)
+
+// ...
+
+
 
 // Watch for Searched Markers -> Update Map Source
 watch(() => searchedDataSource.value, (newData) => {
@@ -447,7 +488,7 @@ watch(() => mapStore.selectedMapStyle, (newStyle) => {
         mapRef.value.setStyle(newStyle.value);
 
         // Style load listener handles the rest
-        // WARNING: Style change might remove markers if source is cleared. 
+        // WARNING: Style change might remove markers if source is cleared.
         // We might need to clear markersOnScreen cache.
         for (const id in markersOnScreen) {
                 markersOnScreen[id].remove();
@@ -464,36 +505,6 @@ watch(() => mapStore.mapBearing, (newBearing) => {
         if (mapRef.value) mapRef.value.setBearing(newBearing);
 });
 
-const updateLanguage = (lang: string, mapInstance?: any) => {
-        const map = mapInstance || mapRef.value;
-        if (!map) return;
-
-        if (!map.isStyleLoaded()) {
-                // Redundant safely covered by on('style.load') but good for backup
-                return;
-        }
-
-        const style = map.getStyle();
-        if (!style || !style.layers) return;
-
-        const fieldName = `name_${lang}`;
-        let updatedCount = 0;
-
-        for (const layer of style.layers) {
-                if (layer.type === 'symbol') {
-                        const layout = (layer as any).layout;
-                        if (layout && layout['text-field']) {
-                                if (layer.source === 'composite') {
-                                        if (layer.id.includes('label') || layer.id.includes('place') || layer.id.includes('poi')) {
-                                                map.setLayoutProperty(layer.id, 'text-field', ['get', fieldName]);
-                                                updatedCount++;
-                                        }
-                                }
-                        }
-                }
-        }
-        console.log(`[Container] Language updated to ${fieldName}. Affected layers: ${updatedCount}`);
-};
 
 const mapOptions = computed(() => ({
         accessToken: mapboxAccessToken,
@@ -506,6 +517,93 @@ const mapOptions = computed(() => ({
         // UI Localization
         locale: locale.value === 'ko' ? MAPBOX_LOCALE_KO : undefined
 }));
+
+// Mini Map Options
+// miniMapRef moved to top
+
+const miniMapOptions = computed(() => ({
+        accessToken: mapboxAccessToken,
+        style: mapStore.selectedMapStyle?.value || 'mapbox://styles/mapbox/light-v11',
+        center: [128, 36], // Fixed Center (Korea)
+        zoom: 5,
+        minZoom: 5,
+        maxZoom: 5,
+        antialias: true,
+        attributionControl: false,
+        hash: false,
+        interactive: false, // Keep non-interactive
+        logoControl: false,
+}));
+
+// Initialize Mini Map
+useMapbox('cbre-minimap', (map) => {
+        miniMapRef.value = map;
+        console.log('[Container] Mini Map initialized (Static).');
+});
+
+// Adjust Heatmap Style based on Data Count
+const updateHeatmapVisuals = (count: number) => {
+        if (!miniMapRef.value) return;
+        const layerId = 'cbre-minimap-heat-layer';
+        if (!miniMapRef.value.getLayer(layerId)) return;
+
+        // Heuristic Logic for Visual Consistency @ Zoom 5
+        let intensity = 1;
+        let radius = 10;
+
+        if (count === 0) {
+                intensity = 0;
+        } else if (count <= 30) {
+                // Critical Low Density (e.g. ~20 items):
+                // Intensity 4: Single point (0.1 * 4 = 0.4) -> Light Green. Cluster -> Dark Green.
+                // Radius 25: Smaller, distinct dots.
+                intensity = 4;
+                radius = 25;
+        } else if (count <= 100) {
+                // Sparse
+                intensity = 5;
+                radius = 25;
+        } else if (count <= 500) {
+                // Moderate
+                intensity = 2;
+                radius = 15;
+        } else {
+                // Dense
+                intensity = 0.8;
+                radius = 10;
+        }
+
+        miniMapRef.value.setPaintProperty(layerId, 'heatmap-intensity', intensity);
+        miniMapRef.value.setPaintProperty(layerId, 'heatmap-radius', radius);
+
+        console.log(`[Container] Updated Heatmap for ${count} items. Intensity: ${intensity}, Radius: ${radius}`);
+};
+
+// Watch for property data changes -> Update Map Source & Heatmap Style
+watch(() => propertyStore.filteredProperties, () => {
+        if (!mapRef.value) return;
+        const source = mapRef.value.getSource('cbre-assets');
+        if (source) {
+                // @ts-ignore
+                source.setData(cbreDataSource.value.data);
+                console.log('[Container] Updated cbre-assets source data.');
+        }
+
+        // 💡 [Sync] Update Mini Map Source & Style
+        if (miniMapRef.value) {
+                const miniMapSource = miniMapRef.value.getSource('cbre-minimap-points');
+                if (miniMapSource) {
+                        // @ts-ignore
+                        miniMapSource.setData(cbreDataSource.value.data);
+                        console.log('[Container] Updated cbre-minimap-points source data.');
+
+                        // Apply dynamic visual adjustments
+                        const count = propertyStore.filteredProperties.length;
+                        updateHeatmapVisuals(count);
+                }
+        }
+}, { deep: true });
+
 </script>
 
 
