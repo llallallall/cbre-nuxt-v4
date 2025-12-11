@@ -40,6 +40,7 @@ const getInitialState = (): MapState => ({
     kakaoAddress: [],
     kakaoKeyword: [],
     googleGeocoder: [],
+    internalProperties: [],
 });
 
 
@@ -87,8 +88,8 @@ export const useMapStore = defineStore('map', {
         /**
          * @description 검색 결과 마커를 지도에 추가하거나 제거합니다.
          */
-        toggleSearchedMarker(lng: number, lat: number) {
-            const coordinate: Coordinate = { longitude: lng, latitude: lat };
+        toggleSearchedMarker(lng: number, lat: number, type: 'KAKAO' | 'GOOGLE' | 'DEFAULT' = 'DEFAULT') {
+            const coordinate: Coordinate = { longitude: lng, latitude: lat, type };
             const index = this.searchedMarkers.findIndex(
                 (el) => el.latitude === coordinate.latitude && el.longitude === coordinate.longitude
             );

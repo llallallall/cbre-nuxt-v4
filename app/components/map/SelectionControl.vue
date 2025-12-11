@@ -1,5 +1,5 @@
 <template>
-        <div class="absolute z-50" :class="positionClasses">
+        <div class="absolute z-30" :class="positionClasses">
                 <UButton color="neutral" variant="outline"
                         class="bg-white shadow-sm ring-1 ring-gray-200 transition-all hover:bg-gray-100"
                         :class="mapStore.filterMapPins ? 'p-3' : 'p-4'" :loading="isLoading" @click="togglePins">

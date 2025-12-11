@@ -9,25 +9,32 @@
                         flex flex-col gap-5">
 
                 <div class="absolute top-0 left-[50%] -translate-x-[50%] 
-                                        px-[1.5em] py-[1.0em] md:py-[0.5em] 
-                                        text-center text-cbre_primary_3 text-[1.5em] 
+                                        px-[0.8em] py-[0.8em] md:px-[1.5em] md:py-[0.5em] 
+                                        text-center text-cbre_primary_3 text-[1.2em] md:text-[1.5em] 
                                         rounded-[0_0_20px_20px] 
                                         bg-[rgba(230,234,234,1)]
+                                        whitespace-nowrap
                                         before:content-[''] before:absolute before:top-0 before:-left-[30px] before:w-[30px] before:h-[30px] before:rounded-tr-[50%] before:bg-transparent  before:shadow-[15px_0_0_0_rgba(230,234,234,1)]
                                         after:content-[''] after:absolute after:top-0 after:-right-[30px] after:w-[30px] after:h-[30px] after:rounded-tl-[50%] after:bg-transparent  after:shadow-[-15px_0_0_0_rgba(230,234,234,1)]
                                         ">
                     List of Users ({{ userStore.allUsers.length }})
                 </div>
-                <div class="flex gap-5 justify-start items-center font-calibre text-white text-lg mb-2">
-                    <span>search field:</span>
-                    <select v-model="searchField" class="bg-transparent text-white border border-white/30 rounded px-2">
-                        <option value="name" class="text-black" selected>Name</option>
-                        <option value="email" class="text-black">Email</option>
-                    </select>
+                <div
+                    class="flex flex-wrap gap-2 md:gap-5 justify-start items-center font-calibre text-white text-base md:text-lg mb-2">
+                    <div class="flex items-center gap-2">
+                        <span class="whitespace-nowrap">search field:</span>
+                        <select v-model="searchField"
+                            class="bg-transparent text-white border border-white/30 rounded px-2 py-1">
+                            <option value="name" class="text-black" selected>Name</option>
+                            <option value="email" class="text-black">Email</option>
+                        </select>
+                    </div>
 
-                    <span>search value: </span>
-                    <input type="text" v-model="searchValue"
-                        class="bg-transparent border-slate-300 border-0 border-b-2  outline-none px-2 py-0 text-white">
+                    <div class="flex items-center gap-2">
+                        <span class="whitespace-nowrap">search value: </span>
+                        <input type="text" v-model="searchValue"
+                            class="bg-transparent border-slate-300 border-0 border-b-2  outline-none px-2 py-0 text-white min-w-[150px]">
+                    </div>
                 </div>
 
                 <UTable :columns="columns" :rows="filteredItems">

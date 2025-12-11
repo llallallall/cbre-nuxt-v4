@@ -1,13 +1,13 @@
 <template>
         <div v-if="calculatedArea > 0 || calculatedLength > 0"
-                class="absolute top-10 right-20 bg-white p-4 rounded shadow-lg z-30 font-sans text-sm text-gray-800 border border-gray-200">
+                class="absolute top-5 right-40 bg-white p-4 rounded shadow-lg z-30 font-sans text-2xl text-gray-800 border border-gray-200">
                 <p v-if="calculatedArea > 0" class="m-0 flex items-center gap-2">
                         <span class="w-2 h-2 rounded-full bg-red-500 inline-block"></span>
-                        <strong>{{ calculatedArea }}</strong> m² (Polygon)
+                        <strong>{{ numberFormat(calculatedArea) }}</strong> m² (Polygon)
                 </p>
                 <p v-if="calculatedLength > 0" class="m-0 flex items-center gap-2 mt-1">
                         <span class="w-2 h-2 rounded-full bg-blue-500 inline-block"></span>
-                        <strong>{{ calculatedLength }}</strong> km (Line)
+                        <strong>{{ numberFormat(calculatedLength) }}</strong> km (Line)
                 </p>
         </div>
 </template>
@@ -17,6 +17,7 @@ import { onUnmounted, shallowRef, ref, watch } from 'vue';
 import { useMapbox } from '#imports';
 import { storeToRefs } from 'pinia';
 import { useMapStore } from '~/stores/map';
+import { useFormat } from '~/composables/useFormat';
 
 // @ts-ignore
 import MapboxDraw from "@mapbox/mapbox-gl-draw";
@@ -24,6 +25,7 @@ import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import area from '@turf/area';
 import length from '@turf/length';
 
+const { numberFormat } = useFormat();
 const draw = shallowRef<any>(null);
 const mapRef = shallowRef<any>(null);
 const calculatedArea = ref(0);
@@ -201,6 +203,46 @@ useMapbox('cbre-map', (map) => {
                                 }
                         },
                         // Custom styles for search markers or other features can be added here
+                        {
+                                'id': 'highlight-active-points',
+                                'type': 'symbol',
+                                'filter': ['all',
+                                        ['==', '$type', 'Point'],
+                                        ['==', 'meta', 'feature'],
+                                        ['==', 'active', 'true']],
+                                'layout': {
+                                        "icon-image": "redPin",
+                                        "icon-size": 0.9,
+                                        "icon-anchor": 'bottom',
+                                        "icon-ignore-placement": true,
+                                        "icon-allow-overlap": true
+                                },
+                                "paint": {
+                                        "icon-color": "#ff0000",
+                                        "icon-halo-color": "#fff",
+                                        "icon-halo-width": 2
+                                }
+                        },
+                        {
+                                'id': 'points-are-blue',
+                                'type': 'symbol',
+                                'filter': ['all',
+                                        ['==', '$type', 'Point'],
+                                        ['==', 'meta', 'feature'],
+                                        ['==', 'active', 'false']],
+                                'layout': {
+                                        "icon-image": "redPin",
+                                        "icon-size": 0.7,
+                                        "icon-anchor": 'bottom',
+                                        "icon-ignore-placement": true,
+                                        "icon-allow-overlap": true
+                                },
+                                "paint": {
+                                        "icon-color": "#ff0000",
+                                        "icon-halo-color": "#fff",
+                                        "icon-halo-width": 2
+                                }
+                        }
                 ]
         });
 

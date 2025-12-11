@@ -2,7 +2,7 @@
         <div class="w-full h-full relative select-none border border-gray-200 bg-white"
                 :class="isKept ? 'bg-cbre-green-50' : ''">
 
-                <div v-if="uiStore.isGridView" class="flex flex-col w-full h-full aspect-[1/1]">
+                <div v-if="uiStore.isGridView" class="flex flex-col w-full h-full">
 
                         <!-- Image Section -->
                         <div
@@ -52,16 +52,15 @@
                                 @mouseenter="isHovered = true" @mouseleave="isHovered = false">
 
                                 <!-- Name -->
-                                <div ref="nameRef"
-                                        class="cbre-text-link-fade-arrow font-semibold text-cbre-green-900 cursor-pointer hover:text-cbre-green-600 transition-colors whitespace-nowrap overflow-hidden"
-                                        :class="!uiStore.isExpandedList ? 'text-[1.2rem] leading-normal mb-1' : 'text-[2rem] leading-normal'"
+                                <div class="cbre-text-link-fade-arrow font-semibold text-cbre-green-900 cursor-pointer hover:text-cbre-green-600 transition-colors overflow-hidden"
+                                        :class="!uiStore.isExpandedList ? 'text-[1.2rem] leading-tight mb-1 line-clamp-2' : 'text-[2rem] leading-tight line-clamp-2'"
                                         @click="openDetail" :title="item.name">
                                         {{ item.name }}
                                 </div>
 
                                 <!-- Address -->
                                 <div class="w-full text-cbre-green-900 font-normal break-keep"
-                                        :class="!uiStore.isExpandedList ? 'text-xs leading-normal line-clamp-2' : 'flex text-2xl truncate leading-normal'">
+                                        :class="!uiStore.isExpandedList ? 'text-xs leading-normal line-clamp-2' : 'flex text-2xl line-clamp-2 leading-normal'">
                                         <div v-if="item.location?.addressFull">{{ item.location.addressFull }}</div>
                                 </div>
 
@@ -257,74 +256,11 @@ const moveToMap = () => {
         }
 };
 
-const nameRef = ref<HTMLElement | null>(null);
-const listAddressRef = ref<HTMLElement | null>(null);
+// Adjust Text Size logic removed to allow CSS wrapping
+// const nameRef ...
+// const listAddressRef ...
+// const adjustTextSize ...
+// ...
 
-const adjustTextSize = async () => {
-        await nextTick();
-        const elements = [nameRef.value, listAddressRef.value];
-
-        elements.forEach(el => {
-                if (!el) return;
-
-                // Reset to measure natural width
-                el.style.fontSize = '';
-
-                // If overflowing
-                if (el.scrollWidth > el.clientWidth) {
-                        // Calculate ratio (Safe guard min size to 1.5rem to be readable)
-                        const currentSize = 2; // base size in rem (This is an approximation, ideally we get computed style)
-                        // But we can just use the scroll/client ratio to scale down whatever the current computed size is effectively
-
-                        // However, the class binding changes font-size based on isExpandedList.
-                        // So we should capture the 'intended' size from the class first?
-                        // Actually, if we reset style.fontSize = '', the class takes over.
-                        // So el.scrollWidth is based on the class-defined font size.
-                        // We just need to scale it down.
-
-                        const ratio = el.clientWidth / el.scrollWidth;
-                        // Get current font size from computed style to apply exact ratio
-                        const computedFontSize = parseFloat(window.getComputedStyle(el).fontSize);
-                        // computedFontSize is in px.
-
-                        // We want to apply scaling on top of the CSS class size.
-                        // If we just set a fixed rem based on ratio, it overrides the class.
-
-                        // Let's stick to the previous logic but maybe more dynamic
-                        // If we assume the base is what CSS provides.
-                        // newSizePx = computedFontSize * ratio
-
-                        // Convert back to rem for consistency or just use px
-                        const newSizePx = Math.max(computedFontSize * ratio, 12); // min 12px
-                        el.style.fontSize = `${newSizePx}px`;
-                }
-        });
-};
-
-let resizeObserver: ResizeObserver | null = null;
-
-onMounted(() => {
-        // Initial check
-        setTimeout(adjustTextSize, 100);
-
-        // Setup ResizeObserver
-        resizeObserver = new ResizeObserver(() => {
-                adjustTextSize();
-        });
-
-        if (nameRef.value) resizeObserver.observe(nameRef.value);
-        if (listAddressRef.value) resizeObserver.observe(listAddressRef.value);
-
-        // Also watch parent container or window for layout shifts that might not directly trigger element resize immediately if they are purely flex based without container query
-        // But observing the element itself is usually enough as its clientWidth changes.
-});
-
-// Watch item specifically for content changes
-watch(() => props.item, adjustTextSize, { deep: true });
-
-// Listen to UI store changes directly just in case transition delays affect observer
-watch(() => uiStore.isExpandedList, () => {
-        setTimeout(adjustTextSize, 300); // Wait for transition
-});
 
 </script>

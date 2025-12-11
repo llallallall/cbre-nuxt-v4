@@ -23,7 +23,7 @@
 
                         <!-- Property Data Layers -->
                         <template v-if="imagesLoaded && styleLoaded">
-                                <MapboxSource source-id="cbre-assets" :source-options="cbreDataSource" />
+                                <MapboxSource source-id="cbre-assets" :source="(cbreDataSource as any)" />
 
                                 <!-- Unclustered Points (Individual Pins) -->
                                 <MapboxLayer :layer="{
@@ -34,25 +34,28 @@
                                         layout: LAYER_UNCLUSTERED_POINT.layout,
                                         paint: LAYER_UNCLUSTERED_POINT.paint
                                 }" />
+                        </template>
 
-                                <!-- Cluster Count Text -->
+                        <!-- Searched Markers Layer -->
+                        <template v-if="imagesLoaded && styleLoaded">
+                                <MapboxSource source-id="searched-markers" :source="(searchedDataSource as any)" />
                                 <MapboxLayer :layer="{
-                                        id: LAYER_CLUSTER_COUNT.id,
-                                        type: LAYER_CLUSTER_COUNT.type,
-                                        source: 'cbre-assets',
-                                        filter: LAYER_CLUSTER_COUNT.filter,
-                                        layout: LAYER_CLUSTER_COUNT.layout,
-                                        paint: LAYER_CLUSTER_COUNT.paint
+                                        id: 'layer-searched-markers',
+                                        type: 'symbol',
+                                        source: 'searched-markers',
+                                        layout: {
+                                                'icon-image': [
+                                                        'match',
+                                                        ['get', 'type'],
+                                                        'KAKAO', 'marker_kakao',
+                                                        'GOOGLE', 'marker_google',
+                                                        'pin' // Default
+                                                ],
+                                                'icon-size': 0.8,
+                                                'icon-allow-overlap': true,
+                                                'icon-anchor': 'bottom'
+                                        }
                                 }" />
-
-                                <!-- Clusters (Circles) -->
-                                <MapboxLayer :layer="{
-                                        id: LAYER_CLUSTERS.id,
-                                        type: LAYER_CLUSTERS.type,
-                                        source: 'cbre-assets',
-                                        filter: LAYER_CLUSTERS.filter,
-                                        paint: LAYER_CLUSTERS.paint
-                                }" :beforeId="LAYER_CLUSTER_COUNT.id" />
                         </template>
 
                         <!-- Standard Controls -->
@@ -75,7 +78,7 @@ import { useStatusStore } from '~/stores/status';
 import { useFormat } from '~/composables/useFormat';
 import {
         mapCenter, mapZoom, mapPitch, mapBearing, MAPBOX_LOCALE_KO, MapLangOptions,
-        LAYER_3D_BUILDINGS, LAYER_CLUSTERS, LAYER_CLUSTER_COUNT, LAYER_UNCLUSTERED_POINT
+        LAYER_3D_BUILDINGS, LAYER_UNCLUSTERED_POINT
 } from '~/context/mapData';
 
 const { locale } = useI18n();
@@ -126,8 +129,32 @@ const cbreDataSource = computed(() => {
                         features: features
                 },
                 cluster: true,
-                clusterMaxZoom: 14, // Adjusted from 12?
+                clusterMaxZoom: 14,
                 clusterRadius: 50,
+        };
+});
+
+// DataSource for Searched Markers (Kakao/Google)
+const searchedDataSource = computed(() => {
+        const markers = mapStore.searchedMarkers;
+        const features = markers.map((marker, index) => ({
+                type: 'Feature',
+                geometry: {
+                        type: 'Point',
+                        coordinates: [Number(marker.longitude), Number(marker.latitude)]
+                },
+                properties: {
+                        id: `search-${index}`,
+                        type: marker.type || 'DEFAULT'
+                }
+        }));
+
+        return {
+                type: 'geojson',
+                data: {
+                        type: 'FeatureCollection',
+                        features: features
+                }
         };
 });
 
@@ -137,8 +164,10 @@ onMounted(() => {
 
 const loadMapImages = (map: any) => {
         const images = [
-                { name: 'pin', url: '/images/pin.png' },
-                { name: 'redPin', url: '/images/red-pin.png' } // If used
+                { name: 'pin', url: '/images/marker_cbre.png' },
+                { name: 'redPin', url: '/images/marker_accent.png' },
+                { name: 'marker_kakao', url: '/images/marker_kakao.png' },
+                { name: 'marker_google', url: '/images/marker_google.png' }
         ];
 
         const promises = images.map(img => {
@@ -168,9 +197,14 @@ const onMapLoad = (v: any) => {
         console.log('[Container] Map @load event.');
 };
 
+// Markers Cache
+const markers: Record<string, any> = {};
+let markersOnScreen: Record<string, any> = {};
+
 // Use robust composable to capture map instance
-useMapbox('cbre-map', (map) => {
+useMapbox('cbre-map', async (map) => {
         mapRef.value = map;
+        const mapboxgl = await import('mapbox-gl').then(m => m.default || m);
 
         // Initial Sync
         loadMapImages(map);
@@ -204,31 +238,13 @@ useMapbox('cbre-map', (map) => {
 
         // Backup check after 1 second to catch any race conditions
         setTimeout(() => {
-                if (map.isStyleLoaded()) {
-                        console.log('[Container] 1s Backup check triggering language update.');
-                        updateLanguage(locale.value, map);
+                if (map.isStyleLoaded() && !styleLoaded.value) {
+                        console.log('[Container] 1s Backup check triggering style load.');
+                        onStyleLoad();
                 }
         }, 1000);
 
         // --- Interactions --- //
-
-        // Clusters Click -> Zoom
-        map.on('click', LAYER_CLUSTERS.id, (e) => {
-                const features = map.queryRenderedFeatures(e.point, { layers: [LAYER_CLUSTERS.id] });
-                if (!features.length) return;
-                const clusterId = features[0]?.properties?.cluster_id;
-
-                const source = map.getSource('cbre-assets');
-                if (source && (source as any).getClusterExpansionZoom) {
-                        (source as any).getClusterExpansionZoom(clusterId, (err: any, zoom: number) => {
-                                if (err) return;
-                                map.easeTo({
-                                        center: (features[0]?.geometry as any)?.coordinates,
-                                        zoom: zoom
-                                });
-                        });
-                }
-        });
 
         // Unclustered Point Click -> Popup
         map.on('click', LAYER_UNCLUSTERED_POINT.id, async (e) => {
@@ -242,7 +258,6 @@ useMapbox('cbre-map', (map) => {
                         coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
                 }
 
-                const mapboxgl = await import('mapbox-gl').then(m => m.default || m);
                 new mapboxgl.Popup()
                         .setLngLat(coordinates)
                         .setHTML(`
@@ -268,14 +283,105 @@ useMapbox('cbre-map', (map) => {
         const setPointer = () => map.getCanvas().style.cursor = 'pointer';
         const resetPointer = () => map.getCanvas().style.cursor = '';
 
-        map.on('mouseenter', LAYER_CLUSTERS.id, setPointer);
-        map.on('mouseleave', LAYER_CLUSTERS.id, resetPointer);
         map.on('mouseenter', LAYER_UNCLUSTERED_POINT.id, setPointer);
         map.on('mouseleave', LAYER_UNCLUSTERED_POINT.id, resetPointer);
+
+        // --- HTML Cluster Logic --- //
+        const updateMarkers = () => {
+                if (!map.getSource('cbre-assets')) return;
+
+                const newMarkers: Record<string, any> = {};
+                const features = map.querySourceFeatures('cbre-assets');
+
+                for (const feature of features) {
+                        const coords = (feature.geometry as any).coordinates;
+                        const props = feature.properties;
+
+                        if (!props?.cluster) continue;
+
+                        const id = props.cluster_id;
+                        let marker = markers[id];
+
+                        if (!marker) {
+                                const el = createHaloCluster(props);
+                                el.style.cursor = 'pointer';
+                                el.onclick = () => {
+                                        const source = map.getSource('cbre-assets') as any;
+                                        source.getClusterExpansionZoom(id, (err: any, zoom: number) => {
+                                                if (err) return;
+                                                map.easeTo({
+                                                        center: coords,
+                                                        zoom: zoom
+                                                });
+                                        });
+                                };
+
+                                marker = markers[id] = new mapboxgl.Marker({
+                                        element: el
+                                }).setLngLat(coords);
+                        }
+
+                        newMarkers[id] = marker;
+
+                        if (!markersOnScreen[id]) {
+                                marker.addTo(map);
+                        }
+                }
+
+                // Remove markers that are no longer visible
+                for (const id in markersOnScreen) {
+                        if (!newMarkers[id]) {
+                                markersOnScreen[id].remove();
+                        }
+                }
+                markersOnScreen = newMarkers;
+        };
+
+        // Update markers on every frame
+        map.on('render', () => {
+                if (!map.getSource('cbre-assets')) return;
+                if (!map.isSourceLoaded('cbre-assets')) return;
+                try {
+                        updateMarkers();
+                } catch (e) {
+                        // silent fail or debug log
+                }
+        });
+
+        // Additional cleanup when data changes effectively
+        watch(() => propertyStore.filteredProperties, () => {
+                // Clear marker cache to prevent memory leaks as Cluster IDs will change
+                Object.keys(markers).forEach(key => delete markers[key]);
+        });
+
 
         // Notify store that map is ready (important for data fetching/filtering flow)
         propertyStore.initialDataLoaded = true;
 });
+
+// Helper: Create Halo Cluster Element
+function createHaloCluster(props: any) {
+        const count = props.point_count || 0;
+        const countAbbr = props.point_count_abbreviated || count;
+
+        // Size calculation based on count
+        const size = count >= 1000 ? 60 : count >= 100 ? 50 : count >= 10 ? 40 : 30;
+
+        const el = document.createElement('div');
+        el.className = 'cluster-halo';
+        el.style.width = `${size + 16}px`; // Halo padding
+        el.style.height = `${size + 16}px`;
+
+        const inner = document.createElement('div');
+        inner.className = 'cluster-inner';
+        inner.style.width = `${size}px`;
+        inner.style.height = `${size}px`;
+        inner.innerText = countAbbr;
+
+        el.appendChild(inner);
+
+        return el;
+}
 
 // Watch for property data changes -> Update Map Source
 watch(() => propertyStore.filteredProperties, () => {
@@ -285,6 +391,17 @@ watch(() => propertyStore.filteredProperties, () => {
                 // @ts-ignore
                 source.setData(cbreDataSource.value.data);
                 console.log('[Container] Updated cbre-assets source data.');
+        }
+}, { deep: true });
+
+// Watch for Searched Markers -> Update Map Source
+watch(() => searchedDataSource.value, (newData) => {
+        if (!mapRef.value) return;
+        const source = mapRef.value.getSource('searched-markers');
+        if (source) {
+                // @ts-ignore
+                source.setData(newData.data);
+                console.log('[Container] Updated searched-markers source data.');
         }
 }, { deep: true });
 
@@ -330,6 +447,21 @@ watch(() => mapStore.selectedMapStyle, (newStyle) => {
         mapRef.value.setStyle(newStyle.value);
 
         // Style load listener handles the rest
+        // WARNING: Style change might remove markers if source is cleared. 
+        // We might need to clear markersOnScreen cache.
+        for (const id in markersOnScreen) {
+                markersOnScreen[id].remove();
+        }
+        markersOnScreen = {};
+});
+
+// Watch for Pitch & Bearing changes (StyleControl)
+watch(() => mapStore.mapPitch, (newPitch) => {
+        if (mapRef.value) mapRef.value.setPitch(newPitch);
+});
+
+watch(() => mapStore.mapBearing, (newBearing) => {
+        if (mapRef.value) mapRef.value.setBearing(newBearing);
 });
 
 const updateLanguage = (lang: string, mapInstance?: any) => {
@@ -348,11 +480,14 @@ const updateLanguage = (lang: string, mapInstance?: any) => {
         let updatedCount = 0;
 
         for (const layer of style.layers) {
-                if (layer.type === 'symbol' && layer.layout && layer.layout['text-field']) {
-                        if (layer.source === 'composite') {
-                                if (layer.id.includes('label') || layer.id.includes('place') || layer.id.includes('poi')) {
-                                        map.setLayoutProperty(layer.id, 'text-field', ['get', fieldName]);
-                                        updatedCount++;
+                if (layer.type === 'symbol') {
+                        const layout = (layer as any).layout;
+                        if (layout && layout['text-field']) {
+                                if (layer.source === 'composite') {
+                                        if (layer.id.includes('label') || layer.id.includes('place') || layer.id.includes('poi')) {
+                                                map.setLayoutProperty(layer.id, 'text-field', ['get', fieldName]);
+                                                updatedCount++;
+                                        }
                                 }
                         }
                 }
@@ -375,6 +510,50 @@ const mapOptions = computed(() => ({
 
 
 <style>
+/* Halo Cluster Styling */
+.cluster-halo {
+        background-color: rgba(0, 63, 45, 0.4);
+        /* CBRE Green 40% Opacity */
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: all 0.2s ease;
+        animation: pulse 2s infinite;
+}
+
+.cluster-halo:hover {
+        background-color: rgba(0, 63, 45, 0.6);
+        transform: scale(1.1);
+}
+
+.cluster-inner {
+        background-color: #003F2D;
+        /* CBRE Green Solid */
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: bold;
+        font-family: 'Outfit', sans-serif;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes pulse {
+        0% {
+                box-shadow: 0 0 0 0 rgba(0, 63, 45, 0.4);
+        }
+
+        70% {
+                box-shadow: 0 0 0 10px rgba(0, 63, 45, 0);
+        }
+
+        100% {
+                box-shadow: 0 0 0 0 rgba(0, 63, 45, 0);
+        }
+}
+
 /* Global overrides for Mapbox controls to match custom design */
 .mapboxgl-ctrl-group {
         box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1) !important;

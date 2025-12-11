@@ -1,10 +1,10 @@
 <template>
-        <div class="cbre-panel-container">
+        <div class="cbre-panel-container h-full flex flex-col">
                 <!-- Header Section (Dark Green Theme) with Stacked Search -->
                 <div class="cbre-panel-header">
 
                         <!-- Title & Text -->
-                        <div class="relative z-10 w-full mb-6 flex justify-between items-center">
+                        <div class="relative z-10 w-full mb-10 flex justify-between items-center">
                                 <h2 class="cbre-panel-title">Web Location Search</h2>
                                 <div class="flex items-center gap-4">
                                         <button @click="onClearPins"
@@ -53,7 +53,7 @@
 
 
                 <!-- Results Section -->
-                <div class="flex flex-col w-full flex-1 pl-8 pr-0 py-0 overflow-hidden">
+                <div class="flex flex-col w-full flex-1 pl-8 pr-0 py-0 min-h-0 overflow-hidden">
 
                         <!-- Clear Button (Text only if needed) -->
                         <div v-if="searchWebText" class="flex  mb-2 shrink-0">
@@ -61,13 +61,12 @@
                         </div>
 
                         <!-- Geocoder Component -->
-                        <div class="flex-1 overflow-hidden">
+                        <div class="flex-1 mb-2 h-full min-h-0">
                                 <NavWebGeocoder ref="geocoderRef" />
                         </div>
                 </div>
 
-                <!-- Footer / Close Section (Removed as actions moved to top) -->
-                <!-- <div class="cbre-panel-footer"></div> -->
+
         </div>
 </template>
 
@@ -83,7 +82,7 @@ interface GeocoderComponent {
 
 const emit = defineEmits(['isClosed']);
 const mapStore = useMapStore();
-const { searchedMarkers, kakaoAddress, kakaoKeyword, googleGeocoder } = storeToRefs(mapStore);
+const { searchedMarkers, kakaoAddress, kakaoKeyword, googleGeocoder, internalProperties } = storeToRefs(mapStore);
 
 const searchWebText = ref('');
 const geocoderRef = ref<GeocoderComponent | null>(null); // 💡 타입 명시
@@ -106,6 +105,7 @@ const onResetKeyword = () => {
         kakaoAddress.value = [];
         kakaoKeyword.value = [];
         googleGeocoder.value = [];
+        internalProperties.value = [];
 };
 
 const handleClose = () => {
@@ -120,6 +120,7 @@ const onClearPins = () => {
         kakaoAddress.value = [];
         kakaoKeyword.value = [];
         googleGeocoder.value = [];
+        internalProperties.value = [];
 };
 </script>
 

@@ -204,6 +204,32 @@
             "web": "웹",
             "home": "지도로 가기"
         },
+        "more": {
+            "title": "더 보기",
+            "filters": "필터",
+            "desc": "자산의 면적, 준공 연도, 시설 등 자세한 검색 조건을 설정할 수 있습니다.",
+            "size": "면적",
+            "period": "기간",
+            "facility": "시설",
+            "finance": "재무",
+            "gfa": "연면적(GFA)",
+            "nfa": "전용면적(NFA)",
+            "site_area": "대지면적",
+            "built": "준공일",
+            "reno": "리모델링",
+            "sales": "매각",
+            "leases": "임대",
+            "buildings": "동수",
+            "basement": "지하 층수",
+            "upper_floor": "지상 층수",
+            "elevator": "엘리베이터",
+            "parking": "주차대수",
+            "iod": "IOD",
+            "gdm": "GDM",
+            "noc": "NOC",
+            "eff_ratio": "전용률",
+            "reset": "초기화"
+        },
         "filter": {
             "transaction": "거래",
             "sector": "자산 유형",
@@ -406,6 +432,71 @@
                 }
             }
         }
+    },
+    "property": {
+        "id": "자산 ID",
+        "name_ko": "자산명 (국문)",
+        "name_en": "자산명 (영문)",
+        "status": "상태",
+        "grade": "등급",
+        "sector": "자산 유형",
+        "sub_sector": "세부 유형",
+        "region": "권역",
+        "district": "지역 (구)",
+        "city": "도시",
+        "province": "도/시",
+        "address": "주소",
+        "built_year": "준공년도",
+        "reno_year": "리모델링 연도",
+        "completion_date": "준공일",
+        "area": {
+            "gfa": "연면적",
+            "nfa": "전용면적",
+            "site": "대지면적",
+            "gfa_sqm": "연면적 (m²)",
+            "nfa_sqm": "전용면적 (m²)",
+            "site_sqm": "대지면적 (m²)",
+            "gfa_py": "연면적 (평)",
+            "nfa_py": "전용면적 (평)",
+            "site_py": "대지면적 (평)",
+            "eff_ratio": "전용률"
+        },
+        "location": {
+            "dist_ic": "IC 거리 (km)",
+            "dist_cityhall": "시청 거리 (km)",
+            "time_ic": "IC 소요시간 (분)",
+            "time_cityhall": "시청 소요시간 (분)"
+        },
+        "facility": {
+            "parking": "주차대수",
+            "elevator": "엘리베이터",
+            "floor_u": "지상 층수",
+            "floor_b": "지하 층수"
+        }
+    },
+    "trans": {
+        "type": "거래 유형",
+        "year": "거래/임대 연도",
+        "quarter": "거래/임대 분기",
+        "date_full": "거래 발생 시기"
+    },
+    "lease": {
+        "occupancy": "임대율 / 입주율",
+        "units_avail": "공실 수",
+        "rent": "명목 임대료",
+        "cam": "관리비",
+        "deposit": "보증금",
+        "rent_free_type": "렌트프리 유형",
+        "rent_free": "렌트프리 기간",
+        "ti": "TI 지원금",
+        "effective_rent": "실질 임대료"
+    },
+    "sale": {
+        "price": "매매가",
+        "price_unit": "매매가 (단위)",
+        "cap_rate": "예상 Cap Rate",
+        "buyer": "매수자",
+        "seller": "매도자"
     },
     "common": {
         "success": "성공",

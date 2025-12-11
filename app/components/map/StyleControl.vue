@@ -1,5 +1,5 @@
 <template>
-        <div class="absolute z-50 flex flex-col gap-4" :class="positionClasses">
+        <div class="absolute z-30 flex flex-col gap-4" :class="positionClasses">
                 <!-- Settings Toggle Button -->
                 <UButton color="neutral" variant="outline"
                         class="shadow-md bg-white rounded-none font-[1100] text-2xl text-black/50 hover:text-opacity-100 hover:text-black p-4"
@@ -37,7 +37,7 @@
                                                                 class="w-8 h-8 rounded-none border border-gray-200 object-cover" />
                                                         <span class=" text-2xl font-medium text-gray-700">{{
                                                                 item.label
-                                                        }}</span>
+                                                                }}</span>
                                                 </div>
                                         </template>
                                 </UDropdownMenu>
@@ -54,7 +54,7 @@
                                                         <img v-if="selectedLang?.avatar" :src="selectedLang.avatar.src"
                                                                 class="w-5 h-5 rounded-sm object-cover" />
                                                         <span class="text-gray-700 text-2xl">{{ selectedLang?.label
-                                                        }}</span>
+                                                                }}</span>
                                                 </div>
                                                 <UIcon name="i-heroicons-chevron-down-20-solid" class="text-gray-400" />
                                         </UButton>
@@ -64,7 +64,7 @@
                                                         <img v-if="item.avatar" :src="item.avatar.src"
                                                                 class="w-5 h-5 rounded-sm object-cover" />
                                                         <span class="font-medium  text-gray-700 text-2xl">{{ item.label
-                                                                }}</span>
+                                                        }}</span>
                                                 </div>
                                         </template>
                                 </UDropdownMenu>

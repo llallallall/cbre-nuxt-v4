@@ -1,6 +1,6 @@
 // app/context/mapData.ts
 
-export const mapStyleId: string = 'light-v11';
+export const mapStyleId: string = 'streets-v12';
 // export const mapAccessToken: string = process.env.MAPBOX_ACCESS_TOKEN as string; // Managed in nuxt.config.ts
 
 export const mapCenter: [number, number] = [127.442, 35.787];
@@ -77,7 +77,7 @@ export const LAYER_CLUSTER_COUNT = {
     filter: ['has', 'point_count'],
     layout: {
         'text-field': ['get', 'point_count_abbreviated'],
-        'text-font': ['Arial Unicode MS Bold'],
+        'text-font': ['Arial Unicode MS Bold', 'Noto Sans CJK KR Bold', 'Noto Sans KR Bold', 'sans-serif'],
         'text-size': 12,
     },
     paint: {

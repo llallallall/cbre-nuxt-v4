@@ -228,7 +228,8 @@
 		<!-- Web Search Panel -->
 		<Transition name="slide-right">
 			<div v-show="isHydrationComplete && !isMobileOrTablet && openWebSearchPannel"
-				class="web-search-pannel shadow-2xl z-10">
+				class="web-search-pannel shadow-2xl z-10"
+				:class="uiStore.isExpandedList ? 'lg:w-[50%]' : 'lg:w-[40%] lg:min-w-[400px] lg:max-w-[600px]'">
 				<NavWebSearchPannel @isClosed="collapseAll" />
 			</div>
 		</Transition>
@@ -432,8 +433,6 @@ watch([openMobileMenu, openTransaction, openSectors, openSubSectors, openMenuMor
 	position: absolute;
 	top: 8rem;
 	right: 0;
-	width: 40%;
-	min-width: 40rem;
 	height: calc(100vh - 8rem);
 	z-index: 100;
 	background-color: white;

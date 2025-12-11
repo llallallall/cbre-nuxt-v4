@@ -202,6 +202,32 @@
             "web": "Web",
             "home": "Map Home"
         },
+        "more": {
+            "title": "More",
+            "filters": "Filters",
+            "desc": "You can set details such as the size of the property, the year of construction, and facilities as search conditions.",
+            "size": "Size",
+            "period": "Period",
+            "facility": "Facility",
+            "finance": "Finance",
+            "gfa": "GFA",
+            "nfa": "NFA",
+            "site_area": "Site Area",
+            "built": "Built",
+            "reno": "Reno",
+            "sales": "Sales",
+            "leases": "Leases",
+            "buildings": "Buildings",
+            "basement": "Basement",
+            "upper_floor": "Upper Floor",
+            "elevator": "Elevator",
+            "parking": "Parking",
+            "iod": "IOD",
+            "gdm": "GDM",
+            "noc": "NOC",
+            "eff_ratio": "Eff. Ratio",
+            "reset": "reset"
+        },
         "filter": {
             "transaction": "Transaction",
             "sector": "Sector",
@@ -404,6 +430,71 @@
                 }
             }
         }
+    },
+    "property": {
+        "id": "Asset ID",
+        "name_ko": "Asset Name (KOR)",
+        "name_en": "Asset Name (ENG)",
+        "status": "Status",
+        "grade": "Grade",
+        "sector": "Sector",
+        "sub_sector": "Sub Sector",
+        "region": "Region",
+        "district": "District",
+        "city": "City",
+        "province": "Province",
+        "address": "Full Address",
+        "built_year": "Year Built",
+        "reno_year": "Reno Year",
+        "completion_date": "Completion Date",
+        "area": {
+            "gfa": "GFA",
+            "nfa": "NFA",
+            "site": "Site Area",
+            "gfa_sqm": "GFA (sqm)",
+            "nfa_sqm": "NFA (sqm)",
+            "site_sqm": "Site Area (sqm)",
+            "gfa_py": "GFA (py)",
+            "nfa_py": "NFA (py)",
+            "site_py": "Site Area (py)",
+            "eff_ratio": "Eff. Ratio"
+        },
+        "location": {
+            "dist_ic": "Dist. I.C. (km)",
+            "dist_cityhall": "Dist. City Hall (km)",
+            "time_ic": "Time I.C. (min)",
+            "time_cityhall": "Time City Hall (min)"
+        },
+        "facility": {
+            "parking": "Parking (Cars)",
+            "elevator": "Elevator",
+            "floor_u": "Upper Floors",
+            "floor_b": "Basement Floors"
+        }
+    },
+    "trans": {
+        "type": "Transaction Type",
+        "year": "Year",
+        "quarter": "Quarter",
+        "date_full": "Full Date"
+    },
+    "lease": {
+        "occupancy": "Occupancy",
+        "units_avail": "Units Available",
+        "rent": "Face Rent",
+        "cam": "CAM",
+        "deposit": "Deposit",
+        "rent_free_type": "Rent Free Type",
+        "rent_free": "Rent Free Period",
+        "ti": "TI Allowance",
+        "effective_rent": "Effective Rent"
+    },
+    "sale": {
+        "price": "Sale Price",
+        "price_unit": "Sale Price p/Area",
+        "cap_rate": "Est. Cap Rate",
+        "buyer": "Buyer",
+        "seller": "Seller"
     },
     "common": {
         "success": "Success",

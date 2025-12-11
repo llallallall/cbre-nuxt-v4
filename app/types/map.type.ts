@@ -7,6 +7,7 @@ export interface Coordinate {
     zoom?: number;
     speed?: number;
     curve?: number;
+    type?: 'KAKAO' | 'GOOGLE' | 'DEFAULT'; // Marker Type
 }
 
 /**
@@ -41,6 +42,7 @@ export interface MapState {
     kakaoAddress: any[];
     kakaoKeyword: any[];
     googleGeocoder: any[];
+    internalProperties: any[];
 
 }
 

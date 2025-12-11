@@ -1,30 +1,32 @@
 <template>
-        <div class="cbre-panel-card mb-3 cursor-pointer group hover:border-cbre-green transition-colors !p-4"
+        <div class="cbre-panel-card cursor-pointer group hover:border-cbre-green transition-colors !p-3 !py-2"
                 @click="handleSelect">
-                <div class="flex justify-between items-center mb-2">
-                        <div
-                                class="w-[calc(100%-40px)] cbre-text-body-md font-bold truncate group-hover:text-[var(--color-primary-1)]">
-                                {{ item?.address_name }}
+                <div class="flex justify-between items-start">
+                        <!-- Content -->
+                        <div class="flex-1 min-w-0 mr-2">
+                                <div class="flex items-center gap-2 mb-0.5">
+                                        <div
+                                                class="text-[1.5rem] font-bold truncate group-hover:text-[var(--color-primary-1)] leading-tight">
+                                                {{ item?.address_name }}
+                                        </div>
+                                </div>
+
+                                <div class="cbre-text-meta flex flex-col gap-0.5">
+                                        <div class="flex items-center text-[1.3rem]">
+                                                <span class="truncate">{{ item?.road_address?.address_name ||
+                                                        item.address?.address_name }}</span>
+                                        </div>
+
+                                        <div class="flex items-center text-[1.1rem] opacity-60">
+                                                <Icon name="ph:map-pin" size="12" class="mr-1" />
+                                                <span>{{ item?.y }}, {{ item?.x }}</span>
+                                        </div>
+                                </div>
                         </div>
-                        <div class="cbre-badge-circle cbre-badge-circle-yellow">
+
+                        <!-- Badge -->
+                        <div class="cbre-badge-circle cbre-badge-circle-yellow shrink-0 scale-90 mt-1">
                                 A
-                        </div>
-                </div>
-
-                <div class="cbre-text-meta flex flex-col gap-1">
-                        <div v-if="item?.road_address" class="flex items-center">
-                                <div class="w-1.5 h-1.5 bg-gray-400 rounded-full mr-2 flex-shrink-0"></div>
-                                <span class="truncate">{{ item.road_address?.address_name }}</span>
-                        </div>
-
-                        <div v-else class="flex items-center">
-                                <div class="w-1.5 h-1.5 bg-gray-400 rounded-full mr-2 flex-shrink-0"></div>
-                                <span class="truncate">{{ item.address.address_name }}</span>
-                        </div>
-
-                        <div class="flex items-center mt-1 opacity-70">
-                                <Icon name="ph:map-pin" size="12" class="mr-1" />
-                                <span>{{ item?.y }}, {{ item?.x }}</span>
                         </div>
                 </div>
         </div>
@@ -56,7 +58,7 @@ const handleSelect = () => {
                 // 1. 지도 이동
                 mapStore.setPinCoordinate(lng, lat);
                 // 2. 검색 마커 추가/제거 (토글)
-                mapStore.toggleSearchedMarker(lng, lat);
+                mapStore.toggleSearchedMarker(lng, lat, 'KAKAO');
         }
 };
 </script>
