@@ -537,5 +537,25 @@
             "info_title": "거래 정보 보기",
             "toggle_title": "미니맵 토글"
         }
+    },
+    "profile": {
+        "edit_profile": "프로필 수정",
+        "security": "보안",
+        "new_password": "새 비밀번호",
+        "new_password_placeholder": "변경하려면 입력하세요",
+        "confirm_password_placeholder": "새 비밀번호 확인",
+        "password_min_length": "비밀번호는 6자 이상이어야 합니다",
+        "passwords_do_not_match": "비밀번호가 일치하지 않습니다",
+        "profile_image": "프로필 이미지",
+        "avatar": {
+            "digital": "디지털",
+            "office": "오피스",
+            "upload": "업로드"
+        },
+        "upload": {
+            "click_here": "여기를 클릭",
+            "instruction": "하여 이미지 업로드",
+            "format": "PNG, JPG 최대 5MB"
+        }
     }
 }

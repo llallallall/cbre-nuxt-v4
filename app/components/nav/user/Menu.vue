@@ -12,7 +12,7 @@
                                                                 class="w-full h-full object-cover" alt="User Avatar" />
                                                 </div>
                                                 <div class="flex items-center mt-1">
-                                                        <span class="font-calibre text-sm text-center max-w-[80px] truncate transition-colors duration-300 group-hover:text-cbre-accent"
+                                                        <span class="font-calibre text-lg text-center max-w-[80px] truncate transition-colors duration-300 group-hover:text-cbre-accent"
                                                                 :class="uiStore.isLightMode ? 'text-cbre-green' : 'text-white'">
                                                                 {{ userStore.userName || 'User' }}
                                                         </span>
@@ -30,14 +30,14 @@
                         </div>
                 </UTooltip>
 
-                <div class="absolute top-22 right-2">
-                        <NavUserProfile v-if="uiStore.isUserProfileModalOpen" />
+                <div class="absolute top-[8rem] right-2">
+                        <NavUserProfile />
                 </div>
         </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, computed } from 'vue';
+import { onMounted } from 'vue';
 import { useUserStore } from '~/stores/user';
 import { useUiStore } from '~/stores/ui';
 

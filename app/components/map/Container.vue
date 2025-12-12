@@ -310,10 +310,12 @@ useMapbox('cbre-map', async (map) => {
                         .setLngLat(coordinates)
                         .setHTML(`
                 <div class="w-full h-full p-2 min-w-[200px]">
-                    <a href="/property/${props?.propertyId}" target="_blank" rel="noopener noreferrer">
+                    
                         <div class="flex flex-col gap-1">
-                            <div class="font-bold text-md mb-1">${props?.propertyName}</div>
-                            <div class="text-xs text-gray-600">
+                            <a href="/property/${props?.propertyId}" target="_blank" rel="noopener noreferrer">
+                                <div class="cbre-text-link-arrow font-semibold text-base mb-1">${props?.propertyName}</div>
+                            </a>
+                            <div class="text-sm text-gray-600">
                                 <div>Sector: ${props?.sector}</div>
                                 <div>SubSector: ${props?.subSector}</div>
                             </div>
@@ -321,7 +323,7 @@ useMapbox('cbre-map', async (map) => {
                                 <img src="${props?.mainImageUrl}" class="w-full h-full object-cover" alt="Property Image" />
                             </div>
                         </div>
-                    </a>
+                   
                 </div>
             `)
                         .addTo(map);

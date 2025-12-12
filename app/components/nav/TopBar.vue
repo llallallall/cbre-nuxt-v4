@@ -6,7 +6,7 @@
 			:class="isLightMode ? 'bg-white text-cbre-green' : 'bg-cbre-green text-white'">
 
 			<!-- === DESKTOP NAVIGATION === -->
-			<div class="hidden lg:flex w-full h-full justify-between items-stretch px-12">
+			<div class="hidden lg:flex w-full h-full justify-between items-stretch pl-12 pr-2">
 				<div id="DesktopLeftMenu" class="flex items-center h-full gap-6">
 					<!-- Logo Section -->
 					<div class="cbre-nav-brand group" @click="navigateTo('/')">
