@@ -1,5 +1,5 @@
 <template>
-        <div class="relative w-full h-full">
+        <div :class="isFullscreen ? 'fixed inset-0 z-[50] bg-white' : 'relative w-full h-full'">
                 <!-- Controls Overlay (Top Right / Top Left) -->
                 <!-- Note: Mapbox Controls (Nav, Geolocate) are managed by MapboxMap slots/props or default -->
 
@@ -61,7 +61,7 @@
                         <!-- Standard Controls -->
                         <MapboxNavigationControl position="top-right" />
                         <MapboxGeolocateControl position="top-right" />
-                        <MapboxFullscreenControl position="top-right" />
+                        <!-- Fullscreen Control added via script -->
                         <MapExportControl position="top-right" />
                         <MapDrawControl position="top-right" />
 
@@ -71,7 +71,7 @@
                 <div v-if="uiStore.showMiniMap"
                         class="absolute bottom-8 right-8 w-[200px] h-[200px] rounded-lg border-2 border-white shadow-xl overflow-hidden z-20 hidden md:block transition-all duration-300">
                         <MapboxMap map-id="cbre-minimap" class="w-full h-full" :options="miniMapOptions">
-                                <MapboxLayer :layer="(LAYER_MINIMAP_POINTS as any)" />
+                                <!-- Only Heatmap Layer for Density Visualization -->
                                 <MapboxLayer :layer="(LAYER_MINIMAP_HEAT as any)" />
                                 <MapboxSource source-id="cbre-minimap-points" :source="(cbreDataSource as any)" />
                         </MapboxMap>
@@ -92,7 +92,7 @@ import {
         LAYER_3D_BUILDINGS, LAYER_UNCLUSTERED_POINT, LAYER_MINIMAP_POINTS, LAYER_MINIMAP_HEAT
 } from '~/context/mapData';
 
-const { locale } = useI18n();
+const { locale, t } = useI18n();
 const mapStore = useMapStore();
 const propertyStore = usePropertyStore();
 const statusStore = useStatusStore();
@@ -100,6 +100,7 @@ const uiStore = useUiStore(); // Initialize UI Store
 const { getThumbnailUrl } = useFormat();
 const mapRef = ref<any>(null);
 const miniMapRef = ref<any>(null); // Hoisted
+let mapboxgl: any = null;
 
 const updateLanguage = (lang: string, mapInstance?: any) => {
         const map = mapInstance || mapRef.value;
@@ -137,7 +138,9 @@ const mapboxAccessToken = config.public.mapbox?.accessToken || '';
 
 // State
 const imagesLoaded = ref(false);
+
 const styleLoaded = ref(false);
+const isFullscreen = ref(false);
 
 const isStandardStyle = computed(() => {
         return mapStore.selectedMapStyle?.id?.includes('standard') || false;
@@ -246,13 +249,68 @@ const onMapLoad = (v: any) => {
 const markers: Record<string, any> = {};
 let markersOnScreen: Record<string, any> = {};
 
+class CustomFullscreenControl {
+    _map: any;
+    _container: any;
+    _btn: any;
+    _className: string;
+    _onToggle: () => void;
+
+    constructor(onToggle: () => void) {
+        this._onToggle = onToggle;
+        this._className = 'mapboxgl-ctrl';
+    }
+
+    onAdd(map: any) {
+        this._map = map;
+        this._container = document.createElement('div');
+        this._container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
+        this._btn = document.createElement('button');
+        this._btn.className = 'mapboxgl-ctrl-icon mapboxgl-ctrl-fullscreen';
+        this._btn.type = 'button';
+        this._btn.setAttribute('aria-label', 'Toggle Fullscreen');
+        
+        // Explicit SVGs for visibility
+        const enterIcon = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 m-auto"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" /></svg>`;
+        const exitIcon = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 m-auto"><path stroke-linecap="round" stroke-linejoin="round" d="M9 9V4.5M9 9H4.5M9 9L3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9h4.5M15 9V4.5M15 9l5.25-5.25M15 15h4.5M15 15v4.5M15 15l5.25 5.25" /></svg>`;
+
+        this._btn.innerHTML = enterIcon;
+
+        this._btn.onclick = () => {
+             this._onToggle();
+             // Toggle Icon
+             const isNowFullscreen = this._btn.innerHTML === exitIcon;
+             this._btn.innerHTML = isNowFullscreen ? enterIcon : exitIcon;
+        };
+        this._container.appendChild(this._btn);
+        return this._container;
+    }
+
+    onRemove() {
+        this._container.parentNode.removeChild(this._container);
+        this._map = undefined;
+    }
+}
+
 // Use robust composable to capture map instance
 useMapbox('cbre-map', async (map) => {
         mapRef.value = map;
-        const mapboxgl = await import('mapbox-gl').then(m => m.default || m);
+        if (!mapboxgl) {
+            mapboxgl = await import('mapbox-gl').then(m => m.default || m);
+        }
 
         // Initial Sync
         loadMapImages(map);
+
+        // Manual Fullscreen Control (CSS-based Pseudo Fullscreen)
+        const fsControl = new CustomFullscreenControl(() => {
+            isFullscreen.value = !isFullscreen.value;
+            setTimeout(() => {
+                map.resize();
+            }, 100);
+        });
+        map.addControl(fsControl, 'top-right');
+
         const currentLang = locale.value;
         console.log('[Container] Map initialized. Initial Language:', currentLang);
 
@@ -564,7 +622,8 @@ const updateControlTooltips = () => {
 
         // Wait a tick for DOM to settle if called immediately
         setTimeout(() => {
-                const { t } = useI18n(); // Ensure we get the latest translator if needed, though global t is fine in setup
+                // Using global t from setup
+                // const { t } = useI18n();  <-- REMOVED
 
                 tooltipMap.forEach(({ selector, key }) => {
                         const els = document.querySelectorAll(selector);
@@ -578,83 +637,18 @@ const updateControlTooltips = () => {
         }, 1000); // 1s delay to safely catch lazy loaded controls
 };
 
-// Initialize Mini Map
-const miniMapMarkers: Record<string, any> = {};
-let miniMapMarkersOnScreen: Record<string, any> = {};
+// Update Mini Map Markers - REMOVED for Heatmap Focus
+// The user requested a pure heatmap visualization for the mini-map.
+// DOM-based cluster markers have been removed to prevent "dark spots" and allow the heatmap layer to show distribution.
 
-// Helper: Create Mini Map Halo Cluster (Smaller)
-function createMiniMapHaloCluster(props: any) {
-        const count = props.point_count || 0;
-        const countAbbr = props.point_count_abbreviated || count;
-        const size = count >= 1000 ? 30 : count >= 100 ? 25 : count >= 10 ? 20 : 15; // ~50% smaller
-
-        const el = document.createElement('div');
-        el.className = 'cluster-halo minimap-halo'; // Add specific class
-        el.style.width = `${size + 8}px`;
-        el.style.height = `${size + 8}px`;
-
-        const inner = document.createElement('div');
-        inner.className = 'cluster-inner';
-        inner.style.width = `${size}px`;
-        inner.style.height = `${size}px`;
-        inner.style.fontSize = '10px'; // Smaller font
-        inner.innerText = countAbbr;
-
-        el.appendChild(inner);
-        return el;
-}
-
-// Update Mini Map Markers
-const updateMiniMapMarkers = () => {
-        if (!miniMapRef.value) return;
-        const map = miniMapRef.value;
-        if (!map.getSource('cbre-minimap-points')) return;
-
-        const newMarkers: Record<string, any> = {};
-        // Query features from the rendered source
-        const features = map.querySourceFeatures('cbre-minimap-points');
-
-        for (const feature of features) {
-                const coords = (feature.geometry as any).coordinates;
-                const props = feature.properties;
-
-                if (!props?.cluster) continue;
-
-                const id = props.cluster_id;
-                let marker = miniMapMarkers[id];
-
-                if (!marker) {
-                        const el = createMiniMapHaloCluster(props);
-                        // @ts-ignore
-                        marker = miniMapMarkers[id] = new mapboxgl.Marker({
-                                element: el
-                        }).setLngLat(coords);
-                }
-
-                newMarkers[id] = marker;
-
-                if (!miniMapMarkersOnScreen[id]) {
-                        marker.addTo(map);
-                }
-        }
-
-        // Cleanup
-        for (const id in miniMapMarkersOnScreen) {
-                if (!newMarkers[id]) {
-                        miniMapMarkersOnScreen[id].remove();
-                }
-        }
-        miniMapMarkersOnScreen = newMarkers;
-};
-
-useMapbox('cbre-minimap', (map) => {
+useMapbox('cbre-minimap', async (map) => {
         miniMapRef.value = map;
-        console.log('[Container] Mini Map initialized (Static).');
+        if (!mapboxgl) {
+            mapboxgl = await import('mapbox-gl').then(m => m.default || m);
+        }
+        console.log('[Container] Mini Map initialized (Static Heatmap).');
 
-        map.on('render', () => {
-                if (!map.isSourceLoaded('cbre-minimap-points')) return;
-                updateMiniMapMarkers();
-        });
+        // No render loop needed for heatmap only
 });
 
 // Adjust Heatmap Style based on Data Count
@@ -666,29 +660,67 @@ const updateHeatmapVisuals = (count: number) => {
         // Heuristic Logic for Visual Consistency @ Zoom 5
         // Since we now have Clusters, we can reduce Heatmap intensity slightly to avoid clash
         // Or keep it as a background glow
-        let intensity = 1;
-        let radius = 10;
 
+        // Define breakpoints for smooth interpolation: [MaxCount, Intensity, Radius]
+        interface HeatmapBreakpoint { count: number; i: number; r: number; }
+        
+        const breakpoints: HeatmapBreakpoint[] = [
+            { count: 0, i: 0, r: 30 },
+            { count: 10, i: 6.0, r: 40 },     // Low count: Very high intensity (x6)
+            { count: 50, i: 5.0, r: 35 },
+            { count: 200, i: 4.0, r: 25 },
+            { count: 1000, i: 3.0, r: 22 },   // ~1k: Balanced standard
+            { count: 5000, i: 2.0, r: 18 },
+            { count: 10000, i: 1.5, r: 16 },  // ~10k: Tighter points
+            { count: 50000, i: 1.0, r: 14 },
+            { count: 100000, i: 0.8, r: 12 }, // ~100k
+            { count: 1000000, i: 0.5, r: 10 }
+        ];
+
+        let intensity = 1;
+        let radius = 15;
+
+        // Linear Interpolation
         if (count === 0) {
-                intensity = 0;
-        } else if (count <= 30) {
-                intensity = 0; // Hide heatmap if very few items, show clusters/points only?
-                // Actually, consistency: Keep heatmap as "glow"
-                intensity = 2;
-                radius = 20;
-        } else if (count <= 100) {
-                intensity = 2;
-                radius = 20;
-        } else if (count <= 500) {
-                intensity = 1.5;
-                radius = 15;
+            intensity = 0;
+        } else if (count >= breakpoints[breakpoints.length - 1]!.count) {
+             const last = breakpoints[breakpoints.length - 1]!;
+             intensity = last.i;
+             radius = last.r;
         } else {
-                intensity = 0.5;
-                radius = 10;
+            for (let j = 0; j < breakpoints.length - 1; j++) {
+                const start = breakpoints[j]!;
+                const end = breakpoints[j + 1]!;
+                if (count >= start.count && count < end.count) {
+                    const t = (count - start.count) / (end.count - start.count);
+                    intensity = start.i + t * (end.i - start.i);
+                    radius = start.r + t * (end.r - start.r);
+                    break;
+                }
+            }
         }
 
-        miniMapRef.value.setPaintProperty(layerId, 'heatmap-intensity', intensity);
-        miniMapRef.value.setPaintProperty(layerId, 'heatmap-radius', radius);
+        if (miniMapRef.value) {
+            miniMapRef.value.setPaintProperty(layerId, 'heatmap-intensity', intensity);
+            
+            // Make radius data-driven based on cluster size (point_count)
+            // Single items (Busan) get 60% of the calculated base radius
+            // Clusters (Seoul) get 100%+ of the calculated base radius
+            // Hard Step for clear distinction:
+            // Single Item (count < 2) -> 20% Radius
+            // Cluster (count >= 2) -> 100% Radius
+            const radiusExpr = [
+                'step',
+                ['coalesce', ['get', 'point_count'], 1],
+                radius * 0.2, // Default (Single item < 2)
+                2,            // Step boundary
+                radius        // Value for >= 2
+            ];
+            
+            miniMapRef.value.setPaintProperty(layerId, 'heatmap-radius', radiusExpr);
+            // Debug log to verify tuning
+            // console.log(`[Container] Heatmap Scaled: Count=${count} -> Int=${intensity.toFixed(2)}, BaseRad=${radius.toFixed(1)}`);
+        }
 };
 
 // Watch for property data changes -> Update Map Source & Heatmap Style

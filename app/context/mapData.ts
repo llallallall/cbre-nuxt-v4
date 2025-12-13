@@ -151,16 +151,15 @@ export const LAYER_MINIMAP_HEAT = {
     type: 'heatmap',
     paint: {
         // Increase the heatmap weight based on frequency and property magnitude
+        // Heatmap Weight: Clamped to avoid massive clusters overwhelming the map
         'heatmap-weight': [
             'interpolate',
             ['linear'],
-            ['coalesce', ['get', 'mag'], 1],
-            0,
-            0,
-            1,
-            0.1, // Significantly reduced weight for single points (mag=1)
-            6,
-            1
+            ['coalesce', ['get', 'point_count'], 1],
+            0, 0,
+            1, 0.15,   // Single item: Low weight to keep it small and sharp
+            20, 0.8,   // Small cluster
+            100, 1     // Large cluster
         ],
         // Increase the heatmap color weight weight by zoom level
         // heatmap-intensity is a multiplier on top of heatmap-weight
@@ -177,30 +176,31 @@ export const LAYER_MINIMAP_HEAT = {
         ],
         // Color ramp for heatmap.  Domain is 0 (low) to 1 (high).
         // Uses cluster colors: #17E88F (light), #018e69 (medium), #003F2D (dark)
+        // Uses tonal variations of CBRE Green #003F2D
         'heatmap-color': [
             'interpolate',
             ['linear'],
             ['heatmap-density'],
             0,
-            'rgba(23, 232, 143, 0)', // Transparent
+            'rgba(0, 63, 45, 0)',    // Transparent
             0.2,
-            'rgba(23, 232, 143, 0.5)', // Light green #17E88F
-            0.6,
-            'rgba(1, 142, 105, 0.8)', // Medium green #018e69
+            'rgba(0, 63, 45, 0.2)',  // Lightest Fade
+            0.5,
+            'rgba(0, 63, 45, 0.5)',  // Medium Fade
+            0.8,
+            'rgba(0, 63, 45, 0.8)',  // Strong Fade
             1,
-            'rgba(0, 63, 45, 1)' // Dark green #003F2D
+            'rgba(0, 63, 45, 0.95)'   // Deepest CBRE Green
         ],
         // Adjust the heatmap radius by zoom level
         'heatmap-radius': [
             'interpolate',
             ['linear'],
             ['zoom'],
-            0,
-            2,
-            5,
-            10, // Reduced radius at zoom 5 to make single points smaller
-            9,
-            30
+            0, 10,
+            4, 30, // Large radius at mini-map zoom
+            6, 50,
+            9, 80
         ],
         // Transition from heatmap to circle layer by zoom level
         'heatmap-opacity': [

@@ -77,7 +77,7 @@
                                 </UDropdownMenu>
                         </div>
 
-                        <UDivider />
+                        <hr class="my-4 border-gray-200" />
 
                         <!-- Sliders -->
                         <div class="space-y-4">
