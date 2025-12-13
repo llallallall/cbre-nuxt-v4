@@ -222,6 +222,9 @@
     "next_property": "Next Property",
     "no_next_property": "No Next Property",
     "logged_in_as": "Logged in as",
+    "docs": {
+        "title": "Documentation"
+    },
     "nav": {
         "brand": {
             "map": "Map",
@@ -554,6 +557,7 @@
             "click_here": "Click here",
             "instruction": "to upload an image",
             "format": "PNG, JPG up to 5MB"
-        }
+        },
+        "show_tooltips": "Show Tooltips"
     }
 }

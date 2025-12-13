@@ -47,6 +47,17 @@
                     </div>
                 </div>
 
+                <!-- Settings Section -->
+                <div class="w-full text-left space-y-4 mt-6 px-4">
+                    <div class="flex items-center justify-between border-b pb-2">
+                        <div class="flex items-center">
+                            <UIcon name="i-heroicons-information-circle" class="w-5 h-5 mr-3 text-cbre-green" />
+                            <span class="font-medium text-gray-500">{{ $t('profile.show_tooltips') }}</span>
+                        </div>
+                        <USwitch :model-value="uiStore.showTooltips" @update:model-value="uiStore.toggleTooltips" />
+                    </div>
+                </div>
+
                 <div class="flex justify-between w-full mt-8 gap-3">
                     <UButton block color="primary" variant="outline"
                         class="flex-1 justify-center cbre-button-secondary text-base hover:bg-cbre-green hover:text-white hover:border-cbre-green rounded-none uppercase font-calibre"

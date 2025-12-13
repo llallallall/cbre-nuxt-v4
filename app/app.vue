@@ -17,9 +17,11 @@
         <CommonCarouselModal v-if="statusStore.isSlideOpen" />
 
         <ClientOnly>
-            <MapSelectedInfoModal v-if="uiStore.showInfoModal" :show="uiStore.showInfoModal"
+                <MapSelectedInfoModal v-if="uiStore.showInfoModal" :show="uiStore.showInfoModal"
                 :items="propertyStore.keptProperties" @close="uiStore.showInfoModal = false" />
         </ClientOnly>
+
+        <CommonDocsModal v-if="uiStore.showDocsModal" />
     </UApp>
 </template>
 

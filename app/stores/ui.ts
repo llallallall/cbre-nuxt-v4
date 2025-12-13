@@ -79,11 +79,17 @@ interface UiState {
     isFabOpen: boolean;
     showInfoModal: boolean;
 
+    // Tooltip Setting
+    showTooltips: boolean;
+
     // map
     showMiniMap: boolean,
 
     // Header Color Mode
     isLightMode: boolean;
+
+    // Docs Modal
+    showDocsModal: boolean;
 
     // Device State
     isMobile: boolean;
@@ -126,10 +132,14 @@ const getInitialState = (): UiState => ({
     isFabOpen: false,
     showInfoModal: false,
 
+    showTooltips: true, // Default enabled
+
     showMiniMap: true,
 
     // Header Color Mode
     isLightMode: false,
+
+    showDocsModal: false,
 
     // Device State
     isMobile: false,
@@ -278,6 +288,24 @@ export const useUiStore = defineStore('ui', {
         setDeviceState(isMobile: boolean, isTablet: boolean) {
             this.isMobile = isMobile;
             this.isTablet = isTablet;
+        },
+
+        /**
+         * @description 툴팁 표시 여부를 토글합니다.
+         * @param forceValue - 강제 설정 값 (선택 사항)
+         */
+        toggleTooltips(forceValue?: boolean) {
+            this.showTooltips = forceValue !== undefined ? forceValue : !this.showTooltips;
+
+            // Nuxt UI AppConfig를 통해 전역 설정 변경 (Prevent prop)
+            const appConfig = useAppConfig();
+            // prevent = false -> Enable tooltip
+            // @ts-ignore
+            appConfig.ui.tooltip.prevent = !this.showTooltips;
+        },
+
+        toggleDocsModal(forceValue?: boolean) {
+            this.showDocsModal = forceValue !== undefined ? forceValue : !this.showDocsModal;
         }
     },
 });

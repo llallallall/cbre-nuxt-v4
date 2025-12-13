@@ -41,3 +41,18 @@ This document tracks all modifications to core configuration files (`main.css`, 
     - `StyleControl.vue`: Fixed `color="white"` type error by changing to `neutral`/`bg-white` and refactored to use `UDropdownMenu` for better image support.
     - `ExportControl.vue`: **Fixed Filename Issue**: Reverted to `@watergis/mapbox-gl-export` (library) after native export failed in embedded browser. Implemented `document.createElement` monkey-patch to successfully force dynamic filenames (`CBRE_Map_...`) by intercepting the library's internal download trigger. Added `file-saver` implementation as backup (`.2.depreciated`).
 
+
+### 2025-12-13
+- **File(s)**: `app/components/common/CommonModal.vue`, `app/components/nav/user/*`, `app/stores/ui.ts`, `i18n/locales/*.json`
+- **Description**:
+    1. **Architecture Change**: Replaced unstable `UModal` with custom `CommonModal.vue` (Teleport-based) to resolve persistent auto-open/overlay issues.
+    2. **Feature Implementation**: Completed User Profile (Email display, Password Reset, Avatar Selection with Digital/Office tabs).
+    3. **Localization**: Implemented full i18n support for Profile features (`en.json` & `ko.json`).
+    4. **Global Feature**: Added "Show Tooltips" global toggle using `USwitch` (replaced `UToggle`).
+- **Action**:
+    - `CommonModal.vue`: Created new component.
+    - `Profile.vue` & `EditProfileModal.vue`: Refactored to use `CommonModal`.
+    - `ui.ts`: Added `showTooltips` state and action synced with `appConfig.ui.tooltip.prevent`.
+    - `Profile.vue`: Replaced `UToggle` with `USwitch`.
+    - `INSTRUCTION_TROUBLESHOOTING.md`: Added section on Nuxt UI Component Compatibility.
+

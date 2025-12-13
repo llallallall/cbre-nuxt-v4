@@ -222,6 +222,9 @@
     "next_property": "다음 자산",
     "no_next_property": "다음 자산 없음",
     "logged_in_as": "로그인 계정:",
+    "docs": {
+        "title": "문서 관리"
+    },
     "nav": {
         "brand": {
             "map": "지도",
@@ -556,6 +559,7 @@
             "click_here": "여기를 클릭",
             "instruction": "하여 이미지 업로드",
             "format": "PNG, JPG 최대 5MB"
-        }
+        },
+        "show_tooltips": "툴팁 표시"
     }
 }

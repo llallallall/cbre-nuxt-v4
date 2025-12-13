@@ -229,3 +229,22 @@ onMounted(() => {
         return element;
     };
     ```
+
+---
+
+## 11. Nuxt UI Component Compatibility
+
+### **`UModal` Auto-Opening & Persistent Overlay**
+- **Issue**: `UModal` with `prevent-close` or specific layouts opens automatically on mount or fails to close, causing the application to become unusable (gray overlay).
+- **Cause**: In certain Nuxt 4 / Vue 3.5+ environments, the internal state management of `UModal` (headless UI underlying logic) conflicts with strict hydration or parent component re-renders.
+- **Fix**: **Replace with Custom `CommonModal`**.
+    - Implemented a lightweight `CommonModal.vue` using Vue's `<Teleport to="body">`.
+    - Manages visibility via simple `v-if` and CSS transitions, bypassing the complex Headless UI state machine.
+    - Explicitly handles `z-index` stacking to allow nested modals (e.g., Edit Profile over Profile).
+
+### **`UToggle` vs `USwitch` (Version Mismatch)**
+- **Issue**: `<UToggle>` component is not recognized or fails to render, or causes TypeScript errors.
+- **Cause**: The project uses `@nuxt/ui` v4+ (or a specific version stream) where the toggle component is named `USwitch`. `UToggle` was either a v2 name or a confusion with other libraries.
+- **Fix**: **Use `<USwitch>`**.
+    - Verified `USwitch` usage in existing `Menu.vue`.
+    - Replaced `<UToggle>` with `<USwitch>` in `Profile.vue` for global settings (e.g., Tooltip Toggle).

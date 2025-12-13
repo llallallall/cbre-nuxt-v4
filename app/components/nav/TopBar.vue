@@ -164,6 +164,15 @@
 						<UIcon name="i-heroicons-globe-alt" class="w-5 h-5" />
 					</button>
 
+					<!-- Docs Link -->
+					<UTooltip :text="$t('docs.title')" :popper="{ placement: 'bottom' }">
+						<button @click="uiStore.toggleDocsModal(true)"
+							class="group cbre-button-topbar-menu transition-colors"
+							:class="isLightMode ? 'text-cbre-green' : 'text-white'">
+							<UIcon name="i-heroicons-book-open" class="w-5 h-5 group-hover:text-cbre-accent" />
+						</button>
+					</UTooltip>
+
 					<!-- Language Switcher -->
 					<CommonLanguageSwitcher />
 
