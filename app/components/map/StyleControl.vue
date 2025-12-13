@@ -24,12 +24,12 @@
 
                         <!-- Map Style Selector -->
                         <div class="flex items-center justify-between">
-                                <label class="font-medium text-gray-700 text-2xl whitespace-nowrap pr-4">Map
+                                <label class="font-medium text-gray-700 text-sm whitespace-nowrap pr-4">Map
                                         Style</label>
-                                <UDropdownMenu :items="styleItems" :ui="{ content: 'w-[15rem] text-2xl ' }">
+                                <UDropdownMenu :items="styleItems" :ui="{ content: 'w-[15rem] text-sm ' }">
                                         <UButton color="neutral" variant="outline" block
                                                 class="justify-between ring-1 ring-gray-200 bg-gray-50">
-                                                <div class="flex items-center gap-2 text-gray-700 text-2xl w-full">
+                                                <div class="flex items-center gap-2 text-gray-700 text-sm w-full">
                                                         <img v-if="selectedStyle?.avatar"
                                                                 :src="selectedStyle.avatar.src"
                                                                 class="w-5 h-5 rounded-sm object-cover" />
@@ -42,7 +42,7 @@
                                                 <div class="flex w-full items-center gap-3 py-1 hover:bg-gray-100">
                                                         <img v-if="item.avatar" :src="item.avatar.src"
                                                                 class="w-8 h-8 rounded-none border border-gray-200 object-cover" />
-                                                        <span class=" text-2xl font-medium text-gray-700">{{
+                                                        <span class=" text-sm font-medium text-gray-700">{{
                                                                 item.label
                                                                 }}</span>
                                                 </div>
@@ -53,14 +53,14 @@
                         <!-- Language Selector -->
                         <div class="flex items-center justify-between">
                                 <label
-                                        class="font-medium text-gray-700 text-2xl whitespace-nowrap pr-4">Language</label>
+                                        class="font-medium text-gray-700 text-sm whitespace-nowrap pr-4">Language</label>
                                 <UDropdownMenu :items="langItems" :ui="{ content: 'w-[10rem]' }">
                                         <UButton color="neutral" variant="outline" block
                                                 class="justify-between ring-1 ring-gray-200 bg-gray-50">
                                                 <div class="flex items-center gap-2">
                                                         <img v-if="selectedLang?.avatar" :src="selectedLang.avatar.src"
                                                                 class="w-5 h-5 rounded-sm object-cover" />
-                                                        <span class="text-gray-700 text-2xl">{{ selectedLang?.label
+                                                        <span class="text-gray-700 text-sm">{{ selectedLang?.label
                                                                 }}</span>
                                                 </div>
                                                 <UIcon name="i-heroicons-chevron-down-20-solid" class="text-gray-400" />
@@ -70,7 +70,7 @@
                                                 <div class="flex items-center gap-3 w-full py-1">
                                                         <img v-if="item.avatar" :src="item.avatar.src"
                                                                 class="w-5 h-5 rounded-sm object-cover" />
-                                                        <span class="font-medium  text-gray-700 text-2xl">{{ item.label
+                                                        <span class="font-medium  text-gray-700 text-sm">{{ item.label
                                                         }}</span>
                                                 </div>
                                         </template>
@@ -82,7 +82,7 @@
                         <!-- Sliders -->
                         <div class="space-y-4">
                                 <div class="flex items-center justify-between">
-                                        <div class="flex justify-between text-2xl gap-2 pr-4">
+                                        <div class="flex justify-between text-sm gap-2 pr-4">
                                                 <span class="font-medium text-gray-700">Pitch</span>
                                                 <span class="text-gray-500">{{ mapStore.mapPitch }}°</span>
                                         </div>
@@ -90,7 +90,7 @@
                                 </div>
 
                                 <div class="flex items-center justify-between gap-4">
-                                        <div class="flex justify-start text-2xl gap-2 pr-4">
+                                        <div class="flex justify-start text-sm gap-2 pr-4">
                                                 <span class="font-medium text-gray-700">Bearing</span>
                                                 <span class="text-gray-500">{{ mapStore.mapBearing }}°</span>
                                         </div>

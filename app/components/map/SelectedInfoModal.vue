@@ -1,6 +1,6 @@
 <template>
     <CommonModal :model-value="show" @update:model-value="emit('close')" 
-        max-width="w-full md:w-2/3 lg:w-3/5 xl:w-1/2" 
+        max-width="w-full md:w-[90%] 2xl:w-[80%] 3xl:w-[60%]" 
         panel-class="md:max-h-[85vh] h-full overflow-hidden" 
         no-padding 
         hide-close-button>

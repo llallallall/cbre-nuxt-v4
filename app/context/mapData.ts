@@ -219,12 +219,12 @@ export const LAYER_MINIMAP_HEAT = {
 
 // Map Options
 export const MapStyleOptions = [
+    { label: 'Streets', value: 'mapbox://styles/mapbox/streets-v12', id: 'streets-v12', avatar: { src: 'images/mapbox/Streets.png', alt: 'Streets' } },
     { label: 'Light', value: 'mapbox://styles/mapbox/light-v11', id: 'light-v11', avatar: { src: 'images/mapbox/Light.png', alt: 'Light' } },
     // ...
     { label: 'Standard', value: 'mapbox://styles/mapbox/standard', id: 'standard', avatar: { src: 'images/mapbox/Standard.png', alt: 'Light' } },
     { label: 'StandardSatellite', value: 'mapbox://styles/mapbox/standard-satellite', id: 'standard-satellite', avatar: { src: 'images/mapbox/StandardSatellite.png', alt: 'Light' } },
     { label: 'Dark', value: 'mapbox://styles/mapbox/dark-v11', id: 'dark-v11', avatar: { src: 'images/mapbox/Dark.png', alt: 'Dark' } },
-    { label: 'Streets', value: 'mapbox://styles/mapbox/streets-v12', id: 'streets-v12', avatar: { src: 'images/mapbox/Streets.png', alt: 'Streets' } },
     { label: 'Outdoors', value: 'mapbox://styles/mapbox/outdoors-v12', id: 'outdoors-v12', avatar: { src: 'images/mapbox/Outdoors.png', alt: 'Outdoors' } },
     { label: 'Satellite', value: 'mapbox://styles/mapbox/satellite-v9', id: 'satellite-v9', avatar: { src: 'images/mapbox/Satellite.png', alt: 'Satellite' } },
     { label: 'SatelliteStreets', value: 'mapbox://styles/mapbox/satellite-streets-v12', id: 'satellite-streets-v12', avatar: { src: 'images/mapbox/SatelliteStreets.png', alt: 'SatelliteStreets' } },

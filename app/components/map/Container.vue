@@ -130,7 +130,7 @@ const updateLanguage = (lang: string, mapInstance?: any) => {
                         }
                 }
         }
-        console.log(`[Container] Language updated to ${fieldName}. Affected layers: ${updatedCount}`);
+        // console.log(`[Container] Language updated to ${fieldName}. Affected layers: ${updatedCount}`);
 };
 
 const config = useRuntimeConfig();
@@ -234,7 +234,7 @@ const loadMapImages = (map: any) => {
 
         Promise.all(promises).then(() => {
                 imagesLoaded.value = true;
-                console.log('[Container] Map images loaded.');
+                // console.log('[Container] Map images loaded.');
         });
 };
 
@@ -242,7 +242,7 @@ const onMapLoad = (v: any) => {
         // v can be map instance or event depending on Nuxt version/library
         // But we capture map via useMapbox mostly. 
         // Just in case template event fires:
-        console.log('[Container] Map @load event.');
+        // console.log('[Container] Map @load event.');
 };
 
 // Markers Cache
@@ -312,11 +312,11 @@ useMapbox('cbre-map', async (map) => {
         map.addControl(fsControl, 'top-right');
 
         const currentLang = locale.value;
-        console.log('[Container] Map initialized. Initial Language:', currentLang);
+        // console.log('[Container] Map initialized. Initial Language:', currentLang);
 
         const onStyleLoad = () => {
                 styleLoaded.value = true;
-                console.log('[Container] Style loaded. Syncing language & images.');
+                // console.log('[Container] Style loaded. Syncing language & images.');
 
                 // Language Sync
                 updateLanguage(locale.value, map);
@@ -345,7 +345,7 @@ useMapbox('cbre-map', async (map) => {
         // Backup check after 1 second to catch any race conditions
         setTimeout(() => {
                 if (map.isStyleLoaded() && !styleLoaded.value) {
-                        console.log('[Container] 1s Backup check triggering style load.');
+                        // console.log('[Container] 1s Backup check triggering style load.');
                         onStyleLoad();
                 }
         }, 1000);
@@ -505,21 +505,21 @@ watch(() => searchedDataSource.value, (newData) => {
         if (source) {
                 // @ts-ignore
                 source.setData(newData.data);
-                console.log('[Container] Updated searched-markers source data.');
+                // console.log('[Container] Updated searched-markers source data.');
         }
 }, { deep: true });
 
 // Watch for map language changes (Store)
 watch(() => mapStore.selectedMapLanguage, (newLangObj) => {
         if (newLangObj?.value) {
-                console.log('[Container] Map language changed to:', newLangObj.value);
+                // console.log('[Container] Map language changed to:', newLangObj.value);
                 updateLanguage(newLangObj.value);
         }
 });
 
 // Watch for global locale changes (Sync Store)
 watch(locale, (newLang) => {
-        console.log('[Container] Global locale changed to:', newLang);
+        // console.log('[Container] Global locale changed to:', newLang);
 
         // Sync store with global locale
         const found = MapLangOptions.find(opt => opt.value === newLang);
@@ -546,12 +546,20 @@ watch(() => mapStore.flyTo, (nv) => {
 
 // Watch for map style changes
 watch(() => mapStore.selectedMapStyle, (newStyle) => {
-        if (!mapRef.value || !newStyle?.value) return;
+        if (mapRef.value) {
+                // console.log('[Container] Style changed to:', newStyle.label);
+                mapRef.value.setStyle(newStyle.value);
+        }
 
-        console.log('[Container] Style changed to:', newStyle.label);
-        mapRef.value.setStyle(newStyle.value);
+        // Sync Mini Map Style
+        if (miniMapRef.value) {
+                miniMapRef.value.setStyle(newStyle.value);
+                // Note: Layers might be removed by setStyle. 
+                // The <MapboxLayer> components in the template *should* re-add themselves upon style.load if properly implemented.
+                // If not, we might need to manually handle re-adding specific minimap layers here.
+        }
 
-        // Style load listener handles the rest
+        // Style load listener handles the rest for Main Map
         // WARNING: Style change might remove markers if source is cleared.
         // We might need to clear markersOnScreen cache.
         for (const id in markersOnScreen) {
@@ -572,7 +580,7 @@ watch(() => mapStore.mapBearing, (newBearing) => {
 
 const mapOptions = computed(() => ({
         accessToken: mapboxAccessToken,
-        style: 'mapbox://styles/mapbox/light-v11',
+        style: 'mapbox://styles/mapbox/streets-v12',
         center: mapCenter,
         zoom: mapZoom,
         pitch: mapPitch,
@@ -588,7 +596,7 @@ const mapOptions = computed(() => ({
 
 const miniMapOptions = computed(() => ({
         accessToken: mapboxAccessToken,
-        style: mapStore.selectedMapStyle?.value || 'mapbox://styles/mapbox/light-v11',
+        style: mapStore.selectedMapStyle?.value || 'mapbox://styles/mapbox/streets-v12',
         center: [128, 36], // Fixed Center (Korea)
         zoom: 5,
         minZoom: 5,
@@ -633,7 +641,7 @@ const updateControlTooltips = () => {
                                 }
                         });
                 });
-                console.log('[Container] Updated Mapbox Control Tooltips');
+                // console.log('[Container] Updated Mapbox Control Tooltips');
         }, 1000); // 1s delay to safely catch lazy loaded controls
 };
 
@@ -646,7 +654,7 @@ useMapbox('cbre-minimap', async (map) => {
         if (!mapboxgl) {
             mapboxgl = await import('mapbox-gl').then(m => m.default || m);
         }
-        console.log('[Container] Mini Map initialized (Static Heatmap).');
+        // console.log('[Container] Mini Map initialized (Static Heatmap).');
 
         // No render loop needed for heatmap only
 });
@@ -730,7 +738,7 @@ watch(() => propertyStore.filteredProperties, () => {
         if (source) {
                 // @ts-ignore
                 source.setData(cbreDataSource.value.data);
-                console.log('[Container] Updated cbre-assets source data.');
+                // console.log('[Container] Updated cbre-assets source data.');
         }
 
         // 💡 [Sync] Update Mini Map Source & Style
@@ -739,7 +747,7 @@ watch(() => propertyStore.filteredProperties, () => {
                 if (miniMapSource) {
                         // @ts-ignore
                         miniMapSource.setData(cbreDataSource.value.data);
-                        console.log('[Container] Updated cbre-minimap-points source data.');
+                        // console.log('[Container] Updated cbre-minimap-points source data.');
 
                         // Apply dynamic visual adjustments
                         const count = propertyStore.filteredProperties.length;
