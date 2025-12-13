@@ -12,10 +12,12 @@
                                                                 class="w-full h-full object-cover" alt="User Avatar" />
                                                 </div>
                                                 <div class="flex items-center mt-1">
-                                                        <span class="font-calibre text-lg text-center max-w-[80px] truncate transition-colors duration-300 group-hover:text-cbre-accent"
-                                                                :class="uiStore.isLightMode ? 'text-cbre-green' : 'text-white'">
-                                                                {{ userStore.userName || 'User' }}
-                                                        </span>
+                                                        <UTooltip :text="userStore.userName || 'User'" :popper="{ placement: 'bottom' }">
+                                                                <span class="font-calibre text-xs text-center max-w-[80px] truncate transition-colors duration-300 group-hover:text-cbre-accent block"
+                                                                        :class="isLightMode ? 'text-cbre-green' : 'text-white'">
+                                                                        {{ userStore.userName || 'User' }}
+                                                                </span>
+                                                        </UTooltip>
                                                 </div>
                                         </div>
                                 </div>

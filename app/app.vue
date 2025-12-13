@@ -5,16 +5,18 @@
             <NuxtPage />
         </NuxtLayout>
 
-        <CommonGlobalLoader />
+        <ClientOnly>
+            <CommonGlobalLoader />
+        </ClientOnly>
 
         <CommonConfirmModal v-if="confirmStore.isOpen" :model-value="confirmStore.isOpen"
             :title="confirmStore.options.title" :message="confirmStore.options.message"
             :confirm-text="confirmStore.options.confirmText" :cancel-text="confirmStore.options.cancelText"
             @update:model-value="confirmStore.cancel" @confirm="confirmStore.confirm" @cancel="confirmStore.cancel" />
 
-        <CommonViewerModal v-if="statusStore.isViewerOpen" />
+        <CommonViewerModal />
 
-        <CommonCarouselModal v-if="statusStore.isSlideOpen" />
+        <CommonCarouselModal />
 
         <ClientOnly>
                 <MapSelectedInfoModal v-if="uiStore.showInfoModal" :show="uiStore.showInfoModal"

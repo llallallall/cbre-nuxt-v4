@@ -53,6 +53,8 @@
     },
     "toggle": "토글",
     "no_properties_selected": "선택된 자산이 없습니다.",
+    "no_previous_property": "첫 번째 자산입니다.",
+    "no_next_property": "마지막 자산입니다.",
     "error_invalid_login": "이메일 또는 비밀번호가 올바르지 않습니다. 다시 시도해주세요.",
     "error_unexpected": "예기치 않은 오류가 발생했습니다.",
     "eula_text": "EULA – 귀하는 CBRE Korea에 재직하는 동안에만 귀하의 유일하고 배타적인 이익을 위해 이 시스템을 사용하는 것에 동의합니다. 귀하는 시스템의 데이터에 대한 소유권이 없으며, 데이터는 양도 및/또는 이전될 수 없습니다.",
@@ -218,9 +220,7 @@
     "failed_create_account": "계정 생성 실패.",
     "home": "홈",
     "previous_property": "이전 자산",
-    "no_previous_property": "이전 자산 없음",
     "next_property": "다음 자산",
-    "no_next_property": "다음 자산 없음",
     "logged_in_as": "로그인 계정:",
     "docs": {
         "title": "문서 관리"
@@ -290,8 +290,20 @@
             "users": "사용자 관리",
             "upload_file": "파일 업로드",
             "download_file": "파일 다운로드"
+        },
+        "anchor": {
+            "overview": "개요",
+            "sizes": "면적 및 규모",
+            "facility": "시설 정보",
+            "parking": "주차 정보",
+            "floorplans": "도면",
+            "floors": "층별 용도",
+            "transactions": "거래 내역",
+            "location": "위치"
         }
     },
+    "download_pdf": "PDF 다운로드",
+    "view_brochure": "브로슈어",
     "list": {
         "load_more": "더 보기",
         "all_loaded": "모든 자산을 불러왔습니다",
@@ -506,33 +518,156 @@
             "elevator": "엘리베이터",
             "floor_u": "지상 층수",
             "floor_b": "지하 층수"
+        },
+        "detail": {
+            "updated": "수정일",
+            "summary": {
+                "title": "자산 개요",
+                "grade": "등급",
+                "effective_ratio": "전용률",
+                "no_of_buildings": "동수",
+                "sector": "섹터",
+                "subsector": "서브섹터",
+                "warehouse_usage": "용도",
+                "warehouse_room": "상온",
+                "warehouse_low": "저온",
+                "warehouse_constant": "정온"
+            },
+            "history": {
+                "title": "연혁",
+                "completion": "준공",
+                "renovation": "리모델링"
+            },
+            "sizes": {
+                "gfa": "연면적",
+                "nfa": "전용면적",
+                "land_area": "대지면적",
+                "floor_plate": "기준층 바닥면적",
+                "floor_area_ratio": "용적률",
+                "building_coverage": "건폐율",
+                "existing": "현재",
+                "permitted": "법정"
+            },
+            "facility": {
+                "elevators": "승강기",
+                "passenger": "승객용",
+                "service": "비상용",
+                "freight": "화물용",
+                "facade": "외관",
+                "roof_material": "지붕재",
+                "lighting": "조명",
+                "me": "기계/전기",
+                "fire_fighting": "소방"
+            },
+            "parking": {
+                "capacity": "주차 용량",
+                "free_parking": "무료 주차",
+                "paid_parking_fee": "유료 주차비",
+                "units": "대",
+                "required": "법정",
+                "units_sqm": "대/㎡",
+                "units_py": "대/평",
+                "vat_included": "VAT 포함"
+            },
+            "floorplans": {
+                "details": "도면 상세",
+                "longitudinal": "종단면도",
+                "cross": "횡단면도",
+                "upper": "지상층",
+                "basement": "지하층",
+                "upper_label": "지상",
+                "basement_label": "지하"
+            },
+            "floors": {
+                "usage_title": "층별 용도",
+                "type": "구분",
+                "floor": "층",
+                "usage": "용도",
+                "total_area": "임대면적",
+                "nla": "전용면적",
+                "ceiling": "천정고",
+                "load": "하중"
+            },
+            "sales": {
+                "title": "매매 사례",
+                "seller": "매도자",
+                "buyer": "매수자",
+                "yr_q": "년도-분기",
+                "type": "구분",
+                "price": "가격",
+                "p_gfa": "평당가(연면적)",
+                "p_nfa": "평당가(전용면적)",
+                "ecr": "캡레이트",
+                "disc": "할인율",
+                "remarks": "비고"
+            },
+            "lease": {
+                "actual_title": "실제 임대 사례",
+                "asking_title": "호가 임대 사례",
+                "floor": "층",
+                "unit": "호수",
+                "date": "날짜",
+                "rent": "임대료",
+                "noc": "NOC",
+                "eff_ratio": "전용률",
+                "monthly_rent": "월 임대료",
+                "monthly_camf": "월 관리비",
+                "deposit": "보증금",
+                "rent_mth_py": "평당 임대료",
+                "camf_mth_py": "평당 관리비",
+                "deposit_py": "평당 보증금",
+                "iod": "보증금 이자",
+                "gdm": "관리비 이익",
+                "lease_term": "임대 기간 (년)",
+                "rent_free_type": "렌트프리 유형",
+                "rent_free_mth": "렌트프리 개월",
+                "effective_noc": "실질 NOC",
+                "fit_out": "핏아웃",
+                "amount_krw": "지원금 (KRW)",
+                "amount_nfa": "평당 지원금",
+                "total_free_rent": "총 렌트프리",
+                "total_occupying": "총 점유 기간",
+                "total_free_rent_occupying": "실질 렌트프리",
+                "monthly_cash": "평당 현금지원",
+                "all_in": "실질 임대료",
+                "all_in_noc": "실질 NOC"
+            },
+            "location": {
+                "address": "주소",
+                "jibun": "지번",
+                "province": "도",
+                "city": "시/군/구",
+                "latitude": "위도",
+                "longitude": "경도"
+            }
+        },
+        "trans": {
+            "type": "거래 유형",
+            "year": "거래/임대 연도",
+            "quarter": "거래/임대 분기",
+            "date_full": "거래 발생 시기"
+        },
+        "lease": {
+            "occupancy": "임대율 / 입주율",
+            "units_avail": "공실 수",
+            "rent": "명목 임대료",
+            "cam": "관리비",
+            "deposit": "보증금",
+            "rent_free_type": "렌트프리 유형",
+            "rent_free": "렌트프리 기간",
+            "ti": "TI 지원금",
+            "effective_rent": "실질 임대료"
+        },
+        "sale": {
+            "price": "매매가",
+            "price_unit": "매매가 (단위)",
+            "cap_rate": "예상 Cap Rate",
+            "buyer": "매수자",
+            "seller": "매도자"
         }
     },
-    "trans": {
-        "type": "거래 유형",
-        "year": "거래/임대 연도",
-        "quarter": "거래/임대 분기",
-        "date_full": "거래 발생 시기"
-    },
-    "lease": {
-        "occupancy": "임대율 / 입주율",
-        "units_avail": "공실 수",
-        "rent": "명목 임대료",
-        "cam": "관리비",
-        "deposit": "보증금",
-        "rent_free_type": "렌트프리 유형",
-        "rent_free": "렌트프리 기간",
-        "ti": "TI 지원금",
-        "effective_rent": "실질 임대료"
-    },
-    "sale": {
-        "price": "매매가",
-        "price_unit": "매매가 (단위)",
-        "cap_rate": "예상 Cap Rate",
-        "buyer": "매수자",
-        "seller": "매도자"
-    },
     "common": {
+        "no_data_found": "데이터가 없습니다.",
         "success": "성공",
         "error": "오류",
         "fab": {

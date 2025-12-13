@@ -214,6 +214,7 @@ useMapbox('cbre-map', (map) => {
                                         "icon-image": "redPin",
                                         "icon-size": 0.9,
                                         "icon-anchor": 'bottom',
+                                        "icon-offset": [0, 14],
                                         "icon-ignore-placement": true,
                                         "icon-allow-overlap": true
                                 },
@@ -234,6 +235,7 @@ useMapbox('cbre-map', (map) => {
                                         "icon-image": "redPin",
                                         "icon-size": 0.7,
                                         "icon-anchor": 'bottom',
+                                        "icon-offset": [0, 10],
                                         "icon-ignore-placement": true,
                                         "icon-allow-overlap": true
                                 },
@@ -243,6 +245,7 @@ useMapbox('cbre-map', (map) => {
                                         "icon-halo-width": 2
                                 }
                         }
+
                 ]
         });
 

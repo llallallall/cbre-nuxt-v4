@@ -3,17 +3,19 @@
                 <!-- Settings Toggle Button -->
                 <UTooltip :text="$t('tooltip.toggle_settings')" :popper="{ placement: 'right' }">
                         <UButton color="neutral" variant="outline"
-                                class="shadow-md bg-white rounded-none font-[1100] text-2xl text-black/50 hover:text-opacity-100 hover:text-black p-4"
-                                icon="i-heroicons-cog-6-tooth" @click="isOpened = !isOpened" />
+                                class="shadow-md bg-white rounded-none hover:text-black w-[3.0rem] h-[3.0rem] flex items-center justify-center p-0"
+                                icon="i-heroicons-cog-6-tooth" :ui="{ leadingIcon: 'w-5 h-5 text-gray-500' }"
+                                @click="isOpened = !isOpened" />
                 </UTooltip>
 
                 <!-- Reset Button -->
                 <UTooltip :text="$t('tooltip.reset_view')" :popper="{ placement: 'right' }">
                         <UButton v-if="!isResetting" color="neutral" variant="outline"
-                                class="shadow-md bg-white rounded-none font-[1100] text-2xl text-black/50 hover:text-opacity-100 hover:text-black p-4"
-                                icon="i-heroicons-arrow-uturn-left" @click="onReset" />
+                                class="shadow-md bg-white rounded-none hover:text-black w-[3.0rem] h-[3.0rem] flex items-center justify-center p-0"
+                                icon="i-heroicons-arrow-uturn-left" :ui="{ leadingIcon: 'w-5 h-5 text-gray-500' }"
+                                @click="onReset" />
                         <UButton v-else loading color="neutral" variant="outline"
-                                class="p-4 text-center text-2xl shadow-md bg-white rounded-none" />
+                                class="shadow-md bg-white rounded-none w-[3.0rem] h-[3.0rem] flex items-center justify-center p-0" />
                 </UTooltip>
 
                 <!-- Settings Panel -->

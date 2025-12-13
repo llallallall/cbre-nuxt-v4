@@ -1,17 +1,17 @@
 <template>
-    <CommonModal v-model="model" maxWidth="sm:max-w-3xl">
-        <div class="bg-white rounded-none w-full font-calibre outline-none">
+    <CommonModal v-model="model" maxWidth="sm:max-w-[80rem]">
+        <div class="bg-white rounded-none w-full font-calibre outline-none p-6 rounded-none">
             <div class="flex justify-between items-center mb-6 border-b pb-2">
-                <h2 class="text-3xl text-cbre-green font-bold">{{ $t('profile.edit_profile') }}</h2>
+                <h2 class="cbre-text-display-2 font-bold">{{ $t('profile.edit_profile') }}</h2>
                 <!-- <UButton color="neutral" variant="ghost" icon="i-heroicons-x-mark-20-solid text-xl text-black"
                     @click="handleClose" /> -->
             </div>
 
-            <form @submit.prevent="handleSave" class="space-y-6 text-base">
+            <form @submit.prevent="handleSave" class="space-y-6 cbre-text-body-md">
                 <div class="flex flex-col sm:flex-row gap-8">
                     <!-- Left Column: Form Fields -->
                     <div class="flex-1 space-y-5">
-                        <UFormField :label="$t('name')" class="text-base">
+                        <UFormField :label="$t('name')">
                             <input v-model="form.name" type="text" class="cbre-input" />
                         </UFormField>
 
@@ -75,7 +75,7 @@
                                         v-for="tab in avatarTabs" 
                                         :key="tab.key"
                                         type="button"
-                                        class="flex-1 h-9 whitespace-nowrap transition-all duration-200 text-lg flex items-center justify-center px-1"
+                                        class="flex-1 h-9 whitespace-nowrap transition-all duration-200 text-xs flex items-center justify-center px-1"
                                         :class="activeTab === tab.key 
                                             ? 'cbre-button-primary' 
                                             : 'cbre-button-secondary'"
@@ -88,9 +88,9 @@
                                 <!-- Manual Tabs Content -->
                                 <div class="h-100 overflow-y-auto p-2 border rounded-md bg-white">
                                     <template v-if="activeTab === 'upload'">
-                                        <div class="flex flex-col items-center justify-center p-4 text-center h-full border-1 border-dashed border-gray-200 rounded-lg hover:border-cbre-green cursor-pointer bg-gray-50 hover:bg-gray-100 transition-colors"
+                                        <div class="flex flex-col items-center justify-center p-4 text-center h-full border-1 border-dashed border-gray-200 rounded-none hover:border-cbre-green cursor-pointer bg-gray-50 hover:bg-gray-100 transition-colors"
                                                 @click="triggerImgUpload">
-                                            <UIcon name="i-heroicons-cloud-arrow-up" class="w-30 h-30 text-gray-400 mb-2" />
+                                            <UIcon name="i-heroicons-cloud-arrow-up" class="w-10 h-10 text-gray-400 mb-2" />
                                             <p class="text-base text-gray-500">
                                                 <span class="text-cbre-green font-semibold underline decoration-solid hover:text-cbre-green-dark">{{ $t('profile.upload.click_here') }}</span>
                                                 {{ $t('profile.upload.instruction') }}
@@ -119,14 +119,14 @@
                 </div>
 
                 <div class="flex justify-end pt-4 border-t gap-3">
-                    <UButton block color="primary" variant="outline"
-                        class="flex-1 justify-center cbre-button-secondary text-base hover:bg-cbre-green hover:text-white hover:border-cbre-green rounded-none uppercase font-calibre"
+                    <UButton block color="neutral" variant="outline"
+                        class="flex-1 justify-center cbre-button-secondary rounded-none uppercase font-calibre"
                         icon="i-heroicons-x-mark-20-solid" @click="handleClose">
                         {{ $t('cancel_button') }}
                     </UButton>
 
-                    <UButton type="submit" :loading="isLoading"  block color="primary" variant="outline"
-                        class="flex-1 justify-center cbre-button-primary bg-cbre-primary text-white text-base hover:bg-cbre-accent hover:text-cbre-green ring-0 rounded-none uppercase font-calibre"
+                    <UButton type="submit" :loading="isLoading" block color="primary" variant="solid"
+                        class="flex-1 justify-center cbre-button-primary rounded-none uppercase font-calibre"
                         icon="i-heroicons-check-20-solid">
                         {{ $t('save_changes') }}
                     </UButton>

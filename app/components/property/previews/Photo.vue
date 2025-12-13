@@ -20,14 +20,14 @@
       No photos have been uploaded.
     </div>
 
-    <UModal v-model="isModalOpen" fullscreen>
+    <CommonModal :model-value="isModalOpen" @update:model-value="isModalOpen = $event" fullscreen no-padding hide-close-button panel-class="!bg-black h-full flex items-center justify-center">
       <div class="relative w-full h-full bg-black flex items-center justify-center">
         <button @click="isModalOpen = false" class="absolute top-4 right-4 text-white hover:text-gray-300 z-50">
           <UIcon name="i-heroicons-x-mark" class="w-8 h-8" />
         </button>
         <img :src="currentImgUrl" class="max-w-full max-h-full object-contain" />
       </div>
-    </UModal>
+    </CommonModal>
   </div>
 </template>
 

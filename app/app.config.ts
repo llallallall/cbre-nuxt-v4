@@ -52,7 +52,7 @@ export default defineAppConfig({
             arrow: true,
             delayDuration: 500,
             slots: {
-                content: 'text-base font-semibold px-4 py-6 border-b-4 border-accent shadow-lg'
+                content: 'text-sm font-semibold px-4 py-6 border-b-4 border-accent shadow-lg'
             }
         }
     }

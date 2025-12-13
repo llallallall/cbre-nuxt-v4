@@ -159,7 +159,7 @@
 
     /* Adjust font size for Korean to match visual weight of English */
     html:lang(ko) {
-        font-size: 59.375%;
+        font-size: 62.5%;
         /* 1rem = 9px (approx 10% reduction) */
     }
 
@@ -456,7 +456,7 @@
 
     /* === TopBar Navigation Menu Button === */
     .cbre-button-topbar-menu {
-        @apply relative flex items-center gap-2 h-[1.8rem] px-2 mx-2 text-[1.5rem] text-[var(--color-primary-1)] font-medium transition-colors duration-200 focus:outline-none cursor-pointer whitespace-nowrap shrink-0;
+        @apply relative flex items-center gap-2 h-[3.0rem] px-2 mx-2 text-[var(--color-primary-1)] font-medium transition-colors duration-200 focus:outline-none cursor-pointer whitespace-nowrap shrink-0;
     }
 
     .cbre-button-topbar-menu::after {
@@ -1217,12 +1217,20 @@
     }
     */
     .cbre-toast-title {
-        font-size: 2rem !important;
+        font-size: 1.6rem !important;
         line-height: 1.2 !important;
     }
 
     .cbre-toast-description {
-        font-size: 1.6rem !important;
-        line-height: 1.4 !important;
+        font-size: 1.2rem !important;
+        line-height: 1.2 !important;
+    }
+
+    /* === Standard Bullet List === */
+    .cbre_bulletList {
+        list-style: none;
+        margin: 0 0 1em;
+        padding: 0 0 0 20px;
+        line-height: 2;
     }
 }

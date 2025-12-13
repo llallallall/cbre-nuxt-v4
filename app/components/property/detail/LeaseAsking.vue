@@ -1,6 +1,6 @@
 <template>
-        <div id="lease-asking-section" class="font-financier text-2xl text-cbre-green mb-[20px]">
-                Asking Lease Transaction
+        <div id="lease-asking-section" class="cbre-text-display-2 mb-[20px]">
+                {{ $t('property.detail.lease.asking_title') }}
         </div>
 
         <UAccordion :items="items" class="bg-white mb-[20px] border-t border-gray-200">
@@ -9,8 +9,7 @@
                                 class="border-b border-gray-200 dark:border-gray-700 rounded-none !p-3">
                                 <template #leading>
                                         <div class="w-full text-left flex items-center">
-                                                <span class="font-financier text-xl text-cbre-green mr-4">Asking Lease
-                                                        Transaction</span>
+                                                <span class="cbre-text-display-3 mr-4">{{ $t('property.detail.lease.asking_title') }}</span>
                                                 <div
                                                         class="bg-cbre-green/10 text-cbre-green rounded-full px-4 py-1 min-w-[60px] flex justify-center items-center text-sm font-bold">
                                                         {{ info ? info.length : 0 }}
@@ -30,23 +29,23 @@
                                         <thead>
                                                 <tr class="border-b border-gray-200">
                                                         <th
-                                                                class="py-2 px-4 font-calibre text-cbre-green font-bold text-sm">
+                                                                class="py-2 px-4 font-calibre text-cbre-green font-bold text-base">
                                                                 #</th>
                                                         <th
-                                                                class="py-2 px-4 font-calibre text-cbre-green font-bold text-sm">
-                                                                Floor</th>
+                                                                class="py-2 px-4 font-calibre text-cbre-green font-bold text-base">
+                                                                {{ $t('property.detail.lease.floor') }}</th>
                                                         <th
-                                                                class="py-2 px-4 font-calibre text-cbre-green font-bold text-sm">
-                                                                Unit</th>
+                                                                class="py-2 px-4 font-calibre text-cbre-green font-bold text-base">
+                                                                {{ $t('property.detail.lease.unit') }}</th>
                                                         <th
-                                                                class="py-2 px-4 font-calibre text-cbre-green font-bold text-sm">
-                                                                Date</th>
+                                                                class="py-2 px-4 font-calibre text-cbre-green font-bold text-base">
+                                                                {{ $t('property.detail.lease.date') }}</th>
                                                         <th
-                                                                class="py-2 px-4 font-calibre text-cbre-green font-bold text-sm text-right">
-                                                                Rent</th>
+                                                                class="py-2 px-4 font-calibre text-cbre-green font-bold text-base text-right">
+                                                                {{ $t('property.detail.lease.rent') }}</th>
                                                         <th
-                                                                class="py-2 px-4 font-calibre text-cbre-green font-bold text-sm text-right">
-                                                                NOC</th>
+                                                                class="py-2 px-4 font-calibre text-cbre-green font-bold text-base text-right">
+                                                                {{ $t('property.detail.lease.noc') }}</th>
                                                 </tr>
                                         </thead>
                                         <tbody>
@@ -55,20 +54,20 @@
                                                         <td class="py-2 px-4 text-center">
                                                                 <input type="checkbox" />
                                                         </td>
-                                                        <td class="py-2 px-4 text-sm text-center">{{ t.lease?.floor ||
+                                                        <td class="py-2 px-4 text-base text-center">{{ t.lease?.floor ||
                                                                 '-' }}</td>
-                                                        <td class="py-2 px-4 text-sm text-center">{{ t.lease?.unit ||
+                                                        <td class="py-2 px-4 text-base text-center">{{ t.lease?.unit ||
                                                                 '-' }}</td>
-                                                        <td class="py-2 px-4 text-sm text-center">{{
+                                                        <td class="py-2 px-4 text-base text-center">{{
                                                                 formatDate(t.lease?.leaseStartDate) }}</td>
-                                                        <td class="py-2 px-4 text-sm text-right">{{
+                                                        <td class="py-2 px-4 text-base text-right">{{
                                                                 formatInt(t.lease?.rentMonthlyPy) }}</td>
-                                                        <td class="py-2 px-4 text-sm text-right">{{
+                                                        <td class="py-2 px-4 text-base text-right">{{
                                                                 formatDecimal(t.lease?.noc) }}</td>
                                                 </tr>
                                                 <tr v-if="!info || info.length === 0">
-                                                        <td colspan="6" class="py-4 text-center text-gray-500 text-sm">
-                                                                No Asking Lease Data
+                                                        <td colspan="6" class="py-4 text-center text-cbre-green text-base">
+                                                                {{ $t('common.no_data_found') }}
                                                         </td>
                                                 </tr>
                                         </tbody>
@@ -88,11 +87,12 @@ const props = withDefaults(defineProps<{
         info: () => []
 });
 
-const { numberFormat } = useFormat();
-const formatInt = (val: any) => numberFormat(val, 0);
-const formatDecimal = (val: any) => numberFormat(val, 2);
+    const { t } = useI18n();
+    const { numberFormat } = useFormat();
+    const formatInt = (val: any) => numberFormat(val, 0);
+    const formatDecimal = (val: any) => numberFormat(val, 2);
 
-const items = [{ label: 'Asking Lease Transaction', defaultOpen: true }] as any[];
+    const items = computed(() => [{ label: t('property.detail.lease.asking_title'), defaultOpen: true }] as any[]);
 
 const formatDate = (dateInput: Date | string | null | undefined): string => {
         if (!dateInput) return '-';

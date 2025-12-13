@@ -1,27 +1,19 @@
 <template>
-        <div id="floor-usage-section" class="font-financier text-2xl text-cbre-green mb-[20px]">
-                Floor Usage
-        </div>
-
-        <UAccordion :items="accordionItems" class="bg-white mb-[20px] border-t border-gray-200">
+        <UAccordion :items="accordionItems" default-value="floor-usage" class="bg-white">
                 <template #default="{ item, open }">
-                        <UButton color="neutral" variant="ghost"
-                                class="border-b border-gray-200 dark:border-gray-700 rounded-none p-3">
-                                <template #leading>
-                                        <div class="w-full text-left flex items-center">
-                                                <span class="font-financier text-xl text-cbre-green mr-4">Floor
-                                                        Usage</span>
-                                                <div
-                                                        class="bg-cbre-green/10 text-cbre-green rounded-full px-4 py-1 min-w-[60px] flex justify-center items-center text-sm font-bold">
-                                                        {{ info ? info.length : 0 }}
-                                                </div>
+                        <div class="w-full flex items-center justify-between py-3">
+                                <div class="text-left flex items-center">
+                                        <h3
+                                                class="cbre-text-display-2 mb-6 border-b-2 border-cbre-green/10 pb-2 inline-block">
+                                                {{ $t('nav.anchor.floors') }}</h3>
+                                        <div
+                                                class="ml-4 bg-cbre-green/10 text-cbre-green rounded-full px-4 py-1 min-w-[60px] flex justify-center items-center text-sm font-bold">
+                                                {{ info ? info.length : 0 }}
                                         </div>
-                                </template>
-                                <template #trailing>
-                                        <UIcon :name="open ? 'i-heroicons-chevron-up' : 'i-heroicons-chevron-down'"
-                                                class="w-5 h-5 ms-auto transform transition-transform duration-200" />
-                                </template>
-                        </UButton>
+                                </div>
+                                <UIcon :name="open ? 'i-heroicons-chevron-up' : 'i-heroicons-chevron-down'"
+                                        class="w-5 h-5 ms-auto transform transition-transform duration-200" />
+                        </div>
                 </template>
 
                 <template #content="{ item }">
@@ -30,7 +22,7 @@
                                         <thead>
                                                 <tr class="border-b border-gray-200">
                                                         <th v-for="header in floorHeaders" :key="header.value"
-                                                                class="py-2 px-4 font-calibre text-cbre-green font-bold text-sm whitespace-nowrap">
+                                                                class="py-2 px-4 font-calibre text-cbre-green font-bold text-base whitespace-nowrap">
                                                                 {{ header.text }}
                                                         </th>
                                                 </tr>
@@ -38,22 +30,22 @@
                                         <tbody>
                                                 <tr v-for="(row, index) in info" :key="index"
                                                         class="border-b border-gray-100 hover:bg-gray-50">
-                                                        <td class="py-2 px-4 text-sm">{{ row.type }}</td>
-                                                        <td class="py-2 px-4 text-sm">{{ row.floor }}F</td>
-                                                        <td class="py-2 px-4 text-sm">{{ row.use }}</td>
-                                                        <td class="py-2 px-4 text-sm text-right">{{
+                                                        <td class="py-2 px-4 text-base">{{ row.type }}</td>
+                                                        <td class="py-2 px-4 text-base">{{ row.floor }}F</td>
+                                                        <td class="py-2 px-4 text-base">{{ row.use }}</td>
+                                                        <td class="py-2 px-4 text-base text-right">{{
                                                                 formatNumber(row.totalAreaSqm) }}</td>
-                                                        <td class="py-2 px-4 text-sm text-right">{{
+                                                        <td class="py-2 px-4 text-base text-right">{{
                                                                 formatNumber(row.netLeasableAreaSqm) }}</td>
-                                                        <td class="py-2 px-4 text-sm text-right">{{
+                                                        <td class="py-2 px-4 text-base text-right">{{
                                                                 formatNumber(row.ceilingHeight) }}</td>
-                                                        <td class="py-2 px-4 text-sm text-right">{{
+                                                        <td class="py-2 px-4 text-base text-right">{{
                                                                 formatNumber(row.floorLoad) }}</td>
                                                 </tr>
                                                 <tr v-if="!info || info.length === 0">
                                                         <td :colspan="floorHeaders.length"
-                                                                class="py-4 text-center text-gray-500 text-sm">
-                                                                No floor usage information available.
+                                                                class="py-10 text-center text-cbre-blue text-base italic">
+                                                                {{ $t('common.no_data_found') }}
                                                         </td>
                                                 </tr>
                                         </tbody>
@@ -67,29 +59,31 @@
 import { useFormat } from '~/composables/useFormat';
 import type { FloorType } from '~/types/property.type';
 
-const accordionItems = [{ label: 'Floor Usage', defaultOpen: true, slot: 'content' }];
+    const { t } = useI18n();
 
-const props = withDefaults(defineProps<{
+    const accordionItems = computed(() => [{ label: t('property.detail.floors.usage_title'), value: 'floor-usage', slot: 'content' }]);
+
+    const props = withDefaults(defineProps<{
         info?: FloorType[]
-}>(), {
+    }>(), {
         info: () => []
-});
+    });
 
-const { numberFormat } = useFormat();
-const formatNumber = (val: number | null | undefined) => {
+    const { numberFormat } = useFormat();
+    const formatNumber = (val: number | null | undefined) => {
         if (val === null || val === undefined) return '-';
         return numberFormat(val, 0);
-};
+    };
 
-const floorHeaders = [
-        { text: 'Type', value: 'type' },
-        { text: 'Floor', value: 'floor' },
-        { text: 'Usage', value: 'use' },
-        { text: 'Total Area (㎡)', value: 'totalAreaSqm' },
-        { text: 'NLA (㎡)', value: 'netLeasableAreaSqm' },
-        { text: 'Ceiling (m)', value: 'ceilingHeight' },
-        { text: 'Load (t/㎡)', value: 'floorLoad' },
-];
+    const floorHeaders = computed(() => [
+        { text: t('property.detail.floors.type'), value: 'type' },
+        { text: t('property.detail.floors.floor'), value: 'floor' },
+        { text: t('property.detail.floors.usage'), value: 'use' },
+        { text: `${t('property.detail.floors.total_area')} (㎡)`, value: 'totalAreaSqm' },
+        { text: `${t('property.detail.floors.nla')} (㎡)`, value: 'netLeasableAreaSqm' },
+        { text: `${t('property.detail.floors.ceiling')} (m)`, value: 'ceilingHeight' },
+        { text: `${t('property.detail.floors.load')} (t/㎡)`, value: 'floorLoad' },
+    ]);
 </script>
 
 <style scoped>

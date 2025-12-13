@@ -52,8 +52,14 @@ export default defineEventHandler(async (event) => {
 
         return {
             ...data,
-            // Map relations that need transformation
-            transactions: data.transactions.map(t => ({
+            warehouse: data.warehouses,
+            history: data.histories,
+            propertyImageFile: data.propertyImageFiles,
+            propertyBrochureFile: data.propertyBrochureFiles,
+            floorPlanFile: data.floorPlanFiles,
+            floor: data.floors,
+            // transactions -> transaction (Singular key as per type definition)
+            transaction: data.transactions.map(t => ({
                 ...t,
                 sale: t.sales.length > 0 ? t.sales[0] : null,
                 lease: t.leases.length > 0 ? t.leases[0] : null,

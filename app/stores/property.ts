@@ -250,6 +250,7 @@ export const usePropertyStore = defineStore('property', {
 
             try {
                 const response = await $fetch<PropertyType>(`/api/property/${propertyId}`);
+
                 // 💡 단일 자산 상세 정보 변환
                 // this.currentProperty = transformPropertyResponse(response);
                 this.currentProperty = response;

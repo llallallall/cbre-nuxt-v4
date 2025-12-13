@@ -1,36 +1,24 @@
 <template>
-        <UModal :model-value="modelValue" @update:model-value="emit('update:modelValue', $event)">
-                <UCard>
-                        <template #header>
-                                <div class="flex items-center justify-between">
-                                        <h3 class="text-base font-semibold leading-6 text-gray-900">
-                                                {{ displayTitle }}
-                                        </h3>
-                                        <UButton color="neutral" variant="ghost" icon="i-heroicons-x-mark-20-solid"
-                                                class="-my-1" @click="handleCancel" />
-                                </div>
-                        </template>
+    <CommonModal :model-value="modelValue" :title="displayTitle" @update:model-value="emit('update:modelValue', $event)" @close="emit('closed')">
+         <div class="text-center mb-4">
+            <p class="text-base text-gray-600 leading-relaxed whitespace-pre-wrap">
+                {{ displayMessage }}
+            </p>
+        </div>
 
-                        <div class="text-center mb-4">
-                                <p class="text-base text-gray-600 leading-relaxed whitespace-pre-wrap">
-                                        {{ displayMessage }}
-                                </p>
-                        </div>
-
-                        <template #footer>
-                                <div class="flex flex-col space-y-3">
-                                        <UButton block color="primary" variant="solid" @click="handleConfirm">
-                                                {{ displayConfirmText }}
-                                        </UButton>
-                                        <UButton block color="neutral" variant="solid"
-                                                class="border border-gray-300 text-gray-700 hover:bg-gray-50"
-                                                @click="handleCancel">
-                                                {{ displayCancelText }}
-                                        </UButton>
-                                </div>
-                        </template>
-                </UCard>
-        </UModal>
+        <template #footer>
+            <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+                 <UButton color="primary" variant="solid" @click="handleConfirm">
+                    {{ displayConfirmText }}
+                </UButton>
+                <UButton color="neutral" variant="solid"
+                    class="border border-gray-300 text-gray-700 hover:bg-gray-50"
+                    @click="handleCancel">
+                    {{ displayCancelText }}
+                </UButton>
+            </div>
+        </template>
+    </CommonModal>
 </template>
 
 <script setup lang="ts">

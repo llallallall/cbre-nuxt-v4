@@ -230,6 +230,20 @@ onMounted(() => {
     };
     ```
 
+### **Mapbox Draw Marker Offset (Pin Above Cursor)**
+- **Issue**: When using the Draw tool (`DrawControl.vue`), the custom marker pin (`redPin`) appears floating significantly above the actual click position/cursor.
+- **Cause**: The custom marker image likely has built-in padding or shadow at the bottom, and the default `icon-anchor: 'bottom'` aligns the bottom edge of the *entire image* (including padding) to the point, causing the visual "tip" to be too high.
+- **Fix**: Apply `icon-offset` in the `layout` property to shift the icon downwards.
+    ```javascript
+    'layout': {
+        "icon-image": "redPin",
+        "icon-size": 0.9,
+        "icon-anchor": 'bottom',
+        "icon-offset": [0, 14], // [x, y] - Shift down by 14px
+        ...
+    }
+    ```
+
 ---
 
 ## 11. Nuxt UI Component Compatibility

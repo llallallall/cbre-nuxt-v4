@@ -49,7 +49,7 @@ We leverage both `@nuxt/ui` capabilities and `@nuxtjs/i18n`.
 - [ ] `signup.vue`
 - [ ] `admin.vue`
 - [ ] `property/index.vue`
-- [ ] `property/[id].vue`
+- [x] `property/[id].vue`
 
 ### Components: Navigation (`app/components/nav`)
 - [x] `TopBar.vue`
@@ -60,7 +60,7 @@ We leverage both `@nuxt/ui` capabilities and `@nuxtjs/i18n`.
 
 ### Components: Property (`app/components/property`)
 - [ ] `PropertyCard.vue` (and related list items)
-- [ ] `PropertyDetail` components
+- [x] `PropertyDetail` components
 
 ### Components: Common/Demo
 - [x] `LanguageSwitcher.vue`

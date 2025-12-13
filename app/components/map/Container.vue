@@ -777,8 +777,8 @@ watch(() => propertyStore.filteredProperties, () => {
 .mapboxgl-ctrl-group button,
 .mapbox-gl-draw_ctrl-draw-btn,
 .mapboxgl-ctrl-icon {
-        width: 3.5rem !important;
-        height: 3.5rem !important;
+        width: 3.0rem !important;
+        height: 3.0rem !important;
         padding: 0px !important;
         border: none !important;
         background-color: white !important;

@@ -31,7 +31,7 @@
 						<div class="relative flex items-center">
 							<input v-model="searchText" type="text" name="search"
 								autocomplete="off" @keyup.enter="onSearchText()"
-								class="w-[24rem] bg-transparent border-b text-[1.5rem] pb-1 focus:outline-none transition-all duration-300 placeholder:tracking-widest"
+								class="w-[24rem] bg-transparent border-b text-base pb-1 focus:outline-none transition-all duration-300 placeholder:tracking-widest"
 								:class="isLightMode ? 'border-cbre-green/30 text-cbre-green placeholder-cbre-green/60 focus:border-cbre-green' : 'border-white/30 text-white placeholder-white/60 focus:border-white'"
 								:placeholder="$t('search_placeholder')" />
 							<div v-if="isHydrationComplete"
@@ -52,7 +52,7 @@
 					<!-- Transaction Type Filter -->
 					<UPopover v-model:open="openTransaction" mode="click"
 						:popper="{ placement: 'bottom-end' }">
-						<button class="group cbre-button-topbar-menu"
+						<button class="group cbre-button-topbar-menu text-base font-medium"
 							:class="isLightMode ? 'text-cbre-green' : 'text-white'">
 							<span>{{ $t('nav.filter.transaction') }}</span>
 							<span v-if="selectedTransaction && selectedTransaction.name !== 'All Types'"
@@ -68,7 +68,7 @@
 							<div
 								class="p-0 w-56 bg-white shadow-lg border-t-4 border-cbre-green rounded-none font-calibre">
 								<div v-for="type in transaction" :key="type.name"
-									class="px-4 py-3 hover:bg-gray-50 cursor-pointer flex justify-between items-center text-cbre-green-800 text-[1.5rem] border-b border-gray-100 last:border-0 transition-colors"
+									class="px-4 py-3 hover:bg-gray-50 cursor-pointer flex justify-between items-center text-cbre-green-800 text-base border-b border-gray-100 last:border-0 transition-colors"
 									:class="{ 'font-bold text-cbre-green-800': selectedTransaction?.name === type.name }"
 									@click="selectTransaction(type)">
 									{{ $t(type.labelKey) }}
@@ -83,7 +83,7 @@
 					<!-- Sector Filter -->
 					<UPopover v-model:open="openSectors" mode="click"
 						:popper="{ placement: 'bottom-end' }">
-						<button class="group cbre-button-topbar-menu"
+						<button class="group cbre-button-topbar-menu text-base font-medium"
 							:class="isLightMode ? 'text-cbre-green' : 'text-white'">
 							<span>{{ $t('nav.filter.sector') }}</span>
 							<span v-if="selectedSectors.length > 0"
@@ -99,7 +99,7 @@
 							<div
 								class="p-0 w-64 bg-white shadow-lg border-t-4 border-cbre-green rounded-none font-calibre">
 								<div v-for="option in sectors" :key="option.name"
-									class="px-4 py-3 hover:bg-gray-50 cursor-pointer flex justify-between items-center text-cbre-green-800 text-[1.5rem] border-b border-gray-100 last:border-0 transition-colors"
+									class="px-4 py-3 hover:bg-gray-50 cursor-pointer flex justify-between items-center text-cbre-green-800 text-base border-b border-gray-100 last:border-0 transition-colors"
 									:class="{ 'font-bold text-cbre-green-800': isSelectedSector(option) }"
 									@click="toggleSelectedSector(option)">
 									{{ $t(option.labelKey) }}
@@ -114,7 +114,7 @@
 					<!-- SubSector Filter -->
 					<UPopover v-model:open="openSubSectors" mode="click"
 						:popper="{ placement: 'bottom-end' }">
-						<button class="group cbre-button-topbar-menu"
+						<button class="group cbre-button-topbar-menu text-base font-medium"
 							:class="isLightMode ? 'text-cbre-green' : 'text-white'">
 							<span>{{ $t('nav.filter.subsector') }}</span>
 							<span v-if="selectedSubSectors.length > 0"
@@ -130,7 +130,7 @@
 							<div
 								class="p-0 w-72 bg-white shadow-lg border-t-4 border-cbre-green rounded-none font-calibre">
 								<div v-for="option in subsectors" :key="option.name"
-									class="px-4 py-3 hover:bg-gray-50 cursor-pointer flex justify-between items-center text-cbre-green-800 text-[1.5rem] border-b border-gray-100 last:border-0 transition-colors"
+									class="px-4 py-3 hover:bg-gray-50 cursor-pointer flex justify-between items-center text-cbre-green-800 text-base border-b border-gray-100 last:border-0 transition-colors"
 									:class="{ 'font-bold text-cbre-green-800': isSelectedSubSector(option) }"
 									@click="toggleSelectedSubSector(option)">
 									{{ $t(option.labelKey) }}
@@ -144,7 +144,7 @@
 
 					<!-- More Menu -->
 					<button @click="openMenuMore = !openMenuMore"
-						class="group cbre-button-topbar-menu" :class="[
+						class="group cbre-button-topbar-menu text-base font-medium" :class="[
 							isLightMode ? 'text-cbre-green' : 'text-white',
 							{ 'border-cbre-accent text-cbre-green-800': openMenuMore }
 						]">
@@ -156,7 +156,7 @@
 
 					<!-- Web Search -->
 					<button @click="openWebSearchPannel = !openWebSearchPannel"
-						class="hidden sm:flex group cbre-button-topbar-menu" :class="[
+						class="hidden sm:flex group cbre-button-topbar-menu text-base font-medium" :class="[
 							isLightMode ? 'text-cbre-green' : 'text-white',
 							{ 'border-cbre-accent text-cbre-green-800': openWebSearchPannel }
 						]">

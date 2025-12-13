@@ -9,8 +9,8 @@
                 <div class="fixed inset-0 top-[0rem] bg-black/25 transition-opacity pointer-events-auto" aria-hidden="true" @click="close"></div>
 
                 <!-- Modal Panel -->
-                <div class="relative transform overflow-hidden bg-white shadow-xl transition-all pointer-events-auto flex flex-col"
-                    :class="[maxWidthClass, fullscreen ? '' : 'rounded-lg sm:my-8']">
+                <div class="relative w-full transform overflow-hidden bg-white shadow-xl transition-all pointer-events-auto flex flex-col"
+                    :class="[maxWidthClass, fullscreen ? '' : 'rounded-none sm:my-8', panelClass]">
                     
                     <!-- Header (Optional) -->
                     <div v-if="title" class="px-4 py-3 border-b border-gray-200 flex justify-between items-center bg-gray-50">
@@ -22,7 +22,7 @@
                     </div>
 
                     <!-- Close button if no header but still dismissible via UI -->
-                    <div v-else class="absolute top-4 right-4 z-20">
+                    <div v-else-if="!hideCloseButton" class="absolute top-4 right-4 z-20">
                          <button type="button" class="text-gray-400 hover:text-gray-500 focus:outline-none" @click="close">
                             <span class="sr-only">Close</span>
                              <UIcon name="i-heroicons-x-mark" class="h-8 w-8 font-bold text-primary" size="2xl"/>
@@ -30,7 +30,7 @@
                     </div>
 
                     <!-- Body -->
-                    <div class="px-4 py-5 sm:p-6">
+                    <div :class="noPadding ? 'p-0' : 'px-4 py-5 sm:p-6'">
                         <slot />
                     </div>
 
@@ -61,6 +61,18 @@ const props = defineProps({
         default: 'sm:max-w-lg' // Default width
     },
     fullscreen: {
+        type: Boolean,
+        default: false
+    },
+    noPadding: {
+        type: Boolean,
+        default: false
+    },
+    panelClass: {
+        type: String,
+        default: ''
+    },
+    hideCloseButton: {
         type: Boolean,
         default: false
     }

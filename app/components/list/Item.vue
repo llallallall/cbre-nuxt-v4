@@ -45,12 +45,12 @@
                                         bg-cbre-green-600
                                          text-white tracking-wider p-0 ">
                                         <div class="flex items-center font-financier font-normal"
-                                                :class="!uiStore.isExpandedList ? 'text-[1.0rem] px-1.5 py-0.5' : 'text-[2rem] px-4 py-1'">
+                                                :class="!uiStore.isExpandedList ? 'text-2xs px-1.5 py-0.5' : 'text-xl px-4 py-1'">
                                                 {{ item?.sector?.name }}
                                         </div>
                                         <div v-if="item.subsector"
                                                 class="flex items-center font-calibre font-light border-l border-gray-300/50"
-                                                :class="!uiStore.isExpandedList ? 'text-[0.85rem] h-[1.1rem] pl-1.5 py-0.5' : 'text-[1.6rem] h-[1.6rem] pl-4 py-1'">
+                                                :class="!uiStore.isExpandedList ? 'text-2xs h-[1.1rem] pl-1.5 py-0.5' : 'text-base h-[1.6rem] pl-4 py-1'">
                                                 {{ item?.subsector?.name }}
                                         </div>
                                 </div>
@@ -63,27 +63,27 @@
 
                                 <!-- Name -->
                                 <UTooltip :text="$t('tooltip.view_details')" :popper="{ placement: 'top' }">
-                                        <div class="cbre-text-link-fade-arrow font-semibold text-cbre-green-900 cursor-pointer hover:text-cbre-green-600 transition-colors overflow-hidden"
-                                                :class="!uiStore.isExpandedList ? 'text-[1.2rem] leading-tight mb-1 line-clamp-2' : 'text-[2rem] leading-tight line-clamp-2'"
+                                        <div class="cbre-text-link-fade-arrow font-semibold cursor-pointer transition-colors overflow-hidden"
+                                                :class="!uiStore.isExpandedList ? 'text-base leading-tight mb-1 line-clamp-2' : 'text-2xl leading-tight line-clamp-2'"
                                                 @click="openDetail">
                                                 {{ item.name }}
                                         </div>
                                 </UTooltip>
 
                                 <!-- Address -->
-                                <div class="w-full text-cbre-green-900 font-normal break-keep"
-                                        :class="!uiStore.isExpandedList ? 'text-xs leading-normal line-clamp-2' : 'flex text-2xl line-clamp-2 leading-normal'">
+                                <div class="w-full text-cbre-slate font-normal break-keep"
+                                        :class="!uiStore.isExpandedList ? 'text-sm leading-normal line-clamp-2' : 'flex text-base line-clamp-2 leading-normal'">
                                         <div v-if="item.location?.addressFull">{{ item.location.addressFull }}</div>
                                 </div>
 
-                                <div class="w-full text-gray-500 hidden xl:flex"
-                                        :class="!uiStore.isExpandedList ? 'text-[10px] leading-normal mt-0.5 truncate' : 'text-lg truncate leading-normal'">
+                                <div class="w-full text-cbre-blue hidden xl:flex"
+                                        :class="!uiStore.isExpandedList ? 'text-xs leading-normal mt-0.5 truncate' : 'text-sm truncate leading-normal mt-1'">
                                         <span
                                                 v-if="item.location?.addressCity && item.location?.addressCity !== '[NULL]'">
                                                 {{ item.location.addressCity }}
                                         </span>
                                         <span
-                                                v-if="item.location?.addressCity && item.location?.addressCity !== '[NULL]' && item.location?.addressProvince">,
+                                                v-if="item.location?.addressCity && item.location?.addressCity !== '[NULL]' && item.location?.addressProvince">,&nbsp;
                                         </span>
                                         <span v-if="item.location?.addressProvince">
                                                 {{ item.location.addressProvince }}
@@ -91,14 +91,14 @@
                                 </div>
 
                                 <!-- Transaction -->
-                                <div class="flex w-full text-gray-500 truncate mt-auto pt-2"
-                                        :class="!uiStore.isExpandedList ? 'text-[10px]' : 'text-lg'">
+                                <div class="flex w-full text-cbre-blue truncate mt-auto pt-2"
+                                        :class="!uiStore.isExpandedList ? 'text-xs' : 'text-base'">
                                         <div v-if="item.transaction[0]?.type" class="cbre-button-primary"
-                                                :class="!uiStore.isExpandedList ? 'px-1.5 py-0.5 text-[10px]' : ''">
+                                                :class="!uiStore.isExpandedList ? 'px-1.5 py-0.5 text-xs' : ''">
                                                 {{ item.transaction[0].type }}
                                         </div>
                                         <div v-if="item.transaction[0]?.year" class="cbre-button-secondary ml-1.5"
-                                                :class="!uiStore.isExpandedList ? 'px-1.5 py-0.5 text-[10px]' : ''">
+                                                :class="!uiStore.isExpandedList ? 'px-1.5 py-0.5 text-xs' : ''">
                                                 {{ item.transaction[0].year }}
                                         </div>
                                 </div>
@@ -151,24 +151,29 @@
                                         <div class="flex flex-col w-full">
                                                 <div class="flex flex-col w-full">
                                                         <!-- Name -->
-                                                        <div class="flex flex-row justify-start w-full">
+                                                        <div class="flex flex-row justify-start w-full items-center mb-1">
                                                                 <UTooltip :text="$t('tooltip.view_details')"
                                                                         :popper="{ placement: 'top' }">
-                                                                        <div class="font-semibold text-[2rem] leading-tight text-cbre-green-900 cursor-pointer hover:text-cbre-green-600 transition-colors"
+                                                                        <div class="font-bold text-3xl leading-tight text-cbre-green-900 cursor-pointer hover:text-cbre-green-600 transition-colors"
                                                                                 @click="openDetail">
                                                                                 {{ item.name }}
                                                                         </div>
                                                                 </UTooltip>
                                                                 <div v-if="item.transaction[0]?.type"
-                                                                        class="cbre-button-primary">{{
+                                                                        class="cbre-button-primary ml-3">{{
                                                                                 item.transaction[0].type }}</div>
                                                                 <div v-if="item.transaction[0]?.year"
                                                                         class="cbre-button-secondary">{{
                                                                                 item.transaction[0].year }}</div>
                                                         </div>
                                                         <!--  Address -->
-                                                        <div class="flex flex-row justify-start w-full min-w-0">
-                                                                <div class="flex text-lg text-gray-500 pr-4 shrink-0">
+                                                        <div class="flex flex-col justify-start w-full min-w-0">
+                                                                <div ref="listAddressRef"
+                                                                        class="flex-1 text-base w-full text-cbre-slate font-normal truncate whitespace-nowrap overflow-hidden">
+                                                                        <div v-if="item.location?.addressFull">{{
+                                                                                item.location.addressFull }}</div>
+                                                                </div>
+                                                                <div class="flex text-sm text-gray-500 shrink-0 mt-0.5">
                                                                         <div
                                                                                 v-if="item.location?.addressCity && item.location?.addressCity !== '[NULL]'">
                                                                                 {{ item.location.addressCity }}</div>
@@ -179,11 +184,6 @@
                                                                         <div v-if="item.location?.addressProvince">{{
                                                                                 item.location.addressProvince
                                                                                 }}</div>
-                                                                </div>
-                                                                <div ref="listAddressRef"
-                                                                        class="flex-1 text-2xl w-full text-cbre-green-900 font-normal truncate border-l-1 border-gray-300 pl-2 whitespace-nowrap overflow-hidden">
-                                                                        <div v-if="item.location?.addressFull">{{
-                                                                                item.location.addressFull }}</div>
                                                                 </div>
                                                         </div>
 

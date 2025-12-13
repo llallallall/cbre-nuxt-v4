@@ -1,6 +1,6 @@
 <template>
-        <div id="sales-section" class="font-financier text-2xl text-cbre-green mb-[20px]">
-                Sales Transaction
+        <div id="sales-section" class="cbre-text-display-2 mb-[20px]">
+                {{ $t('property.detail.sales.title') }}
         </div>
 
         <UAccordion :items="items" class="bg-white mb-[20px] border-t border-gray-200">
@@ -9,8 +9,7 @@
                                 class="border-b border-gray-200 dark:border-gray-700 rounded-none !p-3">
                                 <template #leading>
                                         <div class="w-full text-left flex items-center">
-                                                <span class="font-financier text-xl text-cbre-green mr-4">Sales
-                                                        Transaction</span>
+                                                <span class="cbre-text-display-3 mr-4">{{ $t('property.detail.sales.title') }}</span>
                                                 <div
                                                         class="bg-cbre-green/10 text-cbre-green rounded-full px-4 py-1 min-w-[60px] flex justify-center items-center text-sm font-bold">
                                                         {{ info ? info.length : 0 }}
@@ -30,49 +29,49 @@
                                         <thead>
                                                 <tr class="border-b border-gray-200">
                                                         <th
-                                                                class="py-2 px-2 font-calibre text-cbre-green font-bold text-sm whitespace-nowrap">
+                                                                class="py-2 px-2 font-calibre text-cbre-green font-bold text-base whitespace-nowrap">
                                                                 <UIcon name="i-heroicons-check" class="w-4 h-4" />
                                                         </th>
                                                         <th
-                                                                class="py-2 px-2 font-calibre text-cbre-green font-bold text-sm whitespace-nowrap">
-                                                                Seller
+                                                                class="py-2 px-2 font-calibre text-cbre-green font-bold text-base whitespace-nowrap">
+                                                                {{ $t('property.detail.sales.seller') }}
                                                         </th>
                                                         <th
-                                                                class="py-2 px-2 font-calibre text-cbre-green font-bold text-sm whitespace-nowrap">
-                                                                Buyer
+                                                                class="py-2 px-2 font-calibre text-cbre-green font-bold text-base whitespace-nowrap">
+                                                                {{ $t('property.detail.sales.buyer') }}
                                                         </th>
                                                         <th
-                                                                class="py-2 px-2 font-calibre text-cbre-green font-bold text-sm whitespace-nowrap">
-                                                                YR-Q
+                                                                class="py-2 px-2 font-calibre text-cbre-green font-bold text-base whitespace-nowrap">
+                                                                {{ $t('property.detail.sales.yr_q') }}
                                                         </th>
                                                         <th
-                                                                class="py-2 px-2 font-calibre text-cbre-green font-bold text-sm whitespace-nowrap">
-                                                                Type
+                                                                class="py-2 px-2 font-calibre text-cbre-green font-bold text-base whitespace-nowrap">
+                                                                {{ $t('property.detail.sales.type') }}
                                                         </th>
                                                         <th
-                                                                class="py-2 px-2 font-calibre text-cbre-green font-bold text-sm whitespace-nowrap text-right">
-                                                                GFA</th>
+                                                                class="py-2 px-2 font-calibre text-cbre-green font-bold text-base whitespace-nowrap text-right">
+                                                                {{ $t('property.detail.sales.gfa') }}</th>
                                                         <th
-                                                                class="py-2 px-2 font-calibre text-cbre-green font-bold text-sm whitespace-nowrap text-right">
-                                                                NFA</th>
+                                                                class="py-2 px-2 font-calibre text-cbre-green font-bold text-base whitespace-nowrap text-right">
+                                                                {{ $t('property.detail.sales.nfa') }}</th>
                                                         <th
-                                                                class="py-2 px-2 font-calibre text-cbre-green font-bold text-sm whitespace-nowrap text-right">
-                                                                Price<sub>(KRW)</sub></th>
+                                                                class="py-2 px-2 font-calibre text-cbre-green font-bold text-base whitespace-nowrap text-right">
+                                                                {{ $t('property.detail.sales.price') }}<sub>(KRW)</sub></th>
                                                         <th
-                                                                class="py-2 px-2 font-calibre text-cbre-green font-bold text-sm whitespace-nowrap text-right">
-                                                                P/GFA</th>
+                                                                class="py-2 px-2 font-calibre text-cbre-green font-bold text-base whitespace-nowrap text-right">
+                                                                {{ $t('property.detail.sales.p_gfa') }}</th>
                                                         <th
-                                                                class="py-2 px-2 font-calibre text-cbre-green font-bold text-sm whitespace-nowrap text-right">
-                                                                P/NFA</th>
+                                                                class="py-2 px-2 font-calibre text-cbre-green font-bold text-base whitespace-nowrap text-right">
+                                                                {{ $t('property.detail.sales.p_nfa') }}</th>
                                                         <th
-                                                                class="py-2 px-2 font-calibre text-cbre-green font-bold text-sm whitespace-nowrap text-right">
-                                                                ECR</th>
+                                                                class="py-2 px-2 font-calibre text-cbre-green font-bold text-base whitespace-nowrap text-right">
+                                                                {{ $t('property.detail.sales.ecr') }}</th>
                                                         <th
-                                                                class="py-2 px-2 font-calibre text-cbre-green font-bold text-sm whitespace-nowrap text-right">
-                                                                Disc.</th>
+                                                                class="py-2 px-2 font-calibre text-cbre-green font-bold text-base whitespace-nowrap text-right">
+                                                                {{ $t('property.detail.sales.disc') }}</th>
                                                         <th
-                                                                class="py-2 px-2 font-calibre text-cbre-green font-bold text-sm whitespace-nowrap">
-                                                                Remarks</th>
+                                                                class="py-2 px-2 font-calibre text-cbre-green font-bold text-base whitespace-nowrap">
+                                                                {{ $t('property.detail.sales.remarks') }}</th>
                                                 </tr>
                                         </thead>
                                         <tbody>
@@ -82,34 +81,34 @@
                                                                 <input :id="'t' + idx" type="checkbox"
                                                                         class="ml-[4px]" />
                                                         </td>
-                                                        <td class="py-2 px-2 text-sm">{{ t.sale?.seller || '-' }}</td>
-                                                        <td class="py-2 px-2 text-sm">{{ t.sale?.buyer || '-' }}</td>
-                                                        <td class="py-2 px-2 text-sm text-center">{{ t.year }}-{{
+                                                        <td class="py-2 px-2 text-base">{{ t.sale?.seller || '-' }}</td>
+                                                        <td class="py-2 px-2 text-base">{{ t.sale?.buyer || '-' }}</td>
+                                                        <td class="py-2 px-2 text-base text-center">{{ t.year }}-{{
                                                                 t.quarter || 'Q?' }}</td>
-                                                        <td class="py-2 px-2 text-sm text-center">{{ t.sale?.saleType ||
+                                                        <td class="py-2 px-2 text-base text-center">{{ t.sale?.saleType ||
                                                                 '-' }}</td>
-                                                        <td class="py-2 px-2 text-sm text-right">{{
+                                                        <td class="py-2 px-2 text-base text-right">{{
                                                                 formatDecimal(t.sale?.gfaSqm) }}</td>
-                                                        <td class="py-2 px-2 text-sm text-right">{{
+                                                        <td class="py-2 px-2 text-base text-right">{{
                                                                 formatDecimal(t.sale?.nfaSqm) }}</td>
-                                                        <td class="py-2 px-2 text-sm text-right">{{
+                                                        <td class="py-2 px-2 text-base text-right">{{
                                                                 formatInt(t.sale?.priceKrw) }}</td>
-                                                        <td class="py-2 px-2 text-sm text-right">{{
+                                                        <td class="py-2 px-2 text-base text-right">{{
                                                                 formatInt(t.sale?.pricePerGfa) }}</td>
-                                                        <td class="py-2 px-2 text-sm text-right">{{
+                                                        <td class="py-2 px-2 text-base text-right">{{
                                                                 formatInt(t.sale?.pricePerNfa) }}</td>
-                                                        <td class="py-2 px-2 text-sm text-right">{{
+                                                        <td class="py-2 px-2 text-base text-right">{{
                                                                 formatDecimal(t.sale?.estCapRate) }}%</td>
-                                                        <td class="py-2 px-2 text-sm text-right">{{
+                                                        <td class="py-2 px-2 text-base text-right">{{
                                                                 formatDecimal(t.sale?.estDiscountRate) }}%</td>
-                                                        <td class="py-2 px-2 text-xs text-gray-500 truncate max-w-[150px]"
+                                                        <td class="py-2 px-2 text-base text-cbre-green truncate max-w-[150px]"
                                                                 :title="t.sale?.remarks || ''">
                                                                 {{ t.sale?.remarks }}
                                                         </td>
                                                 </tr>
                                                 <tr v-if="!info || info.length === 0">
-                                                        <td colspan="13" class="py-4 text-center text-gray-500 text-sm">
-                                                                No Sales Data
+                                                        <td colspan="13" class="py-4 text-center text-cbre-green text-base">
+                                                                {{ $t('property.detail.sales.no_data') || $t('common.no_data_found') }}
                                                         </td>
                                                 </tr>
                                         </tbody>
@@ -129,11 +128,12 @@ const props = withDefaults(defineProps<{
         info: () => []
 });
 
-const { numberFormat } = useFormat();
-const formatInt = (val: any) => numberFormat(val, 0);
-const formatDecimal = (val: any) => numberFormat(val, 2);
+    const { t } = useI18n();
+    const { numberFormat } = useFormat();
+    const formatInt = (val: any) => numberFormat(val, 0);
+    const formatDecimal = (val: any) => numberFormat(val, 2);
 
-const items = [{ label: 'Sales Transaction', defaultOpen: true }] as any[];
+    const items = computed(() => [{ label: t('property.detail.sales.title'), defaultOpen: true }] as any[]);
 </script>
 
 <style scoped>

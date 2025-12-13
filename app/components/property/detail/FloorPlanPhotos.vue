@@ -1,30 +1,26 @@
 <template>
-        <div id="floor-plan-section" class="font-financier text-2xl text-cbre-green mb-[20px]">
-                Floor Plan
-        </div>
-
-        <UAccordion :items="accordionItems" class="bg-white mb-[20px] border-t border-gray-200">
+        <UAccordion :items="accordionItems" default-value="floor-plans" class="bg-white">
                 <template #default="{ open }">
-                        <UButton color="neutral" variant="ghost"
-                                class="border-b border-gray-200 dark:border-gray-700 rounded-none p-3">
-                                <template #leading>
-                                        <div class="w-full text-left">
-                                                <span class="font-financier text-xl text-cbre-green">Floor Plan
-                                                        Photos</span>
+                        <div class="w-full flex items-center justify-between py-3">
+                                <div class="text-left flex items-center">
+                                        <h3
+                                                class="cbre-text-display-2 mb-6 border-b-2 border-cbre-green/10 pb-2 inline-block">
+                                                {{ $t('nav.anchor.floorplans') }}</h3>
+                                        <div
+                                                class="ml-4 bg-cbre-green/10 text-cbre-green rounded-full px-4 py-1 min-w-[60px] flex justify-center items-center text-sm font-bold">
+                                                {{ files ? files.length : 0 }}
                                         </div>
-                                </template>
-                                <template #trailing>
-                                        <UIcon :name="open ? 'i-heroicons-chevron-up' : 'i-heroicons-chevron-down'"
-                                                class="w-5 h-5 ms-auto transform transition-transform duration-200" />
-                                </template>
-                        </UButton>
+                                </div>
+                                <UIcon :name="open ? 'i-heroicons-chevron-up' : 'i-heroicons-chevron-down'"
+                                        class="w-5 h-5 ms-auto transform transition-transform duration-200" />
+                        </div>
                 </template>
 
                 <template #content="scope">
-                        <div class="w-full font-calibreLight text-lg text-cbre-green p-4">
+                        <div class="w-full font-calibreLight cbre-text-body-lg text-cbre-green p-4">
                                 <!-- Longitudinal Section -->
                                 <div v-if="longitudinalPhotos.length > 0" class="mb-8">
-                                        <h3 class="font-financier text-xl text-cbre-green mb-4">Longitudinal Section
+                                        <h3 class="cbre-text-display-3 mb-4">{{ $t('property.detail.floorplans.longitudinal') }}
                                         </h3>
                                         <div class="grid grid-cols-2 gap-4">
                                                 <div v-for="(photo, index) in longitudinalPhotos" :key="'long-' + index"
@@ -38,7 +34,7 @@
 
                                 <!-- Cross Section -->
                                 <div v-if="crossPhotos.length > 0" class="mb-8">
-                                        <h3 class="font-financier text-xl text-cbre-green mb-4">Cross Section</h3>
+                                        <h3 class="cbre-text-display-3 mb-4">{{ $t('property.detail.floorplans.cross') }}</h3>
                                         <div class="grid grid-cols-2 gap-4">
                                                 <div v-for="(photo, index) in crossPhotos" :key="'cross-' + index"
                                                         class="relative">
@@ -51,7 +47,7 @@
 
                                 <!-- Upper Floors -->
                                 <div v-if="upperFloors.length > 0" class="mb-8">
-                                        <h3 class="font-financier text-xl text-cbre-green mb-4">Upper Floors</h3>
+                                        <h3 class="cbre-text-display-3 mb-4">{{ $t('property.detail.floorplans.upper') }}</h3>
                                         <div class="grid grid-cols-2 gap-4">
                                                 <div v-for="(floor, index) in upperFloors" :key="'up-' + index"
                                                         class="relative">
@@ -66,7 +62,7 @@
 
                                 <!-- Basement Floors -->
                                 <div v-if="basementFloors.length > 0" class="mb-8">
-                                        <h3 class="font-financier text-xl text-cbre-green mb-4">Basement Floors</h3>
+                                        <h3 class="cbre-text-display-3 mb-4">{{ $t('property.detail.floorplans.basement') }}</h3>
                                         <div class="grid grid-cols-2 gap-4">
                                                 <div v-for="(floor, index) in basementFloors" :key="'base-' + index"
                                                         class="relative">
@@ -79,8 +75,8 @@
                                         </div>
                                 </div>
 
-                                <div v-if="files.length === 0" class="text-center text-gray-500">
-                                        No floor plan photos available.
+                                <div v-if="files.length === 0" class="py-10 text-center text-cbre-blue text-base italic">
+                                        {{ $t('common.no_data_found') }}
                                 </div>
                         </div>
                 </template>
@@ -99,37 +95,31 @@ const FloorFlanTypeEnum = {
         BASEMENTSECTION: 'BASEMENTSECTION',
 } as const;
 
-const accordionItems = [{ label: 'Floor Plan Details', defaultOpen: true, slot: 'content' }];
+    const { t } = useI18n();
 
-const props = defineProps<{
+    const accordionItems = computed(() => [{ label: t('property.detail.floorplans.details'), value: 'floor-plans', slot: 'content' }]);
+
+    const props = defineProps<{
         floorPlanFile: FloorPlanFileType[] | null | undefined
-}>();
+    }>();
 
-const statusStore = useStatusStore();
+    const statusStore = useStatusStore();
 
-const files = computed(() => props.floorPlanFile || []);
+    const files = computed(() => props.floorPlanFile || []);
 
-const longitudinalPhotos = computed(() => files.value.filter((f: any) => f.type === FloorFlanTypeEnum.LOGITUDINALSECTION));
-const crossPhotos = computed(() => files.value.filter((f: any) => f.type === FloorFlanTypeEnum.CROSSSECTION));
-const upperFloors = computed(() => files.value.filter((f: any) => f.type === FloorFlanTypeEnum.UPPERSECTION));
-const basementFloors = computed(() => files.value.filter((f: any) => f.type === FloorFlanTypeEnum.BASEMENTSECTION));
+    const longitudinalPhotos = computed(() => files.value.filter((f: any) => f.type === FloorFlanTypeEnum.LOGITUDINALSECTION));
+    const crossPhotos = computed(() => files.value.filter((f: any) => f.type === FloorFlanTypeEnum.CROSSSECTION));
+    const upperFloors = computed(() => files.value.filter((f: any) => f.type === FloorFlanTypeEnum.UPPERSECTION));
+    const basementFloors = computed(() => files.value.filter((f: any) => f.type === FloorFlanTypeEnum.BASEMENTSECTION));
 
-const formatFloorType = (type: string) => {
-        if (type === FloorFlanTypeEnum.UPPERSECTION) return 'UPPER';
-        if (type === FloorFlanTypeEnum.BASEMENTSECTION) return 'BASEMENT';
+    const formatFloorType = (type: string) => {
+        if (type === FloorFlanTypeEnum.UPPERSECTION) return t('property.detail.floorplans.upper_label');
+        if (type === FloorFlanTypeEnum.BASEMENTSECTION) return t('property.detail.floorplans.basement_label');
         return type;
-};
+    };
 
 const openViewer = (url: string) => {
         statusStore.openViewerModal(url, 'image');
 };
 </script>
 
-<style scoped>
-.cbre_bulletList {
-        list-style: none;
-        margin: 0 0 1em;
-        padding: 0 0 0 20px;
-        line-height: 2;
-}
-</style>

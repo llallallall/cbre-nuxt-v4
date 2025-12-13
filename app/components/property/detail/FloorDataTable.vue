@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="py-2 font-financier text-2xl text-cbre-green w-full ">
+    <div class="py-2 cbre-text-display-2 w-full ">
       <div class="flex justify-between gap-3 w-full mb-5">
         <div class="w-1/2 flex justify-start">Floors Information</div>
         <div class="w-1/2 flex justify-end">
@@ -16,8 +16,8 @@
 
     <div class="shadow-lg rounded-xl overflow-hidden bg-white border border-gray-200">
       <UTable :rows="(info as any[])" :columns="(columns as any[])" :ui="{
-        th: { base: 'px-4 py-3 text-gray-700 font-semibold text-xs' },
-        td: { base: 'px-4 py-3 text-gray-800 text-sm' }
+        th: { base: 'px-4 py-3 text-cbre-green font-semibold text-base' },
+        td: { base: 'px-4 py-3 text-cbre-green text-base' }
       } as any">
         <!-- Expand Button Column -->
         <template #expand-data="{ row }">
@@ -29,7 +29,7 @@
         <!-- Floor & Type Column -->
         <template #floorDetails-data="{ row }">
           {{ (row as any).type === 'BASEMENT' ? 'B' : '' }}{{ Math.abs((row as any).floor || 0) }}F
-          <span class="text-gray-400 text-xs ml-1">({{ (row as any).use || 'General' }})</span>
+          <span class="text-cbre-green ml-1">({{ (row as any).use || 'General' }})</span>
         </template>
 
         <!-- Numeric Columns -->
@@ -52,18 +52,18 @@
         <!-- Expand Slot -->
         <template #expand="{ row }">
           <div class="p-4 bg-gray-50 border-t border-gray-200 shadow-inner">
-            <h4 class="text-sm font-bold text-gray-700 mb-3 ml-1">
+            <h4 class="text-base font-bold text-cbre-green mb-3 ml-1">
               Unit Details ({{ (row as any).floorPartial ? (row as any).floorPartial.length : 0 }})
             </h4>
 
             <div v-if="(row as any).floorPartial && (row as any).floorPartial.length > 0"
               class="overflow-x-auto rounded-lg border border-gray-200 bg-white">
               <UTable :rows="((row as any).floorPartial as any[])" :columns="(subColumns as any[])" :ui="{
-                th: { base: 'px-3 py-2 text-gray-600 font-semibold text-xs' },
-                td: { base: 'px-3 py-2 text-gray-600 text-sm' }
+                th: { base: 'px-3 py-2 text-cbre-green font-semibold text-base' },
+                td: { base: 'px-3 py-2 text-cbre-green text-base' }
               } as any">
                 <template #unitNumber-data="{ row: subRow }">
-                  <span class="font-medium text-gray-800">{{ (subRow as any).unitNumber || '-' }}</span>
+                  <span class="font-medium text-cbre-green">{{ (subRow as any).unitNumber || '-' }}</span>
                 </template>
                 <template #tenant-data="{ row: subRow }">
                   <span class="truncate max-w-[150px]" :title="(subRow as any).tenant || ''">{{ (subRow as any).tenant
@@ -71,7 +71,7 @@
                     'Vacant' }}</span>
                 </template>
                 <template #leaseAreaPy-data="{ row: subRow }">
-                  <div class="text-right font-medium text-indigo-600">{{ formatNumber((subRow as any).leaseAreaPy) }}
+                  <div class="text-right font-medium text-cbre-green">{{ formatNumber((subRow as any).leaseAreaPy) }}
                   </div>
                 </template>
                 <template #depositKrw-data="{ row: subRow }">
@@ -96,7 +96,7 @@
                 </template>
               </UTable>
             </div>
-            <p v-else class="text-sm text-gray-400 italic ml-1">
+            <p v-else class="text-base text-cbre-green italic ml-1">
               No detailed unit information available for this floor.
             </p>
           </div>
@@ -104,7 +104,7 @@
       </UTable>
     </div>
 
-    <div v-if="!info || info.length === 0" class="text-center py-10 text-gray-500">
+    <div v-if="!info || info.length === 0" class="text-center py-10 text-cbre-green">
       <p>No floor data available to display.</p>
     </div>
   </div>

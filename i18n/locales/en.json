@@ -53,6 +53,8 @@
     },
     "toggle": "Toggle",
     "no_properties_selected": "There are no properties selected.",
+    "no_previous_property": "First asset. No previous property.",
+    "no_next_property": "Last asset. No next property.",
     "error_invalid_login": "Invalid email or password. Please try again.",
     "error_unexpected": "An unexpected error occurred.",
     "eula_text": "EULA – You acknowledge and agree to use this system for your sole and exclusive benefit only while you are employed in CBRE Korea. You do not own or have any ownership to any of the data in the system and the data may not be assigned and /or transferred.",
@@ -218,9 +220,7 @@
     "failed_create_account": "Failed to create account.",
     "home": "Home",
     "previous_property": "Previous Property",
-    "no_previous_property": "No Previous Property",
     "next_property": "Next Property",
-    "no_next_property": "No Next Property",
     "logged_in_as": "Logged in as",
     "docs": {
         "title": "Documentation"
@@ -288,8 +288,20 @@
             "users": "Users",
             "upload_file": "Upload File",
             "download_file": "Download File"
+        },
+        "anchor": {
+            "overview": "Overview",
+            "sizes": "Sizes",
+            "facility": "Facility",
+            "parking": "Parking",
+            "floorplans": "Floor Plans",
+            "floors": "Floor Usage",
+            "transactions": "Transactions",
+            "location": "Location"
         }
     },
+    "download_pdf": "Download PDF",
+    "view_brochure": "Brochure",
     "list": {
         "load_more": "Load More",
         "all_loaded": "All properties loaded",
@@ -504,33 +516,156 @@
             "elevator": "Elevator",
             "floor_u": "Upper Floors",
             "floor_b": "Basement Floors"
+        },
+        "detail": {
+            "updated": "Updated",
+            "summary": {
+                "title": "Property Summary",
+                "grade": "Grade",
+                "effective_ratio": "Effective Ratio",
+                "no_of_buildings": "No. of Buildings",
+                "sector": "Sector",
+                "subsector": "SubSector",
+                "warehouse_usage": "Usage",
+                "warehouse_room": "Room",
+                "warehouse_low": "Low",
+                "warehouse_constant": "Constant"
+            },
+            "history": {
+                "title": "History",
+                "completion": "Completion",
+                "renovation": "Renovation"
+            },
+            "sizes": {
+                "gfa": "GFA",
+                "nfa": "NFA",
+                "land_area": "Land Area",
+                "floor_plate": "Floor Plate",
+                "floor_area_ratio": "Floor Area Ratio",
+                "building_coverage": "Building Coverage",
+                "existing": "Existing",
+                "permitted": "Permitted"
+            },
+            "facility": {
+                "elevators": "Elevators",
+                "passenger": "Passenger",
+                "service": "Service",
+                "freight": "Freight",
+                "facade": "Façade",
+                "roof_material": "Roof Material",
+                "lighting": "Lighting",
+                "me": "M & E",
+                "fire_fighting": "Fire Fighting"
+            },
+            "parking": {
+                "capacity": "Parking Capacity",
+                "free_parking": "Free Parking",
+                "paid_parking_fee": "Paid Parking Fee",
+                "units": "units",
+                "required": "required",
+                "units_sqm": "units/sqm",
+                "units_py": "units/py",
+                "vat_included": "VAT include"
+            },
+            "floorplans": {
+                "details": "Floor Plan Details",
+                "longitudinal": "Longitudinal Section",
+                "cross": "Cross Section",
+                "upper": "Upper Floors",
+                "basement": "Basement Floors",
+                "upper_label": "UPPER",
+                "basement_label": "BASEMENT"
+            },
+            "floors": {
+                "usage_title": "Floor Usage",
+                "type": "Type",
+                "floor": "Floor",
+                "usage": "Usage",
+                "total_area": "Total Area",
+                "nla": "NLA",
+                "ceiling": "Ceiling",
+                "load": "Load"
+            },
+            "sales": {
+                "title": "Sales Transaction",
+                "seller": "Seller",
+                "buyer": "Buyer",
+                "yr_q": "YR-Q",
+                "type": "Type",
+                "price": "Price",
+                "p_gfa": "P/GFA",
+                "p_nfa": "P/NFA",
+                "ecr": "ECR",
+                "disc": "Disc.",
+                "remarks": "Remarks"
+            },
+            "lease": {
+                "actual_title": "Actual Lease Transaction",
+                "asking_title": "Asking Lease Transaction",
+                "floor": "Floor",
+                "unit": "Unit",
+                "date": "Date",
+                "rent": "Rent",
+                "noc": "NOC",
+                "eff_ratio": "Eff. Ratio",
+                "monthly_rent": "Monthly Rent",
+                "monthly_camf": "Monthly CAMF",
+                "deposit": "Deposit",
+                "rent_mth_py": "Rent Mth Py",
+                "camf_mth_py": "CAMF Mth Py",
+                "deposit_py": "Deposit Py",
+                "iod": "IOD",
+                "gdm": "GDM",
+                "lease_term": "Lease Term Year",
+                "rent_free_type": "Rent Free Type",
+                "rent_free_mth": "Rent Free Mth",
+                "effective_noc": "Effective Noc",
+                "fit_out": "Fit-Out",
+                "amount_krw": "Amount Krw",
+                "amount_nfa": "Amount Nfa Py",
+                "total_free_rent": "Total Free Rent Period Mth",
+                "total_occupying": "Total Occupying Period Year",
+                "total_free_rent_occupying": "Total Free Rent Occupying Year",
+                "monthly_cash": "Monthly Cash Support Gfa",
+                "all_in": "All In Effective Rent Mth Py",
+                "all_in_noc": "All In Noc"
+            },
+            "location": {
+                "address": "Address",
+                "jibun": "Jibun",
+                "province": "Province",
+                "city": "City",
+                "latitude": "Latitude",
+                "longitude": "Longitude"
+            }
+        },
+        "trans": {
+            "type": "Transaction Type",
+            "year": "Year",
+            "quarter": "Quarter",
+            "date_full": "Full Date"
+        },
+        "lease": {
+            "occupancy": "Occupancy",
+            "units_avail": "Units Available",
+            "rent": "Face Rent",
+            "cam": "CAM",
+            "deposit": "Deposit",
+            "rent_free_type": "Rent Free Type",
+            "rent_free": "Rent Free Period",
+            "ti": "TI Allowance",
+            "effective_rent": "Effective Rent"
+        },
+        "sale": {
+            "price": "Sale Price",
+            "price_unit": "Sale Price p/Area",
+            "cap_rate": "Est. Cap Rate",
+            "buyer": "Buyer",
+            "seller": "Seller"
         }
     },
-    "trans": {
-        "type": "Transaction Type",
-        "year": "Year",
-        "quarter": "Quarter",
-        "date_full": "Full Date"
-    },
-    "lease": {
-        "occupancy": "Occupancy",
-        "units_avail": "Units Available",
-        "rent": "Face Rent",
-        "cam": "CAM",
-        "deposit": "Deposit",
-        "rent_free_type": "Rent Free Type",
-        "rent_free": "Rent Free Period",
-        "ti": "TI Allowance",
-        "effective_rent": "Effective Rent"
-    },
-    "sale": {
-        "price": "Sale Price",
-        "price_unit": "Sale Price p/Area",
-        "cap_rate": "Est. Cap Rate",
-        "buyer": "Buyer",
-        "seller": "Seller"
-    },
     "common": {
+        "no_data_found": "No data found.",
         "success": "Success",
         "error": "Error",
         "fab": {

@@ -3,29 +3,29 @@
 
                 <div v-if="totalCount > 0"
                         class="sticky top-0 z-20 bg-white/95 backdrop-blur-sm py-2 border-b mb-4 flex justify-between items-center">
-                        <div class="text-xl flex items-center">
-                                <span class="font-bold text-2xl px-2">{{ totalCount }}</span> {{ $t('properties_found')
+                        <div class="text-lg flex items-center">
+                                <span class="font-bold px-2">{{ totalCount }}</span> {{ $t('properties_found')
                                 }}
                                 <UTooltip :text="$t('tooltip.refresh_list')" :popper="{ placement: 'bottom' }">
-                                        <UButton icon="i-heroicons-arrow-path" size="xl" color="neutral" variant="ghost"
-                                                class="group ml-2 bg-transparent hover:bg-transparent"
-                                                :ui="{ leadingIcon: 'group-hover:animate-spin' }"
+                                <UButton icon="i-heroicons-arrow-path" size="sm" color="neutral" variant="ghost"
+                                                class="group ml-2 bg-transparent hover:bg-transparent h-[3.0rem] w-[3.0rem] flex items-center justify-center p-0"
+                                                :ui="{ leadingIcon: 'group-hover:animate-spin w-5 h-5' }"
                                                 @click="handleRefresh" />
                                 </UTooltip>
                         </div>
 
                         <div class="flex items-center gap-2 mr-2">
                                 <UTooltip :text="$t('tooltip.view_list')" :popper="{ placement: 'bottom' }">
-                                        <UButton icon="i-heroicons-list-bullet" size="xl"
-                                                class="rounded-none border-1 border-gray-300"
+                                        <UButton icon="i-heroicons-list-bullet" size="sm"
+                                                class="rounded-none border-1 border-gray-300 h-[3.0rem] w-[3.0rem] flex items-center justify-center p-0"
                                                 :color="!uiStore.isGridView ? 'primary' : 'neutral'"
                                                 :variant="!uiStore.isGridView ? 'soft' : 'ghost'"
                                                 @click="uiStore.isGridView = false" />
                                 </UTooltip>
 
                                 <UTooltip :text="$t('tooltip.view_grid')" :popper="{ placement: 'bottom' }">
-                                        <UButton icon="i-heroicons-squares-2x2" size="xl"
-                                                class="rounded-none border-1 border-gray-300"
+                                        <UButton icon="i-heroicons-squares-2x2" size="sm"
+                                                class="rounded-none border-1 border-gray-300 h-[3.0rem] w-[3.0rem] flex items-center justify-center p-0"
                                                 :color="uiStore.isGridView ? 'primary' : 'neutral'"
                                                 :variant="uiStore.isGridView ? 'soft' : 'ghost'"
                                                 @click="uiStore.isGridView = true" />
@@ -36,8 +36,8 @@
                                         :popper="{ placement: 'bottom' }">
                                         <UButton :icon="uiStore.isExpandedList ? 'i-heroicons-arrows-pointing-in' : 'i-heroicons-arrows-pointing-out'"
                                                 :label="uiStore.isExpandedList ? $t('shrink_list') : $t('expand_list')"
-                                                size="lg" color="neutral" variant="outline"
-                                                class="text-xl hidden lg:flex rounded-none"
+                                                size="sm" color="neutral" variant="outline"
+                                                class="hidden lg:flex rounded-none h-[3.0rem] px-4 flex items-center"
                                                 @click="uiStore.isExpandedList = !uiStore.isExpandedList" />
                                 </UTooltip>
                         </div>

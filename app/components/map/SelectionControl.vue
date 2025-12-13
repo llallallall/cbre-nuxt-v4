@@ -2,17 +2,14 @@
         <div class="absolute z-30" :class="positionClasses">
                 <UTooltip :text="$t('tooltip.filter_pins')" :popper="{ placement: 'right' }">
                         <UButton color="neutral" variant="outline"
-                                class="bg-white shadow-sm ring-1 ring-gray-200 transition-all hover:bg-gray-100"
-                                :class="mapStore.filterMapPins ? 'p-3' : 'p-4'" :loading="isLoading"
+                                class="bg-white shadow-sm ring-1 ring-gray-200 transition-all hover:bg-gray-100 w-[3.0rem] h-[3.0rem] flex items-center justify-center p-0"
+                                :loading="isLoading"
                                 @click="togglePins">
                                 <template #leading>
                                         <UIcon :name="mapStore.filterMapPins ? 'i-heroicons-star-solid' : 'i-heroicons-star'"
-                                                class="w-5 h-5 text-2xl font-bold"
-                                                :class="mapStore.filterMapPins ? 'text-yellow-500' : 'shadow-md bg-white font-[1100] rounded-none text-2xl text-black/50 hover:text-opacity-100 hover:text-black'" />
+                                                class="w-5 h-5"
+                                                :class="mapStore.filterMapPins ? 'text-yellow-500' : 'text-gray-500 hover:text-black'" />
                                 </template>
-                                <span v-if="mapStore.filterMapPins" class="text-2xl text-yellow-500 font-medium pr-1">
-                                        Filtered
-                                </span>
                         </UButton>
                 </UTooltip>
         </div>

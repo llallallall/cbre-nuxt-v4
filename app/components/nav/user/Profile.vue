@@ -1,5 +1,5 @@
 <template>
-    <CommonModal v-model="isUserProfileModalOpen" maxWidth="sm:max-w-2xl">
+    <CommonModal v-model="isUserProfileModalOpen" maxWidth="sm:max-w-[50rem]">
         <div class="flex flex-col h-full overflow-hidden font-calibre bg-white w-full">
             <!-- Profile View -->
             <div class="w-full p-8 flex flex-col items-center relative">

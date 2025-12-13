@@ -1,40 +1,40 @@
 <template>
     <div id="PageLayout" class="bg-cbre-gray-50 h-screen font-sans">
-        <div id="TopMenu" class="cbre-layout-topbar">
+        <div id="TopMenu" class="cbre-layout-topbar bg-cbre-green text-white border-0 border-white/10">
             <div id="LeftMenu" class="cbre-layout-topbar-left">
                 <div class="cbre-nav-brand group" @click="navigateTo('/')">
                     <IconCBRELogo
-                        class="w-[9rem] h-[2.8rem] group-hover:opacity-90 transition-opacity text-cbre-green" />
-                    <sub class="cbre-nav-brand-label text-cbre-green">{{ $t('nav.brand.map') }}</sub>
+                        class="w-[9rem] h-[2.8rem] group-hover:opacity-90 transition-opacity text-white" />
+                    <sub class="cbre-nav-brand-label text-white">{{ $t('nav.brand.map') }}</sub>
                 </div>
 
                 <!-- Title -->
-                <div class="cbre-layout-topbar-separator">
-                    <span class="cbre-nav-title text-cbre-green/90">{{ $t('nav.brand.title') }}</span>
+                <div class="cbre-layout-topbar-separator border-white/20">
+                    <span class="cbre-nav-title text-white">{{ $t('nav.brand.title') }}</span>
                 </div>
-                <div class="cbre-layout-topbar-separator-mobile">
-                    <span class="cbre-nav-link text-cbre-green/90">{{ $t('nav.brand.pms_short') }}</span>
+                <div class="cbre-layout-topbar-separator-mobile border-white/20">
+                    <span class="cbre-nav-link text-white">{{ $t('nav.brand.pms_short') }}</span>
                 </div>
             </div>
 
             <div id="right-menu" class="cbre-layout-topbar-right">
 
                 <div class="flex items-center gap-2">
-                    <div @click="goPrevious()" class="cbre-button-nav-circle"
-                        :class="{ 'disabled': !previousPropertyId }"
+                    <div @click="goPrevious()" class="cbre-button-nav-circle hover:bg-white/10 text-white border-white/80"
+                        :class="{ 'disabled opacity-50': !previousPropertyId }"
                         :title="previousPropertyId ? $t('previous_property') : $t('no_previous_property')">
                         <svg width="23" height="18" viewBox="0 0 23 18" fill="none" xmlns="http://www.w3.org/2000/svg"
-                            class="w-[1.4rem] h-[1.4rem] rotate-180 text-inherit">
+                            class="w-[1.4rem] h-[1.4rem] rotate-180 text-white">
                             <path
                                 d="M0.619873 8.99985L21.3766 8.99985M21.3766 8.99985L14.5487 1.21606M21.3766 8.99985L14.5487 16.7836"
                                 stroke="currentColor" stroke-width="1.31081" />
                         </svg>
                     </div>
 
-                    <div @click="goNext()" class="cbre-button-nav-circle" :class="{ 'disabled': !nextPropertyId }"
+                    <div @click="goNext()" class="cbre-button-nav-circle hover:bg-white/10 text-white border-white/80" :class="{ 'disabled opacity-50': !nextPropertyId }"
                         :title="nextPropertyId ? $t('next_property') : $t('no_next_property')">
                         <svg width="23" height="18" viewBox="0 0 23 18" fill="none" xmlns="http://www.w3.org/2000/svg"
-                            class="w-[1.4rem] h-[1.4rem] text-inherit">
+                            class="w-[1.4rem] h-[1.4rem] text-inherit text-white">
                             <path
                                 d="M0.619873 8.99985L21.3766 8.99985M21.3766 8.99985L14.5487 1.21606M21.3766 8.99985L14.5487 16.7836"
                                 stroke="currentColor" stroke-width="1.31081" />
@@ -42,27 +42,17 @@
                     </div>
                 </div>
 
-                <div class="cbre-layout-divider"></div>
+                <div class="cbre-layout-divider bg-white/20"></div>
 
-                <CommonLanguageSwitcher />
+                <CommonLanguageSwitcher class="text-white" />
 
-                <div class="cbre-layout-divider"></div>
+                <div class="cbre-layout-divider bg-white/20"></div>
 
-                <div v-if="loggedIn" class="cbre-layout-topbar-user-section">
-                    <div class="cbre-avatar-user-container" @click="openUserProfileModal"
-                        :title="`${$t('logged_in_as')} ${user?.name || 'User'}`">
-                        <img :src="userAvatar" alt="User Avatar" class="w-full h-full object-cover" />
-                    </div>
-                    <button class="cbre-button-brief-sm" @click="handleLogout">{{ $t('logout') }}</button>
-                </div>
-
-                <div v-else class="cbre-layout-topbar-user-section">
-                    <button class="cbre-button-brief-sm" @click="handleLogin">{{ $t('login') }}</button>
-                </div>
+                <NavUserMenu :isLightMode="false" class="transform translate-y-1 text-white"/>
 
                 <!-- Mobile Navigation Toggle -->
                 <div class="flex md:hidden ml-4">
-                    <button class="cbre-button-nav-toggle"
+                    <button class="cbre-button-nav-toggle border-white/20 text-white hover:bg-white/10"
                         :class="{ 'bg-cbre-green text-white': uiStore.isMenuOverlay }"
                         @click="uiStore.isMenuOverlay = !uiStore.isMenuOverlay">
                         <UIcon :name="uiStore.isMenuOverlay ? 'i-heroicons-x-mark' : 'i-heroicons-bars-3'"
@@ -101,34 +91,46 @@
 import { storeToRefs } from 'pinia'
 import { usePropertyStore } from '~/stores/property'
 import { useUiStore } from '~/stores/ui'
+import { useUserStore } from '~/stores/user'
 
 const router = useRouter()
 const propertyStore = usePropertyStore()
 const uiStore = useUiStore()
-const { loggedIn, user, clear } = useUserSession()
-const userAvatar = computed(() => (user.value as any)?.avatar || '/images/avatar/avatar-placeholder.png')
+const userStore = useUserStore()
+const { t } = useI18n()
+
+const { clear } = useUserSession()
+
+// Session Synchronization
+onMounted(async () => {
+    await userStore.getUser()
+    if (propertyStore.initialProperties.length === 0) {
+        await propertyStore.fetchInitialData()
+    }
+})
 
 const { previousPropertyId, nextPropertyId } = storeToRefs(propertyStore)
 
-const goPrevious = () => {
-    if (previousPropertyId.value && propertyStore.setAssetNav(previousPropertyId.value)) router.push({ path: "/property/" + previousPropertyId.value })
+const goPrevious = async () => {
+    const targetId = previousPropertyId.value;
+    if (targetId) {
+        if (propertyStore.setAssetNav(targetId)) {
+            await navigateTo("/property/" + targetId);
+        }
+    } else {
+        useAppToast().showToast(t('no_previous_property'), 'warning'); // Or 'info'
+    }
 }
 
-const goNext = () => {
-    if (nextPropertyId.value && propertyStore.setAssetNav(nextPropertyId.value)) router.push({ path: "/property/" + nextPropertyId.value })
-}
-
-const openUserProfileModal = () => {
-    uiStore.toggleUserProfileModal(true)
-}
-
-const handleLogout = async () => {
-    await clear()
-    navigateTo('/login')
-}
-
-const handleLogin = () => {
-    navigateTo('/login')
+const goNext = async () => {
+    const targetId = nextPropertyId.value;
+    if (targetId) {
+         if (propertyStore.setAssetNav(targetId)) {
+             await navigateTo("/property/" + targetId);
+         }
+    } else {
+        useAppToast().showToast(t('no_next_property'), 'warning');
+    }
 }
 </script>
 

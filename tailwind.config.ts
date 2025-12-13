@@ -122,12 +122,28 @@ export default <Config>{
                 },
             },
             fontSize: {
-                'base': ['1.6rem', { lineHeight: '1.6' }],
-                'hero-mobile': ['5rem', { lineHeight: '1.0' }],
+                // Base 1rem = 10px (html 62.5%)
+                '2xs': ['1.0rem', { lineHeight: '1.2' }],   // 10px
+                'xs': ['1.2rem', { lineHeight: '1.4' }],    // 12px
+                'sm': ['1.4rem', { lineHeight: '1.5' }],    // 14px
+                'base': ['1.6rem', { lineHeight: '1.6' }],  // 16px
+                'lg': ['1.8rem', { lineHeight: '1.6' }],    // 18px
+                'xl': ['2.0rem', { lineHeight: '1.4' }],    // 20px
+                '2xl': ['2.4rem', { lineHeight: '1.3' }],   // 24px
+                '3xl': ['3.0rem', { lineHeight: '1.2' }],   // 30px
+                '4xl': ['3.6rem', { lineHeight: '1.1' }],   // 36px
+                '5xl': ['4.8rem', { lineHeight: '1.1' }],   // 48px
+                '6xl': ['6.0rem', { lineHeight: '1.0' }],   // 60px
+                '7xl': ['7.2rem', { lineHeight: '1.0' }],   // 72px
+                '8xl': ['9.6rem', { lineHeight: '1.0' }],   // 96px
+                '9xl': ['12.8rem', { lineHeight: '1.0' }],  // 128px
+
+                // Custom Display Aliases (Keep existing if needed, but mapped to new scale)
+                'hero-mobile': ['5.0rem', { lineHeight: '1.0' }],
                 'hero-desktop': ['9.6rem', { lineHeight: '1.0' }],
-                'h1-mobile': ['3rem', { lineHeight: '1.1' }],
+                'h1-mobile': ['3.0rem', { lineHeight: '1.1' }],
                 'h1-desktop': ['4.8rem', { lineHeight: '1.1' }],
-                'h2-mobile': ['2.25rem', { lineHeight: '1.2' }],
+                'h2-mobile': ['2.25rem', { lineHeight: '1.2' }], // 22.5px
                 'h2-desktop': ['3.2rem', { lineHeight: '1.2' }],
             },
             fontFamily: {
