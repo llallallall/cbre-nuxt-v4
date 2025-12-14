@@ -5,6 +5,13 @@ export default defineEventHandler(async (event) => {
     const url = getRequestURL(event);
     const method = event.method;
 
+    // 0. Non-API Routes (Pages, Static Assets, etc.) -> Allow
+    // We only want to enforce strict auth on the API layer.
+    // Page protection is handled by Client Middleware (middleware/auth.ts).
+    if (!url.pathname.startsWith('/api')) {
+        return;
+    }
+
     // 1. Global Public Whitelist (Prefixes that are always public)
     const publicPrefixes = [
         '/api/auth',      // Login, Logout, Callback

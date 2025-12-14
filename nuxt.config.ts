@@ -146,6 +146,14 @@ export default defineNuxtConfig({
       kakaoLocalApiToken: process.env.KAKAO_LOCAL_API_TOKEN,
       minioUrl: process.env.NUXT_PUBLIC_MINIO_URL,
     },
+
+    // Session configuration
+    session: {
+      // @ts-ignore
+      maxAge: undefined, // undefined to make it a session cookie (expires on browser close)
+      name: 'cbre-session',
+      password: process.env.NUXT_SESSION_PASSWORD || ''
+    }
   },
 
   mapbox: {

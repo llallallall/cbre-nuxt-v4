@@ -38,6 +38,16 @@
 
                 <div class="cbre-layout-divider"></div>
 
+                <!-- Docs Link -->
+                <UTooltip :text="$t('docs.title')" :popper="{ placement: 'bottom' }">
+                    <button @click="uiStore.toggleDocsModal(true)"
+                        class="group cbre-button-topbar-menu text-cbre-green transition-colors">
+                        <UIcon name="i-heroicons-book-open" class="w-5 h-5 group-hover:text-cbre-accent" />
+                    </button>
+                </UTooltip>
+
+                <div class="cbre-layout-divider"></div>
+
                 <CommonLanguageSwitcher />
 
                 <div class="cbre-layout-divider"></div>

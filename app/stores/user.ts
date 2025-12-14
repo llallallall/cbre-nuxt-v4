@@ -16,6 +16,7 @@ export const useUserStore = defineStore('user', {
         userId: '' as string,
         userName: '' as string | null, // 💡 [추가] 사용자 이름
         userEmail: '' as string | null, // [추가] 사용자 이메일
+        role: '' as string | null, // [추가] 사용자 권한
         // detail
         userImage: '' as string, // 프론트엔드 표시용 이미지 URL
 
@@ -52,6 +53,7 @@ export const useUserStore = defineStore('user', {
         getUserId: (state) => state.userId,
         getUserName: (state) => state.userName,
         getUserEmail: (state) => state.userEmail,
+        getUserRole: (state) => state.role,
         getUserPassword: (state) => state.userPassword,
 
         // 이미지 URL
@@ -122,9 +124,11 @@ export const useUserStore = defineStore('user', {
                 this.isLogin = true
 
                 // 3. API를 통해 DB에 저장된 상세 Profile 정보를 가져옵니다.
+                const headers = useRequestHeaders(['cookie']);
                 const apiResponse = await $fetch<UserType>('/api/user/profile', {
                     method: 'GET',
-                    query: { id: user.value.id }
+                    query: { id: user.value.id },
+                    headers
                 })
 
                 if (apiResponse) {
@@ -135,6 +139,7 @@ export const useUserStore = defineStore('user', {
                     this.userId = fullUser.id ?? ''
                     this.userName = fullUser.name ?? ''
                     this.userEmail = fullUser.email ?? ''
+                    this.role = fullUser.role ?? ''
 
                     // Profile 상태 갱신
                     if (newProfile) {

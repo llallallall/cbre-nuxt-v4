@@ -56,3 +56,20 @@ This document tracks all modifications to core configuration files (`main.css`, 
     - `Profile.vue`: Replaced `UToggle` with `USwitch`.
     - `INSTRUCTION_TROUBLESHOOTING.md`: Added section on Nuxt UI Component Compatibility.
 
+
+### 2025-12-14
+- **File(s)**: `app/components/map/Container.vue`, `app/context/mapData.ts`
+- **Description**:
+    1. **Fullscreen Fix**: Replaced native Mapbox Fullscreen Control with a custom CSS-based pseudo-fullscreen implementation to bypass iframe permission restrictions. Added explicit SVG icons for Enter/Exit feedback.
+    2. **Mini Map Refinement**: 
+        - Converted Mini Map to a pure **Heatmap** visualization (removed cluster markers/text).
+        - Implemented **Adaptive Density Scaling**: Heatmap `intensity` and `radius` now dynamically interpolate based on total asset count (0-1M items).
+        - **Visual Distinction**: Applied binary radius sizing (`step` function) to enforce a stark contrast between single items (tiny dot, radius * 0.2) and clusters (full blob, radius * 1.0). Reduced single-item weight to `0.15` to prevent bloom.
+    3. **Style Sync**: Linked Mini Map style to Main Map style selector.
+    4. **Default Style**: Changed default map style to `streets-v12`.
+    5. **Cleanup**: Commented out all map-related console logs in `Container.vue` for cleaner production output.
+- **Action**:
+    - `Container.vue`: Added `CustomFullscreenControl` class.
+    - `Container.vue`: Implemented `updateHeatmapVisuals` with linear interpolation and step-based radius.
+    - `mapData.ts`: Updated `LAYER_MINIMAP_HEAT` weights and colors.
+    - `Container.vue`: Removed console logs.

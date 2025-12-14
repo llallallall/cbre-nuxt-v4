@@ -65,6 +65,12 @@
                         {{ $t('profile.edit_profile') }}
                     </UButton>
 
+                    <UButton v-if="['ADMIN', 'DEVELOPER'].includes(userStore.getUserRole || '')" block color="primary" variant="outline"
+                        class="flex-1 justify-center cbre-button-secondary text-base hover:bg-cbre-green hover:text-white hover:border-cbre-green rounded-none uppercase font-calibre"
+                        icon="i-heroicons-command-line" @click="navigateTo('/admin')">
+                        Admin
+                    </UButton>
+
                     <UButton block color="primary" variant="outline"
                         class="flex-1 justify-center cbre-button-primary bg-cbre-primary text-white text-base hover:bg-cbre-accent hover:text-cbre-green ring-0 rounded-none uppercase font-calibre"
                         icon="i-heroicons-arrow-right" @click="handleLogout">

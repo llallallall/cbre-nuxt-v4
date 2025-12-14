@@ -140,7 +140,7 @@
                             <!-- Sizes -->
                             <section id="sizes" class="scroll-mt-40 border-t border-gray-100 pt-16">
 
-                                <PropertyDetailSizesAndMeasurements :scale="item?.scale" />
+                                <PropertyDetailSizes :scale="item?.scale" />
                             </section>
 
                             <!-- Facility -->

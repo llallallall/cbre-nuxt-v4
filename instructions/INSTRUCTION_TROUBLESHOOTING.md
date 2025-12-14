@@ -262,3 +262,32 @@ onMounted(() => {
 - **Fix**: **Use `<USwitch>`**.
     - Verified `USwitch` usage in existing `Menu.vue`.
     - Replaced `<UToggle>` with `<USwitch>` in `Profile.vue` for global settings (e.g., Tooltip Toggle).
+### **Mapbox Fullscreen API Permission Error**
+- **Issue**: Native `mapboxgl.FullscreenControl` fails with "Permissions policy violation" or does nothing inside `<iframe>` or restricted environments.
+- **Cause**: Browser security policies restrict the `requestFullscreen` API when embedded in frames without explicit `allow="fullscreen"` attributes.
+- **Fix**: **Implement CSS-based Pseudo-Fullscreen**.
+    - Created `CustomFullscreenControl` that bypasses the native API using a `fixed inset-0 z-[50]` class on the map container.
+    - Manually handles the toggle logic and triggers `map.resize()` to ensure the GL context updates to the new viewport size.
+    ```typescript
+    // Pseudo-Code
+    const fsControl = new CustomFullscreenControl(() => {
+        isFullscreen.value = !isFullscreen.value; // Toggles CSS class
+        setTimeout(() => map.resize(), 100);
+    });
+    ```
+
+---
+
+## 12. Authentication (Server-Side)
+
+### **Server Middleware Blocking Pages (401)**
+- **Symptoms**: Accessing public pages like `/login` returns a 401 Unauthorized error with stack trace pointing to `server/middleware/auth.ts`.
+- **Cause**: The server middleware runs on every request (including client-side page renders) and strictly blocked all non-whitelisted paths. The whitelist failed to cover all client-side routes.
+- **Fix**: **Allow all non-API routes by default**.
+    - Modified `server/middleware/auth.ts` to skip strict checks if the path does not start with `/api`.
+    - Delegated page-level protection to client-side middleware (`middleware/auth.ts`).
+    ```typescript
+    if (!url.pathname.startsWith('/api')) {
+        return;
+    }
+    ```

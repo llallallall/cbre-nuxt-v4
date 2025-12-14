@@ -225,6 +225,7 @@ export const usePropertyStore = defineStore('property', {
 
             try {
                 const adminData = await $fetch<AdminListType[]>('/api/property/list/admin');
+                console.log('[Store] Fetched adminData:', adminData);
 
                 this.adminList = adminData.map((item, idx) => ({
                     ...item,
@@ -232,11 +233,14 @@ export const usePropertyStore = defineStore('property', {
                     updatedAt: new Date(item.updatedAt),
                     no: idx + 1
                 }));
+                console.log('[Store] Mapped adminList:', this.adminList);
+
                 this.filteredAdminList = this.adminList;
                 this.adminListLoaded = true;
 
             } catch (e: any) {
-                statusStore.setGlobalError('Failed to load admin list.', 'fetchAdminList');
+                const errorMessage = e.data?.statusMessage || e.message || 'Failed to load admin list.';
+                statusStore.setGlobalError(errorMessage, 'fetchAdminList');
                 console.error(e);
             } finally {
                 statusStore.setGlobalLoading(false);

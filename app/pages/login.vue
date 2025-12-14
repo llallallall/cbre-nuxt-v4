@@ -13,9 +13,9 @@
             <!-- Header Section -->
             <div class="cbre-font-calibre text-center backdrop-blur-md bg-white/5 py-6 px-4 select-none rounded-t-lg">
                 <div
-                    class="cbre-text-display-1 font-mono text-white text-3xl md:text-5xl lg:text-6xl tracking-wider font-bold pt-0 pb-2 md:pb-4">
+                    class="cbre-text-display-1 font-mono text-white text-xl md:text-3xl lg:text-4xl tracking-wider font-bold pt-0 pb-2 md:pb-4">
                     Sign In</div>
-                <div class="cbre-text-body-md text-white text-lg md:text-xl lg:text-2xl font-light opacity-90 py-0">
+                <div class="cbre-text-body-md text-white text-base md:text-lg lg:text-xl font-light opacity-90 py-0">
                     Property
                     Management
                     System</div>

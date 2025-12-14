@@ -37,21 +37,34 @@ export default defineEventHandler(async (event) => {
                 .where(eq(schema.user.id, body.userId));
         }
 
-        // Update Profile table
-        const [updatedProfile] = await db.update(schema.profile)
-            .set({
+        // Upsert Profile
+        const [updatedProfile] = await db.insert(schema.profile)
+            .values({
+                id: crypto.randomUUID(),
+                userId: body.userId,
                 imageUrl: body.imageUrl,
                 company: body.company,
                 branch: body.branch,
                 department: body.department,
                 title: body.title,
-                useProfileImage: body.useProfileImage,
+                useProfileImage: body.useProfileImage ?? false,
             })
-            .where(eq(schema.profile.userId, body.userId))
+            .onConflictDoUpdate({
+                target: schema.profile.userId,
+                set: {
+                    imageUrl: body.imageUrl,
+                    company: body.company,
+                    branch: body.branch,
+                    department: body.department,
+                    title: body.title,
+                    useProfileImage: body.useProfileImage,
+                    updatedAt: new Date().toISOString(),
+                }
+            })
             .returning();
 
         if (!updatedProfile) {
-            throw createError({ statusCode: 404, statusMessage: 'Profile not found.' });
+            throw createError({ statusCode: 500, statusMessage: 'Failed to upsert profile.' });
         }
 
         return {

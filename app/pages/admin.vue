@@ -127,7 +127,7 @@ import SearchBar from '~/components/common/SearchBar.vue';
 
 definePageMeta({
     layout: 'admin-layout',
-    middleware: 'auth',
+    middleware: 'admin',
 });
 
 const propertyStore = usePropertyStore();
